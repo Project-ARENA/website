@@ -46,3 +46,26 @@
   margin-top: 100px;
   font-family: Bebas Neue;
 }
+.login-container4 {
+  flex: 0 0 auto;
+  width: auto;
+  border: 2px dashed rgba(120, 120, 120, 0.4);
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.login-text1 {
+  font-size: 25px;
+  font-style: normal;
+  font-family: Bebas Neue;
+  font-weight: 400;
+}
+.login-navlink1 {
+  color: rgb(129, 129, 129);
+  font-size: 25px;
+  font-family: Bebas Neue;
+  border-color: #ffffff;
+  border-width: 5px;
+  text-decoration: none;
+}

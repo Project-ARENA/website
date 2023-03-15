@@ -27,6 +27,11 @@ const Login = (props) => {
           <InputBoxForInfo text="USERNAME"></InputBoxForInfo>
           <InputBoxForInfo text="PASSWORD"></InputBoxForInfo>
           <Button rootClassName="button-root-class-name2"></Button>
+          <div className="login-container4"></div>
+          <span className="login-text1">Don&apos;t have an account? </span>
+          <Link to="/login" className="login-navlink1 button">
+            Resigster here
+          </Link>
         </div>
       </div>
     </div>

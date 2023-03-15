@@ -9,6 +9,7 @@ import TEST from './views/test'
 import Home from './views/home'
 import Login from './views/login'
 import Competitions from './views/competitions'
+import About from './views/about'
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route component={Home} exact path="/" />
         <Route component={Login} exact path="/login" />
         <Route component={Competitions} exact path="/competitions" />
+        <Route component={About} exact path="/about" />
       </div>
     </Router>
   )
