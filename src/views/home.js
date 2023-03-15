@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { Helmet } from 'react-helmet'
 
@@ -25,14 +26,25 @@ const Home = (props) => {
               </svg>
             </div>
             <div className="home-links-container">
-              <span className="home-link">A</span>
-              <span className="home-link1 Anchor">B</span>
-              <span className="home-link2 Anchor">C</span>
-              <span className="home-link3 Anchor">D</span>
+              <Link to="/" className="home-link">
+                HOME
+              </Link>
+              <Link to="/competitions" className="home-link1 Anchor">
+                COMPETITIONS
+              </Link>
+              <Link to="/contact" className="home-link2 Anchor">
+                CONTACT
+              </Link>
+              <span className="home-link3 Anchor">ABOUT</span>
             </div>
           </div>
           <div className="home-right-side">
-            <button className="home-cta-btn button">PROJECT ARENA</button>
+            <Link to="/register1" className="home-cta-btn button">
+              <span>
+                <span className="home-text1">PROJECT PORTAL</span>
+                <br></br>
+              </span>
+            </Link>
           </div>
           <div data-role="MobileMenu" className="home-mobile-menu">
             <div className="home-container1">
