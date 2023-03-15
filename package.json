@@ -4,13 +4,17 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.0.0-alpha.0",
+    "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "mysql": "^2.18.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "^5.2.0",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^5.2.0"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "concurrently \"craco start\" \"node src/server/server.js\"",
     "build": "craco build",
     "test": "craco test --env=jsdom",
     "eject": "craco eject"
