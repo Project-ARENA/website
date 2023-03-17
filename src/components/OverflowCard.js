@@ -7,9 +7,30 @@ import Typography from '@mui/joy/Typography';
 
 export default function OverflowCard(props) {
   const { imageUrl, competitionName, companyName, views, time } = props;
+  const [transform, setTransform] = React.useState("");
+
+  const handleMouseMove = (event) => {
+    const card = event.currentTarget;
+    const boundingRect = card.getBoundingClientRect();
+    const offsetX = event.clientX - boundingRect.left - boundingRect.width / 2;
+    const offsetY = event.clientY - boundingRect.top - boundingRect.height / 2;
+    const transform = `perspective(600px) rotateX(${-offsetY /
+      10}deg) rotateY(${offsetX / 10}deg)`;
+    setTransform(transform);
+  };
+
+  const handleMouseLeave = () => {
+    setTransform("");
+  };
   
   return (
-    <Card variant="outlined" sx={{ width: 320 }}>
+    <Card
+      variant="outlined"
+      sx={{ width: 320 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ transform, transition: "transform 0.2s ease-out" }}
+    >
       <CardOverflow>
         <AspectRatio ratio="2">
           <img
