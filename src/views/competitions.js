@@ -54,7 +54,7 @@ function GenCards() {
   ];
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginLeft: 'auto', marginRight: 'auto', maxWidth: '1024px' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', maxWidth: '1024px', margin: '0 auto', justifyContent: 'center' }}>
       {cardsData.map((cardData, index) => (
         <OverflowCard key={index} {...cardData} />
       ))}
