@@ -3,7 +3,64 @@ import { Link } from 'react-router-dom'
 
 import { Helmet } from 'react-helmet'
 
+import OverflowCard from '../components/OverflowCard'
+
 import './competitions.css'
+
+function GenCards() {
+  const cardsData = [
+    {
+      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
+      competitionName: 'Competition 1',
+      companyName: 'Company 1',
+      views: 42,
+      time: '2 hours',
+    },
+    {
+      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
+      competitionName: 'Competition 2',
+      companyName: 'Company 2',
+      views: 23,
+      time: '1 hour',
+    },
+    {
+      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
+      competitionName: 'Competition 3',
+      companyName: 'Company 3',
+      views: 12,
+      time: '30 minutes',
+    },
+    {
+      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
+      competitionName: 'Competition 4',
+      companyName: 'Company 4',
+      views: 42,
+      time: '2 hours',
+    },
+    {
+      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
+      competitionName: 'Competition 5',
+      companyName: 'Company 5',
+      views: 23,
+      time: '1 hour',
+    },
+    {
+      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
+      competitionName: 'Competition 6',
+      companyName: 'Company 6',
+      views: 12,
+      time: '30 minutes',
+    }
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginLeft: 'auto', marginRight: 'auto', maxWidth: '1024px' }}>
+      {cardsData.map((cardData, index) => (
+        <OverflowCard key={index} {...cardData} />
+      ))}
+    </div>
+  );
+}
 
 const Competitions = (props) => {
   return (
@@ -72,6 +129,11 @@ const Competitions = (props) => {
       <div className="competitions-section-separator1"></div>
       <div className="competitions-section-separator2"></div>
       <div className="competitions-section-separator3"></div>
+      
+      {/* The OverFlow cards, leave some space */}
+      <br />
+      <GenCards />
+      <br />
     </div>
   )
 }

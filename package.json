@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.0.0-alpha.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/public-sans": "^4.5.12",
+    "@mui/joy": "^5.0.0-alpha.71",
     "concurrently": "^7.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
