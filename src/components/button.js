@@ -1,26 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './button.css';
+import * as React from "react";
+import Button from "@mui/joy/Button";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
-const Button = (props) => {
+export default function ButtonIcons({ name, onClick }) {
   return (
-    <div className={`button-container ${props.rootClassName}`}>
-      <button className="button-button button" onClick={props.onClick}>
-        {props.button}
-      </button>
-    </div>
+    <Button
+      variant="soft"
+      endDecorator={<KeyboardArrowRight />}
+      color="success"
+      onClick={onClick}
+      name={name}
+    >
+      {name}
+    </Button>
   );
-};
-
-Button.defaultProps = {
-  button: 'LOGIN',
-  rootClassName: '',
-};
-
-Button.propTypes = {
-  button: PropTypes.string,
-  rootClassName: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-};
-
-export default Button;
+}

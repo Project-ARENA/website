@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet";
 
-import InputBoxForInfo from '../components/input-box-for-info'
-import Button from '../components/button'
-import './login.css'
+import InputBoxForInfo from "../components/input-box-for-info";
+import Button from "../components/button";
+import "./login.css";
 
 const Login = (props) => {
   return (
@@ -24,13 +24,21 @@ const Login = (props) => {
         </div>
         <div className="login-container3">
           <span className="login-text">LOGIN</span>
-          <InputBoxForInfo text="USERNAME"></InputBoxForInfo>
-          <InputBoxForInfo text="PASSWORD"></InputBoxForInfo>
-          <Button rootClassName="button-root-class-name2"></Button>
+          <br></br>
+          <InputBoxForInfo buttonText="USERNAME"></InputBoxForInfo>
+          <InputBoxForInfo buttonText="PASSWORD"></InputBoxForInfo>
+          <br></br>
+          <Button
+            name="Login"
+            onClick={() => {
+              console.log("Login button clicked");
+            }}
+            rootClassName="button-root-class-name2"
+          ></Button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

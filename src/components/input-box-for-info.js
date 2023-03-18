@@ -1,28 +1,19 @@
-import React from 'react'
+import * as React from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
-import PropTypes from 'prop-types'
-
-import './input-box-for-info.css'
-
-const InputBoxForInfo = (props) => {
+export default function BasicTextFields(props) {
+  const { buttonText } = props;
   return (
-    <div className={`input-box-for-info-container ${props.rootClassName} `}>
-      <span className="input-box-for-info-text">{props.text}</span>
-      <input type="text" className="input-box-for-info-textinput input" />
-    </div>
-  )
+    <Box
+      component="form"
+      sx={{
+        "& > :not(style)": { m: 1, width: "25ch" },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField id="outlined-basic" label={buttonText} variant="outlined" />
+    </Box>
+  );
 }
-
-InputBoxForInfo.defaultProps = {
-  text: 'Surname',
-  textinput_placeholder: 'placeholder',
-  rootClassName: '',
-}
-
-InputBoxForInfo.propTypes = {
-  text: PropTypes.string,
-  textinput_placeholder: PropTypes.string,
-  rootClassName: PropTypes.string,
-}
-
-export default InputBoxForInfo

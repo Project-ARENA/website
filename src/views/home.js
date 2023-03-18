@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet";
 
-import './home.css'
+import "./home.css";
 
 const Home = (props) => {
   return (
@@ -39,7 +39,7 @@ const Home = (props) => {
             </div>
           </div>
           <div className="home-right-side">
-            <Link to="/register1" className="home-cta-btn button">
+            <Link to="/register" className="home-cta-btn button">
               <span>
                 <span className="home-text1">PROJECT PORTAL</span>
                 <br></br>
@@ -73,7 +73,7 @@ const Home = (props) => {
       <div className="home-section-separator2"></div>
       <div className="home-section-separator3"></div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
