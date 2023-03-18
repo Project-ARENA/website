@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import './about.css'
+import "./about.css";
 
 const About = (props) => {
   return (
@@ -20,7 +20,7 @@ const About = (props) => {
               </svg>
             </div>
             <div className="about-links-container">
-              <Link to="/home" className="about-link">
+              <Link to="/" className="about-link">
                 HOME
               </Link>
               <Link to="/competitions" className="about-link1 Anchor">
@@ -66,7 +66,7 @@ const About = (props) => {
       <div className="about-section-separator2"></div>
       <div className="about-section-separator3"></div>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
