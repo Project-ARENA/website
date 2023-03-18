@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet";
 
-import './contact.css'
+import "./contact.css";
 
 const Contact = (props) => {
   return (
@@ -39,7 +39,7 @@ const Contact = (props) => {
             </div>
           </div>
           <div className="contact-right-side">
-            <Link to="/register1" className="contact-cta-btn button">
+            <Link to="/register" className="contact-cta-btn button">
               PROJECT PORTAL
             </Link>
           </div>
@@ -70,7 +70,7 @@ const Contact = (props) => {
       <div className="contact-section-separator2"></div>
       <div className="contact-section-separator3"></div>
     </div>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

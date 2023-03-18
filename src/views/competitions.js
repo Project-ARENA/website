@@ -1,53 +1,67 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { Helmet } from 'react-helmet'
+import { Helmet } from "react-helmet";
 
-import OverflowCard from '../components/OverflowCard'
+import OverflowCard from "../components/OverflowCard";
 
-import './competitions.css'
+import "./competitions.css";
 
 function GenCards() {
   const cardsData = [
     {
-      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
-      competitionName: 'Competition 1',
-      companyName: 'Company 1',
+      imageUrl:
+        "https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg",
+      competitionName: "Competition 1",
+      companyName: "Company 1",
       views: 42,
-      time: '2 hours',
+      time: "2 hours",
     },
     {
-      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
-      competitionName: 'Competition 2',
-      companyName: 'Company 2',
+      imageUrl:
+        "https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg",
+      competitionName: "Competition 2",
+      companyName: "Company 2",
       views: 23,
-      time: '1 hour',
+      time: "1 hour",
     },
     {
-      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
-      competitionName: 'Competition 3',
-      companyName: 'Company 3',
+      imageUrl:
+        "https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg",
+      competitionName: "Competition 3",
+      companyName: "Company 3",
       views: 12,
-      time: '30 minutes',
+      time: "30 minutes",
     },
     {
-      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
-      competitionName: 'Competition 4',
-      companyName: 'Company 4',
+      imageUrl:
+        "https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg",
+      competitionName: "Competition 4",
+      companyName: "Company 4",
       views: 42,
-      time: '2 hours',
+      time: "2 hours",
     },
     {
-      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
-      competitionName: 'Competition 5',
-      companyName: 'Company 5',
+      imageUrl:
+        "https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg",
+      competitionName: "Competition 5",
+      companyName: "Company 5",
       views: 23,
-      time: '10 hours',
-    }
+      time: "10 hours",
+    },
   ];
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', maxWidth: '1024px', margin: '0 auto', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "16px",
+        maxWidth: "1024px",
+        margin: "0 auto",
+        justifyContent: "center",
+      }}
+    >
       {cardsData.map((cardData, index) => (
         <OverflowCard key={index} {...cardData} />
       ))}
@@ -89,7 +103,7 @@ const Competitions = (props) => {
             </div>
           </div>
           <div className="competitions-right-side">
-            <Link to="/register1" className="competitions-cta-btn button">
+            <Link to="/register" className="competitions-cta-btn button">
               PROJECT PORTAL
             </Link>
           </div>
@@ -122,13 +136,13 @@ const Competitions = (props) => {
       <div className="competitions-section-separator1"></div>
       <div className="competitions-section-separator2"></div>
       <div className="competitions-section-separator3"></div>
-      
+
       {/* The OverFlow cards, leave some space */}
       <br />
       <GenCards />
       <br />
     </div>
-  )
-}
+  );
+};
 
-export default Competitions
+export default Competitions;
