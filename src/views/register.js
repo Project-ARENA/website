@@ -14,7 +14,7 @@ const Register = (props) => {
         <title>register - Project ARENA</title>
         <meta property="og:title" content="register - Project ARENA" />
       </Helmet>
-      <dic className="register-container1">
+      <div className="register-container1">
         <Link to="/" className="register-navlink">
           <svg
             viewBox="0 0 877.7142857142857 1024"
@@ -23,7 +23,7 @@ const Register = (props) => {
             <path d="M519.429 797.143l58.286-58.286c14.286-14.286 14.286-37.143 0-51.429l-175.429-175.429 175.429-175.429c14.286-14.286 14.286-37.143 0-51.429l-58.286-58.286c-14.286-14.286-37.143-14.286-51.429 0l-259.429 259.429c-14.286 14.286-14.286 37.143 0 51.429l259.429 259.429c14.286 14.286 37.143 14.286 51.429 0zM877.714 512c0 242.286-196.571 438.857-438.857 438.857s-438.857-196.571-438.857-438.857 196.571-438.857 438.857-438.857 438.857 196.571 438.857 438.857z"></path>
           </svg>
         </Link>
-      </dic>
+      </div>
       <div className="register-container5">
         <span className="register-text">
           <span>Register</span>
