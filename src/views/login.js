@@ -26,7 +26,7 @@ const Login = (props) => {
           <span className="login-text">LOGIN</span>
           <br></br>
           <InputBoxForInfo buttonText="USERNAME"></InputBoxForInfo>
-          <InputBoxForInfo buttonText="PASSWORD"></InputBoxForInfo>
+          <InputBoxForInfo buttonText="PASSWORD" isPassword></InputBoxForInfo>
           <br></br>
           <Button
             name="Login"

@@ -61,6 +61,7 @@ const Register = (props) => {
         <InputBoxForInfo
           buttonText="PASSWORD"
           onChange={(e) => setPassword(e.target.value)}
+          isPassword
           rootClassName="input-box-for-info-root-class-name4"
         ></InputBoxForInfo>
         <br></br>

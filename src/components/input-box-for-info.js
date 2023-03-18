@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 export default function BasicTextFields(props) {
-  const { buttonText, onChange } = props;
+  const { buttonText, onChange, isPassword } = props;
 
   return (
     <Box
@@ -21,6 +21,7 @@ export default function BasicTextFields(props) {
         inputProps={{
           onChange: onChange,
         }}
+        type={isPassword ? "password" : "text"}
       />
     </Box>
   );
