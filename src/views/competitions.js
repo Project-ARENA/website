@@ -42,7 +42,7 @@ function GenCards() {
       competitionName: 'Competition 5',
       companyName: 'Company 5',
       views: 23,
-      time: '1 hour',
+      time: '10 hours',
     }
   ];
 
