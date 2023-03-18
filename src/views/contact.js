@@ -35,7 +35,9 @@ const Contact = (props) => {
               <Link to="/contact" className="contact-link2 Anchor">
                 CONTACT
               </Link>
-              <span className="contact-link3 Anchor">ABOUT</span>
+              <Link to="/about" className="contact-link3 Anchor">
+                ABOUT
+              </Link>
             </div>
           </div>
           <div className="contact-right-side">

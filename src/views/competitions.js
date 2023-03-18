@@ -99,7 +99,9 @@ const Competitions = (props) => {
               <Link to="/contact" className="competitions-link2 Anchor">
                 CONTACT
               </Link>
-              <span className="competitions-link3 Anchor">ABOUT</span>
+              <Link to="/about" className="contact-link3 Anchor">
+                ABOUT
+              </Link>
             </div>
           </div>
           <div className="competitions-right-side">
