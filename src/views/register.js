@@ -17,7 +17,7 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
 
   const postDetails = () =>{
-    axios.post("http://localhost:3002/api/post/register",{name:"test",surname: "daggy",email: "test",username: "test",password: "test"})
+    axios.post("http://localhost:3002/api/post/register",{name:name,surname:"David",email: email,username: username,password: password})
   }
   const handleRegister = () => {
     // Do something with the input values

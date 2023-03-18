@@ -19,12 +19,12 @@ db.query("SELECT * FROM users", (err,result)=>{
     if(err) {
     res.send(err)    
     console.log(err)
-    } 
+    }  
 res.send(result)
 });   });
 
 //Route to get registration details and insert
-app.post('/daggy', (req,res)=> {
+app.post('/api/post/register', (req,res)=> {
 
     const name = req.body.name;
     const surname = req.body.surname;
@@ -34,6 +34,23 @@ app.post('/daggy', (req,res)=> {
 
     
     db.query("INSERT INTO users (user_firstname, user_surname, user_nickname, user_password, user_email, user_admin) VALUES (?,?,?,?,?,?)",[name, surname,username,password,email,0], (err,result)=>{
+       if(err) {
+        res.send(err)
+       console.log(err)
+       } 
+       console.log(result)
+    });   
+})
+
+
+//Route to check Login Details
+app.post('/api/post/login', (req,res)=> {
+
+    const username = req.body.username;
+    const password = req.body.password;
+
+    
+    db.query("SELECT EXISTS (SELECT * from users WHERE user_nickname = ? AND user_password = ?);",[username, password], (err,result)=>{
        if(err) {
         res.send(err)
        console.log(err)
