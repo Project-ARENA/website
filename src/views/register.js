@@ -3,11 +3,25 @@ import { Link } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
 
+import { useState } from "react";
+
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import "./register.css";
 
 const Register = (props) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = () => {
+    // Do something with the input values
+    console.log(
+      `Name: ${name}, Email: ${email}, Username: ${username}, Password: ${password}`
+    );
+  };
+
   return (
     <div className="register-container">
       <Helmet>
@@ -31,18 +45,22 @@ const Register = (props) => {
         </span>
         <InputBoxForInfo
           buttonText="NAME"
+          onChange={(e) => setName(e.target.value)}
           rootClassName="input-box-for-info-root-class-name"
         ></InputBoxForInfo>
         <InputBoxForInfo
           buttonText="EMAIL"
+          onChange={(e) => setEmail(e.target.value)}
           rootClassName="input-box-for-info-root-class-name2"
         ></InputBoxForInfo>
         <InputBoxForInfo
           buttonText="USERNAME"
+          onChange={(e) => setUsername(e.target.value)}
           rootClassName="input-box-for-info-root-class-name3"
         ></InputBoxForInfo>
         <InputBoxForInfo
           buttonText="PASSWORD"
+          onChange={(e) => setPassword(e.target.value)}
           rootClassName="input-box-for-info-root-class-name4"
         ></InputBoxForInfo>
         <br></br>
@@ -50,6 +68,7 @@ const Register = (props) => {
           name="Register"
           onClick={() => {
             console.log("Register button clicked");
+            handleRegister();
           }}
           rootClassName="button-root-class-name"
         ></Button>
