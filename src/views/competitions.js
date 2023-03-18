@@ -43,13 +43,6 @@ function GenCards() {
       companyName: 'Company 5',
       views: 23,
       time: '1 hour',
-    },
-    {
-      imageUrl: 'https://www.youthvillage.co.za/wp-content/uploads/2018/03/wits-logo-687x405.jpg',
-      competitionName: 'Competition 6',
-      companyName: 'Company 6',
-      views: 12,
-      time: '30 minutes',
     }
   ];
 
