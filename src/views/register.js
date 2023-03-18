@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import { Link } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
@@ -15,11 +16,16 @@ const Register = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const postDetails = () =>{
+    axios.post("http://localhost:3002/api/post/register",{name:"test",surname: "daggy",email: "test",username: "test",password: "test"})
+  }
   const handleRegister = () => {
     // Do something with the input values
     console.log(
       `Name: ${name}, Email: ${email}, Username: ${username}, Password: ${password}`
     );
+    postDetails();
+   
   };
 
   return (
