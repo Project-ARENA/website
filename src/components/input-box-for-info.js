@@ -3,7 +3,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 export default function BasicTextFields(props) {
-  const { buttonText } = props;
+  const { buttonText, onChange } = props;
+
   return (
     <Box
       component="form"
@@ -13,7 +14,14 @@ export default function BasicTextFields(props) {
       noValidate
       autoComplete="off"
     >
-      <TextField id="outlined-basic" label={buttonText} variant="outlined" />
+      <TextField
+        id="outlined-basic"
+        label={buttonText}
+        variant="outlined"
+        inputProps={{
+          onChange: onChange,
+        }}
+      />
     </Box>
   );
 }
