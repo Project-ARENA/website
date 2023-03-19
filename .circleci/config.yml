@@ -21,5 +21,6 @@ workflows:
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: npm
 
+          # Upload to Jira
           post-steps:
             - jira/notify
