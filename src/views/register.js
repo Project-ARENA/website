@@ -21,7 +21,7 @@ const Register = (props) => {
   const hashedPassword = bycrypt.hashSync(password,10)
 
   const postDetails = () =>{
-    axios.post("http://localhost:3002/api/post/register",{name:name, surname:"David", email: email, username: username, password: password})
+    axios.post("http://localhost:3002/api/post/register",{name:name, surname:"David", email: email, username: username, password: hashedPassword})
   }
   const handleRegister = () => {
     // Do something with the input values
