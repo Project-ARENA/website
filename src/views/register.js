@@ -1,10 +1,13 @@
 import React from "react";
 import axios from 'axios';
+import bycrypt from 'bcryptjs';
+
 import { Link } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
 
 import { useState } from "react";
+// const bcrypt = require('bcryptjs');
 
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
@@ -15,14 +18,15 @@ const Register = (props) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const hashedPassword = bycrypt.hashSync(password,10)
 
   const postDetails = () =>{
-    axios.post("http://localhost:3002/api/post/register",{name:name,surname:"David",email: email,username: username,password: password})
+    axios.post("http://localhost:3002/api/post/register",{name:name, surname:"David", email: email, username: username, password: password})
   }
   const handleRegister = () => {
     // Do something with the input values
     console.log(
-      `Name: ${name}, Email: ${email}, Username: ${username}, Password: ${password}`
+      `Name: ${name}, Email: ${email}, Username: ${username}, Password: ${hashedPassword}`
     );
     postDetails();
    
@@ -49,27 +53,32 @@ const Register = (props) => {
           <span>Register</span>
           <br></br>
         </span>
+
         <InputBoxForInfo
           buttonText="NAME"
           onChange={(e) => setName(e.target.value)}
           rootClassName="input-box-for-info-root-class-name"
         ></InputBoxForInfo>
+    
         <InputBoxForInfo
           buttonText="EMAIL"
           onChange={(e) => setEmail(e.target.value)}
           rootClassName="input-box-for-info-root-class-name2"
         ></InputBoxForInfo>
+    
         <InputBoxForInfo
           buttonText="USERNAME"
           onChange={(e) => setUsername(e.target.value)}
           rootClassName="input-box-for-info-root-class-name3"
         ></InputBoxForInfo>
+    
         <InputBoxForInfo
           buttonText="PASSWORD"
           onChange={(e) => setPassword(e.target.value)}
           isPassword
           rootClassName="input-box-for-info-root-class-name4"
         ></InputBoxForInfo>
+    
         <br></br>
         <Button
           name="Register"
@@ -79,8 +88,9 @@ const Register = (props) => {
           }}
           rootClassName="button-root-class-name"
         ></Button>
+        
         <br></br>
-        <span className="register-text3">Already have an account? </span>
+        <span className="register-text3">Already have an account?Â </span>
         <Link to="/login" className="register-navlink1 button">
           Login here
         </Link>
