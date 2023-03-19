@@ -35,6 +35,12 @@ const Login = (props) => {
             }}
             rootClassName="button-root-class-name2"
           ></Button>
+          <div className="login-container4"></div>
+          <br></br>
+          <span className="login-text1">Don&apos;t have an account? </span>
+          <Link to="/login" className="register-navlink1 button">
+          Register Here
+          </Link>
         </div>
       </div>
     </div>
