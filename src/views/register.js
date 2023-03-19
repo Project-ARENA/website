@@ -18,10 +18,11 @@ const Register = (props) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const hashedPassword = bycrypt.hashSync(password,10)
+  const salt = bycrypt.genSaltSync(10);
+  const hashedPassword = bycrypt.hashSync(password,salt);
 
   const postDetails = () =>{
-    axios.post("http://localhost:3002/api/post/register",{name:name, surname:"David", email: email, username: username, password: password})
+    axios.post("http://localhost:3002/api/post/register",{name:name, surname:"David", email: email, username: username, password: hashedPassword})
   }
   const handleRegister = () => {
     // Do something with the input values
@@ -99,4 +100,4 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+export default Register;11
