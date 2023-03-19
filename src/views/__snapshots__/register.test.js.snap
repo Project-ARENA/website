@@ -67,7 +67,6 @@ exports[`renders correctly enzyme 1`] = `
     />
     <br />
     <ButtonIcons
-      data-testid="settingsPane"
       name="Register"
       onClick={[Function]}
       rootClassName="button-root-class-name"
