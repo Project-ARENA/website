@@ -59,10 +59,18 @@ const Contact = (props) => {
               </div>
             </div>
             <div className="contact-links-container1">
-              <span className="contact-link4 Anchor">Resources</span>
-              <span className="contact-link5 Anchor">Inspiration</span>
-              <span className="contact-link6 Anchor">Process</span>
-              <span className="contact-link7 Anchor">Our story</span>
+            <Link to="/" className="home-link">
+                HOME
+              </Link>
+              <Link to="/competitions" className="home-link1 Anchor">
+                COMPETITIONS
+              </Link>
+              <Link to="/contact" className="home-link2 Anchor">
+                CONTACT
+              </Link>
+              <Link to="/about" className="contact-link3 Anchor">
+                ABOUT
+              </Link>
             </div>
           </div>
         </div>
