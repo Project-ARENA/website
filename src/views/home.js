@@ -78,7 +78,10 @@ const Home = (props) => {
                 ABOUT
               </Link>
               <Link to="/admin-home" className="contact-link4 Anchor">
-                ADMIN HOME
+                ADMIN
+              </Link>
+              <Link to="/player-portal-home" className="contact-link4 Anchor">
+              PLAYER PORTAL
               </Link>
             </div>
           </div>
