@@ -1,5 +1,8 @@
 import React from 'react'
+import {useRef} from 'react'
+import { useState } from "react";
 import { Link } from 'react-router-dom'
+import emailjs from '@emailjs/browser';
 
 import Button from '../components/button'
 import Phone from '../components/phone'
@@ -9,7 +12,27 @@ import InputTextArea from "../components/input-textarea";
 import './contact.css'
 
 const Contact = (props) => {
+  const form = useRef();
+  const [name, setName] = useState("");
+  const [subject,setSubject] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('service_c64xcqo', 'template_d23i9to', form.current, '2FCvu1vrHyFxVkhpJ')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+      e.target.reset()
+  };
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  }
   return (
+    
     <div className="contact-container">
       <div data-role="Header" className="contact-navbar-container">
         <div className="contact-navbar">
@@ -17,8 +40,7 @@ const Contact = (props) => {
             <img
               alt="image"
               src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="contact-image"
-            />
+              className="contact-image" />
             <div data-role="BurgerMenu" className="contact-burger-menu">
               <svg viewBox="0 0 1024 1024" className="contact-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
@@ -49,8 +71,7 @@ const Contact = (props) => {
               <img
                 alt="image"
                 src="https://play.teleporthq.io/static/svg/default-img.svg"
-                className="contact-image1"
-              />
+                className="contact-image1" />
               <div data-role="CloseMobileMenu" className="contact-close-menu">
                 <svg viewBox="0 0 1024 1024" className="contact-icon2">
                   <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
@@ -58,7 +79,7 @@ const Contact = (props) => {
               </div>
             </div>
             <div className="contact-links-container1">
-            <Link to="/" className="contact-link">
+              <Link to="/" className="contact-link">
                 HOME
               </Link>
               <Link to="/competitions" className="contact-link1 Anchor">
@@ -88,29 +109,31 @@ const Contact = (props) => {
           <div className="contact-section-separator06"></div>
           <div className="contact-section-separator07"></div>
           <div className="contact-container05">
-          <InputBoxForInfo
-          buttonText="NAME"
-        
-        ></InputBoxForInfo>
-             <InputBoxForInfo
-          buttonText="Subject"
-          
-        ></InputBoxForInfo>
-             <InputBoxForInfo
-          buttonText="Email"
-          
-        ></InputBoxForInfo>
-             <InputTextArea 
-          label="Type your message here..."
-          
-          rootClassName="input-box-for-info-root-class-name"
-        ></InputTextArea >
+            <InputBoxForInfo
+              buttonText="Name"
+              onChange={(e) => setName(e.target.value)}
+            ></InputBoxForInfo>
+            <InputBoxForInfo
+              buttonText="Subject"
+              onChange={(e) => setSubject(e.target.value)}
+            ></InputBoxForInfo>
+            <InputBoxForInfo
+              buttonText="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            ></InputBoxForInfo>
+            <InputTextArea
+              label="Type your message here..."
+              onChange={(e) => setMessage(e.target.value)}
+              rootClassName="input-box-for-info-root-class-name"
+            ></InputTextArea>
           </div>
           <Button
+          
             name="Submit"
             onClick={() => {
               console.log("Contact Submitted");
-            }}
+              sendEmail()
+            } }
             rootClassName="button-root-class-name2"
           ></Button>
         </div>
