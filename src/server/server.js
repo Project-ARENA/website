@@ -73,6 +73,19 @@ app.get("/api/get/competitions", (req, res) => {
   });
 });
 
+// Route to get hashed password
+app.get("/api/get/password/:username", (req, res) => {
+
+  const username = req.params.username;
+  db.query("SELECT user_password FROM users WHERE user_nickname = ?", username,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
 //Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
