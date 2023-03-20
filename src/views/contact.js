@@ -1,17 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import { Helmet } from "react-helmet";
-
-import "./contact.css";
+import Button from '../components/button'
+import Phone from '../components/phone'
+import Email1 from '../components/email1'
+import InputBoxForInfo from "../components/input-box-for-info";
+import InputTextArea from "../components/input-textarea";
+import './contact.css'
 
 const Contact = (props) => {
   return (
     <div className="contact-container">
-      <Helmet>
-        <title>Contact - Project ARENA</title>
-        <meta property="og:title" content="Contact - Project ARENA" />
-      </Helmet>
       <div data-role="Header" className="contact-navbar-container">
         <div className="contact-navbar">
           <div className="contact-left-side">
@@ -26,7 +25,7 @@ const Contact = (props) => {
               </svg>
             </div>
             <div className="contact-links-container">
-              <Link to="/" className="contact-link">
+              <Link to="/home" className="contact-link">
                 HOME
               </Link>
               <Link to="/competitions" className="contact-link1 Anchor">
@@ -46,7 +45,7 @@ const Contact = (props) => {
             </Link>
           </div>
           <div data-role="MobileMenu" className="contact-mobile-menu">
-            <div className="contact-container1">
+            <div className="contact-container01">
               <img
                 alt="image"
                 src="https://play.teleporthq.io/static/svg/default-img.svg"
@@ -59,13 +58,13 @@ const Contact = (props) => {
               </div>
             </div>
             <div className="contact-links-container1">
-            <Link to="/" className="home-link">
+            <Link to="/" className="contact-link">
                 HOME
               </Link>
-              <Link to="/competitions" className="home-link1 Anchor">
+              <Link to="/competitions" className="contact-link1 Anchor">
                 COMPETITIONS
               </Link>
-              <Link to="/contact" className="home-link2 Anchor">
+              <Link to="/contact" className="contact-link2 Anchor">
                 CONTACT
               </Link>
               <Link to="/about" className="contact-link3 Anchor">
@@ -76,11 +75,94 @@ const Contact = (props) => {
         </div>
       </div>
       <div className="contact-section-separator"></div>
-      <div className="contact-section-separator1"></div>
-      <div className="contact-section-separator2"></div>
-      <div className="contact-section-separator3"></div>
+      <div className="contact-section-separator01"></div>
+      <div className="contact-section-separator02"></div>
+      <div className="contact-section-separator03"></div>
+      <div className="contact-container02">
+        <div className="contact-container03">
+          <div className="contact-container04">
+            <span className="contact-text">Send us a message </span>
+          </div>
+          <div className="contact-section-separator04"></div>
+          <div className="contact-section-separator05"></div>
+          <div className="contact-section-separator06"></div>
+          <div className="contact-section-separator07"></div>
+          <div className="contact-container05">
+          <InputBoxForInfo
+          buttonText="NAME"
+        
+        ></InputBoxForInfo>
+             <InputBoxForInfo
+          buttonText="Subject"
+          
+        ></InputBoxForInfo>
+             <InputBoxForInfo
+          buttonText="Email"
+          
+        ></InputBoxForInfo>
+             <InputTextArea 
+          label="Type your message here..."
+          
+          rootClassName="input-box-for-info-root-class-name"
+        ></InputTextArea >
+          </div>
+          <Button
+            name="Submit"
+            onClick={() => {
+              console.log("Contact Submitted");
+            }}
+            rootClassName="button-root-class-name2"
+          ></Button>
+        </div>
+        <div className="contact-container-for-big-page">
+          <div className="contact-container06">
+            <span className="contact-text1">
+              <span>Contact Details</span>
+              <br></br>
+            </span>
+          </div>
+          <div className="contact-section-separator08"></div>
+          <div className="contact-section-separator09"></div>
+          <div className="contact-section-separator10"></div>
+          <div className="contact-container07">
+            <div className="contact-container08">
+              <Phone
+                text="Enter Number here"
+                rootClassName="phone-root-class-name"
+              ></Phone>
+            </div>
+            <Email1
+              text="Enter Email here"
+              rootClassName="email1-root-class-name"
+            ></Email1>
+          </div>
+        </div>
+      </div>
+      <div className="contact-container-for-small-pages">
+        <div className="contact-container09">
+          <span className="contact-text4">
+            <span>Contact Details</span>
+            <br></br>
+          </span>
+        </div>
+        <div className="contact-section-separator11"></div>
+        <div className="contact-section-separator12"></div>
+        <div className="contact-section-separator13"></div>
+        <div className="contact-container10">
+          <div className="contact-container11">
+            <Phone
+              text="Enter Number here"
+              rootClassName="phone-root-class-name1"
+            ></Phone>
+          </div>
+          <Email1
+            text="Enter Email here"
+            rootClassName="email1-root-class-name1"
+          ></Email1>
+        </div>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact
