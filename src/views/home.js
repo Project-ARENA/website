@@ -38,6 +38,9 @@ const Home = (props) => {
               <Link to="/about" className="contact-link3 Anchor">
                 ABOUT
               </Link>
+              <Link to="/admin-home" className="contact-link3 Anchor">
+                ADMIN
+              </Link>
             </div>
           </div>
           <div className="home-right-side">
@@ -73,6 +76,9 @@ const Home = (props) => {
               </Link>
               <Link to="/about" className="contact-link3 Anchor">
                 ABOUT
+              </Link>
+              <Link to="/admin-home" className="contact-link4 Anchor">
+                ADMIN HOME
               </Link>
             </div>
           </div>

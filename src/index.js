@@ -10,6 +10,10 @@ import Home from "./views/home";
 import Login from "./views/login";
 import Competitions from "./views/competitions";
 import About from './views/about'
+import AdminHome from './views/admin-home'
+import AdminTeams from './views/admin-teams'
+import AdminCompetitions from './views/admin-competitions'
+import AdminProfile from './views/admin-profile'
 
 const App = () => {
   return (
@@ -22,6 +26,10 @@ const App = () => {
         <Route component={Login} exact path="/login" />
         <Route component={Competitions} exact path="/competitions" />
         <Route component={About} exact path="/about" />
+        <Route component={AdminHome} exact path="/admin-home" />
+        <Route component={AdminTeams} exact path="/admin-teams" />
+        <Route component={AdminCompetitions} exact path="/admin-competitions" />
+        <Route component={AdminProfile} exact path="/admin-profile" />
       </div>
     </Router>
   );
