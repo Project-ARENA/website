@@ -9,17 +9,23 @@ function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get("http://localhost:3002/api/get/competitions").then((response) => {
-      const data = response.data.map((data) => ({
-        title: data.competition_name,
-        views: data.competition_views,
-        image: data.competition_image,
-        description: data.competition_info,
-        endDate: data.competition_enddate,
-      }));
-      setCardsData(data);
-    });
+    axios
+      .get("http://localhost:3002/api/get/competitions")
+      .then((response) => {
+        const data = response.data.map((data) => ({
+          title: data.competition_name,
+          views: data.competition_views,
+          image: data.competition_image,
+          description: data.competition_info,
+          endDate: data.competition_enddate,
+        }));
+        setCardsData(data);
+      });
   }, []);
+
+  const handleCardClick = (description) => {
+    console.log(description);
+  };
 
   return (
     <div
@@ -33,7 +39,11 @@ function GenCards() {
       }}
     >
       {cardsData.map((cardData, index) => (
-        <OverflowCard key={index} {...cardData} />
+        <OverflowCard
+          key={index}
+          onClick={() => handleCardClick(cardData.description)}
+          {...cardData}
+        />
       ))}
     </div>
   );
@@ -96,7 +106,7 @@ const Competitions = (props) => {
               </div>
             </div>
             <div className="competitions-links-container1">
-            <Link to="/" className="home-link">
+              <Link to="/" className="home-link">
                 HOME
               </Link>
               <Link to="/competitions" className="home-link1 Anchor">
