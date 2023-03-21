@@ -3,7 +3,6 @@ import cors from 'cors';
 import mysql from 'mysql';
 import dotenv from 'dotenv';
 import emailjs from '@emailjs/nodejs';
-import axios from 'axios';
 dotenv.config();
 
 const app = express();
@@ -135,6 +134,19 @@ app.post("/api/send/email", (req, res) => {
     .catch((error) => {
       console.log(error.text);
       res.status(500).send('Error sending email');
+    });
+});
+
+//ROute to check if username already exists
+app.get("/api/get/doesExist/:username", (req, res) => {
+
+  const username = req.params.username;
+  db.query("SELECT 1 from users WHERE user_nickname = ?;", username,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
     });
 });
 
