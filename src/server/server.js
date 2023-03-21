@@ -86,6 +86,20 @@ app.get("/api/get/password/:username", (req, res) => {
     });
 });
 
+
+//ROute to check if username already exists
+app.get("/api/get/doesExist/:username", (req, res) => {
+
+  const username = req.params.username;
+  db.query("SELECT 1 from users WHERE user_nickname = ?;", username,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
 //Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -12,7 +12,6 @@ import { useState } from "react";
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import "./register.css";
-import { alert } from 'react-alert'
 
 const Register = (props) => {
   const [name, setName] = useState("");
@@ -22,18 +21,34 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const salt = bycrypt.genSaltSync(10);
   const hashedPassword = bycrypt.hashSync(password,salt);
-
+  const[exist, setExistence] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const postDetails = () =>{
     axios.post("http://localhost:3002/api/post/register",{name:name, surname:surname, email: email, username: username, password: hashedPassword});
     
   }
 
+  const checkIfUserExists = () =>{
+    axios
+    .get("http://localhost:3002/api/get/doesExist/" + username)
+    .then(function(response){
+      const userExists = response.data;
+      if (JSON.stringify(userExists) == "[]"){
+        setErrorMessage('');
+        postDetails();
+      }
+      else{
+        setErrorMessage('Username already exists');
+      }
+    });
+  }
+
   const checkIfBlank=()=>{
     if(name == "" || surname =="" || email == "" || username == "" || password==""){
-      //alert("Please enter all details");
+      alert("Please enter all details");
     }
     else{
-      postDetails();
+      checkIfUserExists();
     }
   }
 
@@ -109,6 +124,7 @@ const Register = (props) => {
         ></Button>
         
         <br></br>
+        {errorMessage && <div className="error">{errorMessage}</div>}
         <span className="register-text3">Already have an account?</span>
         <Link to="/login" className="register-navlink1 button">
           Login here
