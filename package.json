@@ -12,6 +12,8 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/joy": "^5.0.0-alpha.71",
     "@mui/material": "^5.11.13",
+    "@mui/styled-engine-sc": "^5.11.11",
+    "@mui/x-data-grid": "^6.0.2",
     "axios": "^1.3.4",
     "bcryptjs": "^2.4.3",
     "concurrently": "^7.6.0",
@@ -23,7 +25,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.3.9"
   },
   "scripts": {
     "start": "concurrently \"craco start\" \"node src/server/server.js\"",

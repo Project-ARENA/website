@@ -77,7 +77,7 @@ const PlayerPortalHome = (props) => {
               TEAM
             </Link>
             <Link to="/player-portal-contact" className="player-portal-home-link3 Anchor">
-              CONTACT
+              CONTACT US
             </Link>
             </div>
           </div>

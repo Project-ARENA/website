@@ -80,9 +80,6 @@ const Home = (props) => {
               <Link to="/admin-home" className="contact-link4 Anchor">
                 ADMIN
               </Link>
-              <Link to="/player-portal-home" className="contact-link4 Anchor">
-              PLAYER PORTAL
-              </Link>
             </div>
           </div>
         </div>
