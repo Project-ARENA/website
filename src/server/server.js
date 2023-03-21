@@ -1,8 +1,8 @@
-import express from 'express';
-import cors from 'cors';
-import mysql from 'mysql';
-import dotenv from 'dotenv';
-import emailjs from '@emailjs/nodejs';
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const emailjs = require("@emailjs/nodejs");
+const mysql = require("mysql");
 dotenv.config();
 
 const app = express();
