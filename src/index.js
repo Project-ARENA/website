@@ -14,6 +14,11 @@ import AdminHome from './views/admin-home'
 import AdminTeams from './views/admin-teams'
 import AdminCompetitions from './views/admin-competitions'
 import AdminProfile from './views/admin-profile'
+import PlayerPortalHome from './views/player-portal-home'
+import PlayerPortalTeam from './views/player-portal-team'
+import PlayerPortalCompetitions from './views/player-portal-competitions'
+import PlayerPortalContact from './views/player-portal-contact'
+import PlayerPortalProfile from './views/player-portal-profile'
 
 const App = () => {
   return (
@@ -30,6 +35,11 @@ const App = () => {
         <Route component={AdminTeams} exact path="/admin-teams" />
         <Route component={AdminCompetitions} exact path="/admin-competitions" />
         <Route component={AdminProfile} exact path="/admin-profile" />
+        <Route component={PlayerPortalHome} exact path="/player-portal-home" />
+        <Route component={PlayerPortalTeam} exact path="/player-portal-team" />
+        <Route component={PlayerPortalCompetitions} exact path="/player-portal-competitions" />
+        <Route component={PlayerPortalContact} exact path="/player-portal-contact" />
+        <Route component={PlayerPortalProfile} exact path="/player-portal-profile" />
       </div>
     </Router>
   );
