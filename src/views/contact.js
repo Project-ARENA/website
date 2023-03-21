@@ -1,8 +1,7 @@
 import React from 'react'
-import {useRef} from 'react'
 import { useState } from "react";
 import { Link } from 'react-router-dom'
-import emailjs from '@emailjs/browser';
+import axios from 'axios';
 
 import Button from '../components/button'
 import Phone from '../components/phone'
@@ -11,26 +10,41 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import InputTextArea from "../components/input-textarea";
 import './contact.css'
 
+
+ //get input from contact page
 const Contact = (props) => {
-  const form = useRef();
   const [name, setName] = useState("");
   const [subject,setSubject] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const sendEmail = (e) => {
-    e.preventDefault();
 
-    emailjs.sendForm('service_c64xcqo', 'template_d23i9to', form.current, '2FCvu1vrHyFxVkhpJ')
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
-      });
-      e.target.reset()
+
+  // const sendEmail = (e) => {
+  //   e.preventDefault();
+
+  //   emailjs.sendForm('service_c64xcqo', 'template_d23i9to', e.target, '2FCvu1vrHyFxVkhpJ')
+  //     .then((result) => {
+  //         console.log(result.text);
+  //     }, (error) => {
+  //         console.log(error.text);
+  //     });
+  //     e.target.reset()
+  //   //console.log(name+" "+subject+" "+email+" "+message)
+  // };
+
+  //send email to admin of site
+  const sendEmail = (event) => {
+    //event.preventDefault();
+    alert("Submitted")
+    axios.post("http://localhost:3002/api/send/email", { name: name, subject: subject, email: email, message: message })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  }
+
   return (
     
     <div className="contact-container">
@@ -101,6 +115,7 @@ const Contact = (props) => {
       <div className="contact-section-separator03"></div>
       <div className="contact-container02">
         <div className="contact-container03">
+         
           <div className="contact-container04">
             <span className="contact-text">Send us a message </span>
           </div>
@@ -124,18 +139,14 @@ const Contact = (props) => {
             <InputTextArea
               label="Type your message here..."
               onChange={(e) => setMessage(e.target.value)}
-              rootClassName="input-box-for-info-root-class-name"
             ></InputTextArea>
           </div>
           <Button
-          
-            name="Submit"
-            onClick={() => {
-              console.log("Contact Submitted");
-              sendEmail()
-            } }
-            rootClassName="button-root-class-name2"
-          ></Button>
+          name = "Submit"
+          type = "submit"
+          onClick= {sendEmail}
+          rootClassName="button-root-class-name2"
+          >Send</Button>
         </div>
         <div className="contact-container-for-big-page">
           <div className="contact-container06">
