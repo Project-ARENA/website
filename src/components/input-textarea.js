@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 export default function MultilineTextFields(props) {
-    const{label,onChange}= props
+  const { label, onChange } = props
   return (
     <Box
       component="form"
@@ -16,14 +16,13 @@ export default function MultilineTextFields(props) {
       <div>
         <TextField
           id="outlined-multiline-flexible"
-          label= {label}
+          label={label}
           multiline
           maxRows={4}
           inputProps={{
             onChange: onChange,
           }}
         />
-        
       </div>
     </Box>
   );
