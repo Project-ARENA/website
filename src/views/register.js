@@ -21,17 +21,43 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const salt = bycrypt.genSaltSync(10);
   const hashedPassword = bycrypt.hashSync(password,salt);
-
+  const[exist, setExistence] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const postDetails = () =>{
-    axios.post("http://localhost:3002/api/post/register",{name:name, surname:surname, email: email, username: username, password: hashedPassword})
+    axios.post("http://localhost:3002/api/post/register",{name:name, surname:surname, email: email, username: username, password: hashedPassword});
+    
   }
+
+  const checkIfUserExists = () =>{
+    axios
+    .get("http://localhost:3002/api/get/doesExist/" + username)
+    .then(function(response){
+      const userExists = response.data;
+      if (JSON.stringify(userExists) == "[]"){
+        setErrorMessage('');
+        postDetails();
+      }
+      else{
+        setErrorMessage('Username already exists');
+      }
+    });
+  }
+
+  const checkIfBlank=()=>{
+    if(name == "" || surname =="" || email == "" || username == "" || password==""){
+      alert("Please enter all details");
+    }
+    else{
+      checkIfUserExists();
+    }
+  }
+
   const handleRegister = () => {
     // Do something with the input values
     console.log(
       `Name: ${name}, Surname: ${surname} Email: ${email}, Username: ${username}, Password: ${hashedPassword}`
     );
-    postDetails();
-   
+    checkIfBlank();
   };
 
   return (
@@ -88,7 +114,7 @@ const Register = (props) => {
         ></InputBoxForInfo>
     
         <br></br>
-        <Button
+        <Button 
           name="Register"
           onClick={() => {
             console.log("Register button clicked");
@@ -98,6 +124,7 @@ const Register = (props) => {
         ></Button>
         
         <br></br>
+        {errorMessage && <div className="error">{errorMessage}</div>}
         <span className="register-text3">Already have an account?</span>
         <Link to="/login" className="register-navlink1 button">
           Login here

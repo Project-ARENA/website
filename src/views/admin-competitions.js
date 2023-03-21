@@ -1,7 +1,53 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from "axios";
+// import DataGrid from "../components/datagrid";
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
 
 import './admin-competitions.css'
+
+const columns = [
+  { field: 'competition_name', headerName: 'Title', width: 150 },
+  { field: 'competition_views', headerName: 'Views', width: 150 },
+  { field: 'competition_image', headerName: 'Image', width: 150 },
+  { field: 'competition_leaderboard', headerName: 'Leaderboard', width: 150 },
+  { field: 'competition_startdate', headerName: 'Start Date', width: 150 },
+  { field: 'competition_enddate', headerName: 'End Date', width: 150 },
+  { field: 'competition_info', headerName: 'Info', width: 150 },
+  { field: 'competition_testcases', headerName: 'Test Cases', width: 150 },
+];
+
+const rows = [
+    { id: 1, competition_name: '1', competition_views: '2', competition_image: 'Jon', 
+    competition_leaderboard: 35, competition_startdate: 'Jon', 
+    competition_enddate: 35, competition_info: 'Jon', 
+    competition_testcases: 35 },
+  ];
+function GenGrid() {
+  const [setData] = React.useState([]);
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3002/api/get/competitions")
+      .then((response) => {
+        const data = response.data.map((data) => ({
+          Title: data.competition_name,
+          Views: data.competition_views,
+          Image: data.competition_image,
+          Leaderboard: data.competition_leaderboard,
+          StartDate: data.competition_startdate,
+          EndDate: data.competition_enddate,
+          Info: data.competition_info,
+          TestCases: data.competition_testcases,
+        }));
+        setData(data);
+      });
+  }, []);
+  return <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection/>
+   
+}
+
 
 const AdminCompetitions = (props) => {
   return (
@@ -81,6 +127,15 @@ const AdminCompetitions = (props) => {
       <div className="admin-competitions-section-separator1"></div>
       <div className="admin-competitions-section-separator2"></div>
       <div className="admin-competitions-section-separator3"></div>
+
+    
+    <GenGrid/>
+    {/* For the Buttons */}
+    <div >
+      
+    </div>
+    
+
     </div>
   )
 }

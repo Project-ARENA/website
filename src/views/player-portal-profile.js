@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import InputBoxForInfo from './input-box-for-info'
-import Button from './button'
+import InputBoxForInfo from "../components/input-box-for-info";
+import Button from "../components/button";
 import './player-portal-profile.css'
 
 const PlayerPortalProfile = (props) => {
@@ -31,37 +31,22 @@ const PlayerPortalProfile = (props) => {
               </svg>
             </div>
             <div className="player-portal-profile-links-container">
-              <Link
-                to="/player-portal-home"
-                className="player-portal-profile-link"
-              >
+              <Link to="/player-portal-home" className="player-portal-profile-link">
                 HOME
               </Link>
-              <Link
-                to="/player-portal-competitions"
-                className="player-portal-profile-link1 Anchor"
-              >
+              <Link to="/player-portal-competitions" className="player-portal-profile-link1 Anchor">
                 COMPETITIONS
               </Link>
-              <Link
-                to="/player-portal-team"
-                className="player-portal-profile-link2 Anchor"
-              >
-                tEAM
+              <Link to="/player-portal-team" className="player-portal-profile-link2 Anchor">
+                TEAM
               </Link>
-              <Link
-                to="/player-portal-contact"
-                className="player-portal-profile-link3 Anchor"
-              >
+              <Link to="/player-portal-contact" className="player-portal-profile-link3 Anchor">
                 CONTACT US
               </Link>
             </div>
           </div>
           <div className="player-portal-profile-container1">
-            <Link
-              to="/player-portal-profile"
-              className="player-portal-profile-navlink"
-            >
+            <Link to="/player-portal-profile" className="player-portal-profile-navlink">
               <svg
                 viewBox="0 0 1024 1024"
                 className="player-portal-profile-icon2"
@@ -93,18 +78,18 @@ const PlayerPortalProfile = (props) => {
               </div>
             </div>
             <div className="player-portal-profile-links-container1">
-              <span className="player-portal-profile-link4 Anchor">
-                Resources
-              </span>
-              <span className="player-portal-profile-link5 Anchor">
-                Inspiration
-              </span>
-              <span className="player-portal-profile-link6 Anchor">
-                Process
-              </span>
-              <span className="player-portal-profile-link7 Anchor">
-                Our story
-              </span>
+            <Link to="/player-portal-home" className="player-portal-profile-link">
+                HOME
+              </Link>
+              <Link to="/player-portal-competitions" className="player-portal-profile-link1 Anchor">
+                COMPETITIONS
+              </Link>
+              <Link to="/player-portal-team" className="player-portal-profile-link2 Anchor">
+                TEAM
+              </Link>
+              <Link to="/player-portal-contact" className="player-portal-profile-link3 Anchor">
+                CONTACT US
+              </Link>
             </div>
           </div>
         </div>
@@ -115,16 +100,20 @@ const PlayerPortalProfile = (props) => {
       <div className="player-portal-profile-section-separator3"></div>
       <div className="player-portal-profile-container3">
         <span className="player-portal-profile-text">UPDATE PROFILE</span>
-        <InputBoxForInfo
-          text="EMAIL"
-          rootClassName="input-box-for-info-root-class-name14"
-        ></InputBoxForInfo>
-        <InputBoxForInfo text="USERNAME"></InputBoxForInfo>
-        <InputBoxForInfo text="PASSWORD"></InputBoxForInfo>
-        <InputBoxForInfo text="CONFIRM PASSWORD"></InputBoxForInfo>
+        <InputBoxForInfo buttonText="EMAIL"></InputBoxForInfo>
+        <InputBoxForInfo 
+            buttonText="USERNAME">
+        </InputBoxForInfo>
+        <InputBoxForInfo buttonText="PASSWORD" isPassword></InputBoxForInfo>
+        <InputBoxForInfo buttonText="CONFIRM PASSWORD" isPassword></InputBoxForInfo>
         <Button
-          button="UPDATE"
-          rootClassName="button-root-class-name3"
+        name="UPDATE"
+        onClick={() => {
+          console.log("Register button clicked");
+          // handleUpdate();
+        }}
+          // button="UPDATE"
+          rootClassName="button-root-class-name4"
         ></Button>
         <div className="player-portal-profile-container4"></div>
       </div>
