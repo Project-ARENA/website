@@ -1,11 +1,36 @@
-const express = require("express");
-const db = require("./db");
-const cors = require("cors");
+import express from 'express';
+import cors from 'cors';
+import mysql from 'mysql';
+import dotenv from 'dotenv';
+import emailjs from '@emailjs/nodejs';
+import axios from 'axios';
+dotenv.config();
 
 const app = express();
 const PORT = 3002;
 app.use(cors());
 app.use(express.json());
+
+const db = mysql.createConnection({
+  host: process.env.REACT_APP_API_KEY_DB_HOST,
+  user: process.env.REACT_APP_API_KEY_DB_USER,
+  password: process.env.REACT_APP_API_KEY_DB_PASSWORD,
+  database: process.env.REACT_APP_API_KEY_DB_DATABASE,
+  ssl: {},
+});
+
+db.connect((err) => {
+  if (err) {
+    console.log(
+      "Error connecting to database, please check your credentials - warning by sayf"
+    );
+    console.log("stopping server");
+    // Stop the server
+    process.exit(1);
+  } else {
+    console.log("Connected to database");
+  }
+});
 
 // Test route
 app.get("/", (req, res) => {
@@ -83,6 +108,33 @@ app.get("/api/get/password/:username", (req, res) => {
         console.log(err)
       }
       res.send(result)
+    });
+});
+
+// Route to send email
+app.post("/api/send/email", (req, res) => {
+  const { name, subject, email, message } = req.body;
+
+  emailjs.send(
+    'service_c64xcqo',
+    'template_d23i9to',
+    {
+      name: name,
+      subject: subject,
+      email: email,
+      message: message
+    },
+    {
+      publicKey: process.env.REACT_APP_API_KEY_PUBLIC_EMAIL,
+      privateKey: process.env.REACT_APP_API_KEY_PRIVATE_EMAIL
+    }
+  )
+    .then((result) => {
+      res.status(200).send('Email sent successfully');
+    })
+    .catch((error) => {
+      console.log(error.text);
+      res.status(500).send('Error sending email');
     });
 });
 
