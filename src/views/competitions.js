@@ -7,6 +7,7 @@ import "./competitions.css";
 
 function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
+  const [isFlipped, setIsFlipped] = React.useState(false);
 
   React.useEffect(() => {
     axios
@@ -23,8 +24,24 @@ function GenCards() {
       });
   }, []);
 
-  const handleCardClick = (description) => {
-    console.log(description);
+  const handleCardClick = (index) => {
+    setIsFlipped(true);
+
+    if (isFlipped) {
+      axios
+        .post("http://localhost:3002/api/post/competition/incViews", {
+          competition_id: index + 1,
+        })
+        .then((response) => {
+          console.log(response);
+        });
+
+      const newCardsData = [...cardsData];
+      newCardsData[index].views += 1;
+      setCardsData(newCardsData);
+
+      setIsFlipped(false);
+    }
   };
 
   return (
@@ -41,7 +58,9 @@ function GenCards() {
       {cardsData.map((cardData, index) => (
         <OverflowCard
           key={index}
-          onClick={() => handleCardClick(cardData.description)}
+          onClick={() => {
+            handleCardClick(index);
+          }}
           {...cardData}
         />
       ))}

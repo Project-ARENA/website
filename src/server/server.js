@@ -97,6 +97,21 @@ app.get("/api/get/competitions", (req, res) => {
   });
 });
 
+// Route to add 1 to competition_views
+app.post("/api/post/competition/incViews", (req, res) => {
+  const competition_id = req.body.competition_id;
+
+  db.query(
+    "UPDATE competition_details SET competition_views = competition_views + 1 WHERE competition_id = ?",
+    competition_id,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
+});
+
 // Route to get hashed password
 app.get("/api/get/password/:username", (req, res) => {
 
