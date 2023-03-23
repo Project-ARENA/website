@@ -18,17 +18,60 @@ const Contact = (props) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
+  const [emailError, setEmailError] = useState(null);
+  const [nameError, setNameError] = useState(null);
+  const [messageError, setMessageError] = useState(null);
+  const [subjectError, setSubjectError] = useState(null);
+  
+  // const handleChange = event => {
+  //   setEmail(event.target.value);
+  // };
+
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  const checkIfBlank=()=>{
+    //checking if inputs are blank
+    
+    if(name == "" || message =="" || subject == ""){
+      alert("Please enter all details");
+    }
+    else{
+      //checking if email is valid
+      if (isValidEmail(email)) {
+        console.log('The email is valid');
+      } else {
+        setEmailError('Email is invalid');
+      }
+    }
+  }
 
   //send email to admin of site
   const sendEmail = (event) => {
-    // alert("Submitted")
-    // axios.post("http://localhost:3002/api/send/email", { name: name, subject: subject, email: email, message: message })
-    // .then((response) => {
-    //   console.log(response);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
+    setEmailError(null);
+    if(name == "" || message =="" || subject == ""){
+      alert("Please enter all details");
+    }
+    else{
+      if (isValidEmail(email)) {
+        console.log('The email is valid');
+        axios.post("http://localhost:3002/api/send/email", { name: name, subject: subject, email: email, message: message })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      } else {
+        setEmailError('Email is invalid');
+      }
+    }
+
+      
+  
+  
+    //alert("Submitted")
     // Reset the text fields
     setName("");
     console.log(name);
@@ -39,7 +82,7 @@ const Contact = (props) => {
     setMessage("");
     console.log(message);
     setSubmitCount(submitCount + 1);
-    console.log("Submitted");
+    //console.log("Submitted");
   };
 
   return (
@@ -120,23 +163,31 @@ const Contact = (props) => {
           <div className="contact-section-separator06"></div>
           <div className="contact-section-separator07"></div>
           <div className="contact-container05">
-            <div key={submitCount} className="contact-container">
+            <div key={submitCount} className="contact-container11">
+              
               <InputBoxForInfo
                 buttonText="Name"
                 onChange={(e) => setName(e.target.value)}
               ></InputBoxForInfo>
+              {/* {nameError && <div className="error">{nameError}</div>} */}
+
               <InputBoxForInfo
                 buttonText="Subject"
                 onChange={(e) => setSubject(e.target.value)}
               ></InputBoxForInfo>
+
               <InputBoxForInfo
-                buttonText="Email"
+                buttonText = "Email"
+                //value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></InputBoxForInfo>
+              {emailError && <div className="error">{emailError}</div>}
+
               <InputTextArea
                 label="Type your message here..."
                 onChange={(e) => setMessage(e.target.value)}
               ></InputTextArea>
+
             </div>
           </div>
           <Button
