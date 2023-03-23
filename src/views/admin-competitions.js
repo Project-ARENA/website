@@ -1,53 +1,46 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from "axios";
-// import DataGrid from "../components/datagrid";
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
-
+import DataGrid from "../components/datagrid";
 import './admin-competitions.css'
 
-const columns = [
-  { field: 'competition_name', headerName: 'Title', width: 150 },
-  { field: 'competition_views', headerName: 'Views', width: 150 },
-  { field: 'competition_image', headerName: 'Image', width: 150 },
-  { field: 'competition_leaderboard', headerName: 'Leaderboard', width: 150 },
-  { field: 'competition_startdate', headerName: 'Start Date', width: 150 },
-  { field: 'competition_enddate', headerName: 'End Date', width: 150 },
-  { field: 'competition_info', headerName: 'Info', width: 150 },
-  { field: 'competition_testcases', headerName: 'Test Cases', width: 150 },
-];
-
-const rows = [
-    { id: 1, competition_name: '1', competition_views: '2', competition_image: 'Jon', 
-    competition_leaderboard: 35, competition_startdate: 'Jon', 
-    competition_enddate: 35, competition_info: 'Jon', 
-    competition_testcases: 35 },
-  ];
 function GenGrid() {
-  const [setData] = React.useState([]);
+  const [rows, setData] = React.useState([]);
 
   React.useEffect(() => {
     axios
       .get("http://localhost:3002/api/get/competitions")
       .then((response) => {
-        const data = response.data.map((data) => ({
-          Title: data.competition_name,
-          Views: data.competition_views,
-          Image: data.competition_image,
-          Leaderboard: data.competition_leaderboard,
-          StartDate: data.competition_startdate,
-          EndDate: data.competition_enddate,
-          Info: data.competition_info,
-          TestCases: data.competition_testcases,
+        const data = response.data.map((data, index) => ({
+          id: index + 1,
+          competition_id: data.competition_id,
+          competition_name: data.competition_name,
+          competition_views: data.competition_views,
+          competition_image: data.competition_image,
+          competition_leaderboard: data.competition_leaderboard,
+          competition_startdate: data.competition_startdate,
+          competition_enddate: data.competition_enddate,
+          competition_info: data.competition_info,
+          competition_testcases: data.competition_testcases,
         }));
         setData(data);
       });
   }, []);
-  return <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection/>
-   
-}
 
+  const columns = [
+    { field: 'competition_id', headerName: 'ID', width: 150 },
+    { field: 'competition_name', headerName: 'Title', width: 150 },
+    { field: 'competition_views', headerName: 'Views', width: 150 },
+    { field: 'competition_image', headerName: 'Image', width: 150 },
+    { field: 'competition_leaderboard', headerName: 'Leaderboard', width: 150 },
+    { field: 'competition_startdate', headerName: 'Start Date', width: 150 },
+    { field: 'competition_enddate', headerName: 'End Date', width: 150 },
+    { field: 'competition_info', headerName: 'Info', width: 150 },
+    { field: 'competition_testcases', headerName: 'Test Cases', width: 150 },
+  ];
+
+  return <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+}
 
 const AdminCompetitions = (props) => {
   return (
@@ -110,7 +103,7 @@ const AdminCompetitions = (props) => {
               </div>
             </div>
             <div className="admin-competitions-links-container1">
-            <Link to="/admin-home" className="admin-competitions-link">
+              <Link to="/admin-home" className="admin-competitions-link">
                 HOME
               </Link>
               <Link to="/admin-competitions" className="admin-competitions-link1 Anchor">
@@ -128,14 +121,10 @@ const AdminCompetitions = (props) => {
       <div className="admin-competitions-section-separator2"></div>
       <div className="admin-competitions-section-separator3"></div>
 
-    
-    <GenGrid/>
-    {/* For the Buttons */}
-    <div >
-      
-    </div>
-    
+      <GenGrid />
 
+      <div >
+      </div>
     </div>
   )
 }
