@@ -6,7 +6,7 @@ import "./about.css";
 const About = (props) => {
   return (
     <div className="about-container">
-      <div data-role="Header" className="about-navbar-container">
+      <div data-role="Header" className="about-navbar-container" data-testid="Header-container">
         <div className="about-navbar">
           <div className="about-left-side">
             <img
@@ -42,14 +42,14 @@ const About = (props) => {
               PROJECT PORTAL
             </Link>
           </div>
-          <div data-role="MobileMenu" className="about-mobile-menu">
+          <div data-role="MobileMenu" className="about-mobile-menu" data-testid="MobileMenu-container">
             <div className="about-container1">
               <img
                 alt="image"
                 src="https://play.teleporthq.io/static/svg/default-img.svg"
                 className="about-image1"
               />
-              <div data-role="CloseMobileMenu" className="about-close-menu">
+              <div data-role="CloseMobileMenu" className="about-close-menu" data-testid="CloseMobileMenu-container">
                 <svg viewBox="0 0 1024 1024" className="about-icon2">
                   <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
                 </svg>
