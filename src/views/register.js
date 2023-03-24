@@ -25,6 +25,9 @@ const Register = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const postDetails = () =>{
     axios.post("http://localhost:3002/api/post/register",{name:name, surname:surname, email: email, username: username, password: hashedPassword});
+    setTimeout(function(){
+    window.location.href = 'http://localhost:3000/login';
+    }, 1000);
     
   }
 
@@ -33,8 +36,9 @@ const Register = (props) => {
     .get("http://localhost:3002/api/get/doesExist/" + username)
     .then(function(response){
       const userExists = response.data;
+      console.log(response.data);
       if (JSON.stringify(userExists) == "[]"){
-        setErrorMessage('');
+        setErrorMessage('Account created successfully');
         postDetails();
       }
       else{
@@ -44,11 +48,30 @@ const Register = (props) => {
   }
 
   const checkIfBlank=()=>{
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+    //If fields empty, warn
     if(name == "" || surname =="" || email == "" || username == "" || password==""){
       alert("Please enter all details");
     }
+
+    //not empty
     else{
-      checkIfUserExists();
+      //check if email correct and password is strong
+      if(emailPattern.test(email) && passwordPattern.test(password)){
+        checkIfUserExists();
+      }
+      //otherwise warn
+      else{
+        //email not corect format
+        if(!emailPattern.test(email)){
+          setErrorMessage('Please enter a valid email');
+        }
+        if(!passwordPattern.test(password)){
+          setErrorMessage("Please enter a stronger password");
+        }
+      }
     }
   }
 

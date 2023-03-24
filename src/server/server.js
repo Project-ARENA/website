@@ -156,7 +156,20 @@ app.post("/api/send/email", (req, res) => {
 app.get("/api/get/doesExist/:username", (req, res) => {
 
   const username = req.params.username;
-  db.query("SELECT 1 from users WHERE user_nickname = ?;", username,
+  db.query("SELECT * from users WHERE user_nickname = ?;", username,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//Route to see if user admin
+app.get("/api/get/isAdmin/:username", (req, res) => {
+
+  const username = req.params.username;
+  db.query("SELECT user_admin from users WHERE user_nickname = ?", username,
     (err, result) => {
       if (err) {
         console.log(err)

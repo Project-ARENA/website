@@ -17,31 +17,57 @@ import bycrypt from 'bcryptjs';
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const[hashedPassword, setHashedPass] = useState("");
+  //const hashedPassword ='';
   const [errorMessage, setErrorMessage] = useState('');
 
 const doAPIStuff = () =>{
   axios
   .get("http://localhost:3002/api/get/password/" + username)
   .then(function(response){
-    //console.log("help " + JSON.stringify(response.data));
     const userData = response.data;
+    
     if (JSON.stringify(userData) == "[]"){
       setErrorMessage('Incorrect username or password');
     }
     else{
-      setHashedPass(userData[0].user_password);
-    console.log("hashed password: " + hashedPassword);
-    isValidPass();
+      const hashedPassword = userData[0].user_password;
+      
+    isValidPass(hashedPassword);
     }
     
   });
 }
-const isValidPass = () =>{
+
+const checkIfAdmin = () =>{
+  axios
+  .get("http://localhost:3002/api/get/isAdmin/" + username)
+  .then(function(response){
+    console.log((response.data)[0].user_admin);
+    if ((response.data)[0].user_admin == "1"){
+      setErrorMessage('Login Successful');
+      setTimeout(function(){
+        window.location.href = 'http://localhost:3000/admin-home';
+        }, 1000);
+      //take him to the admin page
+    }
+    else{
+      console.log("this guy is a normal user");
+      setErrorMessage('Login Successful');
+      setTimeout(function(){
+        window.location.href = 'http://localhost:3000/player-portal-home';
+        }, 1000);
+      //take him to the normal page
+    }
+    
+  });
+}
+
+const isValidPass = (hashedPassword) =>{
   bycrypt.compare(password, hashedPassword, function(error, isMatch) {
     if(isMatch) {
       console.log("The passwords match");
       setErrorMessage('');
+      checkIfAdmin();
     }
     else{
       //alert("Incorrect Password");
@@ -56,7 +82,7 @@ const handleLogin = () =>{
   console.log(
     `Username: ${username}, Password: ${password}`
   );
-  if(username=="Sayf" && password=="SayfLikesKids"){
+  if(username=="Steve" && password=="SteveIsDaBest"){
     window.location.href = 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiUzc-Bi-39AhWPtqQKHRYUCJQQwqsBegQIChAF&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ&usg=AOvVaw0aHtehaphMhOCAkCydRLZU';
   }
   else{
@@ -104,7 +130,7 @@ const handleLogin = () =>{
           <div className="login-container4"></div>
           <br></br>
           <span className="login-text1">Don&apos;t have an account? </span>
-          <Link to="/login" className="register-navlink1 button">
+          <Link to="/register" className="register-navlink1 button">
           Register Here
           </Link>
         </div>
