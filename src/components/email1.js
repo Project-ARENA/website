@@ -6,7 +6,7 @@ import './email1.css'
 
 const Email1 = (props) => {
   return (
-    <div className={`email1-container ${props.rootClassName} `}>
+    <div className={`email1-container ${props.rootClassName} `} data-testid="email1-container">
       <div className="email1-container1">
         <svg viewBox="0 0 1024 1024" className="email1-icon">
           <path
