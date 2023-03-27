@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useState } from "react";
 import TeamInputBox from '../components/TeamInputBox'
 import { v4 as uuidv4 } from 'uuid';
-import Button from '../components/button'
 import './player-portal-team.css'
 
 
@@ -11,19 +10,20 @@ import './player-portal-team.css'
 const PlayerPortalTeam = (props) => {
   //storing the code generated
   const [code, setCode] = useState("");
-  
-  const [submitCount, setSubmitCount] = useState(0);
+  //disable button after press
+  const [disabled, setDisabled] = useState(false);
 
   //generate random code for team
   const randomString = () => {
+  setDisabled(true);
   const code = uuidv4();
   setCode(code)
   console.log('Team code generated')
   console.log(code)
-  return code;
+  
   }
   return (
-    <div key={submitCount} className="player-portal-team-container">
+    <div className="player-portal-team-container">
       <div data-role="Header" className="player-portal-team-navbar-container">
         <div className="player-portal-team-navbar">
           <div className="player-portal-team-left-side">
@@ -111,6 +111,7 @@ const PlayerPortalTeam = (props) => {
         label="Team Name"
         buttonText="Team Name"
         name="Create Team"
+        disabled = {disabled}
         onClick={randomString}
         code = {"Team Code: "+code}
       ></TeamInputBox>
