@@ -92,6 +92,7 @@ const AdminProfile = (props) => {
         <InputBoxForInfo 
             buttonText="USERNAME">
         </InputBoxForInfo>
+        <InputBoxForInfo buttonText="OLD PASSWORD" isPassword></InputBoxForInfo>
         <InputBoxForInfo buttonText="PASSWORD" isPassword></InputBoxForInfo>
         <InputBoxForInfo buttonText="CONFIRM PASSWORD" isPassword></InputBoxForInfo>
         <Button
