@@ -178,7 +178,7 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
     });
 });
 
-//Type above this
+//Type above this please
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

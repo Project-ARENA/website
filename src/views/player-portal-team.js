@@ -1,7 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import TeamInputBox from '../components/TeamInputBox'
+import { v4 as uuidv4 } from 'uuid';
+import Button from '../components/button'
+
 
 import './player-portal-team.css'
+
+//generate random code
+const randomString = () => {
+  const result = uuidv4();
+  return result;
+}
 
 const PlayerPortalTeam = (props) => {
   return (
@@ -88,6 +98,28 @@ const PlayerPortalTeam = (props) => {
       <div className="player-portal-team-section-separator1"></div>
       <div className="player-portal-team-section-separator2"></div>
       <div className="player-portal-team-section-separator3"></div>
+      <TeamInputBox className = "test"
+        title="Create a Team"
+        label="Team Name"
+        buttonText="Team Name"
+        name="Create Team"
+        onClick={console.log(randomString())}
+        
+      ></TeamInputBox>
+      
+      <br></br>
+      <TeamInputBox
+        title="Join a Team"
+        label="Team Code"
+        buttonText="Team Code"
+        name="Join a Team"
+        onClick={console.log('Joined the Team')}
+      ></TeamInputBox>
+      <Button
+            name="Submit"
+            type="submit"
+            onClick={console.log(randomString())}
+        ></Button>
     </div>
   )
 }
