@@ -38,7 +38,7 @@ const About = (props) => {
             </div>
           </div>
           <div className="about-right-side">
-            <Link to="/register" className="about-cta-btn button">
+            <Link to="/login" className="about-cta-btn button">
               PROJECT PORTAL
             </Link>
           </div>

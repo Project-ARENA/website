@@ -44,7 +44,7 @@ const Home = (props) => {
             </div>
           </div>
           <div className="home-right-side">
-            <Link to="/register" className="home-cta-btn button">
+            <Link to="/login" className="home-cta-btn button">
               <span>
                 <span className="home-text1">PROJECT PORTAL</span>
                 <br></br>

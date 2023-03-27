@@ -104,7 +104,7 @@ const Competitions = (props) => {
             </div>
           </div>
           <div className="competitions-right-side">
-            <Link to="/register" className="competitions-cta-btn button">
+            <Link to="/login" className="competitions-cta-btn button">
               PROJECT PORTAL
             </Link>
           </div>
