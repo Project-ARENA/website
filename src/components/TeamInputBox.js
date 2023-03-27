@@ -5,7 +5,7 @@ import InputBoxForInfo from "./input-box-for-info";
 import "./TeamInputBox.css";
 
 export default function TeamInputBox(props) {
-  const { rootClassName, title, label, buttonText , name, onClick, code} = props;
+  const { rootClassName, title, label, buttonText , name, onClick, code, disabled} = props;
   return (
     <div className={`team-input-box ${rootClassName} `}>
       <div className="team-input-box-container">
@@ -17,6 +17,7 @@ export default function TeamInputBox(props) {
         <InputBoxForInfo buttonText={buttonText}></InputBoxForInfo>
         <Button className="team-input-box-button"
           name={name}
+          disabled = {disabled}
           onClick={onClick}
         ></Button>
         </div>
