@@ -28,7 +28,8 @@
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^5.2.0",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.9",
+    "uuidv4": "^6.2.13"
   },
   "scripts": {
     "start": "concurrently \"craco start\" \"node src/server/server.js\"",
