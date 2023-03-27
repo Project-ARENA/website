@@ -179,7 +179,88 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
 });
 !
 
+//! Route to create a team
+app.post("/api/post/create/team", (req, res) => {
+  const user_id = req.body.user_id;
+  const team_name = req.body.team_name;
+  const team_code = req.body.team_code;
 
+  db.query(
+    "INSERT INTO team_details (user_id, team_name, team_code,team_captain) VALUES (?, ?, ?, 1);",
+    [user_id, team_name, team_code],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+//!Route to check if the team name already exists
+//* Returns [] if DNE, else returns something
+app.get("/api/get/doesTeamExist/:team_name", (req, res) => {
+
+  const team_name = req.params.team_name;
+  db.query("SELECT * from team_details WHERE team_name = ?;", team_name,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//!Route to check if the team_code exists
+//* Returns [] if DNE, else returns something
+app.get("/api/get/doesCodeExist/:team_code", (req, res) => {
+
+  const team_code = req.params.team_code;
+  db.query("SELECT * from team_details WHERE team_code = ?;", team_code,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+
+//! Team code can't be primary, cause if two users belong to same team , we have two entries with same code
+//!Route to check which team the code belongs to 
+app.get("/api/get/codeBelongto/:team_code", (req, res) => {
+
+  const team_code = req.params.team_code;
+  db.query("SELECT team_name from team_details WHERE team_code = ? LIMIT 1;", team_code,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//!Route to add user to a team
+app.post("/api/post/addTo/team", (req, res) => {
+  const user_id = req.body.user_id;
+  const team_name = req.body.team_name;
+  const team_code = req.body.team_code;
+
+  db.query(
+    "INSERT INTO team_details (user_id, team_name, team_code) VALUES (?, ?, ?);",
+    [user_id, team_name, team_code],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+//!Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
