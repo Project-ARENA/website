@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import TeamInputBox from '../components/TeamInputBox'
 
 import './player-portal-team.css'
 
@@ -88,6 +89,21 @@ const PlayerPortalTeam = (props) => {
       <div className="player-portal-team-section-separator1"></div>
       <div className="player-portal-team-section-separator2"></div>
       <div className="player-portal-team-section-separator3"></div>
+      <TeamInputBox
+        title="Create a Team"
+        label="Team Name"
+        buttonText="Team Name"
+        name="Create Team"
+        onClick={console.log('Created a Team')}
+      ></TeamInputBox>
+      <br></br>
+      <TeamInputBox
+        title="Join a Team"
+        label="Team Code"
+        buttonText="Team Code"
+        name="Join a Team"
+        onClick={console.log('Joined the Team')}
+      ></TeamInputBox>
     </div>
   )
 }
