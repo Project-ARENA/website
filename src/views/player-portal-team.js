@@ -112,7 +112,7 @@ const PlayerPortalTeam = (props) => {
         buttonText="Team Name"
         name="Create Team"
         onClick={randomString}
-        code = {code}
+        code = {"Team Code: "+code}
       ></TeamInputBox>
       
       <br></br>
