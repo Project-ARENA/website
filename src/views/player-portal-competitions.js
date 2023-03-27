@@ -1,7 +1,102 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from "axios";
+import OverflowCard from "../components/OverflowCardPP";
 
 import './player-portal-competitions.css'
+
+function GenCards() {
+  const [cardsData, setCardsData] = React.useState([]);
+  const [isFlipped, setIsFlipped] = React.useState(false);
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3002/api/get/competitions")
+      .then((response) => {
+        const data = response.data.map((data) => ({
+          title: data.competition_name,
+          views: data.competition_views,
+          image: data.competition_image,
+          description: data.competition_info,
+          endDate: data.competition_enddate,
+        }));
+
+        // Set isRegistered property after cardsData is populated with data
+        // You need find out wheter the user is registered for a competition or not - Sayf
+        // For now, I'm just gonna do the first one manually as an example
+        // Add the isRegistered header to the cardData object, which holds the string "isRegistered" to the first card
+        const newCardsData = data.map((cardData, index) => {
+          if (index === 0) {
+            return { ...cardData, isRegistered: true };
+          } else {
+            return cardData;
+          }
+        });
+
+        setCardsData(newCardsData);
+      });
+  }, []);
+
+  const handleCardClick = (index) => {
+    setIsFlipped(true);
+
+    if (isFlipped) {
+      axios
+        .post("http://localhost:3002/api/post/competition/incViews", {
+          competition_id: index + 1,
+        })
+        .then((response) => {
+          console.log(response);
+        });
+
+      const newCardsData = [...cardsData];
+      newCardsData[index].views += 1;
+      setCardsData(newCardsData);
+
+      setIsFlipped(false);
+    }
+  };
+
+  const handleButtonClick = (index) => {
+    console.log(`Button on card ${index} was clicked!`);
+    // Check if the card is registered or not
+    if (cardsData[index].isRegistered) {
+      console.log(`User is already registered for card ${index}`);
+      // Can use API route to leave competition
+    } else {
+      console.log(`User is not registered for card ${index}`);
+      // Can use API route to join competition
+    }
+    // Add your functionality for the button click here
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "16px",
+        maxWidth: "1024px",
+        margin: "0 auto",
+        justifyContent: "center",
+      }}
+    >
+      {cardsData.map((cardData, index) => (
+        <OverflowCard
+          key={index}
+          onClick={() => {
+            handleCardClick(index);
+          }}
+          onButtonClick={() => {
+            handleButtonClick(index);
+          }}
+          isRegistered={cardData.isRegistered}
+          {...cardData}
+        />
+      ))}
+    </div>
+  );
+}
 
 const PlayerPortalCompetitions = (props) => {
   return (
@@ -76,18 +171,18 @@ const PlayerPortalCompetitions = (props) => {
               </div>
             </div>
             <div className="player-portal-competitions-links-container1">
-            <Link to="/player-portal-home" className="player-portal-competitions-link">
+              <Link to="/player-portal-home" className="player-portal-competitions-link">
                 HOME
-            </Link>
-            <Link to="/player-portal-competitions" className="player-portal-competitions-link1 Anchor">
+              </Link>
+              <Link to="/player-portal-competitions" className="player-portal-competitions-link1 Anchor">
                 COMPETITIONS
-            </Link>
-            <Link to="/player-portal-team" className="player-portal-competitions-link2 Anchor">
+              </Link>
+              <Link to="/player-portal-team" className="player-portal-competitions-link2 Anchor">
                 TEAM
-            </Link>
-            <Link to="/player-portal-contact" className="player-portal-competitions-link3 Anchor">
+              </Link>
+              <Link to="/player-portal-contact" className="player-portal-competitions-link3 Anchor">
                 CONTACT US
-            </Link>
+              </Link>
             </div>
           </div>
         </div>
@@ -96,7 +191,11 @@ const PlayerPortalCompetitions = (props) => {
       <div className="player-portal-competitions-section-separator1"></div>
       <div className="player-portal-competitions-section-separator2"></div>
       <div className="player-portal-competitions-section-separator3"></div>
-    </div>
+      {/* The OverFlow cards, leave some space */}
+      <br />
+      <GenCards />
+      <br />
+    </div >
   )
 }
 
