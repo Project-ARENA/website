@@ -31,7 +31,7 @@ db.connect((err) => {
   }
 });
 
-// Test route
+//!Test route
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
@@ -47,7 +47,7 @@ app.get("/api/get/users", (req, res) => {
   });
 });
 
-//Route to get registration details and insert
+//!Route to get registration details and insert
 app.post("/api/post/register", (req, res) => {
   const name = req.body.name;
   const surname = req.body.surname;
@@ -68,7 +68,7 @@ app.post("/api/post/register", (req, res) => {
   );
 });
 
-//Route to check Login Details
+//!Route to check Login Details
 app.post("/api/post/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -86,7 +86,7 @@ app.post("/api/post/login", (req, res) => {
   );
 });
 
-// Route to get competitions
+//!Route to get competitions
 app.get("/api/get/competitions", (req, res) => {
   db.query("SELECT * FROM competition_details", (err, result) => {
     if (err) {
@@ -112,7 +112,7 @@ app.post("/api/post/competition/incViews", (req, res) => {
   );
 });
 
-// Route to get hashed password
+//! Route to get hashed password
 app.get("/api/get/password/:username", (req, res) => {
 
   const username = req.params.username;
@@ -125,7 +125,7 @@ app.get("/api/get/password/:username", (req, res) => {
     });
 });
 
-// Route to send email
+//! Route to send email
 app.post("/api/send/email", (req, res) => {
   const { name, subject, email, message } = req.body;
 
@@ -152,7 +152,7 @@ app.post("/api/send/email", (req, res) => {
     });
 });
 
-//ROute to check if username already exists
+//!ROute to check if username already exists
 app.get("/api/get/doesExist/:username", (req, res) => {
 
   const username = req.params.username;
@@ -165,7 +165,7 @@ app.get("/api/get/doesExist/:username", (req, res) => {
     });
 });
 
-//Route to see if user admin
+//!Route to see if user admin
 app.get("/api/get/isAdmin/:username", (req, res) => {
 
   const username = req.params.username;
@@ -177,8 +177,90 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
       res.send(result)
     });
 });
+!
 
-//Type above this
+//! Route to create a team
+app.post("/api/post/create/team", (req, res) => {
+  const user_id = req.body.user_id;
+  const team_name = req.body.team_name;
+  const team_code = req.body.team_code;
+
+  db.query(
+    "INSERT INTO team_details (user_id, team_name, team_code,team_captain) VALUES (?, ?, ?, 1);",
+    [user_id, team_name, team_code],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+//!Route to check if the team name already exists
+//* Returns [] if DNE, else returns something
+app.get("/api/get/doesTeamExist/:team_name", (req, res) => {
+
+  const team_name = req.params.team_name;
+  db.query("SELECT * from team_details WHERE team_name = ?;", team_name,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//!Route to check if the team_code exists
+//* Returns [] if DNE, else returns something
+app.get("/api/get/doesCodeExist/:team_code", (req, res) => {
+
+  const team_code = req.params.team_code;
+  db.query("SELECT * from team_details WHERE team_code = ?;", team_code,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+
+//! Team code can't be primary, cause if two users belong to same team , we have two entries with same code
+//!Route to check which team the code belongs to 
+app.get("/api/get/codeBelongto/:team_code", (req, res) => {
+
+  const team_code = req.params.team_code;
+  db.query("SELECT team_name from team_details WHERE team_code = ? LIMIT 1;", team_code,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//!Route to add user to a team
+app.post("/api/post/addTo/team", (req, res) => {
+  const user_id = req.body.user_id;
+  const team_name = req.body.team_name;
+  const team_code = req.body.team_code;
+
+  db.query(
+    "INSERT INTO team_details (user_id, team_name, team_code) VALUES (?, ?, ?);",
+    [user_id, team_name, team_code],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+//!Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
