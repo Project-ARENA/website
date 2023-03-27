@@ -5,7 +5,7 @@ import InputBoxForInfo from "./input-box-for-info";
 import "./TeamInputBox.css";
 
 export default function TeamInputBox(props) {
-  const { rootClassName, title, label, buttonText , name, onClick} = props;
+  const { rootClassName, title, label, buttonText , name, onClick, code} = props;
   return (
     <div className={`team-input-box ${rootClassName} `}>
       <div className="team-input-box-container">
@@ -20,6 +20,8 @@ export default function TeamInputBox(props) {
           onClick={onClick}
         ></Button>
         </div>
+        <br></br>
+        <span className="team-input-box-text">{code}</span>
       </div>
     </div>
   );
