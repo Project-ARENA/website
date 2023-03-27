@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
@@ -100,9 +101,15 @@ const PlayerPortalProfile = (props) => {
       <div className="player-portal-profile-section-separator3"></div>
       <div className="player-portal-profile-container3">
         <span className="player-portal-profile-text">UPDATE PROFILE</span>
-        <InputBoxForInfo buttonText="EMAIL"></InputBoxForInfo>
+        <InputBoxForInfo
+          initialValue="defaultEmail"
+          buttonText="EMAIL"
+        >     
+        </InputBoxForInfo>
         <InputBoxForInfo 
-            buttonText="USERNAME">
+          initialValue="defaultUsername"
+          buttonText="USERNAME"
+        >
         </InputBoxForInfo>
         <InputBoxForInfo buttonText="OLD PASSWORD" isPassword></InputBoxForInfo>
         <InputBoxForInfo buttonText="PASSWORD" isPassword></InputBoxForInfo>
@@ -111,6 +118,7 @@ const PlayerPortalProfile = (props) => {
         name="UPDATE"
         onClick={() => {
           console.log("Register button clicked");
+          console.log(this.props);
           // handleUpdate();
         }}
           // button="UPDATE"
