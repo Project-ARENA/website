@@ -19,9 +19,6 @@ const Contact = (props) => {
   const [message, setMessage] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
   const [emailError, setEmailError] = useState(null);
-  const [nameError, setNameError] = useState(null);
-  const [messageError, setMessageError] = useState(null);
-  const [subjectError, setSubjectError] = useState(null);
   
   // const handleChange = event => {
   //   setEmail(event.target.value);
@@ -31,21 +28,21 @@ const Contact = (props) => {
     return /\S+@\S+\.\S+/.test(email);
   }
 
-  const checkIfBlank=()=>{
-    //checking if inputs are blank
+  // const checkIfBlank=()=>{
+  //   //checking if inputs are blank
     
-    if(name == "" || message =="" || subject == ""){
-      alert("Please enter all details");
-    }
-    else{
-      //checking if email is valid
-      if (isValidEmail(email)) {
-        console.log('The email is valid');
-      } else {
-        setEmailError('Email is invalid');
-      }
-    }
-  }
+  //   if(name == "" || message =="" || subject == ""){
+  //     alert("Please enter all details");
+  //   }
+  //   else{
+  //     //checking if email is valid
+  //     if (isValidEmail(email)) {
+  //       console.log('The email is valid');
+  //     } else {
+  //       setEmailError('Email is invalid');
+  //     }
+  //   }
+  // }
 
   //send email to admin of site
   const sendEmail = (event) => {

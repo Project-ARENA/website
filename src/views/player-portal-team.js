@@ -1,11 +1,29 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import { useState } from "react";
+import TeamInputBox from '../components/TeamInputBox'
+import { v4 as uuidv4 } from 'uuid';
+import Button from '../components/button'
 import './player-portal-team.css'
 
+
+
 const PlayerPortalTeam = (props) => {
+  //storing the code generated
+  const [code, setCode] = useState("");
+  
+  const [submitCount, setSubmitCount] = useState(0);
+
+  //generate random code for team
+  const randomString = () => {
+  const code = uuidv4();
+  setCode(code)
+  console.log('Team code generated')
+  console.log(code)
+  return code;
+  }
   return (
-    <div className="player-portal-team-container">
+    <div key={submitCount} className="player-portal-team-container">
       <div data-role="Header" className="player-portal-team-navbar-container">
         <div className="player-portal-team-navbar">
           <div className="player-portal-team-left-side">
@@ -88,6 +106,23 @@ const PlayerPortalTeam = (props) => {
       <div className="player-portal-team-section-separator1"></div>
       <div className="player-portal-team-section-separator2"></div>
       <div className="player-portal-team-section-separator3"></div>
+      <TeamInputBox
+        title="Create a Team"
+        label="Team Name"
+        buttonText="Team Name"
+        name="Create Team"
+        onClick={randomString}
+        code = {"Team Code: "+code}
+      ></TeamInputBox>
+      
+      <br></br>
+      <TeamInputBox
+        title="Join a Team"
+        label="Team Code"
+        buttonText="Team Code"
+        name="Join a Team"
+        //onClick={console.log('Joined the Team')}
+      ></TeamInputBox>
     </div>
   )
 }
