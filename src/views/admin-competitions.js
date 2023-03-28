@@ -3,6 +3,22 @@ import { Link } from 'react-router-dom'
 import axios from "axios";
 import DataGrid from "../components/datagrid";
 import './admin-competitions.css'
+import Button from '../components/button'
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Modal from 'react-modal';
+import { useState } from 'react';
+import InputBoxForInfo from "../components/input-box-for-info";
+
+// const model =()=>{
+//   return(
+//     <div>
+
+//     </div>
+//   )
+// }
+
+
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
@@ -43,8 +59,42 @@ function GenGrid() {
 }
 
 const AdminCompetitions = (props) => {
+  const [compname, setCompname] = useState("");
+  const [visible,setvisible] = useState(false)
   return (
+    
     <div className="admin-competitions-container">
+      <div className="admin-competitions-button-container">
+        <div className="custom-modal">
+               <Modal isOpen={visible} style={{content: {width: '70%', height: '70%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}, overlay: {zIndex: 1000}}} >
+                <h1>Create a Competition</h1>
+
+                <InputBoxForInfo
+                 buttonText="Competition Name" 
+                 onChange={(e) => setCompname(e.target.value)} 
+                 ></InputBoxForInfo>
+
+                 <div className="admin-competitions-button-container">
+                  <Button name="Close"
+                  onClick={() => {
+                  setvisible(false)
+                  console.log("button clicked");
+                  }}
+                  // rootClassName="button-root-class-name2"
+                  />
+                 </div>
+           </Modal>
+        </div>
+         
+            <Button name="Create Competition"
+            onClick={() => {
+              setvisible(true)
+              console.log("button clicked");
+            }}
+            // rootClassName="button-root-class-name2"
+           />
+           
+</div>
       <div data-role="Header" className="admin-competitions-navbar-container">
         <div className="admin-competitions-navbar">
           <div className="admin-competitions-left-side">
@@ -120,12 +170,19 @@ const AdminCompetitions = (props) => {
       <div className="admin-competitions-section-separator1"></div>
       <div className="admin-competitions-section-separator2"></div>
       <div className="admin-competitions-section-separator3"></div>
-
       <GenGrid />
 
       <div >
+
       </div>
+
+  <div className="admin-competitions-button-container">
+
+  </div>
+
+            
     </div>
+
   )
 }
 
