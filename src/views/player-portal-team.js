@@ -1,27 +1,115 @@
 import React from 'react'
+import axios from "axios";
 import { Link } from 'react-router-dom'
 import { useState } from "react";
 import TeamInputBox from '../components/TeamInputBox'
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../components/button'
 import './player-portal-team.css'
-
-
+const username = localStorage.getItem('username');
+const userID = localStorage.getItem('userID');
 
 const PlayerPortalTeam = (props) => {
+
+  //useState variables
+
   //storing the code generated
   const [code, setCode] = useState("");
-  
+  const [teamName, setInputValue] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
 
-  //generate random code for team
-  const randomString = () => {
+//generate random code for team
+const randomString = () => {
   const code = uuidv4();
   setCode(code)
   console.log('Team code generated')
   console.log(code)
+  console.log(teamName);
   return code;
+}
+
+/*
+    ! CREATE TEAM
+    1.Make sure that the field isn't empty
+    2.verify that the name doesn't exist already
+    3.Then add the team to the data base along with the unique code
+
+*/
+
+const handleInputSubmit = (value) => {
+  const teamName = value;
+  console.log("Input value: ", teamName);
+  if(teamName == ""){
+    alert("Please enter a valid team name");
   }
+  else{
+    validationCreate(teamName);
+  }
+};
+
+const createTeam = (teamName) =>{
+  const code = randomString();
+  axios.post("http://localhost:3002/api/post/create/team",{user_id:userID, team_name:teamName, team_code: code});
+  console.log(username)
+}
+
+const validationCreate = (teamName) =>{
+  axios
+  .get("http://localhost:3002/api/get/doesTeamExist/" + teamName)
+  .then(function(response){
+    const teamData = response.data;
+    
+    if (JSON.stringify(teamData) == "[]"){
+      console.log("Team doesn't exist")
+      createTeam(teamName)
+    }
+    else{
+      console.log("team exists")
+      alert("This team name is already taken");
+    }
+    
+  });
+}
+
+/*
+    ! JOIN TEAM
+    1. Make sure the code is not empty
+    2. Get the team name associated with the code, if none, throw error
+    3. Add the user to the team
+*/
+const handleInputSubmit2 = (value) => {
+  const teamCode = value;
+  console.log("Input value: ", teamCode);
+  if(teamCode == ""){
+    alert("Please enter a valid code");
+  }
+  else{
+    validationCode(teamCode);
+  }
+};
+
+
+const validationCode = (teamCode) =>{
+  axios
+  .get("http://localhost:3002/api/get/codeBelongto/" + teamCode)
+  .then(function(response){
+    const codeResponse = response.data;
+    
+    if (JSON.stringify(codeResponse) == "[]"){
+      alert("Please enter a valid code");
+      
+    }
+    else{
+      joinTeam(codeResponse[0].team_name,teamCode);
+    }
+    
+  });
+}
+
+const joinTeam = (teamName,teamCode) =>{
+  axios.post("http://localhost:3002/api/post/addTo/team",{user_id:userID, team_name:teamName, team_code: teamCode});
+}
+
   return (
     <div key={submitCount} className="player-portal-team-container">
       <div data-role="Header" className="player-portal-team-navbar-container">
@@ -111,8 +199,8 @@ const PlayerPortalTeam = (props) => {
         label="Team Name"
         buttonText="Team Name"
         name="Create Team"
-        onClick={randomString}
-        code = {"Team Code: "+code}
+        onClick={handleInputSubmit}
+        code = {"Team Code: "+ code}
       ></TeamInputBox>
       
       <br></br>
@@ -121,7 +209,7 @@ const PlayerPortalTeam = (props) => {
         label="Team Code"
         buttonText="Team Code"
         name="Join a Team"
-        //onClick={console.log('Joined the Team')}
+        onClick={handleInputSubmit2}
       ></TeamInputBox>
     </div>
   )
