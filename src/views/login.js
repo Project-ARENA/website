@@ -10,6 +10,7 @@ import "./login.css";
 import { hash } from "bcryptjs";
 import bycrypt from 'bcryptjs';
 
+
 /*
     API to get the password associacted with the username -> username might not exist-> throw an error
     call to that API to get the hashed password from the database and then we'll use bcrypt to compare
@@ -17,7 +18,6 @@ import bycrypt from 'bcryptjs';
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  //const hashedPassword ='';
   const [errorMessage, setErrorMessage] = useState('');
 
   const doAPIStuff = () => {
@@ -80,18 +80,26 @@ const Login = (props) => {
     });
   }
 
-  const handleLogin = () => {
-    console.log(
-      `Username: ${username}, Password: ${password}`
-    );
-    if (username == "Steve" && password == "SteveIsDaBest") {
-      window.location.href = 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiUzc-Bi-39AhWPtqQKHRYUCJQQwqsBegQIChAF&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ&usg=AOvVaw0aHtehaphMhOCAkCydRLZU';
-    }
-    else {
-      doAPIStuff();
-    }
-
+const handleLogin = () =>{
+  console.log(
+    `Username: ${username}, Password: ${password}`
+  );
+  localStorage.setItem('username', username);
+  axios
+  .get("http://localhost:3002/api/get/userID/" + username)
+  .then(function(response){
+    const userData = response.data;
+    const userID = userData[0].user_id;
+    localStorage.setItem('userID', userID);
+  });
+  if(username=="Steve" && password=="SteveIsDaBest"){
+    window.location.href = 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiUzc-Bi-39AhWPtqQKHRYUCJQQwqsBegQIChAF&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ&usg=AOvVaw0aHtehaphMhOCAkCydRLZU';
   }
+  else{
+    doAPIStuff();
+  }
+  
+}
 
   return (
     <div className="login-container">
@@ -110,6 +118,7 @@ const Login = (props) => {
         <div className="login-container3">
           <span className="login-text">LOGIN</span>
           <br></br>
+          
           <InputBoxForInfo
             buttonText="USERNAME"
             onChange={(e) => setUsername(e.target.value)}
@@ -126,6 +135,7 @@ const Login = (props) => {
             onClick={() => {
               console.log("Login button clicked");
               handleLogin();
+              localStorage.setItem('username', username);
             }}
             rootClassName="button-root-class-name2"
           ></Button>

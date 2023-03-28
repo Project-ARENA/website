@@ -121,7 +121,6 @@ const PlayerPortalProfile = (props) => {
           onClick={() => {
             console.log("Register button clicked");
             console.log(this.props);
-            // handleUpdate();
           }}
           // button="UPDATE"
           rootClassName="button-root-class-name4"
