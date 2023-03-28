@@ -1,0 +1,24 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/root/.nvm/v0.8.28/bin/node',
+1 verbose cli   '/root/.nvm/v0.8.28/bin/npm',
+1 verbose cli   'completion',
+1 verbose cli   '--',
+1 verbose cli   'npm' ]
+2 info using npm@1.2.30
+3 info using node@v0.8.28
+4 error TypeError: Cannot read property 'length' of undefined
+4 error     at EventEmitter.completion (/root/.nvm/v0.8.28/lib/node_modules/npm/lib/completion.js:88:22)
+4 error     at Object.keys.concat.forEach.Object.defineProperty.get.commandCache.(anonymous function) (/root/.nvm/v0.8.28/lib/node_modules/npm/lib/npm.js:190:11)
+4 error     at EventEmitter.<anonymous> (/root/.nvm/v0.8.28/lib/node_modules/npm/bin/npm-cli.js:84:28)
+4 error     at process.startup.processNextTick.process._tickCallback (node.js:245:9)
+5 error If you need help, you may report this log at:
+5 error     <http://github.com/isaacs/npm/issues>
+5 error or email it to:
+5 error     <npm-@googlegroups.com>
+6 error System Linux 5.15.90.1-microsoft-standard-WSL2
+7 error command "/root/.nvm/v0.8.28/bin/node" "/root/.nvm/v0.8.28/bin/npm" "completion" "--" "npm"
+8 error cwd /root/Uni/Software Design/website
+9 error node -v v0.8.28
+10 error npm -v 1.2.30
+11 error type non_object_property_load
+12 verbose exit [ 1, true ]
