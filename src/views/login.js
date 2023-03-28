@@ -17,7 +17,6 @@ import bycrypt from 'bcryptjs';
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  //const hashedPassword ='';
   const [errorMessage, setErrorMessage] = useState('');
 
   const doAPIStuff = () => {
@@ -110,6 +109,7 @@ const Login = (props) => {
         <div className="login-container3">
           <span className="login-text">LOGIN</span>
           <br></br>
+          
           <InputBoxForInfo
             buttonText="USERNAME"
             onChange={(e) => setUsername(e.target.value)}
@@ -126,6 +126,7 @@ const Login = (props) => {
             onClick={() => {
               console.log("Login button clicked");
               handleLogin();
+              localStorage.setItem('username', username);
             }}
             rootClassName="button-root-class-name2"
           ></Button>
