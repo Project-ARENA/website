@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
@@ -18,66 +18,67 @@ import bycrypt from 'bcryptjs';
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  //const hashedPassword ='';
   const [errorMessage, setErrorMessage] = useState('');
 
-const doAPIStuff = () =>{
-  axios
-  .get("http://localhost:3002/api/get/password/" + username)
-  .then(function(response){
-    const userData = response.data;
-    
-    if (JSON.stringify(userData) == "[]"){
-      setErrorMessage('Incorrect username or password');
-    }
-    else{
-      const hashedPassword = userData[0].user_password;
-      
-    isValidPass(hashedPassword);
-    }
-    
-  });
-}
+  const doAPIStuff = () => {
+    axios
+      .get("http://localhost:3002/api/get/password/" + username)
+      .then(function (response) {
+        const userData = response.data;
 
-const checkIfAdmin = () =>{
-  axios
-  .get("http://localhost:3002/api/get/isAdmin/" + username)
-  .then(function(response){
-    console.log((response.data)[0].user_admin);
-    if ((response.data)[0].user_admin == "1"){
-      setErrorMessage('Login Successful');
-      setTimeout(function(){
-        window.location.href = 'http://localhost:3000/admin-home';
-        }, 1000);
-      //take him to the admin page
-    }
-    else{
-      console.log("this guy is a normal user");
-      setErrorMessage('Login Successful');
-      setTimeout(function(){
-        window.location.href = 'http://localhost:3000/player-portal-home';
-        }, 1000);
-      //take him to the normal page
-    }
-    
-  });
-}
+        if (JSON.stringify(userData) == "[]") {
+          setErrorMessage('Incorrect username or password');
+        }
+        else {
+          const hashedPassword = userData[0].user_password;
 
-const isValidPass = (hashedPassword) =>{
-  bycrypt.compare(password, hashedPassword, function(error, isMatch) {
-    if(isMatch) {
-      console.log("The passwords match");
-      setErrorMessage('');
-      checkIfAdmin();
-    }
-    else{
-      //alert("Incorrect Password");
-      setErrorMessage('Incorrect username or password');
-      console.log("Incorrect Password");
-    }
-    
-  });
-}
+          isValidPass(hashedPassword);
+        }
+
+      });
+  }
+
+  const checkIfAdmin = () => {
+    axios
+      .get("http://localhost:3002/api/get/isAdmin/" + username)
+      .then(function (response) {
+        console.log((response.data)[0].user_admin);
+        if ((response.data)[0].user_admin == "1") {
+          setErrorMessage('Login Successful');
+          setTimeout(function () {
+            window.location.href = 'http://localhost:3000/admin-home';
+          }, 1000);
+          //take him to the admin page
+        }
+        else {
+          console.log("this guy is a normal user");
+          setErrorMessage('Login Successful');
+          setTimeout(function () {
+            window.location.href = 'http://localhost:3000/player-portal-home';
+          }, 1000);
+          //take him to the normal page
+        }
+
+      });
+  }
+
+  const isValidPass = (hashedPassword) => {
+    bycrypt.compare(password, hashedPassword, function (error, isMatch) {
+      if (isMatch) {
+        // Store the username in local storage
+        localStorage.setItem('username', username);
+        console.log("The passwords match");
+        setErrorMessage('');
+        checkIfAdmin();
+      }
+      else {
+        //alert("Incorrect Password");
+        setErrorMessage('Incorrect username or password');
+        console.log("Incorrect Password");
+      }
+
+    });
+  }
 
 const handleLogin = () =>{
   console.log(
@@ -117,14 +118,15 @@ const handleLogin = () =>{
         <div className="login-container3">
           <span className="login-text">LOGIN</span>
           <br></br>
+          
           <InputBoxForInfo
-          buttonText="USERNAME" 
-          onChange={(e) => setUsername(e.target.value)} 
+            buttonText="USERNAME"
+            onChange={(e) => setUsername(e.target.value)}
           ></InputBoxForInfo>
-          <InputBoxForInfo 
-          buttonText="PASSWORD" 
-          isPassword
-          onChange={(e) => setPassword(e.target.value)}
+          <InputBoxForInfo
+            buttonText="PASSWORD"
+            isPassword
+            onChange={(e) => setPassword(e.target.value)}
           ></InputBoxForInfo>
           <br></br>
           {errorMessage && <div className="error">{errorMessage}</div>}
@@ -133,6 +135,7 @@ const handleLogin = () =>{
             onClick={() => {
               console.log("Login button clicked");
               handleLogin();
+              localStorage.setItem('username', username);
             }}
             rootClassName="button-root-class-name2"
           ></Button>
@@ -140,7 +143,7 @@ const handleLogin = () =>{
           <br></br>
           <span className="login-text1">Don&apos;t have an account? </span>
           <Link to="/register" className="register-navlink1 button">
-          Register Here
+            Register Here
           </Link>
         </div>
       </div>

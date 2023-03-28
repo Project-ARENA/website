@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { useState } from "react";
 import TeamInputBox from '../components/TeamInputBox'
 import { v4 as uuidv4 } from 'uuid';
-import Button from '../components/button'
 import './player-portal-team.css'
 const username = localStorage.getItem('username');
 const userID = localStorage.getItem('userID');
@@ -111,7 +110,7 @@ const joinTeam = (teamName,teamCode) =>{
 }
 
   return (
-    <div key={submitCount} className="player-portal-team-container">
+    <div className="player-portal-team-container">
       <div data-role="Header" className="player-portal-team-navbar-container">
         <div className="player-portal-team-navbar">
           <div className="player-portal-team-left-side">

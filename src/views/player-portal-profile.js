@@ -7,6 +7,8 @@ import Button from "../components/button";
 import './player-portal-profile.css'
 
 const PlayerPortalProfile = (props) => {
+  // Get the username from local storage
+  const username = localStorage.getItem('username');
   return (
     <div className="player-portal-profile-container">
       <div
@@ -79,7 +81,7 @@ const PlayerPortalProfile = (props) => {
               </div>
             </div>
             <div className="player-portal-profile-links-container1">
-            <Link to="/player-portal-home" className="player-portal-profile-link">
+              <Link to="/player-portal-home" className="player-portal-profile-link">
                 HOME
               </Link>
               <Link to="/player-portal-competitions" className="player-portal-profile-link1 Anchor">
@@ -104,10 +106,10 @@ const PlayerPortalProfile = (props) => {
         <InputBoxForInfo
           initialValue="defaultEmail"
           buttonText="EMAIL"
-        >     
+        >
         </InputBoxForInfo>
-        <InputBoxForInfo 
-          initialValue="defaultUsername"
+        <InputBoxForInfo
+          initialValue={username}
           buttonText="USERNAME"
         >
         </InputBoxForInfo>
@@ -115,12 +117,11 @@ const PlayerPortalProfile = (props) => {
         <InputBoxForInfo buttonText="PASSWORD" isPassword></InputBoxForInfo>
         <InputBoxForInfo buttonText="CONFIRM PASSWORD" isPassword></InputBoxForInfo>
         <Button
-        name="UPDATE"
-        onClick={() => {
-          console.log("Register button clicked");
-          console.log(this.props);
-          // handleUpdate();
-        }}
+          name="UPDATE"
+          onClick={() => {
+            console.log("Register button clicked");
+            console.log(this.props);
+          }}
           // button="UPDATE"
           rootClassName="button-root-class-name4"
         ></Button>
