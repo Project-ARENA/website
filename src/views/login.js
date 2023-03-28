@@ -135,7 +135,6 @@ const handleLogin = () =>{
             onClick={() => {
               console.log("Login button clicked");
               handleLogin();
-              localStorage.setItem('username', username);
             }}
             rootClassName="button-root-class-name2"
           ></Button>

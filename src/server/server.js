@@ -260,11 +260,24 @@ app.post("/api/post/addTo/team", (req, res) => {
   );
 });
 
-//!ROute to get user id related to username
+//!Route to get user id related to username
 app.get("/api/get/userID/:username", (req, res) => {
 
   const username = req.params.username;
   db.query("SELECT user_id from users WHERE user_nickname = ?;", username,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//!Route to get user email related to username
+app.get("/api/get/userEmail/:username", (req, res) => {
+
+  const username = req.params.username;
+  db.query("SELECT user_email from users WHERE user_nickname = ?;", username,
     (err, result) => {
       if (err) {
         console.log(err)

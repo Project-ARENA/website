@@ -7,8 +7,24 @@ import Button from "../components/button";
 import './player-portal-profile.css'
 
 const PlayerPortalProfile = (props) => {
-  // Get the username from local storage
+  // Get the username, userID and useremail from local storage
+  const userID = localStorage.getItem('userID');
   const username = localStorage.getItem('username');
+  const useremail = localStorage.getItem("useremail");
+
+  // Get user_email from database
+  const getUserEmail = () => {
+    axios
+      .get("http://localhost:3002/api/get/userEmail/" + username)
+      .then(function (response) {
+        localStorage.setItem('useremail', (response.data)[0].user_email);
+      });
+  }
+
+  React.useEffect(() => {
+    getUserEmail()
+  }, []); 
+
   return (
     <div className="player-portal-profile-container">
       <div
@@ -104,13 +120,13 @@ const PlayerPortalProfile = (props) => {
       <div className="player-portal-profile-container3">
         <span className="player-portal-profile-text">UPDATE PROFILE</span>
         <InputBoxForInfo
-          initialValue="defaultEmail"
-          buttonText="EMAIL"
+          initialValue={username}
+          buttonText="USERNAME"
         >
         </InputBoxForInfo>
         <InputBoxForInfo
-          initialValue={username}
-          buttonText="USERNAME"
+          initialValue={useremail}
+          buttonText="EMAIL"
         >
         </InputBoxForInfo>
         <InputBoxForInfo buttonText="OLD PASSWORD" isPassword></InputBoxForInfo>
@@ -120,7 +136,6 @@ const PlayerPortalProfile = (props) => {
           name="UPDATE"
           onClick={() => {
             console.log("Register button clicked");
-            console.log(this.props);
           }}
           // button="UPDATE"
           rootClassName="button-root-class-name4"
