@@ -19,6 +19,4 @@ describe("TeamInputBox component", () => {
         expect(getByText('My Title')).toBeInTheDocument();
         expect(getByText('My Label')).toBeInTheDocument();
     });
-    
-    
 });
