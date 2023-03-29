@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import "./login.css";
-import { hash } from "bcryptjs";
 import bycrypt from 'bcryptjs';
 
 

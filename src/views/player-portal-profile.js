@@ -1,5 +1,6 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import bycrypt from 'bcryptjs';
 import axios from 'axios';
 
 import InputBoxForInfo from "../components/input-box-for-info";
@@ -10,19 +11,99 @@ const PlayerPortalProfile = (props) => {
   // Get the username, userID and useremail from local storage
   const userID = localStorage.getItem('userID');
   const username = localStorage.getItem('username');
-  const useremail = localStorage.getItem("useremail");
+  const email = localStorage.getItem('useremail');
+  const oldPassword = localStorage.getItem('userpassword')
+  let [password, setPassword] = useState("");
+  let [newPassword, setNewPassword] = useState("");
+  let [confirmPassword, setConfirmPassword] = useState("");
+  let [newUsername, setNewUsername] = useState("");
+  let [newEmail, setNewEmail] = useState("");
 
+  const salt = bycrypt.genSaltSync(10);
+  let hashedNewPassword = "";
+  
   // Get user_email from database
-  const getUserEmail = () => {
+  const getUserDetails = () => {
     axios
-      .get("http://localhost:3002/api/get/userEmail/" + username)
+      .get("http://localhost:3002/api/get/userDetails/" + username)
       .then(function (response) {
+        localStorage.setItem('userID', (response.data)[0].user_id);
         localStorage.setItem('useremail', (response.data)[0].user_email);
+        localStorage.setItem('userpassword',(response.data)[0].user_password);
+        setNewUsername(username);
+        setNewEmail(email);
       });
   }
 
-  React.useEffect(() => {
-    getUserEmail()
+  // Update user details in database
+  const putUserDetails = (newEmail, newUsername, newPassword) => {
+    axios
+      .put("http://localhost:3002/api/put/updateDetails/" + userID, {email: newEmail, username: newUsername, password: newPassword});
+  }
+
+  const checkIfDetailsValid = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+    //If fields empty, warn
+    if(newEmail == "" || newUsername == ""){
+      alert("Email and Username cannot be empty");
+      return false;
+    }
+    else if (password == "") {
+      alert("Current Password Required")
+      return false;
+    }
+
+    //not empty
+    else if (newEmail != "" || newUsername != "" || password != "") {
+      //email not corect format
+      if(!emailPattern.test(newEmail)){
+        alert("Please enter a valid email");
+        return false;
+      }
+      //password not correct format
+      if(!passwordPattern.test(password)){
+        alert("Please enter a stronger password");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Handles different update cases
+  const update = () => {
+    bycrypt.compare(password, oldPassword, function (error, isMatch) {
+      if (isMatch) {
+        // Password not changed
+        if ((newPassword == confirmPassword) && (newPassword == "" && confirmPassword == "") && checkIfDetailsValid()) {
+          // putUserDetails(newEmail, newUsername, oldPassword);
+          alert("Email and username updated")
+        }
+        // Password changed and new passwords matches confirmed password 
+        else if ((newPassword == confirmPassword) && (newPassword != "" && confirmPassword != "") && checkIfDetailsValid()) {
+          hashedNewPassword = bycrypt.hashSync(newPassword,salt);
+          // putUserDetails(newEmail, newUsername, hashedNewPassword);
+          alert("Details updated")
+        } 
+        // New password doesn't match confirmed password
+        else if ((newPassword != confirmPassword) && checkIfDetailsValid()){
+          alert("Passwords do not match");
+        }
+      }
+      else {
+        if (checkIfDetailsValid()) {
+          alert("Incorrect Current Password");
+        }
+        
+      }
+
+    });
+  }
+
+  // Allows current details to display when page loads
+  useEffect(() => {
+    getUserDetails()
   }, []); 
 
   return (
@@ -122,20 +203,38 @@ const PlayerPortalProfile = (props) => {
         <InputBoxForInfo
           initialValue={username}
           buttonText="USERNAME"
+          onChange={(e) => setNewUsername(e.target.value)}
         >
         </InputBoxForInfo>
         <InputBoxForInfo
-          initialValue={useremail}
+          initialValue={email}
           buttonText="EMAIL"
+          onChange={(e) => setNewEmail(e.target.value)}
         >
         </InputBoxForInfo>
-        <InputBoxForInfo buttonText="OLD PASSWORD" isPassword></InputBoxForInfo>
-        <InputBoxForInfo buttonText="PASSWORD" isPassword></InputBoxForInfo>
-        <InputBoxForInfo buttonText="CONFIRM PASSWORD" isPassword></InputBoxForInfo>
+        <InputBoxForInfo 
+          buttonText="Current PASSWORD" 
+          isPassword
+          onChange={(e) => setPassword(e.target.value)}
+        >
+        </InputBoxForInfo>
+        <InputBoxForInfo 
+          buttonText="PASSWORD" 
+          isPassword
+          onChange={(e) => setNewPassword(e.target.value)}
+        >
+        </InputBoxForInfo>
+        <InputBoxForInfo 
+          buttonText="CONFIRM PASSWORD" 
+          isPassword
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        >
+        </InputBoxForInfo>
         <Button
           name="UPDATE"
           onClick={() => {
             console.log("Register button clicked");
+            update();
           }}
           // button="UPDATE"
           rootClassName="button-root-class-name4"

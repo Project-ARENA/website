@@ -273,17 +273,37 @@ app.get("/api/get/userID/:username", (req, res) => {
     });
 });
 
-//!Route to get user email related to username
-app.get("/api/get/userEmail/:username", (req, res) => {
+//!Route to get userID, userEmail, userPassword related to username
+app.get("/api/get/userDetails/:username", (req, res) => {
 
   const username = req.params.username;
-  db.query("SELECT user_email from users WHERE user_nickname = ?;", username,
+  db.query("SELECT user_id, user_password, user_email from users WHERE user_nickname = ?;", username,
     (err, result) => {
       if (err) {
         console.log(err)
       }
       res.send(result)
     });
+});
+
+//!Route to update user information
+app.put("/api/put/updateDetails/:userID", (req, res) => {
+  const userID = req.params.username;
+  const email = req.body.email;
+  const username = req.body.username;
+  const password = req.body.password;
+
+  db.query(
+    "UPDATE users SET (user_nickname, user_password, user_email) VALUES (?,?,?) WHERE user_id = ?;", userID,
+    [username, password, email],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
 });
 
 //!Type above this
