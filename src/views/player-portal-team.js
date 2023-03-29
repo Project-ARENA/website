@@ -16,9 +16,11 @@ const PlayerPortalTeam = (props) => {
   const [code, setCode] = useState("");
   const [teamName, setInputValue] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
+  const [disabled, setDisabled] = useState(false);
 
 //generate random code for team
 const randomString = () => {
+  setDisabled(true);
   const code = uuidv4();
   setCode(code)
   console.log('Team code generated')
@@ -198,6 +200,7 @@ const joinTeam = (teamName,teamCode) =>{
         label="Team Name"
         buttonText="Team Name"
         name="Create Team"
+        disabled={disabled}
         onClick={handleInputSubmit}
         code = {"Team Code: "+ code}
       ></TeamInputBox>
