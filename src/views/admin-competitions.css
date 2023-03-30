@@ -208,6 +208,7 @@
   background-color: var(--dl-color-gray-900);
 }
 
+
 @media(max-width: 767px) {
   .admin-competitions-burger-menu {
     display: flex;

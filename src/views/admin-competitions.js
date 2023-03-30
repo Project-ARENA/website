@@ -9,6 +9,7 @@ import 'reactjs-popup/dist/index.css';
 import Modal from 'react-modal';
 import { useState } from 'react';
 import InputBoxForInfo from "../components/input-box-for-info";
+import { DateRangePicker } from 'react-date-range';
 
 // const model =()=>{
 //   return(
@@ -18,11 +19,19 @@ import InputBoxForInfo from "../components/input-box-for-info";
 //   )
 // }
 
+function CompetitionModal() {
+  const [visible, setVisible] = useState(false);
+  const [compname, setCompname] = useState('');
+  const [picture, setPicture] = useState(null);
+
+  
+}
+
 
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
-
+  
   React.useEffect(() => {
     axios
       .get("http://localhost:3002/api/get/competitions")
@@ -60,6 +69,15 @@ function GenGrid() {
 
 const AdminCompetitions = (props) => {
   const [compname, setCompname] = useState("");
+  const [picture, setPicture] = useState('');
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection'
+    }
+  ]);
+
   const [visible,setvisible] = useState(false)
   return (
     
@@ -67,15 +85,35 @@ const AdminCompetitions = (props) => {
       <div className="admin-competitions-button-container">
         <div className="custom-modal">
                <Modal isOpen={visible} style={{content: {width: '70%', height: '70%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}, overlay: {zIndex: 1000}}} >
+                
                 <h1>Create a Competition</h1>
-
+                
                 <InputBoxForInfo
                  buttonText="Competition Name" 
                  onChange={(e) => setCompname(e.target.value)} 
-                 ></InputBoxForInfo>
+                />
+                
+                  <InputBoxForInfo
+                 buttonText="" 
+                 onChange={(e) => setPicture(e.target.value)} 
+                />
 
+                <Button name="Upload Picture"
+                  onClick={() => {
+                  setvisible(true)
+                  console.log("button clicked");
+                  }}
+                  />
+                
+                {/* <InputBoxForInfo
+                 buttonText="YYYY/MM/DD Start date" 
+                 onChange={(e) => setstart(e.target.value)} 
+                />
+                */}
+                
                  <div className="admin-competitions-button-container">
-                  <Button name="Close"
+                  <Button 
+                  name="Close"
                   onClick={() => {
                   setvisible(false)
                   console.log("button clicked");
@@ -93,6 +131,7 @@ const AdminCompetitions = (props) => {
             }}
             // rootClassName="button-root-class-name2"
            />
+           
            
 </div>
       <div data-role="Header" className="admin-competitions-navbar-container">
@@ -185,5 +224,4 @@ const AdminCompetitions = (props) => {
 
   )
 }
-
 export default AdminCompetitions
