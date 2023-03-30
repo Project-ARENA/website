@@ -8,7 +8,7 @@ import Button from "../components/button";
 import './player-portal-profile.css'
 
 const PlayerPortalProfile = (props) => {
-  // Get the username, userID and useremail from local storage
+  // Get the username, userID, userpassword and useremail from local storage
   const userID = localStorage.getItem('userID');
   const username = localStorage.getItem('username');
   const email = localStorage.getItem('useremail');
@@ -41,6 +41,7 @@ const PlayerPortalProfile = (props) => {
       .put("http://localhost:3002/api/put/updateDetails/" + userID, {email: newEmail, username: newUsername, password: newPassword});
   }
 
+  // Ensures all detail fields are valid
   const checkIfDetailsValid = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
