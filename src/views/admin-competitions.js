@@ -10,6 +10,7 @@ import Modal from 'react-modal';
 import { useState } from 'react';
 import InputBoxForInfo from "../components/input-box-for-info";
 import { DateRangePicker } from 'react-date-range';
+import { PickerOverlay } from 'filestack-react';
 
 // const model =()=>{
 //   return(
@@ -24,14 +25,14 @@ function CompetitionModal() {
   const [compname, setCompname] = useState('');
   const [picture, setPicture] = useState(null);
 
-  
+
 }
 
 
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
-  
+
   React.useEffect(() => {
     axios
       .get("http://localhost:3002/api/get/competitions")
@@ -78,62 +79,87 @@ const AdminCompetitions = (props) => {
     }
   ]);
 
-  const [visible,setvisible] = useState(false)
+  const [visible, setvisible] = useState(false)
+
+  const [pickerVisible, setPickerVisible] = useState(false);
+
+  const handleUploadDone = (res) => {
+    console.log(res.filesUploaded[0].url);
+  };
+
+  const handleClosePicker = () => {
+    setPickerVisible(false); // Hide the picker
+  };
+
   return (
-    
+
     <div className="admin-competitions-container">
       <div className="admin-competitions-button-container">
         <div className="custom-modal">
-               <Modal isOpen={visible} style={{content: {width: '70%', height: '70%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}, overlay: {zIndex: 1000}}} >
-                
-                <h1>Create a Competition</h1>
-                
-                <InputBoxForInfo
-                 buttonText="Competition Name" 
-                 onChange={(e) => setCompname(e.target.value)} 
-                />
-                
-                  <InputBoxForInfo
-                 buttonText="" 
-                 onChange={(e) => setPicture(e.target.value)} 
-                />
+          <Modal isOpen={visible} style={{ content: { width: '70%', height: '70%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }, overlay: { zIndex: 1000 } }} >
 
-                <Button name="Upload Picture"
-                  onClick={() => {
-                  setvisible(true)
-                  console.log("button clicked");
-                  }}
-                  />
-                
-                {/* <InputBoxForInfo
+            <h1>Create a Competition</h1>
+
+            <InputBoxForInfo
+              buttonText="Competition Name"
+              onChange={(e) => setCompname(e.target.value)}
+            />
+
+            <InputBoxForInfo
+              buttonText=""
+              onChange={(e) => setPicture(e.target.value)}
+            />
+
+            <Button name="Upload Picture"
+              onClick={() => {
+                setPickerVisible(true);
+                console.log("Picker clicked");
+              }}
+            />
+            {pickerVisible && (
+              <PickerOverlay
+                key="picker-overlay"
+                apikey={process.env.REACT_APP_API_KEY_FILESTACK}
+                onUploadDone={(res) => {
+                  handleUploadDone(res);
+                }}
+                pickerOptions={{
+                  onClose: () => {
+                    handleClosePicker();
+                  }
+                }}
+              />
+            )}
+
+            {/* <InputBoxForInfo
                  buttonText="YYYY/MM/DD Start date" 
                  onChange={(e) => setstart(e.target.value)} 
                 />
                 */}
-                
-                 <div className="admin-competitions-button-container">
-                  <Button 
-                  name="Close"
-                  onClick={() => {
+
+            <div className="admin-competitions-button-container">
+              <Button
+                name="Close"
+                onClick={() => {
                   setvisible(false)
+                  setPickerVisible(false);
                   console.log("button clicked");
-                  }}
-                  // rootClassName="button-root-class-name2"
-                  />
-                 </div>
-           </Modal>
+                }}
+              // rootClassName="button-root-class-name2"
+              />
+            </div>
+          </Modal>
         </div>
-         
-            <Button name="Create Competition"
-            onClick={() => {
-              setvisible(true)
-              console.log("button clicked");
-            }}
-            // rootClassName="button-root-class-name2"
-           />
-           
-           
-</div>
+
+        <Button name="Create Competition"
+          onClick={() => {
+            setvisible(true)
+            console.log("button clicked");
+          }}
+        // rootClassName="button-root-class-name2"
+        />
+
+      </div>
       <div data-role="Header" className="admin-competitions-navbar-container">
         <div className="admin-competitions-navbar">
           <div className="admin-competitions-left-side">
@@ -205,21 +231,9 @@ const AdminCompetitions = (props) => {
           </div>
         </div>
       </div>
-      <div className="admin-competitions-section-separator"></div>
-      <div className="admin-competitions-section-separator1"></div>
-      <div className="admin-competitions-section-separator2"></div>
-      <div className="admin-competitions-section-separator3"></div>
+
       <GenGrid />
 
-      <div >
-
-      </div>
-
-  <div className="admin-competitions-button-container">
-
-  </div>
-
-            
     </div>
 
   )
