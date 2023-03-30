@@ -12,7 +12,8 @@ workflows:
           pkg-manager: npm
           post-steps:
             - jira/notify
-      -  steps:
-          - run:
-              name: Run tests with coverage
-              command: npm run test -- --coverage --watchAll=false
+          parallelism: 1
+          steps:
+            - run:
+                name: Run tests with coverage
+                command: npm run test -- --coverage --watchAll=false
