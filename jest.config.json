@@ -1,8 +1,8 @@
 {
-    "testRegex": "/*.test.js$",
+    "testRegex": ["/*.test.js$", "/*.test.jsx$"],
     "collectCoverage": true,
     "coverageReporters": ["lcov"],
-    "coverageDirectory": "test-coverage",
+    "coverageDirectory": "coverage",
     "coverageThreshold": {
      "global": {
      "branches": 0,
@@ -11,5 +11,8 @@
      "statements": 0
      }
     },
-    "moduleDirectories": ["node_modules", "src"]
+    "moduleDirectories": ["node_modules", "src"],
+    "moduleNameMapper": {
+        "axios": "axios/dist/node/axios.cjs"
+      }
    }
