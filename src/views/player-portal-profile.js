@@ -38,9 +38,7 @@ const PlayerPortalProfile = (props) => {
   // Update user details in database
   const putUserDetails = (newEmail, newUsername, newPassword) => {
     axios
-      .post("http://localhost:3002/api/put/updateDetails/" + userID, {email: newEmail, username: newUsername, password: newPassword});
-
-    console.log("Update succesful!")
+      .post("http://localhost:3002/api/post/updateDetails", {user_id: userID, user_email: newEmail, user_nickname: newUsername, user_password: newPassword});
   }
 
   // Ensures all detail fields are valid
@@ -80,7 +78,7 @@ const PlayerPortalProfile = (props) => {
       if (isMatch) {
         // Password not changed
         if ((newPassword == confirmPassword) && (newPassword == "" && confirmPassword == "") && checkIfDetailsValid()) {
-          // putUserDetails(newEmail, newUsername, oldPassword);
+          putUserDetails(newEmail, newUsername, oldPassword);
           alert("Email and username updated")
         }
         // Password changed and new passwords matches confirmed password 

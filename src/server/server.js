@@ -287,15 +287,15 @@ app.get("/api/get/userDetails/:username", (req, res) => {
 });
 
 //!Route to update user information
-app.put("/api/post/updateDetails/:userID", (req, res) => {
-  const userID = req.params.username;
-  const email = req.body.email;
-  const username = req.body.username;
-  const password = req.body.password;
+app.post("/api/post/updateDetails", (req, res) => {
+  const userID = req.body.user_id;
+  const email = req.body.user_email;
+  const username = req.body.user_nickname;
+  const password = req.body.user_password;
 
   db.query(
-    "UPDATE users SET user_nickname = ?,  user_password = ?, user_email = ? WHERE user_id = ?;", userID,
-    [username, password, email],
+    "UPDATE users SET user_nickname = ?,  user_password = ?, user_email = ? WHERE user_id = ?;",
+    [username, password, email, userID],
     (err, result) => {
       if (err) {
         res.send(err);
