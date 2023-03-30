@@ -38,7 +38,9 @@ const PlayerPortalProfile = (props) => {
   // Update user details in database
   const putUserDetails = (newEmail, newUsername, newPassword) => {
     axios
-      .put("http://localhost:3002/api/put/updateDetails/" + userID, {email: newEmail, username: newUsername, password: newPassword});
+      .post("http://localhost:3002/api/put/updateDetails/" + userID, {email: newEmail, username: newUsername, password: newPassword});
+
+    console.log("Update succesful!")
   }
 
   // Ensures all detail fields are valid
@@ -84,7 +86,7 @@ const PlayerPortalProfile = (props) => {
         // Password changed and new passwords matches confirmed password 
         else if ((newPassword == confirmPassword) && (newPassword != "" && confirmPassword != "") && checkIfDetailsValid()) {
           hashedNewPassword = bycrypt.hashSync(newPassword,salt);
-          // putUserDetails(newEmail, newUsername, hashedNewPassword);
+          putUserDetails(newEmail, newUsername, hashedNewPassword);
           alert("Details updated")
         } 
         // New password doesn't match confirmed password
