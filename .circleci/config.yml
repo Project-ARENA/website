@@ -7,13 +7,14 @@ orbs:
 workflows:
   sample:
     jobs:
+      steps:
+      - run:
+          name: Run tests with coverage
+          command: npm run test -- --coverage --watchAll=false
       - node/test:
           version: "16.10"
           pkg-manager: npm
           post-steps:
             - jira/notify
           parallelism: 1
-          steps:
-            - run:
-                name: Run tests with coverage
-                command: npm run test -- --coverage --watchAll=false
+          
