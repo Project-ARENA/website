@@ -13,6 +13,7 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import "./register.css";
 
+
 const Register = (props) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -47,7 +48,8 @@ const Register = (props) => {
     });
   }
 
-  const checkIfBlank=()=>{
+  
+   const checkIfBlank=()=>{
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
@@ -82,6 +84,7 @@ const Register = (props) => {
     );
     checkIfBlank();
   };
+  
 
   return (
     <div className="register-container">
@@ -158,3 +161,4 @@ const Register = (props) => {
 };
 
 export default Register;
+//export { checkIfBlank };
