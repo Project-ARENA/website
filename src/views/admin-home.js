@@ -1,9 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from "axios";
 
 import './admin-home.css'
 
 const AdminHome = (props) => {
+  const username = sessionStorage.getItem('username');
+
+  // Get user details from database, to make displaying it easier
+  const getUserDetails = () => {
+    axios
+      .get("http://localhost:3002/api/get/userDetails/" + username)
+      .then(function (response) {
+        sessionStorage.setItem('userID', (response.data)[0].user_id);
+        sessionStorage.setItem('useremail', (response.data)[0].user_email);
+        sessionStorage.setItem('userpassword',(response.data)[0].user_password);
+        setNewUsername(username);
+        setNewEmail(email);
+      });
+  }
+
+  window.onload = getUserDetails();
+
   return (
     <div className="admin-home-container">
       <div data-role="Header" className="admin-home-navbar-container">

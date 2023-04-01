@@ -1,21 +1,104 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import bycrypt from 'bcryptjs';
+import axios from 'axios';
 
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import './admin-profile.css'
 
 const AdminProfile = (props) => {
+  // Get the username, userID, userpassword and useremail from local storage
+  const userID = sessionStorage.getItem('userID');
+  const username = sessionStorage.getItem('username');
+  const email = sessionStorage.getItem('useremail');
+  const oldPassword = sessionStorage.getItem('userpassword')
+  let [password, setPassword] = useState("");
+  let [newPassword, setNewPassword] = useState("");
+  let [confirmPassword, setConfirmPassword] = useState("");
+  let [newUsername, setNewUsername] = useState("");
+  let [newEmail, setNewEmail] = useState("");
 
-  // const handleUpdate = () => {
-  //   // Do something with the input values
-  //   console.log(
-  //     `Name: ${name}, Surname: ${surname} Email: ${email}, Username: ${username}, Password: ${hashedPassword}`
-  //   );
-  //   // postDetails();
-   
-  // };
+  const salt = bycrypt.genSaltSync(10);
+  let hashedNewPassword = "";
+  
+  // Set local username and email 
+  const setUserDetails = () => {
+      setNewUsername(username);
+      setNewEmail(email);
+  }
 
+  // Update user details in database
+  const putUserDetails = (newEmail, newUsername, newPassword) => {
+    axios
+      .post("http://localhost:3002/api/post/updateDetails", {user_id: userID, user_email: newEmail, user_nickname: newUsername, user_password: newPassword});
+  }
+
+  // Ensures all detail fields are valid
+  const checkIfDetailsValid = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+    //If fields empty, warn
+    if(newEmail == "" || newUsername == ""){
+      alert("Email and Username cannot be empty");
+      return false;
+    }
+    else if (password == "") {
+      alert("Current Password Required")
+      return false;
+    }
+
+    //not empty
+    else if (newEmail != "" || newUsername != "" || password != "") {
+      //email not corect format
+      if(!emailPattern.test(newEmail)){
+        alert("Please enter a valid email");
+        return false;
+      }
+      //password not correct format
+      if(!passwordPattern.test(password)){
+        alert("Please enter a stronger password");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Handles different update cases
+  const update = () => {
+    bycrypt.compare(password, oldPassword, function (error, isMatch) {
+      if (isMatch) {
+        // Password not changed
+        if ((newPassword == confirmPassword) && (newPassword == "" && confirmPassword == "") && checkIfDetailsValid()) {
+          putUserDetails(newEmail, newUsername, oldPassword);
+          alert("Email and username updated")
+        }
+        // Password changed and new passwords matches confirmed password 
+        else if ((newPassword == confirmPassword) && (newPassword != "" && confirmPassword != "") && checkIfDetailsValid()) {
+          hashedNewPassword = bycrypt.hashSync(newPassword,salt);
+          putUserDetails(newEmail, newUsername, hashedNewPassword);
+          alert("Details updated")
+        } 
+        // New password doesn't match confirmed password
+        else if ((newPassword != confirmPassword) && checkIfDetailsValid()){
+          alert("Passwords do not match");
+        }
+      }
+      else {
+        if (checkIfDetailsValid()) {
+          alert("Incorrect Current Password");
+        }
+        
+      }
+
+    });
+  }
+
+  // Allows current details to display when page loads
+  useEffect(() => {
+    setUserDetails()
+  }, []); 
 
   return (
     <div className="admin-profile-container">
@@ -88,20 +171,52 @@ const AdminProfile = (props) => {
       <div className="admin-profile-section-separator3"></div>
       <div className="admin-profile-container3">
         <span className="admin-profile-text">UPDATE PROFILE</span>
-        <InputBoxForInfo buttonText="EMAIL"></InputBoxForInfo>
-        <InputBoxForInfo 
-            buttonText="USERNAME">
+        <InputBoxForInfo
+          initialValue={username}
+          buttonText="USERNAME"
+          onChange={(e) => setNewUsername(e.target.value)}
+        >
         </InputBoxForInfo>
-        <InputBoxForInfo buttonText="OLD PASSWORD" isPassword></InputBoxForInfo>
-        <InputBoxForInfo buttonText="PASSWORD" isPassword></InputBoxForInfo>
-        <InputBoxForInfo buttonText="CONFIRM PASSWORD" isPassword></InputBoxForInfo>
+        <InputBoxForInfo
+          initialValue={email}
+          buttonText="EMAIL"
+          onChange={(e) => setNewEmail(e.target.value)}
+        >
+        </InputBoxForInfo>
+        <InputBoxForInfo 
+          buttonText="Current PASSWORD" 
+          isPassword
+          onChange={(e) => setPassword(e.target.value)}
+        >
+        </InputBoxForInfo>
+        <InputBoxForInfo 
+          buttonText="PASSWORD" 
+          isPassword
+          onChange={(e) => setNewPassword(e.target.value)}
+        >
+        </InputBoxForInfo>
+        <InputBoxForInfo 
+          buttonText="CONFIRM PASSWORD" 
+          isPassword
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        >
+        </InputBoxForInfo>
         <Button
-        name="UPDATE"
-        onClick={() => {
-          console.log("Register button clicked");
-          // handleUpdate();
-        }}
-          // button="UPDATE"
+          name="UPDATE"
+          onClick={() => {
+            console.log("Register button clicked");
+            update();
+          }}
+          rootClassName="button-root-class-name4"
+        ></Button>
+        <br></br>
+        <Button
+          name="LOG OUT"
+          onClick={() => {
+            console.log("Log out button clicked");
+            sessionStorage.clear();
+            window.location.href = 'http://localhost:3000/login'
+          }}
           rootClassName="button-root-class-name4"
         ></Button>
         <div className="admin-profile-container4"></div>

@@ -65,7 +65,7 @@ const Login = (props) => {
     bycrypt.compare(password, hashedPassword, function (error, isMatch) {
       if (isMatch) {
         // Store the username in local storage
-        localStorage.setItem('username', username);
+        sessionStorage.setItem('username', username);
         console.log("The passwords match");
         setErrorMessage('');
         checkIfAdmin();
@@ -83,13 +83,13 @@ const handleLogin = () =>{
   console.log(
     `Username: ${username}, Password: ${password}`
   );
-  localStorage.setItem('username', username);
+  sessionStorage.setItem('username', username);
   axios
   .get("http://localhost:3002/api/get/userID/" + username)
   .then(function(response){
     const userData = response.data;
     const userID = userData[0].user_id;
-    localStorage.setItem('userID', userID);
+    sessionStorage.setItem('userID', userID);
   });
   if(username=="Steve" && password=="SteveIsDaBest"){
     window.location.href = 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiUzc-Bi-39AhWPtqQKHRYUCJQQwqsBegQIChAF&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ&usg=AOvVaw0aHtehaphMhOCAkCydRLZU';

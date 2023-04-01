@@ -9,10 +9,10 @@ import './player-portal-profile.css'
 
 const PlayerPortalProfile = (props) => {
   // Get the username, userID, userpassword and useremail from local storage
-  const userID = localStorage.getItem('userID');
-  const username = localStorage.getItem('username');
-  const email = localStorage.getItem('useremail');
-  const oldPassword = localStorage.getItem('userpassword')
+  const userID = sessionStorage.getItem('userID');
+  const username = sessionStorage.getItem('username');
+  const email = sessionStorage.getItem('useremail');
+  const oldPassword = sessionStorage.getItem('userpassword')
   let [password, setPassword] = useState("");
   let [newPassword, setNewPassword] = useState("");
   let [confirmPassword, setConfirmPassword] = useState("");
@@ -23,16 +23,9 @@ const PlayerPortalProfile = (props) => {
   let hashedNewPassword = "";
   
   // Get user_email from database
-  const getUserDetails = () => {
-    axios
-      .get("http://localhost:3002/api/get/userDetails/" + username)
-      .then(function (response) {
-        localStorage.setItem('userID', (response.data)[0].user_id);
-        localStorage.setItem('useremail', (response.data)[0].user_email);
-        localStorage.setItem('userpassword',(response.data)[0].user_password);
+  const setUserDetails = () => {
         setNewUsername(username);
         setNewEmail(email);
-      });
   }
 
   // Update user details in database
@@ -104,7 +97,7 @@ const PlayerPortalProfile = (props) => {
 
   // Allows current details to display when page loads
   useEffect(() => {
-    getUserDetails()
+    setUserDetails()
   }, []); 
 
   return (
@@ -237,7 +230,16 @@ const PlayerPortalProfile = (props) => {
             console.log("Register button clicked");
             update();
           }}
-          // button="UPDATE"
+          rootClassName="button-root-class-name4"
+        ></Button>
+        <br></br>
+         <Button
+          name="LOG OUT"
+          onClick={() => {
+            console.log("Log out button clicked");
+            sessionStorage.clear();
+            window.location.href = 'http://localhost:3000/login'
+          }}
           rootClassName="button-root-class-name4"
         ></Button>
         <div className="player-portal-profile-container4"></div>
