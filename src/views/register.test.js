@@ -18,3 +18,94 @@ it('renders correctly enzyme', () => {
   expect(toJson(wrapper)).toMatchSnapshot();
 });
 
+
+// Testing the checkIfBlank function
+
+// Import the necessary modules
+// const axios = require('axios');
+
+// // Import the function to be tested
+// import { checkIfBlank } from './register.js';
+// //const { checkIfBlank } = require('./register');
+
+// // Test suite for checkIfBlank function
+// describe('checkIfBlank', () => {
+
+//   // Mock the setErrorMessage and postDetails functions
+//   let setErrorMessage = jest.fn();
+//   let postDetails = jest.fn();
+
+//   // Test case when all fields are filled in and valid
+//   test('valid input', () => {
+//     // Set up the input data
+//     const name = 'John';
+//     const surname = 'Doe';
+//     const email = 'john.doe@example.com';
+//     const username = 'johndoe';
+//     const password = 'Passw0rd';
+
+//     // Call the function
+//     checkIfBlank(name, surname, email, username, password, setErrorMessage, postDetails);
+
+//     // Check that setErrorMessage and postDetails were not called
+//     expect(setErrorMessage).not.toHaveBeenCalled();
+//     expect(postDetails).not.toHaveBeenCalled();
+//   });
+
+//   // Test case when one or more fields are empty
+//   test('missing field', () => {
+//     // Set up the input data
+//     const name = '';
+//     const surname = 'Doe';
+//     const email = 'john.doe@example.com';
+//     const username = 'johndoe';
+//     const password = 'Passw0rd';
+
+//     // Call the function
+//     checkIfBlank(name, surname, email, username, password, setErrorMessage, postDetails);
+
+//     // Check that setErrorMessage was called with the correct message
+//     expect(setErrorMessage).toHaveBeenCalledWith('Please enter all details');
+
+//     // Check that postDetails was not called
+//     expect(postDetails).not.toHaveBeenCalled();
+//   });
+
+//   // Test case when the email is invalid
+//   test('invalid email', () => {
+//     // Set up the input data
+//     const name = 'John';
+//     const surname = 'Doe';
+//     const email = 'johndoe@examplecom';
+//     const username = 'johndoe';
+//     const password = 'Passw0rd';
+
+//     // Call the function
+//     checkIfBlank(name, surname, email, username, password, setErrorMessage, postDetails);
+
+//     // Check that setErrorMessage was called with the correct message
+//     expect(setErrorMessage).toHaveBeenCalledWith('Please enter a valid email');
+
+//     // Check that postDetails was not called
+//     expect(postDetails).not.toHaveBeenCalled();
+//   });
+
+//   // Test case when the password is weak
+//   test('weak password', () => {
+//     // Set up the input data
+//     const name = 'John';
+//     const surname = 'Doe';
+//     const email = 'john.doe@example.com';
+//     const username = 'johndoe';
+//     const password = 'password';
+
+//     // Call the function
+//     checkIfBlank(name, surname, email, username, password, setErrorMessage, postDetails);
+
+//     // Check that setErrorMessage was called with the correct message
+//     expect(setErrorMessage).toHaveBeenCalledWith('Please enter a stronger password');
+
+//     // Check that postDetails was not called
+//     expect(postDetails).not.toHaveBeenCalled();
+//   });
+// });
