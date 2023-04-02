@@ -232,7 +232,9 @@ const AdminCompetitions = (props) => {
         </div>
       </div>
 
-      <GenGrid />
+      <div className="grid-container">
+        <GenGrid />
+      </div>
 
     </div>
 

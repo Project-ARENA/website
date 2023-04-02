@@ -101,7 +101,9 @@ const AdminTeams = (props) => {
           </div>
         </div>
       </div>
-      <GenGrid />
+      <div className="grid-container">
+        <GenGrid />
+      </div>
     </div>
   )
 }
