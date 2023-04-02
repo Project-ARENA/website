@@ -160,5 +160,5 @@ const Register = (props) => {
   );
 };
 
-export default Register;
-//export { checkIfBlank };
+//export default Register;
+export { Register, validateInput };
