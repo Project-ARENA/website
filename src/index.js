@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "./style.css";
 import Contact from "./views/contact";
-import Register from "./views/register";
+import {Register} from "./views/register";
 import TEST from "./views/test";
 import Home from "./views/home";
 import Login from "./views/login";
