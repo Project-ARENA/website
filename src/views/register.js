@@ -1,85 +1,82 @@
 import React from "react";
 import axios from 'axios';
 import bycrypt from 'bcryptjs';
-
 import { Link } from "react-router-dom";
-
 import { Helmet } from "react-helmet";
-
 import { useState } from "react";
 // const bcrypt = require('bcryptjs');
-
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import "./register.css";
 
-function doRegister(name, surname, email, username, password, setErrorMessage) {
+function hashPassword(password) {
   const salt = bycrypt.genSaltSync(10);
-  const hashedPassword = bycrypt.hashSync(password, salt);
+  return bycrypt.hashSync(password, salt);
+}
 
-  const postDetails = () => {
-    axios.post("http://localhost:3002/api/post/register", { name: name, surname: surname, email: email, username: username, password: hashedPassword });
-    setTimeout(function () {
-      window.location.href = 'http://localhost:3000/login';
-    }, 1000);
+function postUserDetails(name, surname, email, username, hashedPassword) {
+  return axios.post("http://localhost:3002/api/post/register", {
+    name: name,
+    surname: surname,
+    email: email,
+    username: username,
+    password: hashedPassword
+  });
+}
 
+async function checkIfUserExists(username, setErrorMessage) {
+  const response = await axios.get("http://localhost:3002/api/get/doesExist/" + username);
+  const userExists = response.data;
+  console.log(response.data);
+  if (JSON.stringify(userExists) == "[]") {
+    setErrorMessage('Account created successfully');
+    return true;
   }
+  else {
+    setErrorMessage('Username already exists');
+    return false;
+  }
+}
 
-  const checkIfUserExists = () => {
-    axios
-      .get("http://localhost:3002/api/get/doesExist/" + username)
-      .then(function (response) {
-        const userExists = response.data;
-        console.log(response.data);
-        if (JSON.stringify(userExists) == "[]") {
-          setErrorMessage('Account created successfully');
-          postDetails();
-        }
-        else {
-          setErrorMessage('Username already exists');
+function validateInput(name, surname, email, username, password, setErrorMessage) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+  if (name === "" || surname === "" || email === "" || username === "" || password === "") {
+    alert("Please enter all details");
+    return false;
+  }
+  else if (!emailPattern.test(email)) {
+    setErrorMessage('Please enter a valid email');
+    return false;
+  }
+  else if (!passwordPattern.test(password)) {
+    setErrorMessage("Please enter a stronger password");
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function doRegister(name, surname, email, username, password, setErrorMessage) {
+  const hashedPassword = hashPassword(password);
+
+  const validInput = validateInput(name, surname, email, username, password, setErrorMessage);
+
+  if (validInput) {
+    checkIfUserExists(username, setErrorMessage)
+      .then(function (userExists) {
+        if (userExists) {
+          postUserDetails(name, surname, email, username, hashedPassword);
+          setTimeout(function () {
+            window.location.href = 'http://localhost:3000/login';
+          }, 1000);
         }
       });
   }
-
-
-  const checkIfBlank = () => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
-    //If fields empty, warn
-    if (name == "" || surname == "" || email == "" || username == "" || password == "") {
-      alert("Please enter all details");
-    }
-
-    //not empty
-    else {
-      //check if email correct and password is strong
-      if (emailPattern.test(email) && passwordPattern.test(password)) {
-        checkIfUserExists();
-      }
-      //otherwise warn
-      else {
-        //email not corect format
-        if (!emailPattern.test(email)) {
-          setErrorMessage('Please enter a valid email');
-        }
-        if (!passwordPattern.test(password)) {
-          setErrorMessage("Please enter a stronger password");
-        }
-      }
-    }
-  }
-
-  const handleRegister = () => {
-    // Do something with the input values
-    console.log(
-      `Name: ${name}, Surname: ${surname} Email: ${email}, Username: ${username}, Password: ${hashedPassword}`
-    );
-    checkIfBlank();
-  };
-
-  handleRegister();
 }
+
 
 const Register = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
@@ -88,7 +85,6 @@ const Register = (props) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [exist, setExistence] = useState("");
 
   return (
     <div className="register-container">
