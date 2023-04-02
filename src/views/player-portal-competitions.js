@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from "axios";
 import OverflowCard from "../components/OverflowCardPP";
-
+const userID = localStorage.getItem('userID');
 import './player-portal-competitions.css'
 
 function GenCards() {
@@ -13,6 +13,7 @@ function GenCards() {
     axios
       .get("http://localhost:3002/api/get/competitions")
       .then((response) => {
+        //console.log(response.data);
         const data = response.data.map((data) => ({
           title: data.competition_name,
           views: data.competition_views,
@@ -20,23 +21,64 @@ function GenCards() {
           description: data.competition_info,
           endDate: data.competition_enddate,
         }));
-
+        
         // Set isRegistered property after cardsData is populated with data
-        // You need find out wheter the user is registered for a competition or not - Sayf
+        // You need to find out whether the user is registered for a competition or not - Sayf
         // For now, I'm just gonna do the first one manually as an example
         // Add the isRegistered header to the cardData object, which holds the string "isRegistered" to the first card
-        const newCardsData = data.map((cardData, index) => {
-          if (index === 0) {
-            return { ...cardData, isRegistered: true };
-          } else {
-            return cardData;
-          }
+        const newCardsData = [];
+        
+        // Use Promise.all to wait for all the API requests to finish before updating the state
+        Promise.all(
+          data.map((cardData, index) => {
+            //console.log()
+            //for(let item = 0 ; item < data.length; item++){
+              
+              //data.forEach((item) => {
+    
+              //API to get the competition id
+              return axios
+                .get("http://localhost:3002/api/get/competitionID/" + data[index].title)
+                .then(function(response){
+                  //console.log(data[index].title)
+                  //console.log(response.data);
+                  const competition_id = response.data[0].competition_id;
+                  //console.log(competition_id);
+                  //API to see if the user is registered for the competition
+                  return axios
+                    .get("http://localhost:3002/api/get/isRegistered/" + competition_id + "/" + userID)
+                    .then(function(response){
+                      //console.log("I made it here")
+                      const userExists = response.data;
+                      //console.log(response.data);
+                      if (JSON.stringify(userExists) == "[]"){
+                        newCardsData.push(cardData);
+                      }
+                      else{
+                        //console.log("I am registered for this");
+                        newCardsData.push({ ...cardData, isRegistered: true });
+                      }
+                    });
+                });
+                
+            //}
+            
+            // Remove the following code since it is not needed anymore
+            // if (index == 0) {
+            //   return { ...cardData, isRegistered: true };
+            // } else {
+            //   return cardData;
+            // }
+          })
+        ).then(() => {
+          // Now that all the API requests have finished, update the state
+          setCardsData(newCardsData);
         });
-
-        setCardsData(newCardsData);
       });
   }, []);
+  
 
+  //views of card
   const handleCardClick = (index) => {
     setIsFlipped(true);
 
@@ -57,6 +99,7 @@ function GenCards() {
     }
   };
 
+  //if card is clicked 
   const handleButtonClick = (index) => {
     console.log(`Button on card ${index} was clicked!`);
     // Check if the card is registered or not
@@ -65,7 +108,20 @@ function GenCards() {
       // Can use API route to leave competition
     } else {
       console.log(`User is not registered for card ${index}`);
+      axios
+                .get("http://localhost:3002/api/get/competitionIDGlobal/" + cardsData[index].title)
+                .then(function(response){
+                  console.log(response.data[0].competition_id);
+                  const compID = response.data[0].competition_id;
+                  sessionStorage.setItem('CompID', compID);
+                  setTimeout(function () {
+                    window.location.href = 'http://localhost:3000/player-portal-team';
+                  }, 1000);
+                });
+      
+      //console.log(cardsData[index].title);
       // Can use API route to join competition
+      //Need to keep track of the competition_id
     }
     // Add your functionality for the button click here
   };

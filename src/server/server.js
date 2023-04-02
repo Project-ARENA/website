@@ -179,24 +179,25 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
 });
 !
 
-  //! Route to create a team
-  app.post("/api/post/create/team", (req, res) => {
-    const user_id = req.body.user_id;
-    const team_name = req.body.team_name;
-    const team_code = req.body.team_code;
+//! Route to create a team
+app.post("/api/post/create/team", (req, res) => {
+  const user_id = req.body.user_id;
+  const team_name = req.body.team_name;
+  const team_code = req.body.team_code;
+  const competition_id = req.body.competition_id;
 
-    db.query(
-      "INSERT INTO team_details (user_id, team_name, team_code,team_captain) VALUES (?, ?, ?, 1);",
-      [user_id, team_name, team_code],
-      (err, result) => {
-        if (err) {
-          res.send(err);
-          console.log(err);
-        }
-        console.log(result);
+  db.query(
+    "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id) VALUES (?, ?, ?, 1, ?);",
+    [user_id, team_name, team_code, competition_id],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
       }
-    );
-  });
+      console.log(result);
+    }
+  );
+});
 
 //!Route to check if the team name already exists
 //* Returns [] if DNE, else returns something
@@ -246,10 +247,11 @@ app.post("/api/post/addTo/team", (req, res) => {
   const user_id = req.body.user_id;
   const team_name = req.body.team_name;
   const team_code = req.body.team_code;
+  const competition_id = req.body.competition_id;
 
   db.query(
-    "INSERT INTO team_details (user_id, team_name, team_code) VALUES (?, ?, ?);",
-    [user_id, team_name, team_code],
+    "INSERT INTO team_details (user_id, team_name, team_code, competition_id) VALUES (?, ?, ?,?);",
+    [user_id, team_name, team_code, competition_id],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -315,6 +317,46 @@ app.get("/api/get/teams", (req, res) => {
     }
     res.send(result);
   });
+});
+
+//! Route to get the competitionIid
+app.get("/api/get/competitionID/:competition_name", (req, res) => {
+
+  const competition_name = req.params.competition_name;
+  db.query("SELECT competition_id from competition_details WHERE competition_name = ?;", competition_name,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//! Route to see if the user is registered for the competition
+app.get("/api/get/isRegistered/:competition_id/:user_id", (req, res) => {
+
+  const competition_id = req.params.competition_id;
+  const user_id = req.params.user_id;
+  db.query("SELECT * from team_details WHERE competition_id = ? AND user_id = ?;", [competition_id, user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//! Route to get the competitionIid
+app.get("/api/get/competitionIDGlobal/:competition_name", (req, res) => {
+
+  const competition_name = req.params.competition_name;
+  db.query("SELECT competition_id from competition_details WHERE competition_name = ?;", competition_name,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
 });
 
 //!Type above this
