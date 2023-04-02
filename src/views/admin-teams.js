@@ -1,7 +1,40 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import DataGrid from "../components/datagrid";
+import axios from "axios";
 import './admin-teams.css'
+
+function GenGrid() {
+  const [rows, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3002/api/get/teams")
+      .then((response) => {
+        const data = response.data.map((data, index) => ({
+          id: index + 1,
+          team_code: data.team_code,
+          user_id: data.user_id,
+          team_captain: data.team_captain,
+          team_name: data.team_name,
+          team_score: data.team_score,
+          competition_id: data.competition_id,
+        }));
+        setData(data);
+      });
+  }, []);
+
+  const columns = [
+    { field: 'team_code', headerName: 'Team Code', width: 350 },
+    { field: 'user_id', headerName: 'User ID', width: 150 },
+    { field: 'team_captain', headerName: 'Team Captain', width: 150 },
+    { field: 'team_name', headerName: 'Team Name', width: 250 },
+    { field: 'team_score', headerName: 'Team Score', width: 150 },
+    { field: 'competition_id', headerName: 'Competition ID', width: 150 },
+  ];
+
+  return <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+}
 
 const AdminTeams = (props) => {
   return (
@@ -55,7 +88,7 @@ const AdminTeams = (props) => {
               </div>
             </div>
             <div className="admin-teams-links-container1">
-            <Link to="/admin-home" className="admin-teams-link">
+              <Link to="/admin-home" className="admin-teams-link">
                 HOME
               </Link>
               <Link to="/admin-competitions" className="admin-teams-link1 Anchor">
@@ -68,10 +101,7 @@ const AdminTeams = (props) => {
           </div>
         </div>
       </div>
-      <div className="admin-teams-section-separator"></div>
-      <div className="admin-teams-section-separator1"></div>
-      <div className="admin-teams-section-separator2"></div>
-      <div className="admin-teams-section-separator3"></div>
+      <GenGrid />
     </div>
   )
 }

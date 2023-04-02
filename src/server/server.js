@@ -86,7 +86,7 @@ app.post("/api/post/login", (req, res) => {
   );
 });
 
-//!Route to get competitions
+//Route to get competitions
 app.get("/api/get/competitions", (req, res) => {
   db.query("SELECT * FROM competition_details", (err, result) => {
     if (err) {
@@ -179,24 +179,24 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
 });
 !
 
-//! Route to create a team
-app.post("/api/post/create/team", (req, res) => {
-  const user_id = req.body.user_id;
-  const team_name = req.body.team_name;
-  const team_code = req.body.team_code;
+  //! Route to create a team
+  app.post("/api/post/create/team", (req, res) => {
+    const user_id = req.body.user_id;
+    const team_name = req.body.team_name;
+    const team_code = req.body.team_code;
 
-  db.query(
-    "INSERT INTO team_details (user_id, team_name, team_code,team_captain) VALUES (?, ?, ?, 1);",
-    [user_id, team_name, team_code],
-    (err, result) => {
-      if (err) {
-        res.send(err);
-        console.log(err);
+    db.query(
+      "INSERT INTO team_details (user_id, team_name, team_code,team_captain) VALUES (?, ?, ?, 1);",
+      [user_id, team_name, team_code],
+      (err, result) => {
+        if (err) {
+          res.send(err);
+          console.log(err);
+        }
+        console.log(result);
       }
-      console.log(result);
-    }
-  );
-});
+    );
+  });
 
 //!Route to check if the team name already exists
 //* Returns [] if DNE, else returns something
@@ -304,6 +304,17 @@ app.post("/api/post/updateDetails", (req, res) => {
       console.log(result);
     }
   );
+});
+
+//Route to get all teams
+app.get("/api/get/teams", (req, res) => {
+  db.query("SELECT * FROM team_details", (err, result) => {
+    if (err) {
+      res.send(err);
+      console.log(err);
+    }
+    res.send(result);
+  });
 });
 
 //!Type above this
