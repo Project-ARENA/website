@@ -9,21 +9,26 @@ import 'reactjs-popup/dist/index.css';
 import Modal from 'react-modal';
 import { useState } from 'react';
 import InputBoxForInfo from "../components/input-box-for-info";
-// import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
 import { PickerOverlay } from 'filestack-react';
-import { DateRangePicker } from 'rsuite'
-import 'rsuite/dist/styles/rsuite-default.css';
-import "./calender.css";
+
+// const model =()=>{
+//   return(
+//     <div>
+
+//     </div>
+//   )
+// }
 
 function CompetitionModal() {
   const [visible, setVisible] = useState(false);
   const [compname, setCompname] = useState('');
   const [picture, setPicture] = useState(null);
-  
+
 
 }
 
-// function React
+
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
@@ -73,7 +78,7 @@ const AdminCompetitions = (props) => {
       key: 'selection'
     }
   ]);
-  const [selectedDate, setSelectedDate] = useState(null);
+
   const [visible, setvisible] = useState(false)
 
   const [pickerVisible, setPickerVisible] = useState(false);
@@ -126,11 +131,12 @@ const AdminCompetitions = (props) => {
               />
             )}
 
-            <div>
-            <DateRangePicker>
+            {/* <InputBoxForInfo
+                 buttonText="YYYY/MM/DD Start date" 
+                 onChange={(e) => setstart(e.target.value)} 
+                />
+                */}
 
-            </DateRangePicker>
-            </div>
             <div className="admin-competitions-button-container">
               <Button
                 name="Close"
