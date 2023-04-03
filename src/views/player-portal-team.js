@@ -5,8 +5,8 @@ import { useState } from "react";
 import TeamInputBox from '../components/TeamInputBox'
 import { v4 as uuidv4 } from 'uuid';
 import './player-portal-team.css'
-const username = localStorage.getItem('username');
-const userID = localStorage.getItem('userID');
+const username = sessionStorage.getItem('username');
+const userID = sessionStorage.getItem('userID');
 const competition_id = sessionStorage.getItem('CompID');
 
 const PlayerPortalTeam = (props) => {
@@ -19,99 +19,100 @@ const PlayerPortalTeam = (props) => {
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(false);
 
-//generate random code for team
-const randomString = () => {
-  setDisabled(true);
-  const code = uuidv4();
-  setCode(code)
-  console.log('Team code generated')
-  console.log(code)
-  console.log(teamName);
-  return code;
-}
-
-/*
-    ! CREATE TEAM
-    1.Make sure that the field isn't empty
-    2.verify that the name doesn't exist already
-    3.Then add the team to the data base along with the unique code
-
-*/
-
-const handleInputSubmit = (value) => {
-  const teamName = value;
-  console.log("Input value: ", teamName);
-  if(teamName == ""){
-    alert("Please enter a valid team name");
+  //generate random code for team
+  const randomString = () => {
+    setDisabled(true);
+    const code = uuidv4();
+    setCode(code)
+    console.log('Team code generated')
+    console.log(code)
+    console.log(teamName);
+    return code;
   }
-  else{
-    validationCreate(teamName);
-  }
-};
 
-const createTeam = (teamName) =>{
-  const code = randomString();
-  console.log(competition_id);
-  axios.post("http://localhost:3002/api/post/create/team",{user_id:userID, team_name:teamName, team_code: code, competition_id:competition_id});
-  console.log(username)
-}
+  /*
+      ! CREATE TEAM
+      1.Make sure that the field isn't empty
+      2.verify that the name doesn't exist already
+      3.Then add the team to the data base along with the unique code
+  
+  */
 
-const validationCreate = (teamName) =>{
-  axios
-  .get("http://localhost:3002/api/get/doesTeamExist/" + teamName)
-  .then(function(response){
-    const teamData = response.data;
-    
-    if (JSON.stringify(teamData) == "[]"){
-      console.log("Team doesn't exist")
-      createTeam(teamName)
+  const handleInputSubmit = (value) => {
+    const teamName = value;
+    console.log("Input value: ", teamName);
+    if (teamName == "") {
+      alert("Please enter a valid team name");
     }
-    else{
-      console.log("team exists")
-      alert("This team name is already taken");
+    else {
+      validationCreate(teamName);
     }
-    
-  });
-}
+  };
 
-/*
-    ! JOIN TEAM
-    1. Make sure the code is not empty
-    2. Get the team name associated with the code, if none, throw error
-    3. Add the user to the team
-*/
-const handleInputSubmit2 = (value) => {
-  const teamCode = value;
-  console.log("Input value: ", teamCode);
-  if(teamCode == ""){
-    alert("Please enter a valid code");
+  const createTeam = (teamName) => {
+    const code = randomString();
+    console.log(userID);
+    console.log(competition_id);
+    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id });
+    console.log(username)
   }
-  else{
-    validationCode(teamCode);
+
+  const validationCreate = (teamName) => {
+    axios
+      .get("http://localhost:3002/api/get/doesTeamExist/" + teamName)
+      .then(function (response) {
+        const teamData = response.data;
+
+        if (JSON.stringify(teamData) == "[]") {
+          console.log("Team doesn't exist")
+          createTeam(teamName)
+        }
+        else {
+          console.log("team exists")
+          alert("This team name is already taken");
+        }
+
+      });
   }
-};
 
-
-const validationCode = (teamCode) =>{
-  axios
-  .get("http://localhost:3002/api/get/codeBelongto/" + teamCode)
-  .then(function(response){
-    const codeResponse = response.data;
-    
-    if (JSON.stringify(codeResponse) == "[]"){
+  /*
+      ! JOIN TEAM
+      1. Make sure the code is not empty
+      2. Get the team name associated with the code, if none, throw error
+      3. Add the user to the team
+  */
+  const handleInputSubmit2 = (value) => {
+    const teamCode = value;
+    console.log("Input value: ", teamCode);
+    if (teamCode == "") {
       alert("Please enter a valid code");
-      
     }
-    else{
-      joinTeam(codeResponse[0].team_name,teamCode);
+    else {
+      validationCode(teamCode);
     }
-    
-  });
-}
+  };
 
-const joinTeam = (teamName,teamCode) =>{
-  axios.post("http://localhost:3002/api/post/addTo/team",{user_id:userID, team_name:teamName, team_code: teamCode, competition_id: competition_id});
-}
+
+  const validationCode = (teamCode) => {
+    axios
+      .get("http://localhost:3002/api/get/codeBelongto/" + teamCode)
+      .then(function (response) {
+        const codeResponse = response.data;
+
+        if (JSON.stringify(codeResponse) == "[]") {
+          alert("Please enter a valid code");
+
+        }
+        else {
+          joinTeam(codeResponse[0].team_name, teamCode);
+        }
+
+      });
+  }
+
+  const joinTeam = (teamName, teamCode) => {
+    axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id });
+  }
 
   return (
     <div className="player-portal-team-container">
@@ -177,7 +178,7 @@ const joinTeam = (teamName,teamCode) =>{
               </div>
             </div>
             <div className="player-portal-team-links-container1">
-            <Link to="/player-portal-home" className="player-portal-team-link">
+              <Link to="/player-portal-home" className="player-portal-team-link">
                 HOME
               </Link>
               <Link to="/player-portal-competitions" className="player-portal-team-link1 Anchor">
@@ -204,9 +205,9 @@ const joinTeam = (teamName,teamCode) =>{
         name="Create Team"
         disabled={disabled}
         onClick={handleInputSubmit}
-        code = {"Team Code: "+ code}
+        code={"Team Code: " + code}
       ></TeamInputBox>
-      
+
       <br></br>
       <TeamInputBox
         title="Join a Team"

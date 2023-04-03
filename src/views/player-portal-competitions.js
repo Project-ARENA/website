@@ -2,18 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from "axios";
 import OverflowCard from "../components/OverflowCardPP";
-const userID = localStorage.getItem('userID');
+import Modal from 'react-modal';
+const userID = sessionStorage.getItem('userID');
 import './player-portal-competitions.css'
+import { useState } from 'react';
 
 function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
   const [isFlipped, setIsFlipped] = React.useState(false);
 
-  React.useEffect(() => {
-    axios
+  const fetchCardData = () => {
+    return axios
       .get("http://localhost:3002/api/get/competitions")
       .then((response) => {
-        //console.log(response.data);
+        console.log(response.data);
         const data = response.data.map((data) => ({
           title: data.competition_name,
           views: data.competition_views,
@@ -21,62 +23,39 @@ function GenCards() {
           description: data.competition_info,
           endDate: data.competition_enddate,
         }));
-        
-        // Set isRegistered property after cardsData is populated with data
-        // You need to find out whether the user is registered for a competition or not - Sayf
-        // For now, I'm just gonna do the first one manually as an example
-        // Add the isRegistered header to the cardData object, which holds the string "isRegistered" to the first card
-        const newCardsData = [];
-        
-        // Use Promise.all to wait for all the API requests to finish before updating the state
-        Promise.all(
-          data.map((cardData, index) => {
-            //console.log()
-            //for(let item = 0 ; item < data.length; item++){
-              
-              //data.forEach((item) => {
-    
-              //API to get the competition id
-              return axios
-                .get("http://localhost:3002/api/get/competitionID/" + data[index].title)
-                .then(function(response){
-                  //console.log(data[index].title)
-                  //console.log(response.data);
-                  const competition_id = response.data[0].competition_id;
-                  //console.log(competition_id);
-                  //API to see if the user is registered for the competition
-                  return axios
-                    .get("http://localhost:3002/api/get/isRegistered/" + competition_id + "/" + userID)
-                    .then(function(response){
-                      //console.log("I made it here")
-                      const userExists = response.data;
-                      //console.log(response.data);
-                      if (JSON.stringify(userExists) == "[]"){
-                        newCardsData.push(cardData);
-                      }
-                      else{
-                        //console.log("I am registered for this");
-                        newCardsData.push({ ...cardData, isRegistered: true });
-                      }
-                    });
-                });
-                
-            //}
-            
-            // Remove the following code since it is not needed anymore
-            // if (index == 0) {
-            //   return { ...cardData, isRegistered: true };
-            // } else {
-            //   return cardData;
-            // }
-          })
-        ).then(() => {
-          // Now that all the API requests have finished, update the state
-          setCardsData(newCardsData);
-        });
+        return data;
+      });
+  };
+
+  const fetchRegisterData = (userID, cardsData) => {
+    return axios
+      .get(`http://localhost:3002/api/get/competition/registered/${userID}`)
+      .then((response) => {
+        console.log(response.data);
+        const registeredComps = response.data.map((data) => data.competition_id);
+        const newCardsData = [...cardsData];
+        for (let i = 0; i < newCardsData.length; i++) {
+          if (registeredComps.includes(i + 1)) {
+            newCardsData[i].isRegistered = true;
+          } else {
+            newCardsData[i].isRegistered = false;
+          }
+        }
+        return newCardsData;
+      });
+  };
+
+  React.useEffect(() => {
+    fetchCardData()
+      .then((data) => fetchRegisterData(userID, data))
+      .then((newCardsData) => {
+        setCardsData(newCardsData);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
-  
+
 
   //views of card
   const handleCardClick = (index) => {
@@ -106,19 +85,31 @@ function GenCards() {
     if (cardsData[index].isRegistered) {
       console.log(`User is already registered for card ${index}`);
       // Can use API route to leave competition
+      axios
+        .post("http://localhost:3002/api/post/leave/team", {
+          competition_id: index + 1,
+          user_id: userID,
+        })
+        .then((response) => {
+          console.log(response);
+        });
+
+      const newCardsData = [...cardsData];
+      newCardsData[index].isRegistered = false;
+      setCardsData(newCardsData);
     } else {
       console.log(`User is not registered for card ${index}`);
       axios
-                .get("http://localhost:3002/api/get/competitionIDGlobal/" + cardsData[index].title)
-                .then(function(response){
-                  console.log(response.data[0].competition_id);
-                  const compID = response.data[0].competition_id;
-                  sessionStorage.setItem('CompID', compID);
-                  setTimeout(function () {
-                    window.location.href = 'http://localhost:3000/player-portal-team';
-                  }, 1000);
-                });
-      
+        .get("http://localhost:3002/api/get/competitionIDGlobal/" + cardsData[index].title)
+        .then(function (response) {
+          console.log(response.data[0].competition_id);
+          const compID = response.data[0].competition_id;
+          sessionStorage.setItem('CompID', compID);
+          setTimeout(function () {
+            window.location.href = 'http://localhost:3000/player-portal-team';
+          }, 1000);
+        });
+
       //console.log(cardsData[index].title);
       // Can use API route to join competition
       //Need to keep track of the competition_id
@@ -155,6 +146,7 @@ function GenCards() {
 }
 
 const PlayerPortalCompetitions = (props) => {
+
   return (
     <div className="player-portal-competitions-container">
       <div
@@ -243,10 +235,6 @@ const PlayerPortalCompetitions = (props) => {
           </div>
         </div>
       </div>
-      <div className="player-portal-competitions-section-separator"></div>
-      <div className="player-portal-competitions-section-separator1"></div>
-      <div className="player-portal-competitions-section-separator2"></div>
-      <div className="player-portal-competitions-section-separator3"></div>
       {/* The OverFlow cards, leave some space */}
       <br />
       <GenCards />

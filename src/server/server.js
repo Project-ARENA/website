@@ -179,25 +179,25 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
 });
 !
 
-//! Route to create a team
-app.post("/api/post/create/team", (req, res) => {
-  const user_id = req.body.user_id;
-  const team_name = req.body.team_name;
-  const team_code = req.body.team_code;
-  const competition_id = req.body.competition_id;
+  //! Route to create a team
+  app.post("/api/post/create/team", (req, res) => {
+    const user_id = req.body.user_id;
+    const team_name = req.body.team_name;
+    const team_code = req.body.team_code;
+    const competition_id = req.body.competition_id;
 
-  db.query(
-    "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id) VALUES (?, ?, ?, 1, ?);",
-    [user_id, team_name, team_code, competition_id],
-    (err, result) => {
-      if (err) {
-        res.send(err);
-        console.log(err);
+    db.query(
+      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id) VALUES (?, ?, ?, 1, ?);",
+      [user_id, team_name, team_code, competition_id],
+      (err, result) => {
+        if (err) {
+          res.send(err);
+          console.log(err);
+        }
+        console.log(result);
       }
-      console.log(result);
-    }
-  );
-});
+    );
+  });
 
 //!Route to check if the team name already exists
 //* Returns [] if DNE, else returns something
@@ -357,6 +357,37 @@ app.get("/api/get/competitionIDGlobal/:competition_name", (req, res) => {
       }
       res.send(result)
     });
+});
+
+// Route to get the all competitions a user is registered for
+app.get("/api/get/competition/registered/:user_id", (req, res) => {
+
+  const user_id = req.params.user_id;
+  db.query("SELECT competition_id from team_details WHERE user_id = ?;", user_id,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
+// Route to leave a team
+app.post("/api/post/leave/team", (req, res) => {
+  const user_id = req.body.user_id;
+  const competition_id = req.body.competition_id;
+
+  db.query(
+    "DELETE FROM team_details WHERE user_id = ? AND competition_id = ?;",
+    [user_id, competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
 });
 
 //!Type above this
