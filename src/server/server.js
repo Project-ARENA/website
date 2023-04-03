@@ -86,7 +86,7 @@ app.post("/api/post/login", (req, res) => {
   );
 });
 
-//!Route to get competitions
+//Route to get competitions
 app.get("/api/get/competitions", (req, res) => {
   db.query("SELECT * FROM competition_details", (err, result) => {
     if (err) {
@@ -184,10 +184,11 @@ app.post("/api/post/create/team", (req, res) => {
   const user_id = req.body.user_id;
   const team_name = req.body.team_name;
   const team_code = req.body.team_code;
+  const competition_id = req.body.competition_id;
 
   db.query(
-    "INSERT INTO team_details (user_id, team_name, team_code,team_captain) VALUES (?, ?, ?, 1);",
-    [user_id, team_name, team_code],
+    "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id) VALUES (?, ?, ?, 1, ?);",
+    [user_id, team_name, team_code, competition_id],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -246,10 +247,11 @@ app.post("/api/post/addTo/team", (req, res) => {
   const user_id = req.body.user_id;
   const team_name = req.body.team_name;
   const team_code = req.body.team_code;
+  const competition_id = req.body.competition_id;
 
   db.query(
-    "INSERT INTO team_details (user_id, team_name, team_code) VALUES (?, ?, ?);",
-    [user_id, team_name, team_code],
+    "INSERT INTO team_details (user_id, team_name, team_code, competition_id) VALUES (?, ?, ?,?);",
+    [user_id, team_name, team_code, competition_id],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -304,6 +306,57 @@ app.post("/api/post/updateDetails", (req, res) => {
       console.log(result);
     }
   );
+});
+
+//Route to get all teams
+app.get("/api/get/teams", (req, res) => {
+  db.query("SELECT * FROM team_details", (err, result) => {
+    if (err) {
+      res.send(err);
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+
+//! Route to get the competitionIid
+app.get("/api/get/competitionID/:competition_name", (req, res) => {
+
+  const competition_name = req.params.competition_name;
+  db.query("SELECT competition_id from competition_details WHERE competition_name = ?;", competition_name,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//! Route to see if the user is registered for the competition
+app.get("/api/get/isRegistered/:competition_id/:user_id", (req, res) => {
+
+  const competition_id = req.params.competition_id;
+  const user_id = req.params.user_id;
+  db.query("SELECT * from team_details WHERE competition_id = ? AND user_id = ?;", [competition_id, user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
+});
+
+//! Route to get the competitionIid
+app.get("/api/get/competitionIDGlobal/:competition_name", (req, res) => {
+
+  const competition_name = req.params.competition_name;
+  db.query("SELECT competition_id from competition_details WHERE competition_name = ?;", competition_name,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    });
 });
 
 //!Type above this

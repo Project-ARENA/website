@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import './player-portal-team.css'
 const username = localStorage.getItem('username');
 const userID = localStorage.getItem('userID');
+const competition_id = sessionStorage.getItem('CompID');
 
 const PlayerPortalTeam = (props) => {
 
@@ -50,7 +51,8 @@ const handleInputSubmit = (value) => {
 
 const createTeam = (teamName) =>{
   const code = randomString();
-  axios.post("http://localhost:3002/api/post/create/team",{user_id:userID, team_name:teamName, team_code: code});
+  console.log(competition_id);
+  axios.post("http://localhost:3002/api/post/create/team",{user_id:userID, team_name:teamName, team_code: code, competition_id:competition_id});
   console.log(username)
 }
 
@@ -108,7 +110,7 @@ const validationCode = (teamCode) =>{
 }
 
 const joinTeam = (teamName,teamCode) =>{
-  axios.post("http://localhost:3002/api/post/addTo/team",{user_id:userID, team_name:teamName, team_code: teamCode});
+  axios.post("http://localhost:3002/api/post/addTo/team",{user_id:userID, team_name:teamName, team_code: teamCode, competition_id: competition_id});
 }
 
   return (
