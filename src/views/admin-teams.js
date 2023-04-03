@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import DataGrid from "../components/datagrid";
+import DataGrid from "../components/datagridAdminTeams";
 import axios from "axios";
 import './admin-teams.css'
 
@@ -24,16 +24,7 @@ function GenGrid() {
       });
   }, []);
 
-  const columns = [
-    { field: 'team_code', headerName: 'Team Code', width: 350 },
-    { field: 'user_id', headerName: 'User ID', width: 150 },
-    { field: 'team_captain', headerName: 'Team Captain', width: 150 },
-    { field: 'team_name', headerName: 'Team Name', width: 250 },
-    { field: 'team_score', headerName: 'Team Score', width: 150 },
-    { field: 'competition_id', headerName: 'Competition ID', width: 150 },
-  ];
-
-  return <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+  return <DataGrid rows={rows} pageSize={5} />
 }
 
 const AdminTeams = (props) => {
