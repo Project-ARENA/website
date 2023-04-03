@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import Typewriter from "typewriter-effect";
 import { Helmet } from "react-helmet";
 
 import "./home.css";
@@ -65,7 +65,7 @@ const Home = (props) => {
               </div>
             </div>
             <div className="home-links-container1">
-            <Link to="/" className="home-link">
+              <Link to="/" className="home-link">
                 HOME
               </Link>
               <Link to="/competitions" className="home-link1 Anchor">
@@ -84,10 +84,23 @@ const Home = (props) => {
           </div>
         </div>
       </div>
-      <div className="home-section-separator"></div>
-      <div className="home-section-separator1"></div>
-      <div className="home-section-separator2"></div>
-      <div className="home-section-separator3"></div>
+      <br></br>
+      <Typewriter
+        autoStart={true}
+        loop={false}
+        onInit={(typewriter) => {
+          typewriter
+            .changeDelay(100)
+            .typeString('Welcome fellow warrior!')
+            .pauseFor(100)
+            .deleteChars(15)
+            .typeString('to the Arena!')
+            .pauseFor(100)
+            .deleteAll()
+            .typeString('Project Arena')
+            .start();
+        }}
+      />
     </div>
   );
 };
