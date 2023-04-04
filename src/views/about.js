@@ -32,9 +32,9 @@ const About = (props) => {
               <Link to="/about" className="about-link3 Anchor">
                 ABOUT
               </Link>
-              <Link to="/player-portal-home" className="contact-link4 Anchor">
+              {/* <Link to="/player-portal-home" className="contact-link4 Anchor">
                 PLAYER PORTAL
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className="about-right-side">
