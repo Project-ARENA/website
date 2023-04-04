@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly enzyme 1`] = `
+exports[`Register renders correctly enzyme 1`] = `
 <div
   className="register-container"
 >

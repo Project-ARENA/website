@@ -13,21 +13,11 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => (jest.fn())
 }));
 
-it('renders correctly enzyme', () => {
+it('Register renders correctly enzyme', () => {
   const wrapper = shallow(<Register />)
 
   expect(toJson(wrapper)).toMatchSnapshot();
 });
-
-
-// Testing the checkIfBlank function
-
-// Import the necessary modules
-// const axios = require('axios');
-
-// // Import the function to be tested
-// import { checkIfBlank } from './register.js';
-// //const { checkIfBlank } = require('./register');
 
 // Test suite for validateInput function
 describe('validateInput', () => {

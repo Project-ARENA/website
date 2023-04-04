@@ -4,7 +4,6 @@ import bycrypt from 'bcryptjs';
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-// const bcrypt = require('bcryptjs');
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import "./register.css";
@@ -43,7 +42,7 @@ function validateInput(name, surname, email, username, password, setErrorMessage
   const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
   if (name === "" || surname === "" || email === "" || username === "" || password === "") {
-    alert("Please enter all details");
+    setErrorMessage("Please enter all details");
     return false;
   }
   else if (!emailPattern.test(email)) {
@@ -160,5 +159,4 @@ const Register = (props) => {
   );
 };
 
-//export default Register;
 export { Register, validateInput };
