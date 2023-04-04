@@ -12,6 +12,10 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { DateRangePicker } from 'react-date-range';
 import { PickerOverlay } from 'filestack-react';
 
+import { Calendar } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+
 // const model =()=>{
 //   return(
 //     <div>
@@ -24,14 +28,11 @@ function CompetitionModal() {
   const [visible, setVisible] = useState(false);
   const [compname, setCompname] = useState('');
   const [picture, setPicture] = useState(null);
-
-
 }
-
-
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   React.useEffect(() => {
     axios
@@ -91,6 +92,10 @@ const AdminCompetitions = (props) => {
     setPickerVisible(false); // Hide the picker
   };
 
+  function handleSelect(date){
+    console.log(date); // native Date object
+  };
+
   return (
 
     <div className="admin-competitions-container">
@@ -136,6 +141,13 @@ const AdminCompetitions = (props) => {
                  onChange={(e) => setstart(e.target.value)} 
                 />
                 */}
+
+            <div>
+            <Calendar
+              date={new Date()}
+              onChange={(e) => handleSelect(e.target.value)}
+            />
+            </div>
 
             <div className="admin-competitions-button-container">
               <Button
