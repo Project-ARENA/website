@@ -139,13 +139,13 @@ const AdminCompetitions = (props) => {
           </Modal>
         </div>
 
-        <Button  name="Create Competition"
+        {/* <Button  name="Create Competition"
           onClick={() => {
             setvisible(true)
             console.log("button clicked");
           }}
         // rootClassName="button-root-class-name2"
-        />
+        /> */}
 
       </div>
       <div data-role="Header" className="admin-competitions-navbar-container">
@@ -220,9 +220,19 @@ const AdminCompetitions = (props) => {
         </div>
       </div>
 
+
+
       <div className="grid-container">
         <GenGrid />
       </div>
+
+      <Button  name="Create Competition"
+          onClick={() => {
+            setvisible(true)
+            console.log("button clicked");
+          }}
+        // rootClassName="button-root-class-name2"
+        />
 
     </div>
 
