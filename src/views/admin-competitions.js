@@ -9,12 +9,10 @@ import 'reactjs-popup/dist/index.css';
 import Modal from 'react-modal';
 import { useState } from 'react';
 import InputBoxForInfo from "../components/input-box-for-info";
-import { DateRangePicker } from 'react-date-range';
-import { PickerOverlay } from 'filestack-react';
 
-import { Calendar } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
+import { PickerOverlay } from 'filestack-react';
+import CalenderComp from '../components/CalenderComp.js';
+
 
 // const model =()=>{
 //   return(
@@ -28,6 +26,7 @@ function CompetitionModal() {
   const [visible, setVisible] = useState(false);
   const [compname, setCompname] = useState('');
   const [picture, setPicture] = useState(null);
+  const [Calendar,setCalender] = useState('');
 }
 
 function GenGrid() {
@@ -71,17 +70,7 @@ function GenGrid() {
 
 const AdminCompetitions = (props) => {
   const [compname, setCompname] = useState("");
-  const [picture, setPicture] = useState('');
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: null,
-      key: 'selection'
-    }
-  ]);
-
   const [visible, setvisible] = useState(false)
-
   const [pickerVisible, setPickerVisible] = useState(false);
 
   const handleUploadDone = (res) => {
@@ -91,10 +80,9 @@ const AdminCompetitions = (props) => {
   const handleClosePicker = () => {
     setPickerVisible(false); // Hide the picker
   };
+  
 
-  function handleSelect(date){
-    console.log(date); // native Date object
-  };
+  
 
   return (
 
@@ -110,17 +98,13 @@ const AdminCompetitions = (props) => {
               onChange={(e) => setCompname(e.target.value)}
             />
 
-            <InputBoxForInfo
-              buttonText=""
-              onChange={(e) => setPicture(e.target.value)}
-            />
-
             <Button name="Upload Picture"
               onClick={() => {
                 setPickerVisible(true);
                 console.log("Picker clicked");
               }}
             />
+
             {pickerVisible && (
               <PickerOverlay
                 key="picker-overlay"
@@ -136,18 +120,10 @@ const AdminCompetitions = (props) => {
               />
             )}
 
-            {/* <InputBoxForInfo
-                 buttonText="YYYY/MM/DD Start date" 
-                 onChange={(e) => setstart(e.target.value)} 
-                />
-                */}
+            <CalenderComp>
 
-            <div>
-            <Calendar
-              date={new Date()}
-              onChange={(e) => handleSelect(e.target.value)}
-            />
-            </div>
+            </CalenderComp>
+               
 
             <div className="admin-competitions-button-container">
               <Button
@@ -163,7 +139,7 @@ const AdminCompetitions = (props) => {
           </Modal>
         </div>
 
-        <Button name="Create Competition"
+        <Button  name="Create Competition"
           onClick={() => {
             setvisible(true)
             console.log("button clicked");
