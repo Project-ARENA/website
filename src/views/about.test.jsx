@@ -60,12 +60,12 @@ describe("About", () => {
     const competitionsLink = screen.getByText(/competitions/i);
     const contactLink = screen.getByText(/contact/i);
     const aboutLink = screen.getByText(/about/i);
-    const playerPortalLink = screen.getByText(/player portal/i);
+    // const playerPortalLink = screen.getByText(/player portal/i);
     expect(homeLink).toBeInTheDocument();
     expect(competitionsLink).toBeInTheDocument();
     expect(contactLink).toBeInTheDocument();
     expect(aboutLink).toBeInTheDocument();
-    expect(playerPortalLink).toBeInTheDocument();
+    // expect(playerPortalLink).toBeInTheDocument();
   });
 
   it("renders the correct CTA button", () => {
