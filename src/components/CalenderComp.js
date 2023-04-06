@@ -52,7 +52,7 @@ function handleSelect(date){
       value={range[0] ? `${format(range[0].startDate, "MM-dd-yyyy")} to ${format(range[0].endDate, "MM-dd-yyyy")}` : ""}
       readOnly
       className="inputBox"
-      style={{ border: "1px solid black", width: "auto" }}
+      style={{ border: "1px solid black", width: 225 }}
       placeholder={!range[0] && "Click to Select a date"}
       onClick={() => setOpen(open => !open)}
     />

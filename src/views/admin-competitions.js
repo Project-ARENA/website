@@ -139,13 +139,6 @@ const AdminCompetitions = (props) => {
           </Modal>
         </div>
 
-        {/* <Button  name="Create Competition"
-          onClick={() => {
-            setvisible(true)
-            console.log("button clicked");
-          }}
-        // rootClassName="button-root-class-name2"
-        /> */}
 
       </div>
       <div data-role="Header" className="admin-competitions-navbar-container">
