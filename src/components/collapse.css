@@ -1,0 +1,16 @@
+.Accordion__container {
+    margin: 100px 0;
+  }
+  
+  .Accordion__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+  }
+  
+  .Accordion__content {
+    padding: 12px 16px;
+  }

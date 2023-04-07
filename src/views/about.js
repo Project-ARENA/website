@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import AccordionContent from "../components/collapse";
+
 
 import "./about.css";
 
@@ -68,6 +70,16 @@ const About = (props) => {
       <div className="about-section-separator1"></div>
       <div className="about-section-separator2"></div>
       <div className="about-section-separator3"></div>
+
+      <AccordionContent title="Create Competition" content= "wnfiwenfiwe" />
+                
+      
+              
+              
+
+
+
+            
     </div>
   );
 };
