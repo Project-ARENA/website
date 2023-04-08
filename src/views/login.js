@@ -149,4 +149,4 @@ const handleLogin = () =>{
   );
 };
 
-export default Login;
+export { Login };
