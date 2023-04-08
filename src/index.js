@@ -4,16 +4,16 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "./style.css";
 import Contact from "./views/contact";
-import {Register} from "./views/register";
+import { Register } from "./views/register";
 import TEST from "./views/test";
 import Home from "./views/home";
-import Login from "./views/login";
+import { Login } from "./views/login";
 import Competitions from "./views/competitions";
 import About from './views/about'
 import AdminHome from './views/admin-home'
 import AdminTeams from './views/admin-teams'
 import AdminCompetitions from './views/admin-competitions'
-import AdminProfile from './views/admin-profile'
+import { AdminProfile } from './views/admin-profile'
 import PlayerPortalHome from './views/player-portal-home'
 import PlayerPortalTeam from './views/player-portal-team'
 import PlayerPortalCompetitions from './views/player-portal-competitions'

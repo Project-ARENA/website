@@ -225,4 +225,4 @@ const AdminProfile = (props) => {
   )
 }
 
-export default AdminProfile
+export { AdminProfile };
