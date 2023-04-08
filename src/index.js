@@ -19,6 +19,11 @@ import PlayerPortalTeam from './views/player-portal-team'
 import PlayerPortalCompetitions from './views/player-portal-competitions'
 import PlayerPortalContact from './views/player-portal-contact'
 import PlayerPortalProfile from './views/player-portal-profile'
+import ArenaProfile from './views/arena-profile'
+import ArenaSubmissions from './views/arena-submissions'
+import ArenaLeaderboard from './views/arena-leaderboard'
+import ArenaTeam from './views/arena-team'
+
 
 const App = () => {
   return (
@@ -40,6 +45,11 @@ const App = () => {
         <Route component={PlayerPortalCompetitions} exact path="/player-portal-competitions" />
         <Route component={PlayerPortalContact} exact path="/player-portal-contact" />
         <Route component={PlayerPortalProfile} exact path="/player-portal-profile" />
+        <Route component={ArenaProfile} exact path="/arena-profile" />
+        <Route component={ArenaSubmissions} exact path="/arena-submissions" />
+        <Route component={ArenaLeaderboard} exact path="/arena-leaderboard" />
+        <Route component={ArenaTeam} exact path="/arena-team" />
+
       </div>
     </Router>
   );

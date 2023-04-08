@@ -58,10 +58,18 @@ const About = (props) => {
               </div>
             </div>
             <div className="about-links-container1">
-              <span className="about-link4 Anchor">Resources</span>
-              <span className="about-link5 Anchor">Inspiration</span>
-              <span className="about-link6 Anchor">Process</span>
-              <span className="about-link7 Anchor">Our story</span>
+              <Link to="/" className="contact-link">
+                HOME
+              </Link>
+              <Link to="/competitions" className="contact-link1 Anchor">
+                COMPETITIONS
+              </Link>
+              <Link to="/contact" className="contact-link2 Anchor">
+                CONTACT
+              </Link>
+              <Link to="/about" className="contact-link3 Anchor">
+                ABOUT
+              </Link>
             </div>
           </div>
         </div>
@@ -72,13 +80,6 @@ const About = (props) => {
       <div className="about-section-separator3"></div>
 
       <AccordionContent title="Create Competition" content= "wnfiwenfiwe" />
-                
-      
-              
-              
-
-
-
             
     </div>
   );
