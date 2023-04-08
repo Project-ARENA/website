@@ -87,15 +87,16 @@ describe("About", () => {
     const mobileMenuButton = screen.getByTestId("MobileMenu-container");
     expect(mobileMenuButton).toBeInTheDocument();
     mobileMenuButton.click();
-    const resourcesLink = screen.getByText(/resources/i);
-    const inspirationLink = screen.getByText(/inspiration/i);
-    const processLink = screen.getByText(/process/i);
-    const ourStoryLink = screen.getByText(/our story/i);
+    const homeLink = screen.getByText(/home/i);
+    const competitionsLink = screen.getByText(/competitions/i);
+    const contactLink = screen.getByText(/contact/i);
+    const aboutLink = screen.getByText(/about/i);
     const closeMenuButton = screen.getByTestId("CloseMobileMenu-container");
-    expect(resourcesLink).toBeInTheDocument();
-    expect(inspirationLink).toBeInTheDocument();
-    expect(processLink).toBeInTheDocument();
-    expect(ourStoryLink).toBeInTheDocument();
+    expect(homeLink).toBeInTheDocument();
+    expect(competitionsLink).toBeInTheDocument();
+    expect(contactLink).toBeInTheDocument();
+    expect(aboutLink).toBeInTheDocument();
     expect(closeMenuButton).toBeInTheDocument();
   });
 });
+
