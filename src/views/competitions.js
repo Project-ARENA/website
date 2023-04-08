@@ -167,24 +167,6 @@ function InActiveGenCards() {
       });
   };
 
-  // const fetchActiveData = (cardsData) => {
-  //   const CompsendDates = cardsData.map((data) => data.endDate);
-  //   const newCardsData = [...cardsData];
-  //   for (let i = 0; i < newCardsData.length; i++) {
-  //     const sdate = GetDateDifference(new Date(CompsendDates[i]), GetDate());
-  //     console.log(sdate);
-  //     if (GetDateDifference(new Date(CompsendDates[i]), GetDate())) {
-  //       newCardsData[i].isendDate = true;
-  //     } else {
-  //       newCardsData[i].isendDate = false;
-  //     }
-  //   }
-    
-  //   console.log(CompsendDates);
-  //   console.log(newCardsData);
-  //   return newCardsData;
-  // };
-
   const fetchInactiveData = (cardsData) => {
     const newCardsData = [...cardsData];
     const now = GetDate();
@@ -207,21 +189,6 @@ function InActiveGenCards() {
         console.log(error);
       });
   }, []);
-
-  // React.useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3002/api/get/competitions")
-  //     .then((response) => {
-  //       const data = response.data.map((data) => ({
-  //         title: data.competition_name,
-  //         views: data.competition_views,
-  //         image: data.competition_image,
-  //         description: data.competition_info,
-  //         endDate: data.competition_enddate,
-  //       }));
-  //       setCardsData(data);
-  //     });
-  // }, []);
 
   const handleCardClick = (index) => {
     setIsFlipped(true);
@@ -266,8 +233,6 @@ function InActiveGenCards() {
     </div>
   );
 }
-
-
 
 
 
