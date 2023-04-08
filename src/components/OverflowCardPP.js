@@ -7,7 +7,7 @@ import Typography from "@mui/joy/Typography";
 import Button from '../components/button'
 
 export default function OverflowCardPP(props) {
-  const { image, title, description, views, endDate, onClick, isRegistered, onButtonClick } = props;
+  const { image, title, description, views, endDate, onClick, isRegistered, onButton1Click, onButton2Click } = props;
   const [transform, setTransform] = React.useState("");
   const [flipped, setFlipped] = React.useState(false);
 
@@ -30,9 +30,14 @@ export default function OverflowCardPP(props) {
     onClick();
   };
 
-  const handleBtnClick = (event) => {
+  const handleBtn1Click = (event) => {
     event.stopPropagation();
-    onButtonClick();
+    onButton1Click();
+  };
+
+  const handleBtn2Click = (event) => {
+    event.stopPropagation();
+    onButton2Click();
   };
 
   const frontStyles = {
@@ -119,8 +124,17 @@ export default function OverflowCardPP(props) {
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
             <Button
               name={isRegistered ? "Leave" : "Register Now"}
-              onClick={handleBtnClick}
+              onClick={handleBtn1Click}
             />
+          </div>
+          <br></br>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}> 
+            {isRegistered &&
+            <Button
+              name = "Enter Arena"
+              onClick={handleBtn2Click}
+            />
+            }
           </div>
 
         </CardOverflow>

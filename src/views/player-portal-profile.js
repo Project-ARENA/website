@@ -5,7 +5,76 @@ import axios from 'axios';
 
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
-import './player-portal-profile.css'
+import './player-portal-profile.css';
+
+// Update user details in database
+function putUserDetails (userID, newEmail, newUsername, newPassword) {
+  axios
+    .post("http://localhost:3002/api/post/updateDetails", 
+    {user_id: userID, user_email: newEmail, user_nickname: newUsername, user_password: newPassword});
+}
+
+// Ensures all detail fields are valid
+function checkIfDetailsValid (newEmail, newUsername, password, newPassword) {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+  //If fields empty, warn
+  if(newEmail == "" || newUsername == ""){
+    alert("Email and Username cannot be empty");
+    return false;
+  }
+  else if (password == "") {
+    alert("Current Password Required")
+    return false;
+  }
+
+  //not empty
+  else if (newEmail != "" || newUsername != "" || password != "") {
+    //email not corect format
+    if(!emailPattern.test(newEmail)){
+      alert("Please enter a valid email");
+      return false;
+    }
+    //password not correct format
+    if(!passwordPattern.test(newPassword) && newPassword != ""){
+      alert("Please enter a stronger password");
+      return false;
+    }
+  }
+  return true;
+}
+
+// Handles different update cases
+function update (password, oldPassword, newPassword, confirmPassword, userID, newEmail, newUsername) {
+  bycrypt.compare(password, oldPassword, function (error, isMatch) {
+    if (isMatch) {
+      // Password not changed
+      if ((newPassword == confirmPassword) && (newPassword == "" && confirmPassword == "") && checkIfDetailsValid(newEmail, newUsername, password, newPassword)) {
+        putUserDetails(userID, newEmail, newUsername, oldPassword);
+        alert("Email and username updated");
+        window.location.href = 'http://localhost:3000/player-portal-home'
+      }
+      // Password changed and new passwords matches confirmed password 
+      else if ((newPassword == confirmPassword) && (newPassword != "" && confirmPassword != "") && checkIfDetailsValid(newEmail, newUsername, password, newPassword)) {
+        const salt = bycrypt.genSaltSync(10);
+        let hashedNewPassword = bycrypt.hashSync(newPassword,salt);
+        putUserDetails(userID, newEmail, newUsername, hashedNewPassword);
+        alert("Details updated")
+        window.location.href = 'http://localhost:3000/player-portal-home'
+      } 
+      // New password doesn't match confirmed password
+      else if ((newPassword != confirmPassword) && checkIfDetailsValid(newEmail, newUsername, password, newPassword)){
+        alert("Passwords do not match");
+      }
+    }
+    else {
+      if (checkIfDetailsValid(newEmail, newUsername, password, newPassword)) {
+        alert("Incorrect Current Password");
+      }
+    }
+  });
+}
 
 const PlayerPortalProfile = (props) => {
   // Get the username, userID, userpassword and useremail from local storage
@@ -19,80 +88,15 @@ const PlayerPortalProfile = (props) => {
   let [newUsername, setNewUsername] = useState("");
   let [newEmail, setNewEmail] = useState("");
 
-  const salt = bycrypt.genSaltSync(10);
-  let hashedNewPassword = "";
+  const handleSubmit = event => {
+    event.preventDefault();
+    update(password, oldPassword, newPassword, confirmPassword, userID, newEmail, newUsername);
+  };
   
   // Get user_email from database
   const setUserDetails = () => {
         setNewUsername(username);
         setNewEmail(email);
-  }
-
-  // Update user details in database
-  const putUserDetails = (newEmail, newUsername, newPassword) => {
-    axios
-      .post("http://localhost:3002/api/post/updateDetails", {user_id: userID, user_email: newEmail, user_nickname: newUsername, user_password: newPassword});
-  }
-
-  // Ensures all detail fields are valid
-  const checkIfDetailsValid = () => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
-    //If fields empty, warn
-    if(newEmail == "" || newUsername == ""){
-      alert("Email and Username cannot be empty");
-      return false;
-    }
-    else if (password == "") {
-      alert("Current Password Required")
-      return false;
-    }
-
-    //not empty
-    else if (newEmail != "" || newUsername != "" || password != "") {
-      //email not corect format
-      if(!emailPattern.test(newEmail)){
-        alert("Please enter a valid email");
-        return false;
-      }
-      //password not correct format
-      if(!passwordPattern.test(password)){
-        alert("Please enter a stronger password");
-        return false;
-      }
-    }
-    return true;
-  }
-
-  // Handles different update cases
-  const update = () => {
-    bycrypt.compare(password, oldPassword, function (error, isMatch) {
-      if (isMatch) {
-        // Password not changed
-        if ((newPassword == confirmPassword) && (newPassword == "" && confirmPassword == "") && checkIfDetailsValid()) {
-          putUserDetails(newEmail, newUsername, oldPassword);
-          alert("Email and username updated")
-        }
-        // Password changed and new passwords matches confirmed password 
-        else if ((newPassword == confirmPassword) && (newPassword != "" && confirmPassword != "") && checkIfDetailsValid()) {
-          hashedNewPassword = bycrypt.hashSync(newPassword,salt);
-          putUserDetails(newEmail, newUsername, hashedNewPassword);
-          alert("Details updated")
-        } 
-        // New password doesn't match confirmed password
-        else if ((newPassword != confirmPassword) && checkIfDetailsValid()){
-          alert("Passwords do not match");
-        }
-      }
-      else {
-        if (checkIfDetailsValid()) {
-          alert("Incorrect Current Password");
-        }
-        
-      }
-
-    });
   }
 
   // Allows current details to display when page loads
@@ -192,7 +196,7 @@ const PlayerPortalProfile = (props) => {
       <div className="player-portal-profile-section-separator1"></div>
       <div className="player-portal-profile-section-separator2"></div>
       <div className="player-portal-profile-section-separator3"></div>
-      <div className="player-portal-profile-container3">
+      <div className="player-portal-profile-container3" onSubmit={handleSubmit}>
         <span className="player-portal-profile-text">UPDATE PROFILE</span>
         <InputBoxForInfo
           initialValue={username}
@@ -207,13 +211,13 @@ const PlayerPortalProfile = (props) => {
         >
         </InputBoxForInfo>
         <InputBoxForInfo 
-          buttonText="Current PASSWORD" 
+          buttonText="CURRENT PASSWORD" 
           isPassword
           onChange={(e) => setPassword(e.target.value)}
         >
         </InputBoxForInfo>
         <InputBoxForInfo 
-          buttonText="PASSWORD" 
+          buttonText="NEW PASSWORD" 
           isPassword
           onChange={(e) => setNewPassword(e.target.value)}
         >
@@ -225,10 +229,11 @@ const PlayerPortalProfile = (props) => {
         >
         </InputBoxForInfo>
         <Button
+          type = "submit"
           name="UPDATE"
           onClick={() => {
             console.log("Register button clicked");
-            update();
+            update(password, oldPassword, newPassword, confirmPassword, userID, newEmail, newUsername);
           }}
           rootClassName="button-root-class-name4"
         ></Button>
