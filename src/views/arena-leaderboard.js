@@ -13,6 +13,7 @@ const ArenaLeaderboard = (props) => {
               alt="image"
               src="https://play.teleporthq.io/static/svg/default-img.svg"
               className="arena-leaderboard-image"
+              
             />
             <div
               data-role="BurgerMenu"
