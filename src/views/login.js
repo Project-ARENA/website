@@ -14,68 +14,72 @@ import bycrypt from 'bcryptjs';
     API to get the password associacted with the username -> username might not exist-> throw an error
     call to that API to get the hashed password from the database and then we'll use bcrypt to compare
 */
+const Login = (props) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
-function doAPIStuff(username, user_password) {
-  axios
-    .get("http://localhost:3002/api/get/password/" + username)
-    .then(function (response) {
-      const userData = response.data;
+  const doAPIStuff = () => {
+    axios
+      .get("http://localhost:3002/api/get/password/" + username)
+      .then(function (response) {
+        const userData = response.data;
 
-      if (JSON.stringify(userData) == "[]") {
+        if (JSON.stringify(userData) == "[]") {
+          setErrorMessage('Incorrect username or password');
+        }
+        else {
+          const hashedPassword = userData[0].user_password;
+
+          isValidPass(hashedPassword);
+        }
+
+      });
+  }
+
+  const checkIfAdmin = () => {
+    axios
+      .get("http://localhost:3002/api/get/isAdmin/" + username)
+      .then(function (response) {
+        console.log((response.data)[0].user_admin);
+        if ((response.data)[0].user_admin == "1") {
+          setErrorMessage('Login Successful');
+          setTimeout(function () {
+            window.location.href = 'http://localhost:3000/admin-home';
+          }, 1000);
+          //take him to the admin page
+        }
+        else {
+          console.log("this guy is a normal user");
+          setErrorMessage('Login Successful');
+          setTimeout(function () {
+            window.location.href = 'http://localhost:3000/player-portal-home';
+          }, 1000);
+          //take him to the normal page
+        }
+
+      });
+  }
+
+  const isValidPass = (hashedPassword) => {
+    bycrypt.compare(password, hashedPassword, function (error, isMatch) {
+      if (isMatch) {
+        // Store the username in local storage
+        sessionStorage.setItem('username', username);
+        console.log("The passwords match");
+        setErrorMessage('');
+        checkIfAdmin();
+      }
+      else {
+        //alert("Incorrect Password");
         setErrorMessage('Incorrect username or password');
-      }
-      else {
-        const hashedPassword = userData[0].user_password;
-
-        isValidPass(hashedPassword);
+        console.log("Incorrect Password");
       }
 
     });
-}
+  }
 
-function checkIfAdmin (username) {
-  axios
-    .get("http://localhost:3002/api/get/isAdmin/" + username)
-    .then(function (response) {
-      console.log((response.data)[0].user_admin);
-      if ((response.data)[0].user_admin == "1") {
-        setErrorMessage('Login Successful');
-        setTimeout(function () {
-          window.location.href = 'http://localhost:3000/admin-home';
-        }, 1000);
-        //take him to the admin page
-      }
-      else {
-        console.log("this guy is a normal user");
-        setErrorMessage('Login Successful');
-        setTimeout(function () {
-          window.location.href = 'http://localhost:3000/player-portal-home';
-        }, 1000);
-        //take him to the normal page
-      }
-
-    });
-}
-
-function isValidPass (password, hashedPassword, username) {
-  bycrypt.compare(password, hashedPassword, function (error, isMatch) {
-    if (isMatch) {
-      // Store the username in local storage
-      sessionStorage.setItem('username', username);
-      console.log("The passwords match");
-      setErrorMessage('');
-      checkIfAdmin();
-    }
-    else {
-      //alert("Incorrect Password");
-      setErrorMessage('Incorrect username or password');
-      console.log("Incorrect Password");
-    }
-
-  });
-}
-
-function handleLogin (username, password,) {
+const handleLogin = () =>{
   console.log(
     `Username: ${username}, Password: ${password}`
   );
@@ -96,16 +100,6 @@ function handleLogin (username, password,) {
   
 }
 
-const Login = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    handleLogin();
-  };
-
   return (
     <div className="login-container">
       <Helmet>
@@ -120,9 +114,10 @@ const Login = (props) => {
             </svg>
           </Link>
         </div>
-        <div className="login-container3" onSubmit={handleSubmit}>
+        <div className="login-container3">
           <span className="login-text">LOGIN</span>
           <br></br>
+          
           <InputBoxForInfo
             buttonText="USERNAME"
             onChange={(e) => setUsername(e.target.value)}
@@ -135,7 +130,6 @@ const Login = (props) => {
           <br></br>
           {errorMessage && <div className="error">{errorMessage}</div>}
           <Button
-            type = "submit"
             name="Login"
             onClick={() => {
               console.log("Login button clicked");
@@ -155,4 +149,4 @@ const Login = (props) => {
   );
 };
 
-export {Login, checkIfAdmin};
+export default Login;

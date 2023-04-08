@@ -15,6 +15,8 @@ const PlayerPortalHome = (props) => {
         sessionStorage.setItem('userID', (response.data)[0].user_id);
         sessionStorage.setItem('useremail', (response.data)[0].user_email);
         sessionStorage.setItem('userpassword',(response.data)[0].user_password);
+        setNewUsername(username);
+        setNewEmail(email);
       });
   }
 

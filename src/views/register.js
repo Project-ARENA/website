@@ -76,6 +76,7 @@ function doRegister(name, surname, email, username, password, setErrorMessage) {
   }
 }
 
+
 const Register = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [name, setName] = useState("");
@@ -83,11 +84,6 @@ const Register = (props) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    doRegister(name, surname, email, username, password, setErrorMessage);
-  };
 
   return (
     <div className="register-container">
@@ -105,7 +101,7 @@ const Register = (props) => {
           </svg>
         </Link>
       </div>
-      <div className="register-container5" onSubmit={handleSubmit}>
+      <div className="register-container5">
         <span className="register-text">
           <span>Register</span>
           <br></br>
@@ -141,10 +137,9 @@ const Register = (props) => {
           isPassword
           rootClassName="input-box-for-info-root-class-name5"
         ></InputBoxForInfo>
-        
+
         <br></br>
         <Button
-          type = "submit"
           name="Register"
           onClick={() => {
             console.log("Register button clicked");
