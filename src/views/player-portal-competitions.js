@@ -79,7 +79,7 @@ function GenCards() {
   };
 
   //if card is clicked 
-  const handleButtonClick = (index) => {
+  const handleButton1Click = (index) => {
     console.log(`Button on card ${index} was clicked!`);
     // Check if the card is registered or not
     if (cardsData[index].isRegistered) {
@@ -117,6 +117,11 @@ function GenCards() {
     // Add your functionality for the button click here
   };
 
+  const handleButton2Click = (index) => {
+    window.location.href = 'http://localhost:3000/arena-submissions';
+    console.log(`Enter Arena clicked for card ${index}`)
+  };
+
   return (
     <div
       style={{
@@ -134,8 +139,11 @@ function GenCards() {
           onClick={() => {
             handleCardClick(index);
           }}
-          onButtonClick={() => {
-            handleButtonClick(index);
+          onButton1Click={() => {
+            handleButton1Click(index);
+          }}
+          onButton2Click={() => {
+            handleButton2Click(index);
           }}
           isRegistered={cardData.isRegistered}
           {...cardData}
