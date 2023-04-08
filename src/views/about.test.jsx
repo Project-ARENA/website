@@ -10,9 +10,6 @@ import About from "./about";
 
 describe('About', () => {
 
-
-
-
     it("renders the navbar", () => {
     render(
       <BrowserRouter>
