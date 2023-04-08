@@ -22,7 +22,7 @@ const About = (props) => {
               </svg>
             </div>
             <div className="about-links-container">
-              <Link to="/" className="about-link">
+              <Link to="/" className="about-link" data-text="HOME">
                 HOME
               </Link>
               <Link to="/competitions" className="about-link1 Anchor">
