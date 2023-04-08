@@ -5,6 +5,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import './collapse.css'
+
 
 export default function AccordionContent({ title, content}) {
   return (

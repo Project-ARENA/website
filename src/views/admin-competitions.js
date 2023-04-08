@@ -9,7 +9,6 @@ import 'reactjs-popup/dist/index.css';
 import Modal from 'react-modal';
 import { useState } from 'react';
 import InputBoxForInfo from "../components/input-box-for-info";
-import collapse from "../components/collapse";
 
 import { PickerOverlay } from 'filestack-react';
 import CalenderComp from '../components/CalenderComp.js';
@@ -227,9 +226,6 @@ const AdminCompetitions = (props) => {
           }}
         // rootClassName="button-root-class-name2"
         />
-
-    <collapse title="Create Competition" content= "wnfiwenfiwe" />
-
     </div>
 
   )

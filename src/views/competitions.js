@@ -4,6 +4,7 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import OverflowCard from "../components/OverflowCard";
 import "./competitions.css";
+import AccordionContent from "../components/collapse";
 
 function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
@@ -146,9 +147,12 @@ const Competitions = (props) => {
       <div className="competitions-section-separator2"></div>
       <div className="competitions-section-separator3"></div>
 
+
+
+      <AccordionContent title="Competition" content = <GenCards /> />
       {/* The OverFlow cards, leave some space */}
       <br />
-      <GenCards />
+      {/* <GenCards /> */}
       <br />
     </div>
   );
