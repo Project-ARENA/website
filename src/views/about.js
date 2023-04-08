@@ -58,16 +58,16 @@ const About = (props) => {
               </div>
             </div>
             <div className="about-links-container1">
-              <Link to="/" className="contact-link">
+              <Link to="/" className="contact-link" data-testid = "home">
                 HOME
               </Link>
-              <Link to="/competitions" className="contact-link1 Anchor">
+              <Link to="/competitions" className="contact-link1 Anchor" data-testid = "competitions">
                 COMPETITIONS
               </Link>
-              <Link to="/contact" className="contact-link2 Anchor">
+              <Link to="/contact" className="contact-link2 Anchor" data-testid = "contact">
                 CONTACT
               </Link>
-              <Link to="/about" className="contact-link3 Anchor">
+              <Link to="/about" className="contact-link3 Anchor" data-testid = "about">
                 ABOUT
               </Link>
             </div>
