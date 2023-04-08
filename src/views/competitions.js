@@ -6,14 +6,34 @@ import OverflowCard from "../components/OverflowCard";
 import "./competitions.css";
 import AccordionContent from "../components/collapse";
 
+
+
+const GetDate= ()=>{
+  return new Date();
+  //console.log(CurrentTime);
+}
+
+//Differentiate between 2 dates
+const GetDateDifference = (date1, date2) => {
+  const Difference_In_Time = date2.getTime() - date1.getTime();
+  const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  if(Difference_In_Days > 0) {
+    return true; // competition is active
+  } else {
+    return false; // competition is not active
+  }
+};
+
+//DISPLAY ACTIVE CARDS
 function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
   const [isFlipped, setIsFlipped] = React.useState(false);
 
-  React.useEffect(() => {
-    axios
+  const fetchCardData = () => {
+    return axios
       .get("http://localhost:3002/api/get/competitions")
       .then((response) => {
+        console.log(response.data);
         const data = response.data.map((data) => ({
           title: data.competition_name,
           views: data.competition_views,
@@ -21,9 +41,65 @@ function GenCards() {
           description: data.competition_info,
           endDate: data.competition_enddate,
         }));
-        setCardsData(data);
+        return data;
+      });
+  };
+
+  // const fetchActiveData = (cardsData) => {
+  //   const CompsendDates = cardsData.map((data) => data.endDate);
+  //   const newCardsData = [...cardsData];
+  //   for (let i = 0; i < newCardsData.length; i++) {
+  //     const sdate = GetDateDifference(new Date(CompsendDates[i]), GetDate());
+  //     console.log(sdate);
+  //     if (GetDateDifference(new Date(CompsendDates[i]), GetDate())) {
+  //       newCardsData[i].isendDate = true;
+  //     } else {
+  //       newCardsData[i].isendDate = false;
+  //     }
+  //   }
+    
+  //   console.log(CompsendDates);
+  //   console.log(newCardsData);
+  //   return newCardsData;
+  // };
+
+  const fetchActiveData = (cardsData) => {
+    const newCardsData = [...cardsData];
+    const now = GetDate();
+  
+    const activeCards = newCardsData.filter((card) => {
+      const endDate = new Date(card.endDate);
+      return endDate > now;
+    });
+  
+    return activeCards;
+  };
+
+  React.useEffect(() => {
+    fetchCardData()
+      .then((data) => fetchActiveData(data))
+      .then((newCardsData) => {
+        setCardsData(newCardsData);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
+
+  // React.useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3002/api/get/competitions")
+  //     .then((response) => {
+  //       const data = response.data.map((data) => ({
+  //         title: data.competition_name,
+  //         views: data.competition_views,
+  //         image: data.competition_image,
+  //         description: data.competition_info,
+  //         endDate: data.competition_enddate,
+  //       }));
+  //       setCardsData(data);
+  //     });
+  // }, []);
 
   const handleCardClick = (index) => {
     setIsFlipped(true);
@@ -68,6 +144,132 @@ function GenCards() {
     </div>
   );
 }
+
+
+//DISPLAY INACTIVE CARDS
+function InActiveGenCards() {
+  const [cardsData, setCardsData] = React.useState([]);
+  const [isFlipped, setIsFlipped] = React.useState(false);
+
+  const fetchCardData = () => {
+    return axios
+      .get("http://localhost:3002/api/get/competitions")
+      .then((response) => {
+        console.log(response.data);
+        const data = response.data.map((data) => ({
+          title: data.competition_name,
+          views: data.competition_views,
+          image: data.competition_image,
+          description: data.competition_info,
+          endDate: data.competition_enddate,
+        }));
+        return data;
+      });
+  };
+
+  // const fetchActiveData = (cardsData) => {
+  //   const CompsendDates = cardsData.map((data) => data.endDate);
+  //   const newCardsData = [...cardsData];
+  //   for (let i = 0; i < newCardsData.length; i++) {
+  //     const sdate = GetDateDifference(new Date(CompsendDates[i]), GetDate());
+  //     console.log(sdate);
+  //     if (GetDateDifference(new Date(CompsendDates[i]), GetDate())) {
+  //       newCardsData[i].isendDate = true;
+  //     } else {
+  //       newCardsData[i].isendDate = false;
+  //     }
+  //   }
+    
+  //   console.log(CompsendDates);
+  //   console.log(newCardsData);
+  //   return newCardsData;
+  // };
+
+  const fetchInactiveData = (cardsData) => {
+    const newCardsData = [...cardsData];
+    const now = GetDate();
+  
+    const activeCards = newCardsData.filter((card) => {
+      const endDate = new Date(card.endDate);
+      return endDate <= now;
+    });
+  
+    return activeCards;
+  };
+
+  React.useEffect(() => {
+    fetchCardData()
+      .then((data) => fetchInactiveData(data))
+      .then((newCardsData) => {
+        setCardsData(newCardsData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  // React.useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3002/api/get/competitions")
+  //     .then((response) => {
+  //       const data = response.data.map((data) => ({
+  //         title: data.competition_name,
+  //         views: data.competition_views,
+  //         image: data.competition_image,
+  //         description: data.competition_info,
+  //         endDate: data.competition_enddate,
+  //       }));
+  //       setCardsData(data);
+  //     });
+  // }, []);
+
+  const handleCardClick = (index) => {
+    setIsFlipped(true);
+
+    if (isFlipped) {
+      axios
+        .post("http://localhost:3002/api/post/competition/incViews", {
+          competition_id: index + 1,
+        })
+        .then((response) => {
+          console.log(response);
+        });
+
+      const newCardsData = [...cardsData];
+      newCardsData[index].views += 1;
+      setCardsData(newCardsData);
+
+      setIsFlipped(false);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "16px",
+        maxWidth: "1024px",
+        margin: "0 auto",
+        justifyContent: "center",
+      }}
+    >
+      {cardsData.map((cardData, index) => (
+        <OverflowCard
+          key={index}
+          onClick={() => {
+            handleCardClick(index);
+          }}
+          {...cardData}
+        />
+      ))}
+    </div>
+  );
+}
+
+
+
+
 
 const Competitions = (props) => {
   return (
@@ -149,7 +351,8 @@ const Competitions = (props) => {
 
 
 
-      <AccordionContent title="Competition" content = <GenCards /> />
+      <AccordionContent title="Active Competition" content = <GenCards /> />
+      <AccordionContent title="Inactive Competition" content = <InActiveGenCards /> />
       {/* The OverFlow cards, leave some space */}
       <br />
       {/* <GenCards /> */}
