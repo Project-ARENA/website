@@ -1,9 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import axios from "axios";
+import { useState } from 'react';
 import './arena-submissions.css'
+const competition_id = sessionStorage.getItem('CompID');
+
+
+
 
 const ArenaSubmissions = (props) => {
+  const [title, setTitle] = useState('');
+  const [paragraph, setParagraph] = useState('');
+  //Executes when the page is loaded
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3002/api/get/compDetails/" + competition_id)
+      .then(function (response) {
+        setTitle(response.data[0].competition_name);
+        setParagraph(response.data[0].competition_info);
+      });
+  });
   return (
     <div className="arena-submissions-container">
       <div data-role="Header" className="arena-submissions-navbar-container">
@@ -87,7 +103,12 @@ const ArenaSubmissions = (props) => {
       <div className="arena-submissions-section-separator1"></div>
       <div className="arena-submissions-section-separator2"></div>
       <div className="arena-submissions-section-separator3"></div>
+      <br/>
+      <h1>{title}</h1>
+      <p>{paragraph}</p>
+      <a href="https://cdn.filestackcontent.com/cNR3dX4FRHi6PLeNzeeW" download><u>Download PDF</u></a>
     </div>
+    
   )
 }
 

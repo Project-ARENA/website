@@ -97,7 +97,8 @@ function GenCards() {
       const newCardsData = [...cardsData];
       newCardsData[index].isRegistered = false;
       setCardsData(newCardsData);
-    } else {
+    } 
+    else {
       console.log(`User is not registered for card ${index}`);
       axios
         .get("http://localhost:3002/api/get/competitionIDGlobal/" + cardsData[index].title)
@@ -118,7 +119,17 @@ function GenCards() {
   };
 
   const handleButton2Click = (index) => {
-    window.location.href = 'http://localhost:3000/arena-submissions';
+    axios
+        .get("http://localhost:3002/api/get/competitionIDGlobal/" + cardsData[index].title)
+        .then(function (response) {
+          console.log(response.data[0].competition_id);
+          const compID = response.data[0].competition_id;
+          sessionStorage.setItem('CompID', compID);
+          setTimeout(function () {
+            window.location.href = 'http://localhost:3000/arena-submissions';
+          }, 1000);
+        });
+    //window.location.href = 'http://localhost:3000/arena-submissions';
     console.log(`Enter Arena clicked for card ${index}`)
   };
 
