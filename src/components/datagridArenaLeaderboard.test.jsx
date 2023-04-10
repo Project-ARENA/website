@@ -43,48 +43,83 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CustomDataGrid from './datagridArenaLeaderboard';
 
-test('renders a data grid', () => {
+
+
+describe('CustomDataGrid component', () => {
   const rows = [
-    { id: 1, team_rank: 1, team_name: 'Team A', team_location: 'USA', test_case_1: 100, team_score: 500 },
-    { id: 2, team_rank: 2, team_name: 'Team B', team_location: 'UK', test_case_1: 80, team_score: 400 },
-    { id: 3, team_rank: 3, team_name: 'Team C', team_location: 'Canada', test_case_1: 70, team_score: 350 },
+    { id: 1, team_rank: 1, team_name: 'Team A', team_location: 'Location A', test_case_1: 100, team_score: 500 },
+    { id: 2, team_rank: 2, team_name: 'Team B', team_location: 'Location B', test_case_1: 80, team_score: 400 },
+    { id: 3, team_rank: 3, team_name: 'Team C', team_location: 'Location C', test_case_1: 90, team_score: 300 },
   ];
   const noTests = 1;
   const myTeam = 'Team A';
 
-  const { getByRole, getByText } = render(<CustomDataGrid rows={rows} noTests={noTests} myTeam={myTeam} />);
+  it('renders the data grid with correct columns and rows', () => {
+    const { container } = render(<CustomDataGrid rows={rows} noTests={noTests} myTeam={myTeam} />);
 
-  // Check that the data grid exists
-  const dataGrid = getByRole('grid');
-  expect(dataGrid).toBeInTheDocument();
+    // Check that the DataGrid component renders
+    expect(container.querySelector('.MuiDataGrid-root')).toBeInTheDocument();
 
-  // Check that the column headers are present
-  const rankHeader = getByText('Rank');
-  expect(rankHeader).toBeInTheDocument();
+    // Check that the columns render
+    const columnHeaders = container.querySelectorAll('.MuiDataGrid-columnHeaderTitle');
+    expect(columnHeaders[0]).toHaveTextContent('Rank');
+    expect(columnHeaders[1]).toHaveTextContent('Name');
+    expect(columnHeaders[2]).toHaveTextContent('Location');
+    expect(columnHeaders[3]).toHaveTextContent('Test Case 1');
+    expect(columnHeaders[4]).toHaveTextContent('Team Score');
 
-  const nameHeader = getByText('Name');
-  expect(nameHeader).toBeInTheDocument();
-
-  const locationHeader = getByText('Location');
-  expect(locationHeader).toBeInTheDocument();
-
-  // const testCaseHeader = getByText('Test Case 1');
-  // expect(testCaseHeader).toBeInTheDocument();
-
-  // const scoreHeader = getByText('Team Score');
-  // expect(scoreHeader).toBeInTheDocument();
-
-  // Check that the rows are rendered
-  const teamARow = getByText('Team A');
-  expect(teamARow).toBeInTheDocument();
-
-  const teamBRow = getByText('Team B');
-  expect(teamBRow).toBeInTheDocument();
-
-  const teamCRow = getByText('Team C');
-  expect(teamCRow).toBeInTheDocument();
-
-  // Check that the highlighted row has the correct class name
-  // expect(teamARow).toHaveClass('highlighted-row');
+    // Check that the rows render
+    const rowCells = container.querySelectorAll('.MuiDataGrid-cell');
+    expect(rowCells[0]).toHaveTextContent('1');
+    expect(rowCells[1]).toHaveTextContent('Team A');
+    expect(rowCells[2]).toHaveTextContent('Location A');
+    expect(rowCells[3]).toHaveTextContent('100');
+    expect(rowCells[4]).toHaveTextContent('500');
+  });
 });
+
+// test('renders a data grid', () => {
+//   const rows = [
+//     { id: 1, team_rank: 1, team_name: 'Team A', team_location: 'USA', test_case_1: 100, team_score: 500 },
+//     { id: 2, team_rank: 2, team_name: 'Team B', team_location: 'UK', test_case_1: 80, team_score: 400 },
+//     { id: 3, team_rank: 3, team_name: 'Team C', team_location: 'Canada', test_case_1: 70, team_score: 350 },
+//   ];
+//   const noTests = 1;
+//   const myTeam = 'Team A';
+
+//   const { getByRole, getByText } = render(<CustomDataGrid rows={rows} noTests={noTests} myTeam={myTeam} />);
+
+//   // Check that the data grid exists
+//   const dataGrid = getByRole('grid');
+//   expect(dataGrid).toBeInTheDocument();
+
+//   // Check that the column headers are present
+//   const rankHeader = getByText('Rank');
+//   expect(rankHeader).toBeInTheDocument();
+
+//   const nameHeader = getByText('Name');
+//   expect(nameHeader).toBeInTheDocument();
+
+//   const locationHeader = getByText('Location');
+//   expect(locationHeader).toBeInTheDocument();
+
+//   // const testCaseHeader = getByText('Test Case 1');
+//   // expect(testCaseHeader).toBeInTheDocument();
+
+//   // const scoreHeader = getByText('Team Score');
+//   // expect(scoreHeader).toBeInTheDocument();
+
+//   // Check that the rows are rendered
+//   const teamARow = getByText('Team A');
+//   expect(teamARow).toBeInTheDocument();
+
+//   const teamBRow = getByText('Team B');
+//   expect(teamBRow).toBeInTheDocument();
+
+//   const teamCRow = getByText('Team C');
+//   expect(teamCRow).toBeInTheDocument();
+
+//   // Check that the highlighted row has the correct class name
+//   // expect(teamARow).toHaveClass('highlighted-row');
+// });
 
