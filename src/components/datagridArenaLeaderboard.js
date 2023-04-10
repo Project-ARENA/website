@@ -3,10 +3,9 @@ import Box from '@mui/material/Box';
 import { Button } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 
-export default function CustomDataGrid({ rows, noTests }) {
+import './datagridArenaLeaderboard.css'
 
-    const [clickedRowDelete, setClickedRowDelete] = React.useState();
-    const [clickedRowEdit, setClickedRowEdit] = React.useState();
+export default function CustomDataGrid({ rows, noTests, myTeam }) {
 
     const columns = [
         { field: 'team_rank', headerName: 'Rank', width: 100 },
@@ -18,6 +17,11 @@ export default function CustomDataGrid({ rows, noTests }) {
           })),
         { field: 'team_score', headerName: 'Team Score', width: 150 },
     ];
+
+    // Highlight row based on "team_name" field
+    const getRowClassName = (params) => {
+        return params.row.team_name === myTeam ? 'highlighted-row' : '';
+    };
 
     return (
         <Box sx={{ height: 400, width: '100%' }}>
@@ -32,6 +36,7 @@ export default function CustomDataGrid({ rows, noTests }) {
                     },
                 }}
                 pageSizeOptions={[5]}
+                getRowClassName={getRowClassName} // Add getRowClassName prop
             />
         </Box>
     );

@@ -24,7 +24,7 @@ function GenGrid() {
       });
   }, []);
 
-  return <DataGrid rows={rows} noTests={3} pageSize={5} />
+  return <DataGrid rows={rows} noTests={3} myTeam={"Sayfy Wayfs"} pageSize={5} />
 }
 
 const ArenaLeaderboard = (props) => {
