@@ -118,6 +118,7 @@ function GenCards() {
     // Add your functionality for the button click here
   };
 
+  // Handles "Enter Arena" button click
   const handleButton2Click = (index) => {
     axios
         .get("http://localhost:3002/api/get/competitionIDGlobal/" + cardsData[index].title)
@@ -129,7 +130,6 @@ function GenCards() {
             window.location.href = 'http://localhost:3000/arena-submissions';
           }, 1000);
         });
-    //window.location.href = 'http://localhost:3000/arena-submissions';
     console.log(`Enter Arena clicked for card ${index}`)
   };
 

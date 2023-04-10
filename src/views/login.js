@@ -19,6 +19,12 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Enter key triggers Login button
+  const handleSubmit = event => {
+    event.preventDefault();
+    handleLogin();
+  };
+
   const doAPIStuff = () => {
     axios
       .get("http://localhost:3002/api/get/password/" + username)
@@ -114,7 +120,7 @@ const handleLogin = () =>{
             </svg>
           </Link>
         </div>
-        <div className="login-container3">
+        <div className="login-container3" onSubmit={handleSubmit}>
           <span className="login-text">LOGIN</span>
           <br></br>
           
@@ -130,6 +136,7 @@ const handleLogin = () =>{
           <br></br>
           {errorMessage && <div className="error">{errorMessage}</div>}
           <Button
+            type = "submit"
             name="Login"
             onClick={() => {
               console.log("Login button clicked");

@@ -27,26 +27,26 @@ const ArenaLeaderboard = (props) => {
               <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
             </svg>
             <div className="arena-leaderboard-links-container">
-              <Link to="/player-portal-home" className="arena-leaderboard-link">
+              <Link to="/arena-submissions" className="arena-leaderboard-link">
                 Submissions
               </Link>
               <Link
-                to="/player-portal-competitions"
+                to="/arena-leaderboard"
                 className="arena-leaderboard-link1 Anchor"
               >
                 lEADERBOARD
               </Link>
               <Link
-                to="/player-portal-team"
+                to="/arena-team"
                 className="arena-leaderboard-link2 Anchor"
               >
-                tEAM
+                TEAM
               </Link>
             </div>
           </div>
           <div className="arena-leaderboard-container1">
             <Link
-              to="/player-portal-profile"
+              to="/arena-profile"
               className="arena-leaderboard-navlink"
             >
               <svg viewBox="0 0 1024 1024" className="arena-leaderboard-icon4">
