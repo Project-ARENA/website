@@ -7,8 +7,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, onSubmit, ...other } = props; // Include onSubmit in destructuring
 
+  const handleButtonClick = () => {
+    onSubmit(index); // Call onSubmit function with current tab index
+  };
   return (
     <div
       role="tabpanel"
@@ -20,7 +23,7 @@ function TabPanel(props) {
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={handleButtonClick}>
             Submit
           </Button>
         </Box>
@@ -33,6 +36,7 @@ TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 function a11yProps(index) {
@@ -42,7 +46,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs({ onSubmit, tabCount }) { // Receive onSubmit and tabCount props
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -53,20 +57,25 @@ export default function BasicTabs() {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Submission 1" {...a11yProps(0)} />
-          <Tab label="Submission 2" {...a11yProps(1)} />
-          <Tab label="Submission 3" {...a11yProps(2)} />
+          {Array.from({ length: tabCount }, (_, index) => (
+            <Tab
+              key={index}
+              label={`Submission ${index + 1}`}
+              {...a11yProps(index)}
+            />
+          ))}
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        
-      </TabPanel>
+      {Array.from({ length: tabCount }, (_, index) => (
+        <TabPanel
+          key={index}
+          value={value}
+          index={index}
+          onSubmit={onSubmit} // Pass onSubmit prop
+        >
+          {/* Content for each tab */}
+        </TabPanel>
+      ))}
     </Box>
   );
 }

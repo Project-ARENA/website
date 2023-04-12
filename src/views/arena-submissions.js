@@ -8,8 +8,8 @@ import BasicTabs from "../components/tabs"
 
 const competition_id = sessionStorage.getItem('CompID');
 
-function handleChange(){
-
+function onSubmit(index){
+  console.log("it works?", index+1)
 }
 
 
@@ -118,7 +118,10 @@ const ArenaSubmissions = (props) => {
       <br/>
       <h1>Submit your code here:</h1>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '25vh' }}>
-      <BasicTabs/>
+      <BasicTabs 
+      tabCount = {6}
+      onSubmit={onSubmit}
+      />
       </div>
     </div>
     
