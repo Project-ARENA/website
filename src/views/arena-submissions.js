@@ -117,7 +117,7 @@ const ArenaSubmissions = (props) => {
       <br/>
       <br/>
       <h1>Submit your code here:</h1>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '25vh' }}>
+      <div className ="arena-submissions-tabs">
       <BasicTabs 
       tabCount = {6}
       onSubmit={onSubmit}
