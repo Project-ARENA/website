@@ -1,7 +1,31 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import DataGrid from "../components/datagridArenaLeaderboard";
+import axios from "axios";
 import './arena-leaderboard.css'
+
+function GenGrid() {
+  const [rows, setData] = React.useState([]);
+  // TODO: #5 #4 Change API call to get correct info from db
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3002/api/get/teams")
+      .then((response) => {
+        const data = response.data.map((data, index) => ({
+          id: index + 1,
+          team_code: data.team_code,
+          user_id: data.user_id,
+          team_captain: data.team_captain,
+          team_name: data.team_name,
+          team_score: data.team_score,
+          competition_id: data.competition_id,
+        }));
+        setData(data);
+      });
+  }, []);
+
+  return <DataGrid rows={rows} noTests={3} myTeam={"Sayfy Wayfs"} pageSize={5} />
+}
 
 const ArenaLeaderboard = (props) => {
   return (
@@ -27,26 +51,26 @@ const ArenaLeaderboard = (props) => {
               <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
             </svg>
             <div className="arena-leaderboard-links-container">
-              <Link to="/player-portal-home" className="arena-leaderboard-link">
+              <Link to="/arena-submissions" className="arena-leaderboard-link">
                 Submissions
               </Link>
               <Link
-                to="/player-portal-competitions"
+                to="/arena-leaderboard"
                 className="arena-leaderboard-link1 Anchor"
               >
                 lEADERBOARD
               </Link>
               <Link
-                to="/player-portal-team"
+                to="/arena-team"
                 className="arena-leaderboard-link2 Anchor"
               >
-                tEAM
+                TEAM
               </Link>
             </div>
           </div>
           <div className="arena-leaderboard-container1">
             <Link
-              to="/player-portal-profile"
+              to="/arena-profile"
               className="arena-leaderboard-navlink"
             >
               <svg viewBox="0 0 1024 1024" className="arena-leaderboard-icon4">
@@ -74,20 +98,22 @@ const ArenaLeaderboard = (props) => {
               </div>
             </div>
             <div className="arena-leaderboard-links-container1">
-              <span className="arena-leaderboard-link3 Anchor">Resources</span>
-              <span className="arena-leaderboard-link4 Anchor">
-                Inspiration
-              </span>
-              <span className="arena-leaderboard-link5 Anchor">Process</span>
-              <span className="arena-leaderboard-link6 Anchor">Our story</span>
+            <Link to="/arena-submissions" className="arena-team-link">
+                SUBMISSIONS
+              </Link>
+              <Link to="/arena-leaderboard" className="arena-team-link1 Anchor">
+                LEADERBOARD
+              </Link>
+              <Link to="/arena-teams" className="arena-team-link2 Anchor">
+                TEAMS
+              </Link>
             </div>
           </div>
         </div>
       </div>
-      <div className="arena-leaderboard-section-separator"></div>
-      <div className="arena-leaderboard-section-separator1"></div>
-      <div className="arena-leaderboard-section-separator2"></div>
-      <div className="arena-leaderboard-section-separator3"></div>
+      <div className="grid-container">
+        <GenGrid />
+      </div>
     </div>
   )
 }

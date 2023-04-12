@@ -84,6 +84,7 @@ const Register = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // Enter key triggers Register button
   const handleSubmit = event => {
     event.preventDefault();
     doRegister(name, surname, email, username, password, setErrorMessage);

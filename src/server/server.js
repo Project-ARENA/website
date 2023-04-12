@@ -318,6 +318,16 @@ app.get("/api/get/teams", (req, res) => {
     res.send(result);
   });
 });
+//Route to get all teams
+app.get("/api/get/admin_teams", (req, res) => {
+  db.query("SELECT team_details.team_code, team_details.user_id,team_details.team_name, team_details.team_score, competition_details.competition_name FROM team_details INNER JOIN competition_details ON team_details.competition_id = competition_details.competition_id;", (err, result) => {
+    if (err) {
+      res.send(err);
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
 
 //! Route to get the competitionIid
 app.get("/api/get/competitionID/:competition_name", (req, res) => {
