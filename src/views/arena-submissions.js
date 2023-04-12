@@ -3,12 +3,18 @@ import { Link } from 'react-router-dom'
 import axios from "axios";
 import { useState } from 'react';
 import './arena-submissions.css'
+//import tabs from "../components/tabs"
+import BasicTabs from "../components/tabs"
+
 const competition_id = sessionStorage.getItem('CompID');
 
+function handleChange(){
 
+}
 
 
 const ArenaSubmissions = (props) => {
+  const value = true;
   const [title, setTitle] = useState('');
   const [paragraph, setParagraph] = useState('');
   //Executes when the page is loaded
@@ -106,7 +112,14 @@ const ArenaSubmissions = (props) => {
       <br/>
       <h1>{title}</h1>
       <p>{paragraph}</p>
+      <br/>
       <a href="https://cdn.filestackcontent.com/cNR3dX4FRHi6PLeNzeeW" download><u>Download PDF</u></a>
+      <br/>
+      <br/>
+      <h1>Submit your code here:</h1>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '25vh' }}>
+      <BasicTabs/>
+      </div>
     </div>
     
   )
