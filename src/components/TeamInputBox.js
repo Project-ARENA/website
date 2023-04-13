@@ -28,6 +28,7 @@ export default function TeamInputBox(props) {
             data-testid="team-input"
           />
           <Button
+            data-testid="team-input-box-button"
             className="team-input-box-button"
             name={name}
             disabled = {disabled}

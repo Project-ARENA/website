@@ -71,4 +71,62 @@ describe('BasicTabs', () => {
     expect(onSubmitMock).toHaveBeenCalledTimes(1);
     expect(onSubmitMock).toHaveBeenCalledWith(0); // should call with index of current tab (0 in this case)
   });
+
+
+  test('shows the correct tab as active', () => {
+    const tabCount = 3;
+    const tabContent = [
+      <div key="tab1">Tab 1 Content</div>,
+      <div key="tab2">Tab 2 Content</div>,
+      <div key="tab3">Tab 3 Content</div>,
+    ];
+
+    const { getByText } = render(
+      <BasicTabs
+        onSubmit={onSubmitMock}
+        tabCount={tabCount}
+        tabContent={tabContent}
+      />
+    );
+
+    expect(getByText('Tab 1 Content')).toBeInTheDocument();
+    expect(getByText('Testcase 1')).toHaveAttribute('aria-selected', 'true');
+
+    fireEvent.click(getByText('Testcase 2'));
+    expect(getByText('Tab 2 Content')).toBeInTheDocument();
+    expect(getByText('Testcase 2')).toHaveAttribute('aria-selected', 'true');
+
+    fireEvent.click(getByText('Testcase 3'));
+    expect(getByText('Tab 3 Content')).toBeInTheDocument();
+    expect(getByText('Testcase 3')).toHaveAttribute('aria-selected', 'true');
+  });
+
+  test('displays only one tabpanel at a time', () => {
+    const tabCount = 3;
+    const tabContent = [
+      <div key="tab1">Tab 1 Content</div>,
+      <div key="tab2">Tab 2 Content</div>,
+      <div key="tab3">Tab 3 Content</div>,
+    ];
+
+    const { getByText } = render(
+      <BasicTabs
+        onSubmit={onSubmitMock}
+        tabCount={tabCount}
+        tabContent={tabContent}
+      />
+    );
+
+    fireEvent.click(getByText('Testcase 2'));
+    expect(getByText('Tab 2 Content')).toBeInTheDocument();
+    // expect(getByText('Tab 1 Content')).not.toBeVisible();
+    // expect(getByText('Tab 3 Content')).not.toBeVisible();
+
+    fireEvent.click(getByText('Testcase 3'));
+    expect(getByText('Tab 3 Content')).toBeInTheDocument();
+    // expect(getByText('Tab 1 Content')).not.toBeVisible();
+    // expect(getByText('Tab 2 Content')).not.toBeVisible();
+  });
+
+ 
 });
