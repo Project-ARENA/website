@@ -64,3 +64,7 @@
     margin-bottom: var(--dl-space-space-unit);
     text-transform: uppercase;
   }
+  .team-manager-location-button{
+    align-self: center;
+    margin-top: var(--dl-space-space-fiveunits);
+  }

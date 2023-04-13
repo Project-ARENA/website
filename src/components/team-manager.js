@@ -5,7 +5,7 @@ import InputBoxForInfo from "./input-box-for-info";
 import "./team-manager.css";
 
 export default function TeamManager(props) {
-  const { rootClassName, TeamName,TeamMember1,TeamMember2,TeamMember3,TeamMember4, LName, LonClick,Ldisabled, DName, DonClick,Ddisabled } = props;
+  const { rootClassName, TeamName,TeamMember1,TeamMember2,TeamMember3,TeamMember4, LonClick,Ldisabled, DName, DonClick,Ddisabled } = props;
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {
@@ -30,7 +30,7 @@ export default function TeamManager(props) {
       </select>
       <Button
             className="team-manager-location-button"
-            name={LName}
+            name="Update Location"
             disabled = {Ldisabled}
             onClick={() => LonClick(inputValue)}
         />
