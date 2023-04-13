@@ -414,6 +414,25 @@ app.get("/api/get/compDetails/:comp_id", (req, res) => {
   );
 });
 
+// Route to update team table
+app.post("/api/post/update/team", (req, res) => {
+
+  const team_code = req.body.team_code;
+  const user_id = req.body.user_id;
+  const team_name = req.body.team_name;
+  const team_score = req.body.team_score;
+
+  db.query("UPDATE team_details SET team_name = ?, team_score = ?, user_id = ? WHERE team_code = ?;",
+    [team_name, team_score, user_id, team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
 //!Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

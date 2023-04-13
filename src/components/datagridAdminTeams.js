@@ -4,19 +4,56 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { DataGrid } from '@mui/x-data-grid';
 import Modal from 'react-modal';
 import Button from '../components/button'
-import { positions } from 'react-alert';
+import axios from 'axios';
 
 export default function CustomDataGrid({ rows }) {
 
     const [clickedRowDelete, setClickedRowDelete] = React.useState();
     const [clickedRowEdit, setClickedRowEdit] = React.useState();
-    const [visible, setvisible] = React.useState(false)
+    const [visible, setvisible] = React.useState(false);
+
+    const [teamCode, setTeamCode] = React.useState('');
+    const [userID, setUserID] = React.useState('');
+    const [teamName, setTeamName] = React.useState('');
+    const [teamScore, setTeamScore] = React.useState('');
+    const [competitionName, setCompetitionName] = React.useState('');
 
     const onButtonEdit = (e, row) => {
         e.stopPropagation();
         setClickedRowEdit(row);
+
+        setTeamCode(row.team_code);
+        setUserID(row.user_id);
+        setTeamName(row.team_name);
+        setTeamScore(row.team_score);
+        setCompetitionName(row.competition_name);
+
         setvisible(true);
     };
+
+    const onButtonEditSubmit = async (e) => {
+        console.log(teamCode);
+        console.log(userID);
+        console.log(teamName);
+        console.log(teamScore);
+        console.log(competitionName);
+
+        try {
+            const response = await axios.post('http://localhost:3002/api/post/update/team', {
+                team_code: teamCode,
+                user_id: userID,
+                team_name: teamName,
+                team_score: teamScore
+            });
+            console.log(response.data);
+            setEditCount(editCount + 1);
+            setvisible(false);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
 
     const onButtonDelete = (e, row) => {
         e.stopPropagation();
@@ -62,51 +99,52 @@ export default function CustomDataGrid({ rows }) {
 
             <Modal isOpen={visible} style={{ content: { width: '70%', height: '70%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }, overlay: { zIndex: 1000 } }} >
 
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    height: '100%'
-                }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        height: '100%'
+                    }}>
 
                     <h1>Row selected for edit:</h1>
 
                     <InputBoxForInfo
                         buttonText="Team Code"
                         initialValue={clickedRowEdit ? `${clickedRowEdit.team_code}` : null}
-                        onChange={(e) => setCompname(e.target.value)}
+                        onChange={(e) => setTeamCode(e.target.value)}
                     />
 
                     <InputBoxForInfo
                         buttonText="User ID"
                         initialValue={clickedRowEdit ? `${clickedRowEdit.user_id}` : null}
-                        onChange={(e) => setCompname(e.target.value)}
+                        onChange={(e) => setUserID(e.target.value)}
                     />
 
                     <InputBoxForInfo
                         buttonText="Team Name"
                         initialValue={clickedRowEdit ? `${clickedRowEdit.team_name}` : null}
-                        onChange={(e) => setCompname(e.target.value)}
+                        onChange={(e) => setTeamName(e.target.value)}
                     />
 
                     <InputBoxForInfo
                         buttonText="Team Score"
                         initialValue={clickedRowEdit ? `${clickedRowEdit.team_score}` : null}
-                        onChange={(e) => setCompname(e.target.value)}
+                        onChange={(e) => setTeamScore(e.target.value)}
                     />
 
                     <InputBoxForInfo
                         buttonText="Competition Name"
                         initialValue={clickedRowEdit ? `${clickedRowEdit.competition_name}` : null}
-                        onChange={(e) => setCompname(e.target.value)}
+                        onChange={(e) => setCompetitionName(e.target.value)}
                     />
 
                     <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
                         <Button
                             name="Edit"
-                            onClick={() => {
-                                setvisible(false)
+                            onClick={(e) => {
+                                onButtonEditSubmit(e.target.value);
                                 console.log("Edit button clicked");
                             }}
                         />
