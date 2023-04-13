@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -7,10 +7,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 function TabPanel(props) {
-  const { children, value, index, onSubmit, ...other } = props; // Include onSubmit in destructuring
+  const { children, value, index, onSubmit, ...other } = props;
 
   const handleButtonClick = () => {
-    onSubmit(index); // Call onSubmit function with current tab index
+    onSubmit(index);
   };
   return (
     <div
@@ -46,7 +46,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs({ onSubmit, tabCount }) { // Receive onSubmit and tabCount props
+export default function BasicTabs({ onSubmit, tabCount, tabContent }) { // Receive onSubmit, tabCount, and tabContent props
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -60,7 +60,7 @@ export default function BasicTabs({ onSubmit, tabCount }) { // Receive onSubmit 
           {Array.from({ length: tabCount }, (_, index) => (
             <Tab
               key={index}
-              label={`Submission ${index + 1}`}
+              label={`Testcase ${index + 1}`}
               {...a11yProps(index)}
             />
           ))}
@@ -71,9 +71,10 @@ export default function BasicTabs({ onSubmit, tabCount }) { // Receive onSubmit 
           key={index}
           value={value}
           index={index}
-          onSubmit={onSubmit} // Pass onSubmit prop
+          onSubmit={onSubmit}
         >
-          {/* Content for each tab */}
+          {/* Render content for each tab from the tabContent prop */}
+          {tabContent[index]}
         </TabPanel>
       ))}
     </Box>
