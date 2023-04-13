@@ -20,3 +20,42 @@ describe('NavigationLinks', () => {
     expect(getByText('Link 5')).toBeInTheDocument();
   });
 });
+
+test('renders NavigationLinks component without crashing', () => {
+  render(<NavigationLinks />);
+});
+
+test('renders NavigationLinks component with all props passed in', () => {
+  const props = {
+    rootClassName: 'test-class',
+    text: 'Text',
+    text1: 'Text1',
+    text2: 'Text2',
+    text3: 'Text3',
+    text4: 'Text4',
+  };
+
+  render(<NavigationLinks {...props} />);
+});
+
+test('renders NavigationLinks component with only required props passed in', () => {
+  const props = {
+    text: 'Text',
+  };
+
+  render(<NavigationLinks {...props} />);
+});
+
+test('renders NavigationLinks component with default props when no props are passed in', () => {
+  render(<NavigationLinks />);
+});
+
+test('renders NavigationLinks component with rootClassName prop applied correctly', () => {
+  const props = {
+    rootClassName: 'test-class',
+  };
+
+  const { container } = render(<NavigationLinks {...props} />);
+  expect(container.firstChild).toHaveClass('test-class');
+});
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import NavigationLinks from './navigation-links2';
+import NavigationLinks from './navigation-links1';
 
 describe('NavigationLinks', () => {
   it('should render navigation links with correct text', () => {
@@ -58,4 +58,3 @@ test('renders NavigationLinks component with rootClassName prop applied correctl
   const { container } = render(<NavigationLinks {...props} />);
   expect(container.firstChild).toHaveClass('test-class');
 });
-
