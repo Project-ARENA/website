@@ -45,7 +45,6 @@
     align-self: center;
     text-align: center;
     font-weight: 600;
-    margin-bottom: var(--dl-space-space-unit);
     text-transform: uppercase;
   }
   .team-manager-text5 {
@@ -67,4 +66,10 @@
   .team-manager-location-button{
     align-self: center;
     margin-top: var(--dl-space-space-fiveunits);
+  }
+
+  .button-icons{
+    align-self: center;
+    margin-top: var(--dl-space-space-fiveunits);
+    margin-bottom: var(--dl-space-space-fiveunits);
   }

@@ -95,7 +95,7 @@ const ArenaTeam = (props) => {
     TeamMember4="Team Member 4"
     Ldisabled={disabled}
     LonClick={handleInputSubmit} 
-    Dname="Delete this team"
+    DName="Delete this team"
     Ddisabled={disabled}
     DonClick={handleInputSubmit} 
 />
