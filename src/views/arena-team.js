@@ -1,9 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useState } from "react";
+import TeamManager from '../components/team-manager'
 
 import './arena-team.css'
 
 const ArenaTeam = (props) => {
+
+
+  const [disabled, setDisabled] = useState(false);
+
+  const handleInputSubmit = () => {
+    console.log("Input value: Hello");}
+
+
   return (
     <div className="arena-team-container">
       <div data-role="Header" className="arena-team-navbar-container">
@@ -76,7 +86,31 @@ const ArenaTeam = (props) => {
       <div className="arena-team-section-separator1"></div>
       <div className="arena-team-section-separator2"></div>
       <div className="arena-team-section-separator3"></div>
+
+
+      <TeamManager 
+    TeamName="Team Name"
+    TeamMember1="Team Member 1"
+    TeamMember2="Team Member 2"
+    TeamMember3="Team Member 3"
+    TeamMember4="Team Member 4"
+    Lname="Location"
+    Ldisabled={disabled}
+    LonClick={handleInputSubmit} 
+    Dname="Delete"
+    Ddisabled={disabled}
+    DonClick={handleInputSubmit} 
+/>
+
+
+
+
+
+
+
+
     </div>
+
   )
 }
 
