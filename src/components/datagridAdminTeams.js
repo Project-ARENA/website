@@ -46,7 +46,6 @@ export default function CustomDataGrid({ rows }) {
                 team_score: teamScore
             });
             console.log(response.data);
-            setEditCount(editCount + 1);
             setvisible(false);
         } catch (error) {
             console.error(error);
@@ -55,9 +54,21 @@ export default function CustomDataGrid({ rows }) {
 
 
 
-    const onButtonDelete = (e, row) => {
+    const onButtonDelete = async (e, row) => {
         e.stopPropagation();
         setClickedRowDelete(row);
+
+        try {
+            const response = await axios.post('http://localhost:3002/api/post/remove/team', {
+                user_id: row.user_id,
+                team_code: row.team_code
+            });
+            console.log(response.data);
+            setvisible(false);
+        } catch (error) {
+            console.error(error);
+        }
+
     };
 
     const columns = [
