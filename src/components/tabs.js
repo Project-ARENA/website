@@ -4,7 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Button from "../components/button";
+
 
 function TabPanel(props) {
   const { children, value, index, onSubmit, ...other } = props;
@@ -23,8 +24,10 @@ function TabPanel(props) {
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
-          <Button variant="contained" color="primary" onClick={handleButtonClick}>
-            Submit
+          <Button 
+          name = "Submit"
+          onClick={handleButtonClick}>
+            
           </Button>
         </Box>
       )}
