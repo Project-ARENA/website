@@ -34,13 +34,14 @@ export default function TeamManager(props) {
       <span className="team-manager-location">Location:</span>
 
       {/* Drop down menu */}
-      
+
       <Box sx={{ minWidth: 200 }}>
       <FormControl fullWidth>
         <InputLabel id="simple-select-label">Location</InputLabel>
         <Select
-          labelId="simple-select-label"
-          id="simple-select"
+          data-testid="location-select"
+          labelId="location-select"
+          id="location-select"
           value={location}
           label="Location"
           onChange={handleChange}
