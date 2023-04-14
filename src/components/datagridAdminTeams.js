@@ -5,6 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Modal from 'react-modal';
 import Button from '../components/button'
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 export default function CustomDataGrid({ rows }) {
 
@@ -65,18 +66,35 @@ export default function CustomDataGrid({ rows }) {
         e.stopPropagation();
         setClickedRowDelete(row);
 
-        try {
-            const response = await axios.post('http://localhost:3002/api/post/remove/team', {
-                user_id: row.user_id,
-                team_code: row.team_code
-            });
-            console.log(response.data);
-            setvisible(false);
-        } catch (error) {
-            console.error(error);
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
 
+                axios.post('http://localhost:3002/api/post/remove/team', {
+                    user_id: row.user_id,
+                    team_code: row.team_code
+                });
+
+                Swal.fire(
+                    'Deleted!',
+                    'Row has been deleted.',
+                    'success'
+                ).then(() => {
+                    window.location.reload(false);
+                });
+            }
+        })
     };
+
+
+
 
     const columns = [
         { field: 'team_code', headerName: 'Team Code', width: 350 },
