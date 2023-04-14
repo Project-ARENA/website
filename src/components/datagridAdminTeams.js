@@ -12,16 +12,19 @@ export default function CustomDataGrid({ rows }) {
     const [clickedRowEdit, setClickedRowEdit] = React.useState();
     const [visible, setvisible] = React.useState(false);
 
+    const [rowID, setRowID] = React.useState(null);
     const [teamCode, setTeamCode] = React.useState('');
     const [userID, setUserID] = React.useState('');
     const [teamName, setTeamName] = React.useState('');
     const [teamScore, setTeamScore] = React.useState('');
     const [competitionName, setCompetitionName] = React.useState('');
 
+
     const onButtonEdit = (e, row) => {
         e.stopPropagation();
         setClickedRowEdit(row);
 
+        setRowID(row.id);
         setTeamCode(row.team_code);
         setUserID(row.user_id);
         setTeamName(row.team_name);
@@ -32,6 +35,7 @@ export default function CustomDataGrid({ rows }) {
     };
 
     const onButtonEditSubmit = async (e) => {
+        console.log(rowID);
         console.log(teamCode);
         console.log(userID);
         console.log(teamName);
@@ -46,6 +50,9 @@ export default function CustomDataGrid({ rows }) {
                 team_score: teamScore
             });
             console.log(response.data);
+
+            window.location.reload(false);
+
             setvisible(false);
         } catch (error) {
             console.error(error);
