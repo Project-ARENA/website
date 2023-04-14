@@ -28,8 +28,39 @@ db.connect((err) => {
     process.exit(1);
   } else {
     console.log("Connected to database");
+
+    // Execute functions after certain intervals
+    // setInterval(checkActiveCompetitions, 10000);
   }
 });
+
+const checkActiveCompetitions = () => {
+  // Every 10 seconds
+
+  db.query("SELECT competition_id, competition_enddate, competition_active FROM competition_details", (err, result) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    const currentDate = new Date();
+    result.forEach(row => {
+      const endDate = new Date(row.competition_enddate);
+      if (currentDate > endDate) {
+        row.competition_active = false;
+      } else {
+        row.competition_active = true;
+      }
+      // Update the competition_active flag in the database
+      db.query("UPDATE competition_details SET competition_active = ? WHERE competition_id = ?", [row.competition_active, row.competition_id], (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    });
+    console.log(result);
+  });
+
+}
 
 //!Test route
 app.get("/", (req, res) => {
