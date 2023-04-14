@@ -11,7 +11,8 @@ const ArenaTeam = (props) => {
   const [disabled, setDisabled] = useState(false);
 
   const handleInputSubmit = () => {
-    console.log("Input value: Hello");}
+    console.log("Input value: Hello");
+  }
 
 
   return (
@@ -33,6 +34,9 @@ const ArenaTeam = (props) => {
               <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
             </svg>
             <div className="arena-team-links-container">
+              <Link to="/arena-main" className="arena-main-link">
+                ARENA
+              </Link>
               <Link to="/arena-submissions" className="arena-team-link">
                 Submissions
               </Link>
@@ -87,18 +91,18 @@ const ArenaTeam = (props) => {
       <div className="arena-team-section-separator2"></div>
       <div className="arena-team-section-separator3"></div>
 
-      <TeamManager 
-    TeamName="Team Name"
-    TeamMember1="Team Member 1"
-    TeamMember2="Team Member 2"
-    TeamMember3="Team Member 3"
-    TeamMember4="Team Member 4"
-    Ldisabled={disabled}
-    LonClick={handleInputSubmit} 
-    DName="Delete this team"
-    Ddisabled={disabled}
-    DonClick={handleInputSubmit} 
-/>
+      <TeamManager
+        TeamName="Team Name"
+        TeamMember1="Team Member 1"
+        TeamMember2="Team Member 2"
+        TeamMember3="Team Member 3"
+        TeamMember4="Team Member 4"
+        Ldisabled={disabled}
+        LonClick={handleInputSubmit}
+        DName="Delete this team"
+        Ddisabled={disabled}
+        DonClick={handleInputSubmit}
+      />
 
     </div>
 

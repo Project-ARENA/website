@@ -37,7 +37,7 @@ const ArenaLeaderboard = (props) => {
               alt="image"
               src="https://play.teleporthq.io/static/svg/default-img.svg"
               className="arena-leaderboard-image"
-              
+
             />
             <div
               data-role="BurgerMenu"
@@ -51,6 +51,9 @@ const ArenaLeaderboard = (props) => {
               <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
             </svg>
             <div className="arena-leaderboard-links-container">
+              <Link to="/arena-main" className="arena-main-link">
+                ARENA
+              </Link>
               <Link to="/arena-submissions" className="arena-leaderboard-link">
                 Submissions
               </Link>
@@ -98,7 +101,7 @@ const ArenaLeaderboard = (props) => {
               </div>
             </div>
             <div className="arena-leaderboard-links-container1">
-            <Link to="/arena-submissions" className="arena-team-link">
+              <Link to="/arena-submissions" className="arena-team-link">
                 SUBMISSIONS
               </Link>
               <Link to="/arena-leaderboard" className="arena-team-link1 Anchor">

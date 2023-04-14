@@ -3,72 +3,9 @@ import { Link } from 'react-router-dom'
 import axios from "axios";
 import { useState } from 'react';
 import './arena-submissions.css'
-//import tabs from "../components/tabs"
-import BasicTabs from "../components/tabs"
-import { PickerOverlay } from 'filestack-react';
-
-const competition_id = sessionStorage.getItem('CompID');
-
-// function onSubmit(index){
-//   console.log("it works?", index+1);
-//   setPickerVisible(true);
-// }
 
 
 const ArenaSubmissions = (props) => {
-  /* 
-     ! NEED TO DO THE FOLLOWING:
-     1. Create the database for this:
-        -submission number
-        -competition id
-        -team id
-        -submission score
-      (This way we can know which team has uploaded, for which competition and which submission)
-      2. Create an api to get the submission history
-      2.1 Figure out how to make the submission history go down :(
-      3. Figure out how to organize that based on competition id so i don't have to get shouting from Sayf for making too many API calls
-      4. Create an API to add the link for the teams submission
-      5. Create an api to send the highest score to the team_details table
-      6. Get the competition info pdf thingy
-
-  */
-  const [pickerVisible, setPickerVisible] = useState(false);
-  const submissionString = "Submission 1: 10\nSubmission 2: 1021\nSubmission 3: 102";
-
-  //This stores contents of tab, tab number and index in the array are related
-  
-  const tabContent = [
-    //Bruh this thing so complicated
-    <div key={0}>{submissionString.split("\n").map((line, index) => <div key={index}>{line}</div>)}</div>,
-    'Content for Submission 2',
-    'Content for Submission 3',
-    'Content for Submission 4',
-    'Content for Submission 5',
-    'Content for Submission 6',
-  ];
-  
-  
-  const [title, setTitle] = useState('');
-  const [paragraph, setParagraph] = useState('');
-
-  //Executes when the page is loaded
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:3002/api/get/compDetails/" + competition_id)
-      .then(function (response) {
-        setTitle(response.data[0].competition_name);
-        setParagraph(response.data[0].competition_info);
-      });
-  });
-
-  //Sets the pickerVisible to false, so you can actually click it again
-  const handleClosePicker = () => {
-    setPickerVisible(false); 
-  };
-  //Returns the url for the file uploaded
-  const handleUploadDone = (res) => {
-    console.log(res.filesUploaded[0].url);
-  };
   return (
     <div className="arena-submissions-container">
       <div data-role="Header" className="arena-submissions-navbar-container">
@@ -91,6 +28,9 @@ const ArenaSubmissions = (props) => {
               <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
             </svg>
             <div className="arena-submissions-links-container">
+              <Link to="/arena-main" className="arena-main-link">
+                ARENA
+              </Link>
               <Link to="/arena-submissions" className="arena-submissions-link">
                 Submissions
               </Link>
@@ -152,40 +92,8 @@ const ArenaSubmissions = (props) => {
       <div className="arena-submissions-section-separator1"></div>
       <div className="arena-submissions-section-separator2"></div>
       <div className="arena-submissions-section-separator3"></div>
-      <br/>
-      <h1>{title}</h1>
-      <p>{paragraph}</p>
-      <br/>
-      <a href="https://cdn.filestackcontent.com/cNR3dX4FRHi6PLeNzeeW" download><u>Download PDF</u></a>
-      <br/>
-      <br/>
-      <h1>Submit your code here:</h1>
-      <div className ="arena-submissions-tabs">
-      <BasicTabs 
-      tabContent={tabContent}
-      tabCount = {6}
-      onSubmit={(index)=>{
-        setPickerVisible(true);
-        console.log("index: " + index )
-      }}
-      />
-      {pickerVisible && (
-              <PickerOverlay
-                key="picker-overlay"
-                apikey={process.env.REACT_APP_API_KEY_FILESTACK}
-                onUploadDone={(res) => {
-                  handleUploadDone(res);
-                }}
-                pickerOptions={{
-                  onClose: () => {
-                    handleClosePicker();
-                  }
-                }}
-              />
-            )}
-      </div>
-    </div>
-    
+    </div >
+
   )
 }
 

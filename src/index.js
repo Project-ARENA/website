@@ -23,6 +23,7 @@ import ArenaProfile from './views/arena-profile'
 import ArenaSubmissions from './views/arena-submissions'
 import ArenaLeaderboard from './views/arena-leaderboard'
 import ArenaTeam from './views/arena-team'
+import ArenaMain from './views/arena-main'
 
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
         <Route component={ArenaSubmissions} exact path="/arena-submissions" />
         <Route component={ArenaLeaderboard} exact path="/arena-leaderboard" />
         <Route component={ArenaTeam} exact path="/arena-team" />
+        <Route component={ArenaMain} exact path="/arena-main" />
 
       </div>
     </Router>
