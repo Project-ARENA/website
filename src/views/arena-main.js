@@ -10,6 +10,12 @@ import { PickerOverlay } from 'filestack-react';
 
 const competition_id = sessionStorage.getItem('CompID');
 
+//! Generates a random score when the user submits
+function generateRandomNumber () {
+    const number = Math.floor(Math.random() * 100) + 1; // Generate a random number between 1 and 100
+    return number
+  };
+
 //! Gets the testCases for the competition
 function getCompTestCases(linkForPDF){
     axios
