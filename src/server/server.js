@@ -482,6 +482,21 @@ app.post("/api/post/remove/team", (req, res) => {
   );
 });
 
+//!Route to get competition test cases
+app.get("/api/get/compTestCases/:comp_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  db.query("SELECT competition_testcases from competition_details WHERE competition_id = ?;", comp_id,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
+
+
 //!Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

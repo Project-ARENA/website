@@ -7,12 +7,19 @@ import './arena-main.css'
 import BasicTabs from "../components/tabs"
 import { PickerOverlay } from 'filestack-react';
 
+
 const competition_id = sessionStorage.getItem('CompID');
 
-// function onSubmit(index){
-//   console.log("it works?", index+1);
-//   setPickerVisible(true);
-// }
+//! Gets the testCases for the competition
+function getCompTestCases(linkForPDF){
+    axios
+            .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
+            .then(function (response) {
+                linkForPDF = response.data[0].competition_testcases;
+
+                console.log(linkForPDF)
+            });
+}
 
 
 const ArenaMain = (props) => {
@@ -29,7 +36,10 @@ const ArenaMain = (props) => {
         3. Figure out how to organize that based on competition id so i don't have to get shouting from Sayf for making too many API calls
         4. Create an API to add the link for the teams submission
         5. Create an api to send the highest score to the team_details table
-        6. Get the competition info pdf thingy
+        !DONE
+        6. Get the competition info pdf thingy 
+        !Kinda done, need to ask Sayf how to reload a compnent
+        7. Generate a random score when the user uploads
   
     */
     const [pickerVisible, setPickerVisible] = useState(false);
@@ -37,19 +47,12 @@ const ArenaMain = (props) => {
 
     //This stores contents of tab, tab number and index in the array are related
 
-    const tabContent = [
-        //Bruh this thing so complicated
-        <div key={0}>{maintring.split("\n").map((line, index) => <div key={index}>{line}</div>)}</div>,
-        'Content for Submission 2',
-        'Content for Submission 3',
-        'Content for Submission 4',
-        'Content for Submission 5',
-        'Content for Submission 6',
-    ];
-
-
+    let tabContent = [];
     const [title, setTitle] = useState('');
     const [paragraph, setParagraph] = useState('');
+    let tabIndex = -1;
+    let linkForPDF =""
+    let scoreRandom = 0;
 
     //Executes when the page is loaded
     React.useEffect(() => {
@@ -59,7 +62,11 @@ const ArenaMain = (props) => {
                 setTitle(response.data[0].competition_name);
                 setParagraph(response.data[0].competition_info);
             });
+            
+            //Sets the link for the competition testcases
+            getCompTestCases(linkForPDF);
     });
+
 
     //Sets the pickerVisible to false, so you can actually click it again
     const handleClosePicker = () => {
@@ -159,7 +166,7 @@ const ArenaMain = (props) => {
             <h1>{title}</h1>
             <p>{paragraph}</p>
             <br />
-            <a href="https://cdn.filestackcontent.com/cNR3dX4FRHi6PLeNzeeW" download><u>Download PDF</u></a>
+            <a href={linkForPDF} download><u>Download PDF</u></a>
             <br />
             <br />
             <h1>Submit your code here:</h1>
@@ -169,7 +176,7 @@ const ArenaMain = (props) => {
                     tabCount={6}
                     onSubmit={(index) => {
                         setPickerVisible(true);
-                        console.log("index: " + index)
+                        tabIndex = index;
                     }}
                 />
                 {pickerVisible && (
@@ -193,3 +200,5 @@ const ArenaMain = (props) => {
 }
 
 export default ArenaMain
+
+  

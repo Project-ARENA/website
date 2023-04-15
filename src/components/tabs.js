@@ -25,7 +25,7 @@ function TabPanel(props) {
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
           <Button 
-          name = "Submit"
+          name = "Upload Solution"
           onClick={handleButtonClick}>
             
           </Button>
