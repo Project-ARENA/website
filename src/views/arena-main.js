@@ -6,9 +6,12 @@ import './arena-main.css'
 //import tabs from "../components/tabs"
 import BasicTabs from "../components/tabs"
 import { PickerOverlay } from 'filestack-react';
+import { sub } from 'date-fns';
 
 
 const competition_id = sessionStorage.getItem('CompID');
+const user_id  = sessionStorage.getItem('userID');
+let tabIndex = -1;
 
 //! Generates a random score when the user submits
 function generateRandomNumber () {
@@ -16,21 +19,40 @@ function generateRandomNumber () {
     return number
   };
 
+//!Gets the teamID
+function getTeamID (){
+    axios
+            .get("http://localhost:3002/api/get/team_id/" + competition_id + "/" + user_id)
+            .then(function (response) {
+                sessionStorage.setItem('teamID', response.data[0].team_name);
+            });
+}
+
 //! Gets the testCases for the competition
 function getCompTestCases(linkForPDF){
     axios
             .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
             .then(function (response) {
                 linkForPDF = response.data[0].competition_testcases;
-
                 console.log(linkForPDF)
             });
 }
 
+function uploadSubmissions(subNum,URL){
+    let score = generateRandomNumber();
+    axios.post("http://localhost:3002/api/post/submission", {
+        submission_score: score,
+        submission_number: subNum,
+        submission_link: URL,
+        competition_id: competition_id,
+        team_name: sessionStorage.getItem('teamID')
+  });
+}
 
 const ArenaMain = (props) => {
     /* 
        ! NEED TO DO THE FOLLOWING:
+       !Done
        1. Create the database for this:
           -submission number
           -competition id
@@ -40,6 +62,7 @@ const ArenaMain = (props) => {
         2. Create an api to get the submission history
         2.1 Figure out how to make the submission history go down :(
         3. Figure out how to organize that based on competition id so i don't have to get shouting from Sayf for making too many API calls
+        !Done
         4. Create an API to add the link for the teams submission
         5. Create an api to send the highest score to the team_details table
         !DONE
@@ -49,17 +72,16 @@ const ArenaMain = (props) => {
   
     */
     const [pickerVisible, setPickerVisible] = useState(false);
-    const maintring = "Submission 1: 10\nSubmission 2: 1021\nSubmission 3: 102";
+    
 
     //This stores contents of tab, tab number and index in the array are related
 
     let tabContent = [];
     const [title, setTitle] = useState('');
     const [paragraph, setParagraph] = useState('');
-    let tabIndex = -1;
-    let linkForPDF =""
-    let scoreRandom = 0;
 
+    let linkForPDF =""
+    
     //Executes when the page is loaded
     React.useEffect(() => {
         axios
@@ -71,6 +93,7 @@ const ArenaMain = (props) => {
             
             //Sets the link for the competition testcases
             getCompTestCases(linkForPDF);
+            getTeamID();
     });
 
 
@@ -182,7 +205,8 @@ const ArenaMain = (props) => {
                     tabCount={6}
                     onSubmit={(index) => {
                         setPickerVisible(true);
-                        tabIndex = index;
+                        tabIndex = index+1;
+                        console.log(tabIndex);
                     }}
                 />
                 {pickerVisible && (
@@ -191,6 +215,7 @@ const ArenaMain = (props) => {
                         apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                         onUploadDone={(res) => {
                             handleUploadDone(res);
+                            uploadSubmissions(tabIndex,res.filesUploaded[0].url);
                         }}
                         pickerOptions={{
                             onClose: () => {

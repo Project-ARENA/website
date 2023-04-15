@@ -495,7 +495,40 @@ app.get("/api/get/compTestCases/:comp_id", (req, res) => {
   );
 });
 
+//! Route to get the team_id in that competition
+app.get("/api/get/team_id/:comp_id/:user_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  const user_id = req.params.user_id;
+  db.query("SELECT team_name from team_details WHERE competition_id = ? AND user_id = ?;", [comp_id, user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
 
+//!Route to post the score
+app.post("/api/post/submission", (req, res) => {
+  const submission_score = req.body.submission_score;
+  const submission_number = req.body.submission_number;
+  const submission_link = req.body.submission_link;
+  const competition_id = req.body.competition_id;
+  const team_name = req.body.team_name;
+
+  db.query(
+    "INSERT INTO submissions (submission_score, submission_number, submission_link, competition_id, team_name) VALUES (?,?,?,?,?);",
+    [submission_score, submission_number, submission_link, competition_id, team_name],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
 
 //!Type above this
 app.listen(PORT, () => {
