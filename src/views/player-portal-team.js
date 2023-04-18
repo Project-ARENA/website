@@ -18,6 +18,7 @@ const PlayerPortalTeam = (props) => {
   const [teamName, setInputValue] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(false);
+  const [no_testcases, setNoTests] = useState(0);
 
   //generate random code for team
   const randomString = () => {
@@ -28,6 +29,27 @@ const PlayerPortalTeam = (props) => {
     console.log(code)
     console.log(teamName);
     return code;
+  }
+
+  //get number of test cases
+  function numTestCases () {
+    axios.get("http://localhost:3002/api/get/numTests/" + competition_id)
+    .then(function (response) {
+      setNoTests(response.data[0].no_testcases);
+    });
+  }
+
+  // //create json array for test cases
+  function createJsonArray(numKeys) {
+    const jsonArray = {};
+
+    for (let i = 1; i <= numKeys; i++) {
+      const key = `testcase_${i}`;
+      jsonArray[key] = null; // Set initial value to null
+    }
+
+    const jsonString = JSON.stringify(jsonArray);
+    return jsonString;
   }
 
   /*
@@ -49,11 +71,15 @@ const PlayerPortalTeam = (props) => {
     }
   };
 
+  //get number of test cases
+  numTestCases();
+
   const createTeam = (teamName) => {
     const code = randomString();
     console.log(userID);
     console.log(competition_id);
-    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id });
+    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id});
+    axios.post("http://localhost:3002/api/post/initTests/team", { testcase_latest: createJsonArray(no_testcases), testcase_highest: createJsonArray(no_testcases), team_name: teamName});
     console.log(username)
   }
 
