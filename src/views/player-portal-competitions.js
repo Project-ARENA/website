@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import OverflowCard from "../components/OverflowCardPP";
-import Modal from 'react-modal';
-const userID = sessionStorage.getItem('userID');
-import './player-portal-competitions.css'
-import { useState } from 'react';
+import Modal from "react-modal";
+const userID = sessionStorage.getItem("userID");
+import "./player-portal-competitions.css";
+import { useState } from "react";
 
 function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
@@ -32,7 +32,9 @@ function GenCards() {
       .get(`http://localhost:3002/api/get/competition/registered/${userID}`)
       .then((response) => {
         console.log(response.data);
-        const registeredComps = response.data.map((data) => data.competition_id);
+        const registeredComps = response.data.map(
+          (data) => data.competition_id
+        );
         const newCardsData = [...cardsData];
         for (let i = 0; i < newCardsData.length; i++) {
           if (registeredComps.includes(i + 1)) {
@@ -56,7 +58,6 @@ function GenCards() {
       });
   }, []);
 
-
   //views of card
   const handleCardClick = (index) => {
     setIsFlipped(true);
@@ -78,7 +79,7 @@ function GenCards() {
     }
   };
 
-  //if card is clicked 
+  //if card is clicked
   const handleButton1Click = (index) => {
     console.log(`Button on card ${index} was clicked!`);
     // Check if the card is registered or not
@@ -97,17 +98,19 @@ function GenCards() {
       const newCardsData = [...cardsData];
       newCardsData[index].isRegistered = false;
       setCardsData(newCardsData);
-    } 
-    else {
+    } else {
       console.log(`User is not registered for card ${index}`);
       axios
-        .get("http://localhost:3002/api/get/competitionIDGlobal/" + cardsData[index].title)
+        .get(
+          "http://localhost:3002/api/get/competitionIDGlobal/" +
+            cardsData[index].title
+        )
         .then(function (response) {
           console.log(response.data[0].competition_id);
           const compID = response.data[0].competition_id;
-          sessionStorage.setItem('CompID', compID);
+          sessionStorage.setItem("CompID", compID);
           setTimeout(function () {
-            window.location.href = 'http://localhost:3000/player-portal-team';
+            window.location.href = "http://localhost:3000/player-portal-team";
           }, 1000);
         });
 
@@ -121,20 +124,24 @@ function GenCards() {
   // Handles "Enter Arena" button click
   const handleButton2Click = (index) => {
     axios
-        .get("http://localhost:3002/api/get/competitionIDGlobal/" + cardsData[index].title)
-        .then(function (response) {
-          console.log(response.data[0].competition_id);
-          const compID = response.data[0].competition_id;
-          sessionStorage.setItem('CompID', compID);
-          setTimeout(function () {
-            window.location.href = 'http://localhost:3000/arena-main';
-          }, 1000);
-        });
-    console.log(`Enter Arena clicked for card ${index}`)
+      .get(
+        "http://localhost:3002/api/get/competitionIDGlobal/" +
+          cardsData[index].title
+      )
+      .then(function (response) {
+        console.log(response.data[0].competition_id);
+        const compID = response.data[0].competition_id;
+        sessionStorage.setItem("CompID", compID);
+        setTimeout(function () {
+          window.location.href = "http://localhost:3000/arena-main";
+        }, 1000);
+      });
+    console.log(`Enter Arena clicked for card ${index}`);
   };
 
   return (
     <div
+      data-testid="card"
       style={{
         display: "flex",
         flexWrap: "wrap",
@@ -165,7 +172,6 @@ function GenCards() {
 }
 
 const PlayerPortalCompetitions = (props) => {
-
   return (
     <div className="player-portal-competitions-container">
       <div
@@ -191,22 +197,37 @@ const PlayerPortalCompetitions = (props) => {
               </svg>
             </div>
             <div className="player-portal-competitions-links-container">
-              <Link to="/player-portal-home" className="player-portal-competitions-link">
+              <Link
+                to="/player-portal-home"
+                className="player-portal-competitions-link"
+              >
                 HOME
               </Link>
-              <Link to="/player-portal-competitions" className="player-portal-competitions-link1 Anchor">
+              <Link
+                to="/player-portal-competitions"
+                className="player-portal-competitions-link1 Anchor"
+              >
                 COMPETITIONS
               </Link>
-              <Link to="/player-portal-team" className="player-portal-competitions-link2 Anchor">
+              <Link
+                to="/player-portal-team"
+                className="player-portal-competitions-link2 Anchor"
+              >
                 TEAM
               </Link>
-              <Link to="/player-portal-contact" className="player-portal-competitions-link3 Anchor">
+              <Link
+                to="/player-portal-contact"
+                className="player-portal-competitions-link3 Anchor"
+              >
                 CONTACT US
               </Link>
             </div>
           </div>
           <div className="player-portal-competitions-container1">
-            <Link to="/player-portal-profile" className="player-portal-competitions-navlink">
+            <Link
+              to="/player-portal-profile"
+              className="player-portal-competitions-navlink"
+            >
               <svg
                 viewBox="0 0 1024 1024"
                 className="player-portal-competitions-icon2"
@@ -238,16 +259,28 @@ const PlayerPortalCompetitions = (props) => {
               </div>
             </div>
             <div className="player-portal-competitions-links-container1">
-              <Link to="/player-portal-home" className="player-portal-competitions-link">
+              <Link
+                to="/player-portal-home"
+                className="player-portal-competitions-link"
+              >
                 HOME
               </Link>
-              <Link to="/player-portal-competitions" className="player-portal-competitions-link1 Anchor">
+              <Link
+                to="/player-portal-competitions"
+                className="player-portal-competitions-link1 Anchor"
+              >
                 COMPETITIONS
               </Link>
-              <Link to="/player-portal-team" className="player-portal-competitions-link2 Anchor">
+              <Link
+                to="/player-portal-team"
+                className="player-portal-competitions-link2 Anchor"
+              >
                 TEAM
               </Link>
-              <Link to="/player-portal-contact" className="player-portal-competitions-link3 Anchor">
+              <Link
+                to="/player-portal-contact"
+                className="player-portal-competitions-link3 Anchor"
+              >
                 CONTACT US
               </Link>
             </div>
@@ -258,8 +291,8 @@ const PlayerPortalCompetitions = (props) => {
       <br />
       <GenCards />
       <br />
-    </div >
-  )
-}
+    </div>
+  );
+};
 
-export default PlayerPortalCompetitions
+export default PlayerPortalCompetitions;
