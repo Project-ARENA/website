@@ -18,8 +18,9 @@ export default function TeamInputBox(props) {
     setInputValue(event.target.value);
   };
   const handleChange = (event) => {
-    setLocation(event.target.value);
-    console.log(location);
+    const selectedLocation = event.target.value;
+    setLocation(selectedLocation);
+    console.log(selectedLocation);
   };
 
   return (
