@@ -509,6 +509,20 @@ app.get("/api/get/team_id/:comp_id/:user_id", (req, res) => {
   );
 });
 
+//! Route to get latest test_case 
+app.get("/api/get/testcase_latest/:comp_id/:user_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  const user_id = req.params.user_id;
+  db.query("SELECT testcase_latest from team_details WHERE competition_id = ? AND user_id = ?;", [comp_id, user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
 //!Route to post the score
 app.post("/api/post/submission", (req, res) => {
   const submission_score = req.body.submission_score;

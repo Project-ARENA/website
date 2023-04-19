@@ -13,6 +13,15 @@ const competition_id = sessionStorage.getItem('CompID');
 const user_id  = sessionStorage.getItem('userID');
 let tabIndex = -1;
 
+//Function to set the latest scores
+function getLatestScores(){
+    axios
+            .get("http://localhost:3002/api/get/team_id/" + competition_id + "/" + user_id)
+            .then(function (response) {
+                sessionStorage.setItem('teamID', response.data[0].team_name);
+            });
+}
+
 //! Generates a random score when the user submits
 function generateRandomNumber () {
     const number = Math.floor(Math.random() * 100) + 1; // Generate a random number between 1 and 100
