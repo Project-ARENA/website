@@ -31,7 +31,7 @@ function getLatestScores(){
                 //They have submitted
                 else{
                     const latestString  = response.data[0].testcase_latest;
-                    console.log(response.data[0].testcase_latest);
+                    //console.log(response.data[0].testcase_latest);
                     const jsonArray = JSON.parse(latestString);
 
                     
@@ -42,7 +42,7 @@ function getLatestScores(){
                         count++
                     }
 
-                    console.log(latestSubmissionScores);
+                    //console.log(latestSubmissionScores);
 
                 }
             });
@@ -52,7 +52,7 @@ function getNumTestCases(){
             .get("http://localhost:3002/api/get/numTests/" + competition_id)
             .then(function (response) {
                 numTests = response.data[0].no_testcases;
-                console.log("Number of testcase" + numTests);
+                //console.log("Number of testcase" + numTests);
             });
 }
 
@@ -77,13 +77,67 @@ function getCompTestCases(linkForPDF){
             .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
             .then(function (response) {
                 linkForPDF = response.data[0].competition_testcases;
-                console.log(linkForPDF)
+                //console.log(linkForPDF)
             });
 }
 
-function uploadSubmissions(URL){
+function ScoredHigher() {
+    let isHigher = false;
+    return new Promise((resolve, reject) => {
+      
+      axios.get("http://localhost:3002/api/get/testcase_highest/" + competition_id + "/" + user_id)
+        .then(function (response) {
+          if (response.data[0].testcase_highest == null) {
+            console.log("haven't submitted yet")
+            isHigher = true;
+          } else {
+            console.log("they have submitted before")
+            const latestString = response.data[0].testcase_highest;
+            //console.log(response.data[0].testcase_highest);
+            //console.log(latestSubmissionScores);
+            const jsonArray = JSON.parse(latestString);
+            let highestSub = [];
+            let count = 0;
+            for (let key in jsonArray) {
+              highestSub[count] = jsonArray[key];
+              count++
+            }
+            for (let i = 0; i < latestSubmissionScores.length; i++) {
+                console.log(latestSubmissionScores[i] + " " + highestSub[i])
+              if (latestSubmissionScores[i] > highestSub[i]) {
+                isHigher = true;
+                console.log("Somethign was set to true");
+              }
+            }
+          }
+          resolve(isHigher); // Resolve the promise with the updated value of isHigher
+        })
+        .catch(reject);
+    });
+  }
+
+  async function postHighestScore() {
+    return new Promise((resolve, reject) => {
+      if (ScoredHigher()) {
+        axios.post("http://localhost:3002/api/post/highestScore/team", {
+          team_name: sessionStorage.getItem('teamName'),
+          testcase_highest: newSub
+        })
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+      } else {
+        resolve(null);
+      }
+    });
+  }
+
+async function uploadSubmissions(){
     //Make the JSON String thing
-    console.log(latestSubmissionScores);
+    //console.log(latestSubmissionScores);
     const obj = {};
 
     latestSubmissionScores.map((value, index) => {
@@ -97,9 +151,13 @@ function uploadSubmissions(URL){
         testcase_latest: newSub
   });
 
+  //Check if greater, then upload to highest
+  //console.log(ScoredHigher())
+  await postHighestScore();
+
     //Upload to submission history
 
-    //Check if greater, then upload to highest
+    
 
 //     axios.post("http://localhost:3002/api/post/submission", {
 //         submission_score: score,
@@ -178,7 +236,7 @@ const ArenaMain = (props) => {
     };
     //Returns the url for the file uploaded
     const handleUploadDone = (res) => {
-        console.log(res.filesUploaded[0].url);
+        //console.log(res.filesUploaded[0].url);
     };
     return (
         <div className="arena-main-container">
@@ -281,7 +339,8 @@ const ArenaMain = (props) => {
                     onSubmit={(index) => {
                         setPickerVisible(true);
                         tabIndex = index+1;
-                        console.log(tabIndex);
+                        //console.log(tabIndex);
+                       
                     }}
                 />
                 {pickerVisible && (
@@ -290,10 +349,11 @@ const ArenaMain = (props) => {
                         apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                         onUploadDone={(res) => {
                             handleUploadDone(res);
+
                             //This sets the new score
-                            latestSubmissionScores[tabIndex-1] = generateRandomNumber();
-                            console.log(latestSubmissionScores);
-                            uploadSubmissions(res.filesUploaded[0].url);
+                            latestSubmissionScores[tabIndex-1] = 16;
+                            //console.log(latestSubmissionScores);
+                            uploadSubmissions();
                             
                         }}
                         pickerOptions={{
