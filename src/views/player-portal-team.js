@@ -16,6 +16,7 @@ const PlayerPortalTeam = (props) => {
   //storing the code generated
   const [code, setCode] = useState("");
   const [teamName, setInputValue] = useState("");
+  const [location, setLocation] = useState('');
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(false);
   const [no_testcases, setNoTests] = useState(0);
@@ -60,8 +61,10 @@ const PlayerPortalTeam = (props) => {
   
   */
 
-  const handleInputSubmit = (value) => {
+  const handleInputSubmit = (value, location) => {
     const teamName = value;
+    // const teamLocation = location;
+    console.log("Location value: ", location);
     console.log("Input value: ", teamName);
     if (teamName == "") {
       alert("Please enter a valid team name");
@@ -74,11 +77,11 @@ const PlayerPortalTeam = (props) => {
   //get number of test cases
   numTestCases();
 
-  const createTeam = (teamName) => {
+  const createTeam = (teamName,teamLocation) => {
     const code = randomString();
     console.log(userID);
     console.log(competition_id);
-    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id});
+    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id, team_location: teamLocation });
     axios.post("http://localhost:3002/api/post/initTests/team", { testcase_latest: createJsonArray(no_testcases), testcase_highest: createJsonArray(no_testcases), team_name: teamName});
     console.log(username)
   }
@@ -137,7 +140,7 @@ const PlayerPortalTeam = (props) => {
   }
 
   const joinTeam = (teamName, teamCode) => {
-    axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id });
+    axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id, team_location: teamLocation });
   }
 
   return (

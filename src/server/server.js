@@ -216,10 +216,10 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
     const team_name = req.body.team_name;
     const team_code = req.body.team_code;
     const competition_id = req.body.competition_id;
-
+    const team_location = req.body.team_location;
     db.query(
-      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id, team_score) VALUES (?, ?, ?, 1, ?, 0);",
-      [user_id, team_name, team_code, competition_id],
+      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id, team_score, team_location) VALUES (?, ?, ?, 1, ?, 0, ?);",
+      [user_id, team_name, team_code, competition_id, team_location],
       (err, result) => {
         if (err) {
           res.send(err);
