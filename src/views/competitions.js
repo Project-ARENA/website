@@ -6,18 +6,16 @@ import OverflowCard from "../components/OverflowCard";
 import "./competitions.css";
 import AccordionContent from "../components/collapse";
 
-
-
-const GetDate= ()=>{
+const GetDate = () => {
   return new Date();
   //console.log(CurrentTime);
-}
+};
 
 //Differentiate between 2 dates
 const GetDateDifference = (date1, date2) => {
   const Difference_In_Time = date2.getTime() - date1.getTime();
   const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  if(Difference_In_Days > 0) {
+  if (Difference_In_Days > 0) {
     return true; // competition is active
   } else {
     return false; // competition is not active
@@ -57,7 +55,7 @@ function GenCards() {
   //       newCardsData[i].isendDate = false;
   //     }
   //   }
-    
+
   //   console.log(CompsendDates);
   //   console.log(newCardsData);
   //   return newCardsData;
@@ -66,12 +64,12 @@ function GenCards() {
   const fetchActiveData = (cardsData) => {
     const newCardsData = [...cardsData];
     const now = GetDate();
-  
+
     const activeCards = newCardsData.filter((card) => {
       const endDate = new Date(card.endDate);
       return endDate > now;
     });
-  
+
     return activeCards;
   };
 
@@ -123,6 +121,7 @@ function GenCards() {
 
   return (
     <div
+      data-testid="card"
       style={{
         display: "flex",
         flexWrap: "wrap",
@@ -144,7 +143,6 @@ function GenCards() {
     </div>
   );
 }
-
 
 //DISPLAY INACTIVE CARDS
 function InActiveGenCards() {
@@ -170,12 +168,12 @@ function InActiveGenCards() {
   const fetchInactiveData = (cardsData) => {
     const newCardsData = [...cardsData];
     const now = GetDate();
-  
+
     const activeCards = newCardsData.filter((card) => {
       const endDate = new Date(card.endDate);
       return endDate <= now;
     });
-  
+
     return activeCards;
   };
 
@@ -212,6 +210,7 @@ function InActiveGenCards() {
 
   return (
     <div
+      data-testid="card"
       style={{
         display: "flex",
         flexWrap: "wrap",
@@ -233,8 +232,6 @@ function InActiveGenCards() {
     </div>
   );
 }
-
-
 
 const Competitions = (props) => {
   return (
@@ -314,10 +311,11 @@ const Competitions = (props) => {
       <div className="competitions-section-separator2"></div>
       <div className="competitions-section-separator3"></div>
 
-
-
-      <AccordionContent title="Active Competition" content = <GenCards /> />
-      <AccordionContent title="Inactive Competition" content = <InActiveGenCards /> />
+      <AccordionContent title="Active Competition" content=<GenCards /> />
+      <AccordionContent
+        title="Inactive Competition"
+        content=<InActiveGenCards />
+      />
       {/* The OverFlow cards, leave some space */}
       <br />
       {/* <GenCards /> */}
