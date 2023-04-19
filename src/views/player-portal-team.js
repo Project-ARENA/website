@@ -8,6 +8,7 @@ import './player-portal-team.css'
 const username = sessionStorage.getItem('username');
 const userID = sessionStorage.getItem('userID');
 const competition_id = sessionStorage.getItem('CompID');
+const locationValue = sessionStorage.getItem('locationValue');
 
 const PlayerPortalTeam = (props) => {
 
@@ -31,6 +32,10 @@ const PlayerPortalTeam = (props) => {
     console.log(teamName);
     return code;
   }
+
+  const handleLocationChange = (selectedLocation) => {
+    setLocationValue(selectedLocation);
+  };
 
   //get number of test cases
   function numTestCases () {
@@ -61,10 +66,10 @@ const PlayerPortalTeam = (props) => {
   
   */
 
-  const handleInputSubmit = (value, location) => {
+  const handleInputSubmit = (value, locationValue) => {
     const teamName = value;
     // const teamLocation = location;
-    console.log("Location value: ", location);
+    console.log("Location value: ", locationValue);
     console.log("Input value: ", teamName);
     if (teamName == "") {
       alert("Please enter a valid team name");
@@ -77,11 +82,11 @@ const PlayerPortalTeam = (props) => {
   //get number of test cases
   numTestCases();
 
-  const createTeam = (teamName,teamLocation) => {
+  const createTeam = (teamName) => {
     const code = randomString();
     console.log(userID);
     console.log(competition_id);
-    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id, team_location: teamLocation });
+    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id, team_location: locationValue });
     axios.post("http://localhost:3002/api/post/initTests/team", { testcase_latest: createJsonArray(no_testcases), testcase_highest: createJsonArray(no_testcases), team_name: teamName});
     console.log(username)
   }
@@ -140,7 +145,7 @@ const PlayerPortalTeam = (props) => {
   }
 
   const joinTeam = (teamName, teamCode) => {
-    axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id, team_location: teamLocation });
+    axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id, team_location: locationValue });
   }
 
   return (
@@ -227,8 +232,9 @@ const PlayerPortalTeam = (props) => {
       <div className="player-portal-team-section-separator1"></div>
       <div className="player-portal-team-section-separator2"></div>
       <div className="player-portal-team-section-separator3"></div>
-      //TODO: Fix setting location in variable and database
+      {/* //TODO: Fix setting location in variable and database */}
       <TeamInputBox
+        onLocationChange={handleLocationChange}
         title="Create a Team"
         label="Team Name"
         buttonText="Team Name"
