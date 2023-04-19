@@ -10,17 +10,21 @@ import Select from '@mui/material/Select';
 import "./TeamInputBox.css";
 
 export default function TeamInputBox(props) {
-  const { rootClassName, title, label, buttonText, name, onClick, code, disabled } = props;
+  const { rootClassName, title, label, buttonText, name, onClick, code, disabled} = props;
   const [inputValue, setInputValue] = useState("");
-  const [location, setLocation] = useState('');
+  const [location, setLocationValue] = useState("");
+  var locationValue = "";
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
-  const handleChange = (event) => {
+
+  const handleLocationChange = (event, value1) => {
     const selectedLocation = event.target.value;
-    setLocation(selectedLocation);
-    console.log(selectedLocation);
+    setLocationValue(selectedLocation);
+    locationValue = selectedLocation;
+    console.log(locationValue);
+    sessionStorage.setItem('locationValue', locationValue);
   };
 
   return (
@@ -51,7 +55,7 @@ export default function TeamInputBox(props) {
     labelId="location-select"
     id="location-select"
     value={location}
-    onChange={handleChange}
+    onChange={handleLocationChange}
     label="Location"
     style={{display: "flex", justifyContent: "center" }}
   >
