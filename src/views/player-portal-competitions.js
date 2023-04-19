@@ -127,7 +127,7 @@ function GenCards() {
           const compID = response.data[0].competition_id;
           sessionStorage.setItem('CompID', compID);
           setTimeout(function () {
-            window.location.href = 'http://localhost:3000/arena-submissions';
+            window.location.href = 'http://localhost:3000/arena-main';
           }, 1000);
         });
     console.log(`Enter Arena clicked for card ${index}`)

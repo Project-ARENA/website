@@ -52,7 +52,7 @@ const Login = (props) => {
           setErrorMessage('Login Successful');
           setTimeout(function () {
             window.location.href = 'http://localhost:3000/admin-home';
-          }, 1000);
+          }, 500);
           //take him to the admin page
         }
         else {
@@ -60,7 +60,7 @@ const Login = (props) => {
           setErrorMessage('Login Successful');
           setTimeout(function () {
             window.location.href = 'http://localhost:3000/player-portal-home';
-          }, 1000);
+          }, 500);
           //take him to the normal page
         }
 

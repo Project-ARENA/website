@@ -72,6 +72,17 @@ const ArenaMain = (props) => {
   
     */
     const [pickerVisible, setPickerVisible] = useState(false);
+    const [no_testcases, setNoTests] = useState(0);
+
+    // get number of test cases
+    function numTestCases () {
+    axios.get("http://localhost:3002/api/get/numTests/" + competition_id)
+    .then(function (response) {
+      setNoTests(response.data[0].no_testcases);
+    });
+    }
+    
+    numTestCases();
     
 
     //This stores contents of tab, tab number and index in the array are related
@@ -202,7 +213,7 @@ const ArenaMain = (props) => {
             <div className="arena-main-tabs">
                 <BasicTabs
                     tabContent={tabContent}
-                    tabCount={6}
+                    tabCount={no_testcases}
                     onSubmit={(index) => {
                         setPickerVisible(true);
                         tabIndex = index+1;

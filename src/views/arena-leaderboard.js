@@ -4,6 +4,7 @@ import DataGrid from "../components/datagridArenaLeaderboard";
 import axios from "axios";
 import './arena-leaderboard.css'
 
+// gets number test cases and team name to generate table
 function getNoTests(comp_id, user_id) {
   const [noTests, setNoTests] = React.useState(0);
   const [myTeam, setMyTeam] = React.useState("");
@@ -19,6 +20,7 @@ function getNoTests(comp_id, user_id) {
   return [noTests, myTeam];
 }
 
+// used to generate the table with correct data
 function GenGrid(params) {
   const [rows, setData] = React.useState([]);
   var key;
