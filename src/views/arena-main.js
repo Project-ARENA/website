@@ -34,9 +34,11 @@ function getLatestScores(){
                     const jsonArray = JSON.parse(latestString);
 
                     
-
+                    let count = 0;
                     for (let key in jsonArray) {
-                        latestSubmissionScores.push(jsonArray[key]);
+                        latestSubmissionScores[count] = jsonArray[key];
+
+                        count++
                     }
 
                     console.log(latestSubmissionScores);
@@ -126,8 +128,6 @@ const ArenaMain = (props) => {
     
 
     //This stores contents of tab, tab number and index in the array are related
-    
-    let tabContent = [];
     const [title, setTitle] = useState('');
     const [paragraph, setParagraph] = useState('');
 
@@ -150,6 +150,8 @@ const ArenaMain = (props) => {
             
     });
 
+    //latestSubmissionScores = latestSubmissionScores.slice(0,numTests);
+    //console.log(latestSubmissionScores);
 
     //Sets the pickerVisible to false, so you can actually click it again
     const handleClosePicker = () => {
@@ -269,7 +271,9 @@ const ArenaMain = (props) => {
                         apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                         onUploadDone={(res) => {
                             handleUploadDone(res);
-                            uploadSubmissions(tabIndex,res.filesUploaded[0].url);
+                            latestSubmissionScores.slice(0,numTests);
+                            //uploadSubmissions(tabIndex,res.filesUploaded[0].url);
+                            
                         }}
                         pickerOptions={{
                             onClose: () => {
