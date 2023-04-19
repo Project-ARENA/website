@@ -8,6 +8,7 @@ import BasicTabs from "../components/tabs"
 import { PickerOverlay } from 'filestack-react';
 import { sub } from 'date-fns';
 import { ConstructionOutlined, ControlPointSharp } from '@mui/icons-material';
+import { Tab } from '@mui/material';
 
 
 const competition_id = sessionStorage.getItem('CompID');
@@ -64,9 +65,9 @@ function generateRandomNumber () {
 //!Gets the teamID
 function getTeamID (){
     axios
-            .get("http://localhost:3002/api/get/team_id/" + competition_id + "/" + user_id)
+            .get("http://localhost:3002/api/get/team_name/" + competition_id + "/" + user_id)
             .then(function (response) {
-                sessionStorage.setItem('teamID', response.data[0].team_name);
+                sessionStorage.setItem('teamName', response.data[0].team_name);
             });
 }
 
@@ -80,15 +81,33 @@ function getCompTestCases(linkForPDF){
             });
 }
 
-function uploadSubmissions(subNum,URL){
-    let score = generateRandomNumber();
-    axios.post("http://localhost:3002/api/post/submission", {
-        submission_score: score,
-        submission_number: subNum,
-        submission_link: URL,
-        competition_id: competition_id,
-        team_name: sessionStorage.getItem('teamID')
+function uploadSubmissions(URL){
+    //Make the JSON String thing
+    console.log(latestSubmissionScores);
+    const obj = {};
+
+    latestSubmissionScores.map((value, index) => {
+    obj[`testcase_${index + 1}`] = value;
+    });
+
+    const newSub = JSON.stringify(obj);
+    //Upload to latest
+    axios.post("http://localhost:3002/api/post/latestScore/team", {
+        team_name: sessionStorage.getItem('teamName'),
+        testcase_latest: newSub
   });
+
+    //Upload to submission history
+
+    //Check if greater, then upload to highest
+
+//     axios.post("http://localhost:3002/api/post/submission", {
+//         submission_score: score,
+//         submission_number: subNum,
+//         submission_link: URL,
+//         competition_id: competition_id,
+//         team_name: sessionStorage.getItem('teamID')
+//   });
 }
 
 const ArenaMain = (props) => {
@@ -114,17 +133,17 @@ const ArenaMain = (props) => {
   
     */
     const [pickerVisible, setPickerVisible] = useState(false);
-    const [no_testcases, setNoTests] = useState(0);
+    //const [no_testcases, setNoTests] = useState(0);
 
-    // get number of test cases
-    function numTestCases () {
-    axios.get("http://localhost:3002/api/get/numTests/" + competition_id)
-    .then(function (response) {
-      setNoTests(response.data[0].no_testcases);
-    });
-    }
+    // // get number of test cases
+    // function numTestCases () {
+    // axios.get("http://localhost:3002/api/get/numTests/" + competition_id)
+    // .then(function (response) {
+    //   setNoTests(response.data[0].no_testcases);
+    // });
+    // }
     
-    numTestCases();
+    // numTestCases();
     
 
     //This stores contents of tab, tab number and index in the array are related
@@ -271,8 +290,10 @@ const ArenaMain = (props) => {
                         apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                         onUploadDone={(res) => {
                             handleUploadDone(res);
-                            latestSubmissionScores.slice(0,numTests);
-                            //uploadSubmissions(tabIndex,res.filesUploaded[0].url);
+                            //This sets the new score
+                            latestSubmissionScores[tabIndex-1] = generateRandomNumber();
+                            console.log(latestSubmissionScores);
+                            uploadSubmissions(res.filesUploaded[0].url);
                             
                         }}
                         pickerOptions={{
