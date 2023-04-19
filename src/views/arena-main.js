@@ -7,18 +7,49 @@ import './arena-main.css'
 import BasicTabs from "../components/tabs"
 import { PickerOverlay } from 'filestack-react';
 import { sub } from 'date-fns';
+import { ConstructionOutlined, ControlPointSharp } from '@mui/icons-material';
 
 
 const competition_id = sessionStorage.getItem('CompID');
 const user_id  = sessionStorage.getItem('userID');
 let tabIndex = -1;
+let latestSubmissionScores = [];
+let numTests = 0;
 
 //Function to set the latest scores
 function getLatestScores(){
     axios
-            .get("http://localhost:3002/api/get/team_id/" + competition_id + "/" + user_id)
+            .get("http://localhost:3002/api/get/testcase_latest/" + competition_id + "/" + user_id)
             .then(function (response) {
-                sessionStorage.setItem('teamID', response.data[0].team_name);
+                
+                //They haveven't submitted yet
+                if (response.data[0].testcase_latest == null){ 
+
+                }
+
+                //They have submitted
+                else{
+                    const latestString  = response.data[0].testcase_latest;
+                    console.log(response.data[0].testcase_latest);
+                    const jsonArray = JSON.parse(latestString);
+
+                    
+
+                    for (let key in jsonArray) {
+                        latestSubmissionScores.push(jsonArray[key]);
+                    }
+
+                    console.log(latestSubmissionScores);
+
+                }
+            });
+}
+function getNumTestCases(){
+    axios
+            .get("http://localhost:3002/api/get/numTests/" + competition_id)
+            .then(function (response) {
+                numTests = response.data[0].no_testcases;
+                console.log("Number of testcase" + numTests);
             });
 }
 
@@ -84,7 +115,7 @@ const ArenaMain = (props) => {
     
 
     //This stores contents of tab, tab number and index in the array are related
-
+    
     let tabContent = [];
     const [title, setTitle] = useState('');
     const [paragraph, setParagraph] = useState('');
@@ -93,6 +124,7 @@ const ArenaMain = (props) => {
     
     //Executes when the page is loaded
     React.useEffect(() => {
+        getNumTestCases(numTests);
         axios
             .get("http://localhost:3002/api/get/compDetails/" + competition_id)
             .then(function (response) {
@@ -103,6 +135,8 @@ const ArenaMain = (props) => {
             //Sets the link for the competition testcases
             getCompTestCases(linkForPDF);
             getTeamID();
+            getLatestScores();
+            
     });
 
 
@@ -210,8 +244,8 @@ const ArenaMain = (props) => {
             <h1>Submit your code here:</h1>
             <div className="arena-main-tabs">
                 <BasicTabs
-                    tabContent={tabContent}
-                    tabCount={6}
+                    tabContent={latestSubmissionScores}
+                    tabCount={numTests}
                     onSubmit={(index) => {
                         setPickerVisible(true);
                         tabIndex = index+1;

@@ -77,7 +77,7 @@ export default function BasicTabs({ onSubmit, tabCount, tabContent }) { // Recei
           onSubmit={onSubmit}
         >
           {/* Render content for each tab from the tabContent prop */}
-          {tabContent[index]}
+          {"Score: " + tabContent[index]}
         </TabPanel>
       ))}
     </Box>

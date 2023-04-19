@@ -523,6 +523,20 @@ app.get("/api/get/testcase_latest/:comp_id/:user_id", (req, res) => {
   );
 });
 
+//! Route to get latest test_case 
+app.get("/api/get/numTests/:comp_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  
+  db.query("SELECT no_testcases from competition_details WHERE competition_id = ?;", comp_id,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
 //!Route to post the score
 app.post("/api/post/submission", (req, res) => {
   const submission_score = req.body.submission_score;
