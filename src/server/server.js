@@ -216,10 +216,10 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
     const team_name = req.body.team_name;
     const team_code = req.body.team_code;
     const competition_id = req.body.competition_id;
-
+    const team_location = req.body.team_location;
     db.query(
-      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id, team_score) VALUES (?, ?, ?, 1, ?, 0);",
-      [user_id, team_name, team_code, competition_id],
+      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id, team_score, team_location) VALUES (?, ?, ?, 1, ?, 0, ?);",
+      [user_id, team_name, team_code, competition_id, team_location],
       (err, result) => {
         if (err) {
           res.send(err);
@@ -500,6 +500,34 @@ app.get("/api/get/team_id/:comp_id/:user_id", (req, res) => {
   const comp_id = req.params.comp_id;
   const user_id = req.params.user_id;
   db.query("SELECT team_name from team_details WHERE competition_id = ? AND user_id = ?;", [comp_id, user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
+//! Route to get latest test_case 
+app.get("/api/get/testcase_latest/:comp_id/:user_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  const user_id = req.params.user_id;
+  db.query("SELECT testcase_latest from team_details WHERE competition_id = ? AND user_id = ?;", [comp_id, user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
+//! Route to get latest test_case 
+app.get("/api/get/numTests/:comp_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  
+  db.query("SELECT no_testcases from competition_details WHERE competition_id = ?;", comp_id,
     (err, result) => {
       if (err) {
         console.log(err)
