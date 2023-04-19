@@ -227,6 +227,7 @@ const PlayerPortalTeam = (props) => {
       <div className="player-portal-team-section-separator1"></div>
       <div className="player-portal-team-section-separator2"></div>
       <div className="player-portal-team-section-separator3"></div>
+      //TODO: Fix setting location in variable and database
       <TeamInputBox
         title="Create a Team"
         label="Team Name"
