@@ -216,10 +216,10 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
     const team_name = req.body.team_name;
     const team_code = req.body.team_code;
     const competition_id = req.body.competition_id;
-
+    const team_location = req.body.team_location;
     db.query(
-      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id) VALUES (?, ?, ?, 1, ?);",
-      [user_id, team_name, team_code, competition_id],
+      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id, team_score, team_location) VALUES (?, ?, ?, 1, ?, 0, ?);",
+      [user_id, team_name, team_code, competition_id, team_location],
       (err, result) => {
         if (err) {
           res.send(err);
@@ -534,6 +534,68 @@ app.post("/api/post/submission", (req, res) => {
   db.query(
     "INSERT INTO submissions (submission_score, submission_number, submission_link, competition_id, team_name) VALUES (?,?,?,?,?);",
     [submission_score, submission_number, submission_link, competition_id, team_name],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+// Get number of test cases in competition and team name
+app.get("/api/get/compTeamDeatils/:comp_id/:user_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  const user_id = req.params.user_id;
+  
+  db.query("SELECT cd.no_testcases, td.team_name FROM competition_details cd JOIN team_details td ON cd.competition_id = td.competition_id WHERE cd.competition_id = ? AND td.competition_id = ? AND td.user_id = ?;", [comp_id,comp_id,user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
+// Get all info for leaderboard
+app.get("/api/get/leaderboard/:comp_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  db.query(`SELECT team_name, team_score, team_location, testcase_highest
+  FROM team_details WHERE competition_id = ? ORDER BY team_score DESC;`, [comp_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
+// Get number of test cases in competition
+app.get("/api/get/numTests/:comp_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  
+  db.query("SELECT no_testcases FROM competition_details WHERE competition_id = ?;", comp_id,
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
+// Initialise testcase latest and highest fields 
+app.post("/api/post/initTests/team", (req, res) => {
+  const team_name = req.body.team_name;
+  const testcase_latest = req.body.testcase_latest;
+  const testcase_highest = req.body.testcase_highest;
+
+  db.query(
+    "UPDATE team_details SET testcase_latest = ?, testcase_highest = ? WHERE team_name = ?;",
+    [testcase_latest, testcase_highest, team_name],
     (err, result) => {
       if (err) {
         res.send(err);

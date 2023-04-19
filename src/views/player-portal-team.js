@@ -16,8 +16,10 @@ const PlayerPortalTeam = (props) => {
   //storing the code generated
   const [code, setCode] = useState("");
   const [teamName, setInputValue] = useState("");
+  const [location, setLocation] = useState('');
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(false);
+  const [no_testcases, setNoTests] = useState(0);
 
   //generate random code for team
   const randomString = () => {
@@ -30,6 +32,27 @@ const PlayerPortalTeam = (props) => {
     return code;
   }
 
+  //get number of test cases
+  function numTestCases () {
+    axios.get("http://localhost:3002/api/get/numTests/" + competition_id)
+    .then(function (response) {
+      setNoTests(response.data[0].no_testcases);
+    });
+  }
+
+  // //create json array for test cases
+  function createJsonArray(numKeys) {
+    const jsonArray = {};
+
+    for (let i = 1; i <= numKeys; i++) {
+      const key = `testcase_${i}`;
+      jsonArray[key] = null; // Set initial value to null
+    }
+
+    const jsonString = JSON.stringify(jsonArray);
+    return jsonString;
+  }
+
   /*
       ! CREATE TEAM
       1.Make sure that the field isn't empty
@@ -38,8 +61,10 @@ const PlayerPortalTeam = (props) => {
   
   */
 
-  const handleInputSubmit = (value) => {
+  const handleInputSubmit = (value, location) => {
     const teamName = value;
+    // const teamLocation = location;
+    console.log("Location value: ", location);
     console.log("Input value: ", teamName);
     if (teamName == "") {
       alert("Please enter a valid team name");
@@ -49,11 +74,15 @@ const PlayerPortalTeam = (props) => {
     }
   };
 
-  const createTeam = (teamName) => {
+  //get number of test cases
+  numTestCases();
+
+  const createTeam = (teamName,teamLocation) => {
     const code = randomString();
     console.log(userID);
     console.log(competition_id);
-    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id });
+    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id, team_location: teamLocation });
+    axios.post("http://localhost:3002/api/post/initTests/team", { testcase_latest: createJsonArray(no_testcases), testcase_highest: createJsonArray(no_testcases), team_name: teamName});
     console.log(username)
   }
 
@@ -111,7 +140,7 @@ const PlayerPortalTeam = (props) => {
   }
 
   const joinTeam = (teamName, teamCode) => {
-    axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id });
+    axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id, team_location: teamLocation });
   }
 
   return (
@@ -198,6 +227,7 @@ const PlayerPortalTeam = (props) => {
       <div className="player-portal-team-section-separator1"></div>
       <div className="player-portal-team-section-separator2"></div>
       <div className="player-portal-team-section-separator3"></div>
+      //TODO: Fix setting location in variable and database
       <TeamInputBox
         title="Create a Team"
         label="Team Name"

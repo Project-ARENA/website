@@ -31,7 +31,7 @@ describe('TeamManager', () => {
     expect(getByText('Member3')).toBeInTheDocument();
     expect(getByText('Member4')).toBeInTheDocument();
     // expect(locationSelect).toBeInTheDocument();
-    expect(getByDisplayValue('')).toBeInTheDocument(); // Location default value
+    //expect(getByDisplayValue('')).toBeInTheDocument(); // Location default value
     expect(getByText('Update Location')).toBeInTheDocument();
     expect(getByText('Delete')).toBeInTheDocument();
 

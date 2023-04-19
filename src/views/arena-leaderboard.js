@@ -4,30 +4,58 @@ import DataGrid from "../components/datagridArenaLeaderboard";
 import axios from "axios";
 import './arena-leaderboard.css'
 
-function GenGrid() {
+function getNoTests(comp_id, user_id) {
+  const [noTests, setNoTests] = React.useState(0);
+  const [myTeam, setMyTeam] = React.useState("");
+
+  React.useEffect(() => {
+  axios
+      .get("http://localhost:3002/api/get/compTeamDeatils/" + comp_id + "/" + user_id)
+      .then(function(response){
+        setNoTests(response.data[0].no_testcases);
+        setMyTeam(response.data[0].team_name);
+      });
+  }, []);
+  return [noTests, myTeam];
+}
+
+function GenGrid(params) {
   const [rows, setData] = React.useState([]);
+  var key;
   // TODO: #5 #4 Change API call to get correct info from db
+  
   React.useEffect(() => {
     axios
-      .get("http://localhost:3002/api/get/teams")
+      .get("http://localhost:3002/api/get/leaderboard/" + params.compID)
       .then((response) => {
-        const data = response.data.map((data, index) => ({
-          id: index + 1,
-          team_code: data.team_code,
-          user_id: data.user_id,
-          team_captain: data.team_captain,
-          team_name: data.team_name,
-          team_score: data.team_score,
-          competition_id: data.competition_id,
-        }));
+        const data = response.data.map((data, index) => {
+          const newData = {
+            id: index + 1,
+            team_rank: index + 1,
+            team_name: data.team_name,
+            team_location: data.team_location,
+            team_score: data.team_score
+          };
+  
+          // Iterate through the key-value pairs of testcase_highest
+          for (const [key, value] of Object.entries(JSON.parse(data.testcase_highest))) {
+            // Dynamically create fields with key as field name and value as field value
+            newData[key] = value;
+          }
+  
+          return newData;
+        });
         setData(data);
       });
   }, []);
-
-  return <DataGrid rows={rows} noTests={3} myTeam={"Sayfy Wayfs"} pageSize={5} />
+  return <DataGrid rows={rows} noTests={params.no} myTeam={params.team} pageSize={5} />
 }
 
 const ArenaLeaderboard = (props) => {
+  const compID = sessionStorage.getItem('CompID');
+  const userID = sessionStorage.getItem('userID');
+  const [noTests, myTeam] = getNoTests(compID, userID);
+
   return (
     <div className="arena-leaderboard-container">
       <div data-role="Header" className="arena-leaderboard-navbar-container">
@@ -115,7 +143,7 @@ const ArenaLeaderboard = (props) => {
         </div>
       </div>
       <div className="grid-container">
-        <GenGrid />
+        <GenGrid no={noTests} team={myTeam} compID={compID}/>
       </div>
     </div>
   )
