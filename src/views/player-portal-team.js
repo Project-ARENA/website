@@ -21,7 +21,7 @@ const PlayerPortalTeam = (props) => {
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(false);
   const [no_testcases, setNoTests] = useState(0);
-
+  let inputLocation = " ";
   //generate random code for team
   const randomString = () => {
     setDisabled(true);
@@ -69,7 +69,8 @@ const PlayerPortalTeam = (props) => {
   const handleInputSubmit = (value, locationValue) => {
     const teamName = value;
     // const teamLocation = location;
-    console.log("Location value: ", locationValue);
+    inputLocation = locationValue;
+    console.log("Location value: ", inputLocation);
     console.log("Input value: ", teamName);
     if (teamName == "") {
       alert("Please enter a valid team name");
@@ -82,10 +83,13 @@ const PlayerPortalTeam = (props) => {
   //get number of test cases
   numTestCases();
 
-  const createTeam = (teamName) => {
+  const createTeam = (teamName,inputLocation) => {
     const code = randomString();
     console.log(userID);
     console.log(competition_id);
+    console.log("this is locationValue " + locationValue);
+    console.log("this is location " + location);
+    console.log("this is location inputLocation" + inputLocation);
     axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id, team_location: locationValue });
     axios.post("http://localhost:3002/api/post/initTests/team", { testcase_latest: createJsonArray(no_testcases), testcase_highest: createJsonArray(no_testcases), team_name: teamName});
     console.log(username)
@@ -144,7 +148,7 @@ const PlayerPortalTeam = (props) => {
       });
   }
 
-  const joinTeam = (teamName, teamCode) => {
+  const joinTeam = (teamName, teamCode,inputLocation) => {
     axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id, team_location: locationValue });
   }
 

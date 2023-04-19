@@ -20,6 +20,12 @@ export default function TeamInputBox(props) {
   };
 
   const handleLocationChange = (event, value1) => {
+    // const selectedLocation = event.target.value;
+    // setLocationValue(selectedLocation);
+    // locationValue = selectedLocation;
+    // console.log(locationValue);
+    // sessionStorage.setItem('locationValue', locationValue);
+    console.log("handleLocationChange called"); // <-- add this line
     const selectedLocation = event.target.value;
     setLocationValue(selectedLocation);
     locationValue = selectedLocation;
@@ -78,7 +84,7 @@ export default function TeamInputBox(props) {
             className="team-input-box-button"
             name={name}
             disabled = {disabled}
-            onClick={() => onClick(inputValue)}
+            onClick={() => onClick(inputValue,location)}
             style={{ marginTop: "25px" }}
           />
         </div>
