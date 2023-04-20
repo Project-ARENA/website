@@ -1,23 +1,23 @@
-import React from 'react'
+import React from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { useState } from "react";
-import TeamInputBox from '../components/TeamInputBox'
-import { v4 as uuidv4 } from 'uuid';
-import './player-portal-team.css'
-const username = sessionStorage.getItem('username');
-const userID = sessionStorage.getItem('userID');
-const competition_id = sessionStorage.getItem('CompID');
-const locationValue = sessionStorage.getItem('locationValue');
+import TeamInputBox from "../components/TeamInputBox";
+import JoinTeam from "../components/JoinTeam";
+import { v4 as uuidv4 } from "uuid";
+import "./player-portal-team.css";
+const username = sessionStorage.getItem("username");
+const userID = sessionStorage.getItem("userID");
+const competition_id = sessionStorage.getItem("CompID");
+const locationValue = sessionStorage.getItem("locationValue");
 
 const PlayerPortalTeam = (props) => {
-
   //useState variables
 
   //storing the code generated
   const [code, setCode] = useState("");
   const [teamName, setInputValue] = useState("");
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(false);
   const [no_testcases, setNoTests] = useState(0);
@@ -26,23 +26,24 @@ const PlayerPortalTeam = (props) => {
   const randomString = () => {
     setDisabled(true);
     const code = uuidv4();
-    setCode(code)
-    console.log('Team code generated')
-    console.log(code)
+    setCode(code);
+    console.log("Team code generated");
+    console.log(code);
     console.log(teamName);
     return code;
-  }
+  };
 
   const handleLocationChange = (selectedLocation) => {
     setLocationValue(selectedLocation);
   };
 
   //get number of test cases
-  function numTestCases () {
-    axios.get("http://localhost:3002/api/get/numTests/" + competition_id)
-    .then(function (response) {
-      setNoTests(response.data[0].no_testcases);
-    });
+  function numTestCases() {
+    axios
+      .get("http://localhost:3002/api/get/numTests/" + competition_id)
+      .then(function (response) {
+        setNoTests(response.data[0].no_testcases);
+      });
   }
 
   // //create json array for test cases
@@ -74,8 +75,7 @@ const PlayerPortalTeam = (props) => {
     console.log("Input value: ", teamName);
     if (teamName == "") {
       alert("Please enter a valid team name");
-    }
-    else {
+    } else {
       validationCreate(teamName);
     }
   };
@@ -83,17 +83,27 @@ const PlayerPortalTeam = (props) => {
   //get number of test cases
   numTestCases();
 
-  const createTeam = (teamName,inputLocation) => {
+  const createTeam = (teamName, inputLocation) => {
     const code = randomString();
     console.log(userID);
     console.log(competition_id);
     console.log("this is locationValue " + locationValue);
     console.log("this is location " + location);
     console.log("this is location inputLocation" + inputLocation);
-    axios.post("http://localhost:3002/api/post/create/team", { user_id: userID, team_name: teamName, team_code: code, competition_id: competition_id, team_location: locationValue });
-    axios.post("http://localhost:3002/api/post/initTests/team", { testcase_latest: createJsonArray(no_testcases), testcase_highest: createJsonArray(no_testcases), team_name: teamName});
-    console.log(username)
-  }
+    axios.post("http://localhost:3002/api/post/create/team", {
+      user_id: userID,
+      team_name: teamName,
+      team_code: code,
+      competition_id: competition_id,
+      team_location: locationValue,
+    });
+    axios.post("http://localhost:3002/api/post/initTests/team", {
+      testcase_latest: createJsonArray(no_testcases),
+      testcase_highest: createJsonArray(no_testcases),
+      team_name: teamName,
+    });
+    console.log(username);
+  };
 
   const validationCreate = (teamName) => {
     axios
@@ -102,16 +112,14 @@ const PlayerPortalTeam = (props) => {
         const teamData = response.data;
 
         if (JSON.stringify(teamData) == "[]") {
-          console.log("Team doesn't exist")
-          createTeam(teamName)
-        }
-        else {
-          console.log("team exists")
+          console.log("Team doesn't exist");
+          createTeam(teamName);
+        } else {
+          console.log("team exists");
           alert("This team name is already taken");
         }
-
       });
-  }
+  };
 
   /*
       ! JOIN TEAM
@@ -124,12 +132,10 @@ const PlayerPortalTeam = (props) => {
     console.log("Input value: ", teamCode);
     if (teamCode == "") {
       alert("Please enter a valid code");
-    }
-    else {
+    } else {
       validationCode(teamCode);
     }
   };
-
 
   const validationCode = (teamCode) => {
     axios
@@ -139,18 +145,21 @@ const PlayerPortalTeam = (props) => {
 
         if (JSON.stringify(codeResponse) == "[]") {
           alert("Please enter a valid code");
-
-        }
-        else {
+        } else {
           joinTeam(codeResponse[0].team_name, teamCode);
         }
-
       });
-  }
+  };
 
-  const joinTeam = (teamName, teamCode,inputLocation) => {
-    axios.post("http://localhost:3002/api/post/addTo/team", { user_id: userID, team_name: teamName, team_code: teamCode, competition_id: competition_id, team_location: locationValue });
-  }
+  const joinTeam = (teamName, teamCode, inputLocation) => {
+    axios.post("http://localhost:3002/api/post/addTo/team", {
+      user_id: userID,
+      team_name: teamName,
+      team_code: teamCode,
+      competition_id: competition_id,
+      team_location: locationValue,
+    });
+  };
 
   return (
     <div className="player-portal-team-container">
@@ -171,23 +180,38 @@ const PlayerPortalTeam = (props) => {
               </svg>
             </div>
             <div className="player-portal-team-links-container">
-              <Link to="/player-portal-home" className="player-portal-team-link">
+              <Link
+                to="/player-portal-home"
+                className="player-portal-team-link"
+              >
                 HOME
               </Link>
-              <Link to="/player-portal-competitions" className="player-portal-team-link1 Anchor">
+              <Link
+                to="/player-portal-competitions"
+                className="player-portal-team-link1 Anchor"
+              >
                 COMPETITIONS
               </Link>
-              <Link to="/player-portal-team" className="player-portal-team-link2 Anchor">
+              <Link
+                to="/player-portal-team"
+                className="player-portal-team-link2 Anchor"
+              >
                 TEAM
               </Link>
-              <Link to="/player-portal-contact" className="player-portal-team-link3">
+              <Link
+                to="/player-portal-contact"
+                className="player-portal-team-link3"
+              >
                 <span className="Anchor">CONTACT US</span>
                 <br></br>
               </Link>
             </div>
           </div>
           <div className="player-portal-team-container1">
-            <Link to="/player-portal-profile" className="player-portal-team-navlink">
+            <Link
+              to="/player-portal-profile"
+              className="player-portal-team-navlink"
+            >
               <svg viewBox="0 0 1024 1024" className="player-portal-team-icon2">
                 <path d="M576 706.612v-52.78c70.498-39.728 128-138.772 128-237.832 0-159.058 0-288-192-288s-192 128.942-192 288c0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h896c0-128.968-166.898-235.64-384-253.388z"></path>
               </svg>
@@ -216,16 +240,28 @@ const PlayerPortalTeam = (props) => {
               </div>
             </div>
             <div className="player-portal-team-links-container1">
-              <Link to="/player-portal-home" className="player-portal-team-link">
+              <Link
+                to="/player-portal-home"
+                className="player-portal-team-link"
+              >
                 HOME
               </Link>
-              <Link to="/player-portal-competitions" className="player-portal-team-link1 Anchor">
+              <Link
+                to="/player-portal-competitions"
+                className="player-portal-team-link1 Anchor"
+              >
                 COMPETITIONS
               </Link>
-              <Link to="/player-portal-team" className="player-portal-team-link2 Anchor">
+              <Link
+                to="/player-portal-team"
+                className="player-portal-team-link2 Anchor"
+              >
                 TEAM
               </Link>
-              <Link to="/player-portal-contact" className="player-portal-team-link3">
+              <Link
+                to="/player-portal-contact"
+                className="player-portal-team-link3"
+              >
                 CONTACT US
               </Link>
             </div>
@@ -249,15 +285,15 @@ const PlayerPortalTeam = (props) => {
       ></TeamInputBox>
 
       <br></br>
-      <TeamInputBox
+      <JoinTeam
         title="Join a Team"
         label="Team Code"
         buttonText="Team Code"
         name="Join a Team"
         onClick={handleInputSubmit2}
-      ></TeamInputBox>
+      ></JoinTeam>
     </div>
-  )
-}
+  );
+};
 
-export default PlayerPortalTeam
+export default PlayerPortalTeam;
