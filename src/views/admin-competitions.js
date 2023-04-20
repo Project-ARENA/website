@@ -61,6 +61,17 @@ const AdminCompetitions = (props) => {
 
   const handleUploadDone = (res) => {
     console.log(res.filesUploaded[0].url);
+    console.log(res.filesUploaded[0].mimetype);
+
+    if (res.filesUploaded[0].mimetype === "image/png" || "image/jpeg") {
+      console.log("Image uploaded");
+      // Add to DB
+    }
+
+    if (res.filesUploaded[0].mimetype === "application/pdf") {
+      console.log("PDF uploaded");
+      // Add to DB
+    }
   };
 
   const handleClosePicker = () => {
