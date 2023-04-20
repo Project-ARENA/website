@@ -42,7 +42,7 @@ export default function TeamInputBox(props) {
         <h1 className="team-input-box-text1">{label}</h1>
         <div className="Sayf">
           <InputBoxForInfo
-            buttonText="Team Name"
+            buttonText={buttonText}
             value={inputValue}
             onChange={handleInputChange}
             placeholder="Enter your input"
