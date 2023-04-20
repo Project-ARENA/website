@@ -4,7 +4,7 @@ import Button from "../components/button";
 import InputBoxForInfo from "./input-box-for-info";
 import "./TeamInputBox.css";
 
-export default function TeamInputBox(props) {
+export default function JoinTeam(props) {
   const {
     rootClassName,
     title,
@@ -35,7 +35,7 @@ export default function TeamInputBox(props) {
             value={inputValue}
             onChange={handleInputChange}
             placeholder="Enter your input"
-            data-testid="team-input"
+            data-testid="input"
           />
           <Button
             data-testid="team-input-box-button"
