@@ -9,12 +9,14 @@ import { PickerOverlay } from 'filestack-react';
 import { sub } from 'date-fns';
 import { ConstructionOutlined, ControlPointSharp } from '@mui/icons-material';
 import { Tab } from '@mui/material';
+import { hi } from 'date-fns/locale';
 
 
 const competition_id = sessionStorage.getItem('CompID');
 const user_id  = sessionStorage.getItem('userID');
 let tabIndex = -1;
 let latestSubmissionScores = [];
+let newHighestSub = ""
 let numTests = 0;
 
 //Function to set the latest scores
@@ -84,7 +86,6 @@ function getCompTestCases(linkForPDF){
 function ScoredHigher() {
     let isHigher = false;
     return new Promise((resolve, reject) => {
-      
       axios.get("http://localhost:3002/api/get/testcase_highest/" + competition_id + "/" + user_id)
         .then(function (response) {
           if (response.data[0].testcase_highest == null) {
@@ -93,8 +94,6 @@ function ScoredHigher() {
           } else {
             console.log("they have submitted before")
             const latestString = response.data[0].testcase_highest;
-            //console.log(response.data[0].testcase_highest);
-            //console.log(latestSubmissionScores);
             const jsonArray = JSON.parse(latestString);
             let highestSub = [];
             let count = 0;
@@ -103,37 +102,46 @@ function ScoredHigher() {
               count++
             }
             for (let i = 0; i < latestSubmissionScores.length; i++) {
-                console.log(latestSubmissionScores[i] + " " + highestSub[i])
+              console.log(latestSubmissionScores[i] + " " + highestSub[i])
               if (latestSubmissionScores[i] > highestSub[i]) {
+                //Change only the one that is higher
+                highestSub[i] = latestSubmissionScores[i];
                 isHigher = true;
-                console.log("Somethign was set to true");
               }
             }
+            const obj = {};
+            highestSub.map((value, index) => {
+              obj[`testcase_${index + 1}`] = value;
+            });
+            const newHighestSub = JSON.stringify(obj);
+            console.log(newHighestSub);
+            resolve([isHigher, newHighestSub]); // Resolve the promise with both values
           }
-          resolve(isHigher); // Resolve the promise with the updated value of isHigher
         })
         .catch(reject);
     });
   }
-
+  
   async function postHighestScore() {
-    return new Promise((resolve, reject) => {
-      if (ScoredHigher()) {
-        axios.post("http://localhost:3002/api/post/highestScore/team", {
+    try {
+      const [isHigher, newHighestSub] = await ScoredHigher();
+      console.log(newHighestSub);
+  
+      if (isHigher) {
+        const response = await axios.post("http://localhost:3002/api/post/highestScore/team", {
           team_name: sessionStorage.getItem('teamName'),
-          testcase_highest: newSub
-        })
-        .then(response => {
-          resolve(response);
-        })
-        .catch(error => {
-          reject(error);
+          testcase_highest: newHighestSub
         });
+        return response;
       } else {
-        resolve(null);
+        return null;
       }
-    });
+    } catch (error) {
+      throw error;
+    }
   }
+  
+  
 
 async function uploadSubmissions(){
     //Make the JSON String thing
@@ -351,7 +359,7 @@ const ArenaMain = (props) => {
                             handleUploadDone(res);
 
                             //This sets the new score
-                            latestSubmissionScores[tabIndex-1] = 16;
+                            latestSubmissionScores[tabIndex-1] = 30;
                             //console.log(latestSubmissionScores);
                             uploadSubmissions();
                             
