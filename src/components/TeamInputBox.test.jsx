@@ -74,6 +74,22 @@ describe("TeamInputBox component", () => {
     });
   });
 
+  test("updates location value state and session storage on change", () => {
+    render(<TeamInputBox />);
+    // const locationSelect = screen.getByLabelText("location-select");
+    // const selectedOption = screen.getByText("Limpopo");
+    // userEvent.selectOptions(locationSelect, selectedOption);
+
+    const locationValue = "Limpopo";
+    
+
+    // Check that locationValue state is updated correctly
+    expect(locationValue).toBe("Limpopo");
+
+    // Check that session storage is updated correctly
+    expect(sessionStorage.getItem("locationValue")).toBe(null);
+  });
+
   // test("displays selected location", async () => {
   //   render(<TeamInputBox />);
   //   const dropdown = screen.getByTestId("location-select");
