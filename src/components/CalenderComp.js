@@ -57,19 +57,13 @@ function handleSelect(date){
       onClick={() => setOpen(open => !open)}
     />
              
-               
-            {/* <DateRangePicker
-            onChange={item => setState([item.selection])}
-            showSelectionPreview={true}
-            moveRangeOnFirstSelection={false}
-            months={2}
-            ranges={state}
-            direction="horizontal"
-            />; */}
             <div ref={refOne}>
             {open &&
             <DateRange
-            onChange={item => setRange([item.selection])}
+            onChange={(item) => {
+              console.log(`${format(item.selection.startDate, "MM-dd-yyyy")} to ${format(item.selection.endDate, "MM-dd-yyyy")}`);
+              setRange([item.selection]);
+            }}
             editableDateInputs={true}
             moveRangeOnFirstSelection={false}
             ranges={range}
@@ -79,10 +73,6 @@ function handleSelect(date){
           />
             }
             </div> 
-            
-            
-           
-            
         </div>
     )
 }

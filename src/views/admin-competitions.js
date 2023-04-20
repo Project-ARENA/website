@@ -13,7 +13,10 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { PickerOverlay } from 'filestack-react';
 import CalenderComp from '../components/CalenderComp.js';
 
+import { render } from "react-dom";
+import { useForm } from "react-cool-form";
 
+import "./styles.scss";
 // const model =()=>{
 //   return(
 //     <div>
@@ -21,6 +24,14 @@ import CalenderComp from '../components/CalenderComp.js';
 //     </div>
 //   )
 // }
+
+const Field = ({ label, id, error, ...rest }) => (
+  <div>
+    <label htmlFor={id}>{label}</label>
+    <input id={id} {...rest} />
+    {error && <p>{error}</p>}
+  </div>
+);
 
 function CompetitionModal() {
   const [visible, setVisible] = useState(false);
@@ -83,6 +94,15 @@ const AdminCompetitions = (props) => {
   
 
   
+  const { form, use } = useForm({
+    // (Strongly advise) Provide the default values just like we use React state
+    defaultValues: { username: "", email: "", password: "" },
+    // The event only triggered when the form is valid
+    onSubmit: (values) => alert(JSON.stringify(values, undefined, 2))
+  });
+  // We can enable the "errorWithTouched" option to filter the error of an un-blurred field
+  // Which helps the user focus on typing without being annoyed by the error message
+  const errors = use("errors", { errorWithTouched: true });
 
   return (
 
@@ -93,40 +113,44 @@ const AdminCompetitions = (props) => {
 
             <h1>Create a Competition</h1>
 
-            <InputBoxForInfo
-              buttonText="Competition Name"
-              onChange={(e) => setCompname(e.target.value)}
-            />
-
-            <Button name="Upload Picture"
+            <form ref={form} noValidate>
+      <Field
+        label="Competition Name"
+        id="username"
+        name="username"
+        // Support built-in validation
+        required
+        error={errors.username}
+      />
+      <Button name="Upload Team Picture"
               onClick={() => {
                 setPickerVisible(true);
                 console.log("Picker clicked");
               }}
             />
 
-            {pickerVisible && (
-              <PickerOverlay
-                key="picker-overlay"
-                apikey={process.env.REACT_APP_API_KEY_FILESTACK}
-                onUploadDone={(res) => {
-                  handleUploadDone(res);
-                }}
-                pickerOptions={{
-                  onClose: () => {
-                    handleClosePicker();
-                  }
-                }}
-              />
-            )}
-
+{pickerVisible && (
+ <div className="center">
+ <PickerOverlay
+   key="picker-overlay"
+   apikey={process.env.REACT_APP_API_KEY_FILESTACK}
+   onUploadDone={(res) => {
+     handleUploadDone(res);
+   }}
+   pickerOptions={{
+     onClose: () => {
+       handleClosePicker();
+     }
+   }}
+ />
+</div>
+)}
             <CalenderComp>
 
             </CalenderComp>
-               
-
-            <div className="admin-competitions-button-container">
-              <Button
+      <input type="submit" />
+    </form>
+    <Button
                 name="Close"
                 onClick={() => {
                   setvisible(false)
@@ -135,7 +159,6 @@ const AdminCompetitions = (props) => {
                 }}
               // rootClassName="button-root-class-name2"
               />
-            </div>
           </Modal>
         </div>
 
