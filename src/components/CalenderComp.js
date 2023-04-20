@@ -54,6 +54,7 @@ function handleSelect(date){
       className="inputBox"
       style={{ border: "1px solid black", width: 225 }}
       placeholder={!range[0] && "Click to Select a date"}
+      data-testid="calendar-input" // add data-testid attribute
       onClick={() => setOpen(open => !open)}
     />
              
@@ -70,6 +71,7 @@ function handleSelect(date){
             months={2}
             direction="horizontal"
             className="calendarElement"
+            data-testid="calendar-element" // add data-testid attribute
           />
             }
             </div> 
