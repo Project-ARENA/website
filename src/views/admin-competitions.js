@@ -1,87 +1,62 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import DataGrid from "../components/datagrid";
-import './admin-competitions.css'
-import Button from '../components/button'
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import Modal from 'react-modal';
-import { useState } from 'react';
+import "./admin-competitions.css";
+import Button from "../components/button";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import Modal from "react-modal";
+import { useState } from "react";
 import InputBoxForInfo from "../components/input-box-for-info";
 
-import { PickerOverlay } from 'filestack-react';
-import CalenderComp from '../components/CalenderComp.js';
-
-import { render } from "react-dom";
-import { useForm } from "react-cool-form";
-
-import styles from "./styles.module.scss";
-// const model =()=>{
-//   return(
-//     <div>
-
-//     </div>
-//   )
-// }
-
-const Field = ({ label, id, error, ...rest }) => (
-  <div>
-    <label htmlFor={id}>{label}</label>
-    <input id={id} {...rest} />
-    {error && <p>{error}</p>}
-  </div>
-);
-
-function CompetitionModal() {
-  const [visible, setVisible] = useState(false);
-  const [compname, setCompname] = useState('');
-  const [picture, setPicture] = useState(null);
-  const [Calendar,setCalender] = useState('');
-}
+import { PickerOverlay } from "filestack-react";
+import CalenderComp from "../components/CalenderComp.js";
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
 
   React.useEffect(() => {
-    axios
-      .get("http://localhost:3002/api/get/competitions")
-      .then((response) => {
-        const data = response.data.map((data, index) => ({
-          id: index + 1,
-          competition_id: data.competition_id,
-          competition_name: data.competition_name,
-          competition_views: data.competition_views,
-          competition_image: data.competition_image,
-          competition_leaderboard: data.competition_leaderboard,
-          competition_startdate: data.competition_startdate,
-          competition_enddate: data.competition_enddate,
-          competition_info: data.competition_info,
-          competition_testcases: data.competition_testcases,
-        }));
-        setData(data);
-      });
+    axios.get("http://localhost:3002/api/get/competitions").then((response) => {
+      const data = response.data.map((data, index) => ({
+        id: index + 1,
+        competition_id: data.competition_id,
+        competition_name: data.competition_name,
+        competition_views: data.competition_views,
+        competition_image: data.competition_image,
+        competition_leaderboard: data.competition_leaderboard,
+        competition_startdate: data.competition_startdate,
+        competition_enddate: data.competition_enddate,
+        competition_info: data.competition_info,
+        competition_testcases: data.competition_testcases,
+      }));
+      setData(data);
+    });
   }, []);
 
   const columns = [
-    { field: 'competition_id', headerName: 'ID', width: 150 },
-    { field: 'competition_name', headerName: 'Title', width: 150 },
-    { field: 'competition_views', headerName: 'Views', width: 150 },
-    { field: 'competition_image', headerName: 'Image', width: 150 },
-    { field: 'competition_leaderboard', headerName: 'Leaderboard', width: 150 },
-    { field: 'competition_startdate', headerName: 'Start Date', width: 150 },
-    { field: 'competition_enddate', headerName: 'End Date', width: 150 },
-    { field: 'competition_info', headerName: 'Info', width: 150 },
-    { field: 'competition_testcases', headerName: 'Test Cases', width: 150 },
+    { field: "competition_id", headerName: "ID", width: 150 },
+    { field: "competition_name", headerName: "Title", width: 150 },
+    { field: "competition_views", headerName: "Views", width: 150 },
+    { field: "competition_image", headerName: "Image", width: 150 },
+    { field: "competition_leaderboard", headerName: "Leaderboard", width: 150 },
+    { field: "competition_startdate", headerName: "Start Date", width: 150 },
+    { field: "competition_enddate", headerName: "End Date", width: 150 },
+    { field: "competition_info", headerName: "Info", width: 150 },
+    { field: "competition_testcases", headerName: "Test Cases", width: 150 },
   ];
 
-  return <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+  return (
+    <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+  );
 }
 
 const AdminCompetitions = (props) => {
   const [compname, setCompname] = useState("");
-  const [visible, setvisible] = useState(false)
+  const [numtestcases, setNumTestCases] = useState(0);
+
+  const [visible, setvisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
 
   const handleUploadDone = (res) => {
@@ -91,79 +66,114 @@ const AdminCompetitions = (props) => {
   const handleClosePicker = () => {
     setPickerVisible(false); // Hide the picker
   };
-  
-
-  
-  const { form, use } = useForm({
-    // (Strongly advise) Provide the default values just like we use React state
-    defaultValues: { username: "", email: "", password: "" },
-    // The event only triggered when the form is valid
-    onSubmit: (values) => alert(JSON.stringify(values, undefined, 2))
-  });
-  // We can enable the "errorWithTouched" option to filter the error of an un-blurred field
-  // Which helps the user focus on typing without being annoyed by the error message
-  const errors = use("errors", { errorWithTouched: true });
 
   return (
-
     <div className="admin-competitions-container">
-      <div className="admin-competitions-button-container">
-        <div className="custom-modal">
-          <Modal isOpen={visible} style={{ content: { width: '70%', height: '70%', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }, overlay: { zIndex: 1000 } }} >
+      <Modal
+        isOpen={visible}
+        style={{
+          content: {
+            width: "80%",
+            height: "80%",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          },
+          overlay: { zIndex: 1000 },
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "100%",
+          }}
+        >
+          <h1>Create a Competition</h1>
 
-            <h1>Create a Competition</h1>
+          <InputBoxForInfo
+            buttonText="Competition Name"
+            onChange={(e) => setCompname(e.target.value)}
+          />
 
-            <form ref={form} noValidate>
-      <Field
-        label="Competition Name"
-        id="username"
-        name="username"
-        // Support built-in validation
-        required
-        error={errors.username}
-      />
-      <Button name="Upload Team Picture"
+          <InputBoxForInfo
+            buttonText="Number of test cases"
+            onChange={(e) => setNumTestCases(e.target.value)}
+          />
+
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <Button
+              name="Upload Team Picture"
+              style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
                 console.log("Picker clicked");
               }}
             />
+          </div>
 
-{pickerVisible && (
- <div className="center">
- <PickerOverlay
-   key="picker-overlay"
-   apikey={process.env.REACT_APP_API_KEY_FILESTACK}
-   onUploadDone={(res) => {
-     handleUploadDone(res);
-   }}
-   pickerOptions={{
-     onClose: () => {
-       handleClosePicker();
-     }
-   }}
- />
-</div>
-)}
-            <CalenderComp>
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <Button
+              name="Upload PDF"
+              style={{ background: "#457B9D", color: "white" }}
+              onClick={() => {
+                setPickerVisible(true);
+                console.log("Picker clicked");
+              }}
+            />
+          </div>
 
-            </CalenderComp>
-      <input type="submit" />
-    </form>
-    <Button
-                name="Close"
-                onClick={() => {
-                  setvisible(false)
-                  setPickerVisible(false);
-                  console.log("button clicked");
+          {pickerVisible && (
+            <div
+              className="center"
+              style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}
+            >
+              <PickerOverlay
+                key="picker-overlay"
+                apikey={process.env.REACT_APP_API_KEY_FILESTACK}
+                onUploadDone={(res) => {
+                  handleUploadDone(res);
                 }}
-              // rootClassName="button-root-class-name2"
+                pickerOptions={{
+                  onClose: () => {
+                    handleClosePicker();
+                  },
+                }}
               />
-          </Modal>
+            </div>
+          )}
+
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <CalenderComp></CalenderComp>
+          </div>
+
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <Button
+              name="Create"
+              onClick={() => {
+                setvisible(false);
+                setPickerVisible(false);
+                console.log("Create button clicked");
+                console.log(compname);
+                console.log(numtestcases);
+              }}
+            />
+          </div>
+
+          <div style={{ marginLeft: 6, marginTop: 5 }}>
+            <Button
+              name="Close"
+              onClick={() => {
+                setvisible(false);
+                setPickerVisible(false);
+                console.log("button clicked");
+              }}
+            />
+          </div>
         </div>
-
-
-      </div>
+      </Modal>
       <div data-role="Header" className="admin-competitions-navbar-container">
         <div className="admin-competitions-navbar">
           <div className="admin-competitions-left-side">
@@ -184,10 +194,16 @@ const AdminCompetitions = (props) => {
               <Link to="/admin-home" className="admin-competitions-link">
                 HOME
               </Link>
-              <Link to="/admin-competitions" className="admin-competitions-link1 Anchor">
+              <Link
+                to="/admin-competitions"
+                className="admin-competitions-link1 Anchor"
+              >
                 COMPETITIONS
               </Link>
-              <Link to="/admin-teams" className="admin-competitions-link2 Anchor">
+              <Link
+                to="/admin-teams"
+                className="admin-competitions-link2 Anchor"
+              >
                 TEAMS
               </Link>
             </div>
@@ -225,10 +241,16 @@ const AdminCompetitions = (props) => {
               <Link to="/admin-home" className="admin-competitions-link">
                 HOME
               </Link>
-              <Link to="/admin-competitions" className="admin-competitions-link1 Anchor">
+              <Link
+                to="/admin-competitions"
+                className="admin-competitions-link1 Anchor"
+              >
                 COMPETITIONS
               </Link>
-              <Link to="/admin-teams" className="admin-competitions-link2 Anchor">
+              <Link
+                to="/admin-teams"
+                className="admin-competitions-link2 Anchor"
+              >
                 TEAMS
               </Link>
             </div>
@@ -236,21 +258,19 @@ const AdminCompetitions = (props) => {
         </div>
       </div>
 
-
-
       <div className="grid-container">
         <GenGrid />
       </div>
 
-      <Button  name="Create Competition"
-          onClick={() => {
-            setvisible(true)
-            console.log("button clicked");
-          }}
+      <Button
+        name="Create Competition"
+        onClick={() => {
+          setvisible(true);
+          console.log("button clicked");
+        }}
         // rootClassName="button-root-class-name2"
-        />
+      />
     </div>
-
-  )
-}
-export default AdminCompetitions
+  );
+};
+export default AdminCompetitions;
