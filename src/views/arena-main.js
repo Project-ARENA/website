@@ -9,7 +9,7 @@ import { PickerOverlay } from 'filestack-react';
 import { sub } from 'date-fns';
 import { ConstructionOutlined, ControlPointSharp } from '@mui/icons-material';
 import { Tab } from '@mui/material';
-import { hi } from 'date-fns/locale';
+import { da, hi } from 'date-fns/locale';
 
 
 const competition_id = sessionStorage.getItem('CompID');
@@ -151,6 +151,22 @@ async function uploadSubmissions(){
     latestSubmissionScores.map((value, index) => {
     obj[`testcase_${index + 1}`] = value;
     });
+
+    //Upload to submission history:
+    axios
+            .get("http://localhost:3002/api/get/testcase_prev/" + competition_id + "/" + user_id)
+            .then(function (response) {
+                console.log(response.data[0].testcase_prev)
+                const data = JSON.parse(response.data[0].testcase_prev);
+                const nextKey = Object.keys(data).length.toString();
+                const updatedData = {...data, [nextKey]: obj};
+                const updatedDataString = JSON.stringify(updatedData);
+                console.log(updatedDataString);
+                axios.post("http://localhost:3002/api/post/testcasePrev/team", {
+                        team_name: sessionStorage.getItem('teamName'),
+                        testcase_prev: updatedDataString
+                });
+            });
 
     const newSub = JSON.stringify(obj);
     //Upload to latest
@@ -359,7 +375,7 @@ const ArenaMain = (props) => {
                             handleUploadDone(res);
 
                             //This sets the new score
-                            latestSubmissionScores[tabIndex-1] = 30;
+                            latestSubmissionScores[tabIndex-1] = generateRandomNumber();
                             //console.log(latestSubmissionScores);
                             uploadSubmissions();
                             
