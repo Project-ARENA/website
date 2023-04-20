@@ -12,6 +12,7 @@ export default function ButtonIcons({ name, onClick,disabled,style }) {
       onClick={onClick}
       name={name}
       style={style}
+      data-testid="button"
     >
       {name}
     </Button>
