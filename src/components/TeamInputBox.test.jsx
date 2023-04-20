@@ -8,7 +8,6 @@ import {
 } from "@testing-library/react";
 import { getByRole, getByTestId, getByText } from "@testing-library/dom";
 import "@testing-library/jest-dom/extend-expect";
-import userEvent from "@testing-library/user-event";
 
 import TeamInputBox from "./TeamInputBox";
 import InputBoxForInfo from "./input-box-for-info";
