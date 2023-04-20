@@ -16,7 +16,7 @@ import CalenderComp from '../components/CalenderComp.js';
 import { render } from "react-dom";
 import { useForm } from "react-cool-form";
 
-import "./styles.scss";
+import styles from "./styles.module.scss";
 // const model =()=>{
 //   return(
 //     <div>

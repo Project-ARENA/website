@@ -537,6 +537,20 @@ app.get("/api/get/testcase_highest/:comp_id/:user_id", (req, res) => {
   );
 });
 
+//! Route to get submission history 
+app.get("/api/get/testcase_prev/:comp_id/:user_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+  const user_id = req.params.user_id;
+  db.query("SELECT testcase_prev from team_details WHERE competition_id = ? AND user_id = ?;", [comp_id, user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err)
+      }
+      res.send(result)
+    }
+  );
+});
+
 //! Route to get Number of testcases 
 app.get("/api/get/numTests/:comp_id", (req, res) => {
   const comp_id = req.params.comp_id;
@@ -558,6 +572,23 @@ app.post("/api/post/latestScore/team", (req, res) => {
   db.query(
     "UPDATE team_details SET testcase_latest = ? WHERE team_name = ?;",
     [testcase_latest, team_name],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+//!Route to add testcase_prev
+app.post("/api/post/testcasePrev/team", (req, res) => {
+  const team_name = req.body.team_name;
+  const testcase_prev = req.body.testcase_prev;
+  db.query(
+    "UPDATE team_details SET testcase_prev = ? WHERE team_name = ?;",
+    [testcase_prev, team_name],
     (err, result) => {
       if (err) {
         res.send(err);
