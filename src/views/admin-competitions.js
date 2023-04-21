@@ -11,7 +11,7 @@ import { useState } from "react";
 import InputBoxForInfo from "../components/input-box-for-info";
 
 import { PickerOverlay } from "filestack-react";
-import CalenderComp from "../components/CalenderComp.js";
+import {CalenderComp, startDate, endDate} from "../components/CalenderComp.js";
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
@@ -169,6 +169,8 @@ const AdminCompetitions = (props) => {
                 console.log("Create button clicked");
                 console.log(compname);
                 console.log(numtestcases);
+                console.log("startDate: " + startDate);
+                console.log("endDate: " + endDate);
               }}
             />
           </div>

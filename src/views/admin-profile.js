@@ -120,17 +120,17 @@ const AdminProfile = (props) => {
               </svg>
             </div>
             <div className="admin-profile-links-container">
-              <Link to="/player-portal-home" className="admin-profile-link">
+              <Link to="/admin-home" className="admin-profile-link">
                 HOME
               </Link>
               <Link
-                to="/player-portal-competitions"
+                to="/admin-competitions"
                 className="admin-profile-link1 Anchor"
               >
                 COMPETITIONS
               </Link>
               <Link
-                to="/player-portal-team"
+                to="/admin-teams"
                 className="admin-profile-link2 Anchor"
               >
                 TEAMS

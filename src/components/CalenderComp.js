@@ -6,6 +6,9 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { addDays } from "date-fns";
 
+let startDate;
+let endDate;
+
 const CalenderComp = () => {
   const [calendar, setCalendar] = useState("");
 
@@ -19,6 +22,9 @@ const CalenderComp = () => {
       key: "selection",
     },
   ]);
+
+  startDate = format(range[0].startDate, "MM-dd-yyyy");
+  endDate = format(range[0].startDate, "MM-dd-yyyy");
 
   useEffect(() => {
     // set current date on component Load
@@ -113,4 +119,4 @@ const CalenderComp = () => {
     </div>
   );
 };
-export default CalenderComp;
+export {CalenderComp, startDate, endDate};
