@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import CalenderComp from "./CalenderComp";
+import {CalenderComp} from "./CalenderComp";
 
 describe("CalenderComp", () => {
   test("renders input box and calendar element", () => {

@@ -1,11 +1,38 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from "axios";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './arena-submissions.css'
+import DataGrid from "../components/dataGridSubmissions";
+
+const competition_id = sessionStorage.getItem('CompID');
+const user_id  = sessionStorage.getItem('userID');
 
 
 const ArenaSubmissions = (props) => {
+  const [numTests, setNumTests] = useState(0);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:3002/api/get/numTests/${competition_id}`)
+      .then(response => {
+        setNumTests(response.data[0].no_testcases); 
+        console.log(response.data[0].no_testcases) 
+      });
+  
+    axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
+      .then(response => {
+        const historyJSON = JSON.parse(response.data[0].testcase_prev)
+        const newData = Object.values(historyJSON).map(testcaseObj => [
+          testcaseObj.testcase_1,
+          testcaseObj.testcase_2,
+          testcaseObj.testcase_3
+        ]);
+        setData(newData);
+        console.log(newData);
+      });
+  }, [competition_id, user_id]);
+
   return (
     <div className="arena-submissions-container">
       <div data-role="Header" className="arena-submissions-navbar-container">
@@ -92,8 +119,14 @@ const ArenaSubmissions = (props) => {
       <div className="arena-submissions-section-separator1"></div>
       <div className="arena-submissions-section-separator2"></div>
       <div className="arena-submissions-section-separator3"></div>
+      <br/>
+      <h1>Submission History</h1>
+      <br/>
+      <div>
+      <DataGrid numColumns={3} data={data} />
+    </div>
     </div >
-
+    
   )
 }
 
