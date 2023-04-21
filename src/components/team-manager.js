@@ -10,9 +10,9 @@ import Select from '@mui/material/Select';
 import "./team-manager.css";
 
 export default function TeamManager(props) {
-  const { rootClassName, TeamName,TeamMember1,TeamMember2,TeamMember3,TeamMember4, LonClick,Ldisabled, DName, DonClick,Ddisabled } = props;
+  const { rootClassName, TeamName,TeamMember1,TeamMember2,TeamMember3,TeamMember4, location, LonClick,Ldisabled, DName, DonClick,Ddisabled } = props;
   const [inputValue, setInputValue] = useState("");
-  const [location, setLocation] = useState('');
+  //const [location, setLocation] = useState('');
 
   const handleChange = (event) => {
     setLocation(event.target.value);
@@ -31,6 +31,7 @@ export default function TeamManager(props) {
       <span className="team-manager-text3">{TeamMember2}</span>
       <span className="team-manager-text4">{TeamMember3}</span>
       <span className="team-manager-text5">{TeamMember4}</span>
+      <span className="team-manager-location">Location: {location}</span>
       {/* <span className="team-manager-location">Location:</span>
 
       
@@ -62,13 +63,13 @@ export default function TeamManager(props) {
 
       {/* Buttons*/}
 
-      <Button
+      {/* <Button
             className="team-manager-location-button"
             name="Update Location"
             disabled = {Ldisabled}
             onClick={() => LonClick(inputValue)}
             style={{ marginTop: "25px" }}
-        />
+        /> */}
       <Button
             className="team-manager-delete-button"
             name={DName}

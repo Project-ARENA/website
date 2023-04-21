@@ -97,6 +97,7 @@ const ArenaTeam = (props) => {
         TeamMember2="Team Member 2"
         TeamMember3="Team Member 3"
         TeamMember4="Team Member 4"
+        location = "Gauteng"
         Ldisabled={disabled}
         LonClick={handleInputSubmit}
         DName="Delete this team"
