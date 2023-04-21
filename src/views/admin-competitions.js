@@ -4,7 +4,6 @@ import axios from "axios";
 import DataGrid from "../components/datagrid";
 import "./admin-competitions.css";
 import Button from "../components/button";
-import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Modal from "react-modal";
 import { useState } from "react";
@@ -35,6 +34,23 @@ function GenGrid() {
     });
   }, []);
 
+  function PostCompDetails(Compname,views,teamPicture,leaderboard,testcases,testcasedocument,startdate,enddate,description){
+    return axios.post("http://localhost:3002/api/post/competitions",{
+      Compname:Compname,
+      views:views,
+      teamPicture:teamPicture,
+      leaderboard:leaderboard,
+      startdate:startdate,
+      enddate:enddate,
+      description:description,
+      testcasedocument:testcasedocument,
+      testcases:testcases
+    });
+  }
+
+  function doRegister(Compname,views,teamPicture,leaderboard,testcases,testcasedocument,startdate,enddate,description){
+  PostCompDetails(Compname,views,teamPicture,leaderboard,testcases,testcasedocument,startdate,enddate,description);
+  }
   const columns = [
     { field: "competition_id", headerName: "ID", width: 150 },
     { field: "competition_name", headerName: "Title", width: 150 },
@@ -55,6 +71,8 @@ function GenGrid() {
 const AdminCompetitions = (props) => {
   const [compname, setCompname] = useState("");
   const [numtestcases, setNumTestCases] = useState(0);
+  const [desc, setdesc] = useState("");
+
 
   const [visible, setvisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
@@ -159,7 +177,16 @@ const AdminCompetitions = (props) => {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <CalenderComp></CalenderComp>
           </div>
-
+          
+          <div>
+          <InputBoxForInfo style={{width : 400,height :400}}
+            
+          buttonText="Competition Description"
+          onChange={(e) => setdesc(e.target.value)}
+          />
+          </div>
+          
+          
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Create"
@@ -169,6 +196,9 @@ const AdminCompetitions = (props) => {
                 console.log("Create button clicked");
                 console.log(compname);
                 console.log(numtestcases);
+                console.log(desc)
+                // console.log("startdate  ",`${format(range[0].startDate, "MM-dd-yyyy")}`)
+                // console.log("end date   ",`${format(range[0].endDate,"MM-dd-yyyy")}`)
               }}
             />
           </div>
