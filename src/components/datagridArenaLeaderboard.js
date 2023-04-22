@@ -7,6 +7,12 @@ import './datagridArenaLeaderboard.css'
 
 export default function CustomDataGrid({ rows, noTests, myTeam }) {
 
+    // Sort the rows based on team_score in descending order
+    const sortedRows = React.useMemo(() => {
+        const sorted = [...rows].sort((a, b) => b.team_score - a.team_score);
+        return sorted.map((row, index) => ({ ...row, team_rank: index + 1 }));
+    }, [rows]);
+
     const columns = [
         { field: 'team_rank', headerName: 'Rank', width: 100 },
         { field: 'team_name', headerName: 'Name', width: 200 },
@@ -31,7 +37,7 @@ export default function CustomDataGrid({ rows, noTests, myTeam }) {
       
             return option;
           },
-          editable: true
+          editable: false
         },
         // TODO: #3 Figure out how to add no. test case columns dynamically
         ...Array.from({ length: noTests }, (_, i) => ({
@@ -48,7 +54,7 @@ export default function CustomDataGrid({ rows, noTests, myTeam }) {
     return (
         <Box sx={{ height: 400, width: '100%' }}>
             <DataGrid
-                rows={rows}
+                rows={sortedRows}
                 columns={columns}
                 initialState={{
                     pagination: {

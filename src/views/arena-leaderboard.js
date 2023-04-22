@@ -23,8 +23,7 @@ function getNoTests(comp_id, user_id) {
 // used to generate the table with correct data
 function GenGrid(params) {
   const [rows, setData] = React.useState([]);
-  var key;
-  var sum;
+  var sum = 0;
   // TODO: #5 #4 Change API call to get correct info from db
   
   React.useEffect(() => {
@@ -36,17 +35,17 @@ function GenGrid(params) {
             id: index + 1,
             team_rank: index + 1,
             team_name: data.team_name,
-            team_location: data.team_location ? JSON.stringify(data.team_location) : '',
-            team_score: sum
+            team_location: data.team_location ? data.team_location : "",
+            team_score: 0
           };
-          console.log(data.team_location);
           // Iterate through the key-value pairs of testcase_highest
           for (const [key, value] of Object.entries(JSON.parse(data.testcase_highest))) {
             // Dynamically create fields with key as field name and value as field value
             newData[key] = value;
             sum += value;
           }
-  
+          newData.team_score = sum;
+
           return newData;
         });
         setData(data);

@@ -89,7 +89,7 @@ const PlayerPortalTeam = (props) => {
       team_name: teamName,
       team_code: code,
       competition_id: competition_id,
-      team_location: location
+      team_location: String(location)
     });
     axios.post("http://localhost:3002/api/post/initTests/team", {
       testcase_latest: createJsonArray(no_testcases),
