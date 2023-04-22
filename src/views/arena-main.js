@@ -88,10 +88,7 @@ function ScoredHigher() {
     return new Promise((resolve, reject) => {
       axios.get("http://localhost:3002/api/get/testcase_highest/" + competition_id + "/" + user_id)
         .then(function (response) {
-          if (response.data[0].testcase_highest == null) {
-            console.log("haven't submitted yet")
-            isHigher = true;
-          } else {
+          
             console.log("they have submitted before")
             const latestString = response.data[0].testcase_highest;
             const jsonArray = JSON.parse(latestString);
@@ -116,7 +113,7 @@ function ScoredHigher() {
             const newHighestSub = JSON.stringify(obj);
             console.log(newHighestSub);
             resolve([isHigher, newHighestSub]); // Resolve the promise with both values
-          }
+          
         })
         .catch(reject);
     });
@@ -145,30 +142,44 @@ function ScoredHigher() {
 
 async function uploadSubmissions(){
     //Make the JSON String thing
-    //console.log(latestSubmissionScores);
+    console.log(latestSubmissionScores);
     const obj = {};
 
     latestSubmissionScores.map((value, index) => {
     obj[`testcase_${index + 1}`] = value;
     });
 
+    const newSub = JSON.stringify(obj);
+    console.log("hello?")
     //Upload to submission history:
     axios
             .get("http://localhost:3002/api/get/testcase_prev/" + competition_id + "/" + user_id)
             .then(function (response) {
-                console.log(response.data[0].testcase_prev)
-                const data = JSON.parse(response.data[0].testcase_prev);
-                const nextKey = Object.keys(data).length.toString();
-                const updatedData = {...data, [nextKey]: obj};
-                const updatedDataString = JSON.stringify(updatedData);
-                console.log(updatedDataString);
-                axios.post("http://localhost:3002/api/post/testcasePrev/team", {
-                        team_name: sessionStorage.getItem('teamName'),
-                        testcase_prev: updatedDataString
-                });
+                if(response.data[0].testcase_prev == null){
+                    const originalObject = JSON.parse(newSub);
+                    const newObject = {0: originalObject};
+                    const newString = JSON.stringify(newObject);
+                    axios.post("http://localhost:3002/api/post/testcasePrev/team", {
+                            team_name: sessionStorage.getItem('teamName'),
+                            testcase_prev: newString
+                    });
+                }
+                else{
+                    console.log(response.data[0].testcase_prev)
+                    const data = JSON.parse(response.data[0].testcase_prev);
+                    const nextKey = Object.keys(data).length.toString();
+                    const updatedData = {...data, [nextKey]: obj};
+                    const updatedDataString = JSON.stringify(updatedData);
+                    console.log(updatedDataString);
+                    axios.post("http://localhost:3002/api/post/testcasePrev/team", {
+                            team_name: sessionStorage.getItem('teamName'),
+                            testcase_prev: updatedDataString
+                    });
+                }
+                
             });
 
-    const newSub = JSON.stringify(obj);
+    
     //Upload to latest
     axios.post("http://localhost:3002/api/post/latestScore/team", {
         team_name: sessionStorage.getItem('teamName'),
@@ -178,18 +189,10 @@ async function uploadSubmissions(){
   //Check if greater, then upload to highest
   //console.log(ScoredHigher())
   await postHighestScore();
+  setTimeout(function () {
+    window.location.reload();
+  }, 500);
 
-    //Upload to submission history
-
-    
-
-//     axios.post("http://localhost:3002/api/post/submission", {
-//         submission_score: score,
-//         submission_number: subNum,
-//         submission_link: URL,
-//         competition_id: competition_id,
-//         team_name: sessionStorage.getItem('teamID')
-//   });
 }
 
 const ArenaMain = (props) => {
