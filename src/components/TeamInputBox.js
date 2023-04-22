@@ -9,28 +9,21 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import "./TeamInputBox.css";
 
-export default function TeamInputBox(props) {
+var location = "";
+
+function TeamInputBox(props) {
   const { rootClassName, title, label, buttonText, name, onClick, code, disabled} = props;
   const [inputValue, setInputValue] = useState("");
-  const [location, setLocationValue] = useState("");
-  var locationValue = "";
+  const [locationValue, setLocationValue] = useState("");
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  const handleLocationChange = (event, value1) => {
-    // const selectedLocation = event.target.value;
-    // setLocationValue(selectedLocation);
-    // locationValue = selectedLocation;
-    // console.log(locationValue);
-    // sessionStorage.setItem('locationValue', locationValue);
+  const handleLocationChange = (event) => {
     console.log("handleLocationChange called"); // <-- add this line
-    const selectedLocation = event.target.value;
-    setLocationValue(selectedLocation);
-    locationValue = selectedLocation;
-    console.log(locationValue);
-    sessionStorage.setItem('locationValue', locationValue);
+    setLocationValue(event.target.value);
+    location = event.target.value;
   };
 
   return (
@@ -60,7 +53,7 @@ export default function TeamInputBox(props) {
     data-testid="location-select"
     labelId="location-select"
     id="location-select"
-    value={location}
+    value={locationValue}
     onChange={handleLocationChange}
     label="Location"
     style={{display: "flex", justifyContent: "center" }}
@@ -94,3 +87,4 @@ export default function TeamInputBox(props) {
     </div>
   );
 }
+export {TeamInputBox, location};

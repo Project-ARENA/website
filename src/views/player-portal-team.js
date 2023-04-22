@@ -2,14 +2,13 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import TeamInputBox from "../components/TeamInputBox";
+import {TeamInputBox, location} from "../components/TeamInputBox";
 import JoinTeam from "../components/JoinTeam";
 import { v4 as uuidv4 } from "uuid";
 import "./player-portal-team.css";
 const username = sessionStorage.getItem("username");
 const userID = sessionStorage.getItem("userID");
 const competition_id = sessionStorage.getItem("CompID");
-const locationValue = sessionStorage.getItem("locationValue");
 
 const PlayerPortalTeam = (props) => {
   //useState variables
@@ -17,7 +16,6 @@ const PlayerPortalTeam = (props) => {
   //storing the code generated
   const [code, setCode] = useState("");
   const [teamName, setInputValue] = useState("");
-  const [location, setLocation] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(false);
   const [no_testcases, setNoTests] = useState(0);
@@ -52,7 +50,7 @@ const PlayerPortalTeam = (props) => {
 
     for (let i = 1; i <= numKeys; i++) {
       const key = `testcase_${i}`;
-      jsonArray[key] = null; // Set initial value to null
+      jsonArray[key] = 0; // Set initial value to null
     }
 
     const jsonString = JSON.stringify(jsonArray);
@@ -67,12 +65,10 @@ const PlayerPortalTeam = (props) => {
   
   */
 
-  const handleInputSubmit = (value, locationValue) => {
+  const handleInputSubmit = (value) => {
     const teamName = value;
-    // const teamLocation = location;
-    inputLocation = locationValue;
-    console.log("Location value: ", inputLocation);
-    console.log("Input value: ", teamName);
+    // console.log("Location value: ", location);
+    // console.log("Team value: ", teamName);
     if (teamName == "") {
       alert("Please enter a valid team name");
     } else {
@@ -83,19 +79,17 @@ const PlayerPortalTeam = (props) => {
   //get number of test cases
   numTestCases();
 
-  const createTeam = (teamName, inputLocation) => {
+  const createTeam = (teamName) => {
     const code = randomString();
     console.log(userID);
     console.log(competition_id);
-    console.log("this is locationValue " + locationValue);
-    console.log("this is location " + location);
-    console.log("this is location inputLocation" + inputLocation);
+    console.log("this is location" + location);
     axios.post("http://localhost:3002/api/post/create/team", {
       user_id: userID,
       team_name: teamName,
       team_code: code,
       competition_id: competition_id,
-      team_location: locationValue,
+      team_location: location
     });
     axios.post("http://localhost:3002/api/post/initTests/team", {
       testcase_latest: createJsonArray(no_testcases),
