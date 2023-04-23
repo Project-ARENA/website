@@ -99,6 +99,30 @@ app.post("/api/post/register", (req, res) => {
   );
 });
 
+//Create a competition
+app.post("/api/post/Create_comp", (req, res) => {
+  const compname = req.body.compname;
+  const testcaseNum = req.body.testcaseNum;
+  const startDate = req.body.startDate;
+  const endDate = req.body.endDate;
+  const desc = req.body.desc;
+  const pic = req.body.pic;
+  const pdf = req.body.pdf;
+
+  db.query(
+    `INSERT INTO competition_details (competition_name, competition_views, competition_image, competition_startdate, competition_enddate, competition_info, competition_testcases, competition_active, no_testcases)
+VALUES (?, 0, ?, ?, ?, ?, ?, 0, ?)`,
+    [compname,pic, startDate,endDate,desc, pdf,testcaseNum],
+    (err, result) => {
+      if (err) {
+        res.send(err);
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
 //!Route to check Login Details
 app.post("/api/post/login", (req, res) => {
   const username = req.body.username;

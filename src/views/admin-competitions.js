@@ -12,9 +12,23 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { PickerOverlay } from "filestack-react";
 import {CalenderComp, startDate, endDate} from "../components/CalenderComp.js";
 
+// Modal.setAppElement(el)
+function PostCompDetails(compname, pic, startDate,endDate,desc, pdf,testcaseNum){
+  console.log(compname, pic, startDate,endDate,desc, pdf,testcaseNum)
+  return axios.post("http://localhost:3002/api/post/Create_comp",{
+    compname:compname,
+    pic:pic,
+    startDate:startDate,
+    endDate:endDate,
+    desc:desc,
+    pdf:pdf,
+    testcaseNum:testcaseNum
+  });
+}
+
 function GenGrid() {
   const [rows, setData] = React.useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
+ 
 
   React.useEffect(() => {
     axios.get("http://localhost:3002/api/get/competitions").then((response) => {
@@ -34,23 +48,9 @@ function GenGrid() {
     });
   }, []);
 
-  function PostCompDetails(Compname,views,teamPicture,leaderboard,testcases,testcasedocument,startdate,enddate,description){
-    return axios.post("http://localhost:3002/api/post/competitions",{
-      Compname:Compname,
-      views:views,
-      teamPicture:teamPicture,
-      leaderboard:leaderboard,
-      startdate:startdate,
-      enddate:enddate,
-      description:description,
-      testcasedocument:testcasedocument,
-      testcases:testcases
-    });
-  }
+  
 
-  function doRegister(Compname,views,teamPicture,leaderboard,testcases,testcasedocument,startdate,enddate,description){
-  PostCompDetails(Compname,views,teamPicture,leaderboard,testcases,testcasedocument,startdate,enddate,description);
-  }
+  
   const columns = [
     { field: "competition_id", headerName: "ID", width: 150 },
     { field: "competition_name", headerName: "Title", width: 150 },
@@ -72,14 +72,18 @@ const AdminCompetitions = (props) => {
   const [compname, setCompname] = useState("");
   const [numtestcases, setNumTestCases] = useState(0);
   const [desc, setdesc] = useState("");
-
+  const [pic, setpic] = useState('');
+  const [pdf, setpdf] = useState('');
+  
 
   const [visible, setvisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
 
   const handleUploadDone = (res) => {
-    console.log(res.filesUploaded[0].url);
-    console.log(res.filesUploaded[0].mimetype);
+    setpic(res.filesUploaded[0].url)
+    setpdf(res.filesUploaded[0].mimetype)
+    console.log(pic);
+    console.log(pdf);
 
     if (res.filesUploaded[0].mimetype === "image/png" || "image/jpeg") {
       console.log("Image uploaded");
@@ -194,10 +198,14 @@ const AdminCompetitions = (props) => {
                 setvisible(false);
                 setPickerVisible(false);
                 console.log("Create button clicked");
-                console.log(compname);
-                console.log(numtestcases);
+                console.log("Competition Name is:" + compname);
+                console.log("Test cases are:" + numtestcases);
                 console.log("startDate: " + startDate);
                 console.log("endDate: " + endDate);
+                console.log("Desc: " + desc);
+                console.log("pic link is:" + pic);
+                console.log("pdf link is:" + pdf);
+                PostCompDetails(compname,pic, startDate,endDate,desc, pdf,parseInt(numtestcases));
               }}
             />
           </div>

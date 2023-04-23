@@ -23,8 +23,8 @@ const CalenderComp = () => {
     },
   ]);
 
-  startDate = format(range[0].startDate, "MM-dd-yyyy");
-  endDate = format(range[0].startDate, "MM-dd-yyyy");
+  startDate = format(range[0].startDate, "yyyy-MM-dd");
+  endDate = format(range[0].endDate, "yyyy-MM-dd");
 
   useEffect(() => {
     // set current date on component Load
