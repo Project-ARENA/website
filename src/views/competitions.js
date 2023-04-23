@@ -25,14 +25,17 @@ const GetDateDifference = (date1, date2) => {
 //DISPLAY ACTIVE CARDS
 function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
+  const [activeData, setActiveData] = React.useState([]);
+  const [inactiveData, setInactiveData] = React.useState([]);
   const [isFlipped, setIsFlipped] = React.useState(false);
 
   const fetchCardData = () => {
     return axios
       .get("http://localhost:3002/api/get/competitions")
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         const data = response.data.map((data) => ({
+          competition_id: data.competition_id,
           title: data.competition_name,
           views: data.competition_views,
           image: data.competition_image,
@@ -73,15 +76,33 @@ function GenCards() {
     return activeCards;
   };
 
+  const fetchInactiveData = (cardsData) => {
+    const newCardsData = [...cardsData];
+    const now = GetDate();
+
+    const InactiveCards = newCardsData.filter((card) => {
+      const endDate = new Date(card.endDate);
+      return endDate <= now;
+    });
+
+    return InactiveCards;
+  };
+
   React.useEffect(() => {
-    fetchCardData()
-      .then((data) => fetchActiveData(data))
-      .then((newCardsData) => {
-        setCardsData(newCardsData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const fetchData = async () => {
+      try {
+        const data = await fetchCardData();
+        const activeData = fetchActiveData(data);
+        const inactiveData = fetchInactiveData(data);
+        setCardsData(data);
+        setActiveData(activeData);
+        setInactiveData(inactiveData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // React.useEffect(() => {
@@ -99,114 +120,78 @@ function GenCards() {
   //     });
   // }, []);
 
-  const handleCardClick = (index) => {
+  const handleCardClick = async (competition_id) => {
     setIsFlipped(true);
 
     if (isFlipped) {
-      axios
-        .post("http://localhost:3002/api/post/competition/incViews", {
-          competition_id: index + 1,
-        })
-        .then((response) => {
-          console.log(response);
-        });
+      try {
+        const response = axios.post(
+          "http://localhost:3002/api/post/competition/incViews",
+          { competition_id: competition_id }
+        );
 
-      const newCardsData = [...cardsData];
-      newCardsData[index].views += 1;
-      setCardsData(newCardsData);
-
-      setIsFlipped(false);
-    }
-  };
-
-  return (
-    <div
-      data-testid="card"
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "16px",
-        maxWidth: "1024px",
-        margin: "0 auto",
-        justifyContent: "center",
-      }}
-    >
-      {cardsData.map((cardData, index) => (
-        <OverflowCard
-          key={index}
-          onClick={() => {
-            handleCardClick(index);
-          }}
-          {...cardData}
-        />
-      ))}
-    </div>
-  );
-}
-
-//DISPLAY INACTIVE CARDS
-function InActiveGenCards() {
-  const [cardsData, setCardsData] = React.useState([]);
-  const [isFlipped, setIsFlipped] = React.useState(false);
-
-  const fetchCardData = () => {
-    return axios
-      .get("http://localhost:3002/api/get/competitions")
-      .then((response) => {
-        console.log(response.data);
-        const data = response.data.map((data) => ({
-          title: data.competition_name,
-          views: data.competition_views,
-          image: data.competition_image,
-          description: data.competition_info,
-          endDate: data.competition_enddate,
-        }));
-        return data;
-      });
-  };
-
-  const fetchInactiveData = (cardsData) => {
-    const newCardsData = [...cardsData];
-    const now = GetDate();
-
-    const activeCards = newCardsData.filter((card) => {
-      const endDate = new Date(card.endDate);
-      return endDate <= now;
-    });
-
-    return activeCards;
-  };
-
-  React.useEffect(() => {
-    fetchCardData()
-      .then((data) => fetchInactiveData(data))
-      .then((newCardsData) => {
+        const newCardsData = [...cardsData];
+        newCardsData[competition_id - 1].views += 1;
         setCardsData(newCardsData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  const handleCardClick = (index) => {
-    setIsFlipped(true);
-
-    if (isFlipped) {
-      axios
-        .post("http://localhost:3002/api/post/competition/incViews", {
-          competition_id: index + 1,
-        })
-        .then((response) => {
-          console.log(response);
-        });
-
-      const newCardsData = [...cardsData];
-      newCardsData[index].views += 1;
-      setCardsData(newCardsData);
-
-      setIsFlipped(false);
+        console.log(response);
+        setIsFlipped(false);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
+
+  function getActiveCards() {
+    return (
+      <div
+        data-testid="card"
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "16px",
+          maxWidth: "1024px",
+          margin: "0 auto",
+          justifyContent: "center",
+        }}
+      >
+        {activeData.map((activeData, index) => (
+          <OverflowCard
+            key={index}
+            onClick={() => {
+              handleCardClick(activeData.competition_id);
+            }}
+            {...activeData}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  function getInactiveCards() {
+    return (
+      <div
+        data-testid="card"
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "16px",
+          maxWidth: "1024px",
+          margin: "0 auto",
+          justifyContent: "center",
+        }}
+      >
+        {inactiveData.map((inactiveData, index) => (
+          <OverflowCard
+            key={index}
+            onClick={() => {
+              handleCardClick(inactiveData.competition_id);
+            }}
+            {...inactiveData}
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -220,15 +205,15 @@ function InActiveGenCards() {
         justifyContent: "center",
       }}
     >
-      {cardsData.map((cardData, index) => (
-        <OverflowCard
-          key={index}
-          onClick={() => {
-            handleCardClick(index);
-          }}
-          {...cardData}
-        />
-      ))}
+      <AccordionContent
+        title="Active Competitions"
+        content={getActiveCards()}
+      />
+
+      <AccordionContent
+        title="Inactive Competitions"
+        content={getInactiveCards()}
+      />
     </div>
   );
 }
@@ -306,19 +291,9 @@ const Competitions = (props) => {
           </div>
         </div>
       </div>
-      <div className="competitions-section-separator"></div>
-      <div className="competitions-section-separator1"></div>
-      <div className="competitions-section-separator2"></div>
-      <div className="competitions-section-separator3"></div>
 
-      <AccordionContent title="Active Competition" content=<GenCards /> />
-      <AccordionContent
-        title="Inactive Competition"
-        content=<InActiveGenCards />
-      />
-      {/* The OverFlow cards, leave some space */}
-      <br />
-      {/* <GenCards /> */}
+      <GenCards />
+
       <br />
     </div>
   );
