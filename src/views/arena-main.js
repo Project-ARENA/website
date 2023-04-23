@@ -71,7 +71,7 @@ function getCompTestCases(linkForPDF){
             .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
             .then(function (response) {
                 linkForPDF = response.data[0].competition_testcases;
-                //console.log(linkForPDF)
+                console.log(linkForPDF)
             });
 }
 

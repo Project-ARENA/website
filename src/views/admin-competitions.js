@@ -10,28 +10,36 @@ import { useState } from "react";
 import InputBoxForInfo from "../components/input-box-for-info";
 
 import { PickerOverlay } from "filestack-react";
-import {CalenderComp, startDate, endDate} from "../components/CalenderComp.js";
+import {
+  CalenderComp,
+  startDate,
+  endDate,
+} from "../components/CalenderComp.js";
 
 // Modal.setAppElement(el)
-function PostCompDetails(compname, pic, startDate,endDate,desc, pdf,testcaseNum){
-  console.log(compname, pic, startDate,endDate,desc, pdf,testcaseNum)
-  return axios.post("http://localhost:3002/api/post/Create_comp",{
-    compname:compname,
-    pic:pic,
-    startDate:startDate,
-    endDate:endDate,
-    desc:desc,
-    pdf:pdf,
-    testcaseNum:testcaseNum
+function PostCompDetails(
+  compname,
+  pic,
+  startDate,
+  endDate,
+  desc,
+  pdf,
+  testcaseNum
+) {
+  console.log(compname, pic, startDate, endDate, desc, pdf, testcaseNum);
+  return axios.post("http://localhost:3002/api/post/Create_comp", {
+    compname: compname,
+    pic: pic,
+    startDate: startDate,
+    endDate: endDate,
+    desc: desc,
+    pdf: pdf,
+    testcaseNum: testcaseNum,
   });
 }
 
-var finalpic = "";
-var finalpdf = "";
-
 function GenGrid() {
   const [rows, setData] = React.useState([]);
- 
 
   React.useEffect(() => {
     axios.get("http://localhost:3002/api/get/competitions").then((response) => {
@@ -51,9 +59,6 @@ function GenGrid() {
     });
   }, []);
 
-  
-
-  
   const columns = [
     { field: "competition_id", headerName: "ID", width: 150 },
     { field: "competition_name", headerName: "Title", width: 150 },
@@ -75,28 +80,31 @@ const AdminCompetitions = (props) => {
   const [compname, setCompname] = useState("");
   const [numtestcases, setNumTestCases] = useState(0);
   const [desc, setdesc] = useState("");
-  const [pic, setpic] = useState('');
-  const [pdf, setpdf] = useState('');
-  
+  const [pic, setpic] = useState("");
+  const [pdf, setpdf] = useState("");
 
   const [visible, setvisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
 
   const handleUploadDone = (res) => {
-    setpic(res.filesUploaded[0].url)
-    setpdf(res.filesUploaded[0].mimetype)
-    console.log(pic);
-    console.log(pdf);
+    // setpic(res.filesUploaded[0].url)
+    // setpdf(res.filesUploaded[0].mimetype)
+    // console.log(pic);
+    // console.log(pdf);
 
-    if (res.filesUploaded[0].mimetype === "image/png" || "image/jpeg") {
+    if (
+      res.filesUploaded[0].mimetype === "image/png" ||
+      res.filesUploaded[0].mimetype === "image/jpeg" ||
+      res.filesUploaded[0].mimetype === "image/jpg"
+    ) {
       console.log("Image uploaded");
-      finalpic = res.filesUploaded[0].url;
-      console.log(finalpic);
+      console.log(res.filesUploaded[0].url);
+      setpic(res.filesUploaded[0].url);
     }
 
     if (res.filesUploaded[0].mimetype === "application/pdf") {
       console.log("PDF uploaded");
-      finalpdf = res.filesUploaded[0].url;
+      setpdf(res.filesUploaded[0].url);
     }
   };
 
@@ -185,16 +193,15 @@ const AdminCompetitions = (props) => {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <CalenderComp></CalenderComp>
           </div>
-          
+
           <div>
-          <InputBoxForInfo style={{width : 400,height :400}}
-            
-          buttonText="Competition Description"
-          onChange={(e) => setdesc(e.target.value)}
-          />
+            <InputBoxForInfo
+              style={{ width: 400, height: 400 }}
+              buttonText="Competition Description"
+              onChange={(e) => setdesc(e.target.value)}
+            />
           </div>
-          
-          
+
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Create"
@@ -207,9 +214,17 @@ const AdminCompetitions = (props) => {
                 console.log("startDate: " + startDate);
                 console.log("endDate: " + endDate);
                 console.log("Desc: " + desc);
-                console.log("pic link is:" + finalpic);
-                console.log("pdf link is:" + finalpdf);
-                PostCompDetails(compname, finalpic, startDate,endDate,desc, finalpdf, parseInt(numtestcases));
+                console.log("pic link is:" + pic);
+                console.log("pdf link is:" + pdf);
+                PostCompDetails(
+                  compname,
+                  pic,
+                  startDate,
+                  endDate,
+                  desc,
+                  pdf,
+                  parseInt(numtestcases)
+                );
               }}
             />
           </div>
