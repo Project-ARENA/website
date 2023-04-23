@@ -215,25 +215,31 @@ const ArenaMain = (props) => {
     //This stores contents of tab, tab number and index in the array are related
     const [title, setTitle] = useState('');
     const [paragraph, setParagraph] = useState('');
-
-    let linkForPDF ="";
+    const [linkForPDF, setlinkForPDF] = useState('');
+    
     
     //Executes when the page is loaded
     React.useEffect(() => {
+        
         getNumTestCases(numTests);
         axios
-            .get("http://localhost:3002/api/get/compDetails/" + competition_id)
-            .then(function (response) {
-                setTitle(response.data[0].competition_name);
-                setParagraph(response.data[0].competition_info);
-            });
-            
-            //Sets the link for the competition testcases
-            getCompTestCases(linkForPDF);
+          .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
+          .then(function (response) {
+            setlinkForPDF(response.data[0].competition_testcases) 
+            console.log(linkForPDF);
+            // Sets the link for the competition testcases
+            //getCompTestCases(linkForPDF);
             getTeamID();
             getLatestScores();
-            
-    });
+          });
+        axios
+          .get("http://localhost:3002/api/get/compDetails/" + competition_id)
+          .then(function (response) {
+            setTitle(response.data[0].competition_name);
+            setParagraph(response.data[0].competition_info);
+          });
+      }, []);
+      
 
     //latestSubmissionScores = latestSubmissionScores.slice(0,numTests);
     //console.log(latestSubmissionScores);
