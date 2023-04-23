@@ -15,6 +15,7 @@ function GenCards() {
       .then((response) => {
         //console.log(response.data);
         const data = response.data.map((data) => ({
+          competition_id: data.competition_id,
           title: data.competition_name,
           views: data.competition_views,
           image: data.competition_image,
@@ -45,17 +46,6 @@ function GenCards() {
       });
   };
 
-  // React.useEffect(() => {
-  //   fetchCardData()
-  //     .then((data) => fetchRegisterData(userID, data))
-  //     .then((newCardsData) => {
-  //       setCardsData(newCardsData);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,26 +61,6 @@ function GenCards() {
   }, []);
 
   //views of card
-  // const handleCardClick = (index) => {
-  //   setIsFlipped(true);
-
-  //   if (isFlipped) {
-  //     axios
-  //       .post("http://localhost:3002/api/post/competition/incViews", {
-  //         competition_id: index + 1,
-  //       })
-  //       .then((response) => {
-  //         console.log(response);
-  //       });
-
-  //     const newCardsData = [...cardsData];
-  //     newCardsData[index].views += 1;
-  //     setCardsData(newCardsData);
-
-  //     setIsFlipped(false);
-  //   }
-  // };
-
   const handleCardClick = async (index) => {
     setIsFlipped(true);
 
