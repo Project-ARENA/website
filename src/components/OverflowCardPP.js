@@ -4,10 +4,20 @@ import Card from "@mui/joy/Card";
 import CardOverflow from "@mui/joy/CardOverflow";
 import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
-import Button from '../components/button'
+import Button from "../components/button";
 
 export default function OverflowCardPP(props) {
-  const { image, title, description, views, endDate, onClick, isRegistered, onButton1Click, onButton2Click } = props;
+  const {
+    image,
+    title,
+    description,
+    views,
+    endDate,
+    onClick,
+    isRegistered,
+    onButton1Click,
+    onButton2Click,
+  } = props;
   const [transform, setTransform] = React.useState("");
   const [flipped, setFlipped] = React.useState(false);
 
@@ -16,8 +26,9 @@ export default function OverflowCardPP(props) {
     const boundingRect = card.getBoundingClientRect();
     const offsetX = event.clientX - boundingRect.left - boundingRect.width / 2;
     const offsetY = event.clientY - boundingRect.top - boundingRect.height / 2;
-    const transform = `perspective(600px) rotateX(${-offsetY / 10
-      }deg) rotateY(${offsetX / 10}deg)`;
+    const transform = `perspective(600px) rotateX(${
+      -offsetY / 10
+    }deg) rotateY(${offsetX / 10}deg)`;
     setTransform(transform);
   };
 
@@ -56,6 +67,13 @@ export default function OverflowCardPP(props) {
     transition: "transform 0.6s",
     transformStyle: "preserve-3d",
     transform: flipped ? "rotateY(0deg)" : "rotateY(180deg)",
+
+    // make it centered
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    margin: "auto",
   };
 
   return (
@@ -65,13 +83,11 @@ export default function OverflowCardPP(props) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      style={
-        {
-          transform,
-          transition: "transform 0.2s ease-out",
-          cursor: "pointer"
-        }
-      }
+      style={{
+        transform,
+        transition: "transform 0.2s ease-out",
+        cursor: "pointer",
+      }}
     >
       <div style={frontStyles}>
         <CardOverflow>
@@ -96,7 +112,7 @@ export default function OverflowCardPP(props) {
             display: "flex",
             gap: 1.5,
             py: 1.5,
-            px: "var(--Card-padding)"
+            px: "var(--Card-padding)",
           }}
         >
           <Typography
@@ -115,28 +131,27 @@ export default function OverflowCardPP(props) {
         </CardOverflow>
       </div>
       <div style={backStyles}>
-        <CardOverflow>
+        <CardOverflow sx={{ textAlign: "center" }}>
           {/* Add Whatever for the back of the card */}
+
           <Typography level="body2" sx={{ mt: 2, mb: 2 }}>
             {description}
           </Typography>
-          {/* Add a button, the text is "Register" if isRegister is true, else the text is "Leave" */}
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-            <Button
-              name={isRegistered ? "Leave" : "Register Now"}
-              onClick={handleBtn1Click}
-            />
-          </div>
-          <br></br>
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}> 
-            {isRegistered &&
-            <Button
-              name = "Enter Arena"
-              onClick={handleBtn2Click}
-            />
-            }
-          </div>
 
+          {isRegistered && (
+            <Button name="Enter Arena" onClick={handleBtn2Click} />
+          )}
+
+          <br />
+          <br />
+
+          <Button
+            name={isRegistered ? "Leave" : "Register Now"}
+            onClick={handleBtn1Click}
+            style={
+              isRegistered ? { backgroundColor: "rgba(255, 0, 0, 0.5)" } : {}
+            }
+          />
         </CardOverflow>
       </div>
     </Card>
