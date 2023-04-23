@@ -2,10 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import OverflowCard from "../components/OverflowCardPP";
-import Modal from "react-modal";
 const userID = sessionStorage.getItem("userID");
 import "./player-portal-competitions.css";
-import { useState } from "react";
 
 function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
@@ -15,7 +13,7 @@ function GenCards() {
     return axios
       .get("http://localhost:3002/api/get/competitions")
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         const data = response.data.map((data) => ({
           title: data.competition_name,
           views: data.competition_views,
@@ -31,7 +29,7 @@ function GenCards() {
     return axios
       .get(`http://localhost:3002/api/get/competition/registered/${userID}`)
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         const registeredComps = response.data.map(
           (data) => data.competition_id
         );
@@ -47,35 +45,70 @@ function GenCards() {
       });
   };
 
+  // React.useEffect(() => {
+  //   fetchCardData()
+  //     .then((data) => fetchRegisterData(userID, data))
+  //     .then((newCardsData) => {
+  //       setCardsData(newCardsData);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
   React.useEffect(() => {
-    fetchCardData()
-      .then((data) => fetchRegisterData(userID, data))
-      .then((newCardsData) => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchCardData();
+        const newCardsData = await fetchRegisterData(userID, data);
         setCardsData(newCardsData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   //views of card
-  const handleCardClick = (index) => {
+  // const handleCardClick = (index) => {
+  //   setIsFlipped(true);
+
+  //   if (isFlipped) {
+  //     axios
+  //       .post("http://localhost:3002/api/post/competition/incViews", {
+  //         competition_id: index + 1,
+  //       })
+  //       .then((response) => {
+  //         console.log(response);
+  //       });
+
+  //     const newCardsData = [...cardsData];
+  //     newCardsData[index].views += 1;
+  //     setCardsData(newCardsData);
+
+  //     setIsFlipped(false);
+  //   }
+  // };
+
+  const handleCardClick = async (index) => {
     setIsFlipped(true);
 
     if (isFlipped) {
-      axios
-        .post("http://localhost:3002/api/post/competition/incViews", {
-          competition_id: index + 1,
-        })
-        .then((response) => {
-          console.log(response);
-        });
+      try {
+        const response = axios.post(
+          "http://localhost:3002/api/post/competition/incViews",
+          { competition_id: index + 1 }
+        );
 
-      const newCardsData = [...cardsData];
-      newCardsData[index].views += 1;
-      setCardsData(newCardsData);
-
-      setIsFlipped(false);
+        const newCardsData = [...cardsData];
+        newCardsData[index].views += 1;
+        setCardsData(newCardsData);
+        console.log(response);
+        setIsFlipped(false);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
