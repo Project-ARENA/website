@@ -9,7 +9,7 @@ import {
 import { getByRole, getByTestId, getByText } from "@testing-library/dom";
 import "@testing-library/jest-dom/extend-expect";
 
-import TeamInputBox from "./TeamInputBox";
+import {TeamInputBox} from "./TeamInputBox";
 import InputBoxForInfo from "./input-box-for-info";
 
 describe("TeamInputBox component", () => {

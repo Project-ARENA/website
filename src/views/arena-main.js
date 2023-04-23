@@ -15,47 +15,39 @@ import { da, hi } from 'date-fns/locale';
 const competition_id = sessionStorage.getItem('CompID');
 const user_id  = sessionStorage.getItem('userID');
 let tabIndex = -1;
-let latestSubmissionScores = [];
+let latestSubmissionScores = [0];
 let newHighestSub = ""
 let numTests = 0;
 
 //Function to set the latest scores
 function getLatestScores(){
+    return new Promise((resolve, reject) => {
     axios
-            .get("http://localhost:3002/api/get/testcase_latest/" + competition_id + "/" + user_id)
-            .then(function (response) {
-                
-                //They haveven't submitted yet
-                if (response.data[0].testcase_latest == null){ 
-
-                }
-
-                //They have submitted
-                else{
-                    const latestString  = response.data[0].testcase_latest;
-                    //console.log(response.data[0].testcase_latest);
-                    const jsonArray = JSON.parse(latestString);
-
-                    
-                    let count = 0;
-                    for (let key in jsonArray) {
-                        latestSubmissionScores[count] = jsonArray[key];
-
-                        count++
-                    }
-
-                    //console.log(latestSubmissionScores);
-
-                }
+        .get("http://localhost:3002/api/get/testcase_latest/" + competition_id + "/" + user_id)
+        .then(function (response) {
+            
+            const latestString  = response.data[0].testcase_latest;
+            //console.log(response.data[0].testcase_latest);
+            const jsonArray = JSON.parse(latestString);
+ 
+            let count = 0;
+            for (let key in jsonArray) {
+                latestSubmissionScores[count] = jsonArray[key];
+                count++
+            }
+                //console.log(latestSubmissionScores);
             });
+            resolve(latestSubmissionScores)
+    });
 }
+
 function getNumTestCases(){
     axios
-            .get("http://localhost:3002/api/get/numTests/" + competition_id)
-            .then(function (response) {
-                numTests = response.data[0].no_testcases;
-                //console.log("Number of testcase" + numTests);
-            });
+        .get("http://localhost:3002/api/get/numTests/" + competition_id)
+        .then(function (response) {
+            numTests = response.data[0].no_testcases;
+            //console.log("Number of testcase" + numTests);
+        });
 }
 
 //! Generates a random score when the user submits
@@ -67,10 +59,10 @@ function generateRandomNumber () {
 //!Gets the teamID
 function getTeamID (){
     axios
-            .get("http://localhost:3002/api/get/team_name/" + competition_id + "/" + user_id)
-            .then(function (response) {
-                sessionStorage.setItem('teamName', response.data[0].team_name);
-            });
+        .get("http://localhost:3002/api/get/team_name/" + competition_id + "/" + user_id)
+        .then(function (response) {
+            sessionStorage.setItem('teamName', response.data[0].team_name);
+        });
 }
 
 //! Gets the testCases for the competition
@@ -99,7 +91,7 @@ function ScoredHigher() {
               count++
             }
             for (let i = 0; i < latestSubmissionScores.length; i++) {
-              console.log(latestSubmissionScores[i] + " " + highestSub[i])
+            //   console.log(latestSubmissionScores[i] + " " + highestSub[i])
               if (latestSubmissionScores[i] > highestSub[i]) {
                 //Change only the one that is higher
                 highestSub[i] = latestSubmissionScores[i];
@@ -111,7 +103,7 @@ function ScoredHigher() {
               obj[`testcase_${index + 1}`] = value;
             });
             const newHighestSub = JSON.stringify(obj);
-            console.log(newHighestSub);
+            // console.log(newHighestSub);
             resolve([isHigher, newHighestSub]); // Resolve the promise with both values
           
         })
@@ -122,7 +114,7 @@ function ScoredHigher() {
   async function postHighestScore() {
     try {
       const [isHigher, newHighestSub] = await ScoredHigher();
-      console.log(newHighestSub);
+    //   console.log(newHighestSub);
   
       if (isHigher) {
         const response = await axios.post("http://localhost:3002/api/post/highestScore/team", {
@@ -189,9 +181,10 @@ async function uploadSubmissions(){
   //Check if greater, then upload to highest
   //console.log(ScoredHigher())
   await postHighestScore();
-  setTimeout(function () {
-    window.location.reload();
-  }, 500);
+  window.location.reload();
+//   setTimeout(function () {
+    
+//   }, 500);
 
 }
 
@@ -218,24 +211,12 @@ const ArenaMain = (props) => {
   
     */
     const [pickerVisible, setPickerVisible] = useState(false);
-    //const [no_testcases, setNoTests] = useState(0);
-
-    // // get number of test cases
-    // function numTestCases () {
-    // axios.get("http://localhost:3002/api/get/numTests/" + competition_id)
-    // .then(function (response) {
-    //   setNoTests(response.data[0].no_testcases);
-    // });
-    // }
-    
-    // numTestCases();
-    
 
     //This stores contents of tab, tab number and index in the array are related
     const [title, setTitle] = useState('');
     const [paragraph, setParagraph] = useState('');
 
-    let linkForPDF =""
+    let linkForPDF ="";
     
     //Executes when the page is loaded
     React.useEffect(() => {
@@ -283,9 +264,11 @@ const ArenaMain = (props) => {
                                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
                             </svg>
                         </div>
-                        <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
-                            <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
-                        </svg>
+                            <Link to="/player-portal-competitions" className="arena-back-link">
+                                <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
+                                    <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
+                                </svg>
+                            </Link>
                         <div className="arena-main-links-container">
                             <Link to="/arena-main" className="arena-main-link">
                                 ARENA

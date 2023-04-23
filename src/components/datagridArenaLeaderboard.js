@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { Button } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 
 import './datagridArenaLeaderboard.css'
@@ -35,7 +34,7 @@ export default function CustomDataGrid({ rows, noTests, myTeam }) {
               ({ value: optionValue }) => value === optionValue
             );
       
-            return option;
+            return option ? option.label : '';;
           },
           editable: false
         },
@@ -59,11 +58,11 @@ export default function CustomDataGrid({ rows, noTests, myTeam }) {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 5,
+                            pageSize: 15,
                         },
                     },
                 }}
-                pageSizeOptions={[5]}
+                pageSizeOptions={[15]}
                 getRowClassName={getRowClassName} // Add getRowClassName prop
             />
         </Box>

@@ -26,6 +26,9 @@ function PostCompDetails(compname, pic, startDate,endDate,desc, pdf,testcaseNum)
   });
 }
 
+var finalpic = "";
+var finalpdf = "";
+
 function GenGrid() {
   const [rows, setData] = React.useState([]);
  
@@ -87,12 +90,13 @@ const AdminCompetitions = (props) => {
 
     if (res.filesUploaded[0].mimetype === "image/png" || "image/jpeg") {
       console.log("Image uploaded");
-      // Add to DB
+      finalpic = res.filesUploaded[0].url;
+      console.log(finalpic);
     }
 
     if (res.filesUploaded[0].mimetype === "application/pdf") {
       console.log("PDF uploaded");
-      // Add to DB
+      finalpdf = res.filesUploaded[0].url;
     }
   };
 
@@ -138,7 +142,7 @@ const AdminCompetitions = (props) => {
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
-              name="Upload Team Picture"
+              name="Upload PDF"
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
@@ -149,7 +153,7 @@ const AdminCompetitions = (props) => {
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
-              name="Upload PDF"
+              name="Upload Team Picture"
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
@@ -203,9 +207,9 @@ const AdminCompetitions = (props) => {
                 console.log("startDate: " + startDate);
                 console.log("endDate: " + endDate);
                 console.log("Desc: " + desc);
-                console.log("pic link is:" + pic);
-                console.log("pdf link is:" + pdf);
-                PostCompDetails(compname,pic, startDate,endDate,desc, pdf,parseInt(numtestcases));
+                console.log("pic link is:" + finalpic);
+                console.log("pdf link is:" + finalpdf);
+                PostCompDetails(compname, finalpic, startDate,endDate,desc, finalpdf, parseInt(numtestcases));
               }}
             />
           </div>

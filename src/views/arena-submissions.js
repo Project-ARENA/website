@@ -23,13 +23,22 @@ const ArenaSubmissions = (props) => {
     axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
       .then(response => {
         const historyJSON = JSON.parse(response.data[0].testcase_prev)
-        const newData = Object.values(historyJSON).map(testcaseObj => [
-          testcaseObj.testcase_1,
-          testcaseObj.testcase_2,
-          testcaseObj.testcase_3
-        ]);
-        setData(newData);
-        console.log(newData);
+
+        if (historyJSON !== null) {
+          const newData = Object.values(historyJSON).map(testcaseObj => {
+
+            const testCaseData = [];
+
+            for (let i = 1; i <= numTests; i++) {
+            testCaseData.push(testcaseObj[`testcase_${i}`]);
+            }
+
+          return testCaseData;
+          });
+
+          setData(newData);
+          console.log(newData);
+      }
       });
   }, [competition_id, user_id]);
 
@@ -51,9 +60,11 @@ const ArenaSubmissions = (props) => {
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
             </div>
-            <svg viewBox="0 0 1024 1024" className="arena-submissions-icon2">
-              <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
-            </svg>
+              <Link to="/player-portal-competitions" className="arena-back-link">
+                  <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
+                      <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
+                  </svg>
+              </Link>
             <div className="arena-submissions-links-container">
               <Link to="/arena-main" className="arena-main-link">
                 ARENA
@@ -123,7 +134,7 @@ const ArenaSubmissions = (props) => {
       <h1>Submission History</h1>
       <br/>
       <div>
-      <DataGrid numColumns={3} data={data} />
+      <DataGrid numColumns={numTests} data={data} />
     </div>
     </div >
     
