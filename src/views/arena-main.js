@@ -209,37 +209,12 @@ async function uploadSubmissions() {
     testcase_latest: newSub,
   });
 
-  //Check if greater, then upload to highest
-  //console.log(ScoredHigher())
   await postHighestScore();
   
-  //   setTimeout(function () {
-
-  //   }, 500);a
 }
 
 const ArenaMain = (props) => {
-  /* 
-       ! NEED TO DO THE FOLLOWING:
-       !Done
-       1. Create the database for this:
-          -submission number
-          -competition id
-          -team id
-          -submission score
-        (This way we can know which team has uploaded, for which competition and which submission)
-        2. Create an api to get the submission history
-        2.1 Figure out how to make the submission history go down :(
-        3. Figure out how to organize that based on competition id so i don't have to get shouting from Sayf for making too many API calls
-        !Done
-        4. Create an API to add the link for the teams submission
-        5. Create an api to send the highest score to the team_details table
-        !DONE
-        6. Get the competition info pdf thingy 
-        !Kinda done, need to ask Sayf how to reload a compnent
-        7. Generate a random score when the user uploads
   
-    */
   const [pickerVisible, setPickerVisible] = useState(false);
 
   //This stores contents of tab, tab number and index in the array are related
@@ -268,18 +243,13 @@ const ArenaMain = (props) => {
   }, []);
 
   const [isLoaded, setIsLoaded] = React.useState(false);
-  const [isSubmit, setIsSubmitted] = React.useState(false);
-
-  //latestSubmissionScores = latestSubmissionScores.slice(0,numTests);
-  //console.log(latestSubmissionScores);
-
   //Sets the pickerVisible to false, so you can actually click it again
   const handleClosePicker = () => {
     setPickerVisible(false);
   };
   //Returns the url for the file uploaded
   const handleUploadDone = (res) => {
-    //console.log(res.filesUploaded[0].url);
+    
   };
   return (
     <div className="arena-main-container">
