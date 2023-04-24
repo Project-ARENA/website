@@ -212,10 +212,10 @@ async function uploadSubmissions() {
   //Check if greater, then upload to highest
   //console.log(ScoredHigher())
   await postHighestScore();
-  window.location.reload();
+  window.location.reload(false);
   //   setTimeout(function () {
 
-  //   }, 500);
+  //   }, 500);a
 }
 
 const ArenaMain = (props) => {
@@ -250,6 +250,11 @@ const ArenaMain = (props) => {
 
   //Executes when the page is loaded
   React.useEffect(() => {
+    const fetchData = async () => {
+      await getLatestScores();
+      setIsLoaded(true);
+    };
+    fetchData();
     getNumTestCases(numTests);
     axios
       .get("http://localhost:3002/api/get/compDetails/" + competition_id)
@@ -257,12 +262,12 @@ const ArenaMain = (props) => {
         setTitle(response.data[0].competition_name);
         setParagraph(response.data[0].competition_info);
       });
-
     //Sets the link for the competition testcases
     getCompTestCases(linkForPDF);
     getTeamID();
-    getLatestScores();
-  });
+  }, []);
+
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   //latestSubmissionScores = latestSubmissionScores.slice(0,numTests);
   //console.log(latestSubmissionScores);
@@ -374,6 +379,8 @@ const ArenaMain = (props) => {
       <br />
       <h1>Submit your code here:</h1>
       <div className="arena-main-tabs">
+      <div>
+      {isLoaded && (
         <BasicTabs
           tabContent={latestSubmissionScores}
           tabCount={numTests}
@@ -383,6 +390,8 @@ const ArenaMain = (props) => {
             //console.log(tabIndex);
           }}
         />
+      )}
+    </div>
         {pickerVisible && (
           <PickerOverlay
             key="picker-overlay"
@@ -394,6 +403,7 @@ const ArenaMain = (props) => {
               latestSubmissionScores[tabIndex - 1] = generateRandomNumber();
               //console.log(latestSubmissionScores);
               uploadSubmissions();
+              
             }}
             pickerOptions={{
               onClose: () => {
