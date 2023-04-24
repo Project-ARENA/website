@@ -45,9 +45,6 @@ const PlayerPortalHome = (props) => {
               <Link to="/player-portal-competitions" className="player-portal-home-link1 Anchor">
                 COMPETITIONS
               </Link>
-              <Link to="/player-portal-team" className="player-portal-home-link2 Anchor">
-                TEAM
-              </Link>
               <Link to="/player-portal-contact" className="player-portal-home-link3 Anchor">
                 CONTACT
               </Link>

@@ -221,7 +221,7 @@ const AdminProfile = (props) => {
           onClick={() => {
             console.log("Log out button clicked");
             sessionStorage.clear();
-            window.location.href = 'http://localhost:3000/login'
+            window.location.href = 'http://localhost:3000'
           }}
           rootClassName="button-root-class-name4"
         ></Button>

@@ -6,9 +6,21 @@ import {TeamInputBox, location} from "../components/TeamInputBox";
 import JoinTeam from "../components/JoinTeam";
 import { v4 as uuidv4 } from "uuid";
 import "./player-portal-team.css";
+import Swal from 'sweetalert2'
+
 const username = sessionStorage.getItem("username");
 const userID = sessionStorage.getItem("userID");
 const competition_id = sessionStorage.getItem("CompID");
+
+// Function to copy a value to clipboard
+const copyToClipboard = (value) => {
+  const textarea = document.createElement('textarea'); // Create a textarea element
+  textarea.value = value; // Set the value to the textarea
+  document.body.appendChild(textarea); // Append the textarea to the body
+  textarea.select(); // Select the textarea
+  document.execCommand('copy'); // Copy the selected text to clipboard
+  document.body.removeChild(textarea); // Remove the textarea from the body
+};
 
 const PlayerPortalTeam = (props) => {
   //useState variables
@@ -20,6 +32,7 @@ const PlayerPortalTeam = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [no_testcases, setNoTests] = useState(0);
   let inputLocation = " ";
+  
   //generate random code for team
   const randomString = () => {
     setDisabled(true);
@@ -97,6 +110,22 @@ const PlayerPortalTeam = (props) => {
       team_name: teamName,
     });
     console.log(username);
+    Swal.fire({
+      title: 'Team created!',
+      text: "Team Code: " + code,
+      icon: 'success',
+      showCancelButton: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Copy'
+      }).then((result) => {
+      if (result.isConfirmed) {
+        copyToClipboard(code);
+        setTimeout(() => {
+          window.location.href = "http://localhost:3000/arena-main"
+        }, 1000);
+      }
+    })
   };
 
   const validationCreate = (teamName) => {
@@ -145,7 +174,7 @@ const PlayerPortalTeam = (props) => {
       });
   };
 
-  const joinTeam = (teamName, teamCode, inputLocation) => {
+  const joinTeam = (teamName, teamCode, locationValue) => {
     axios.post("http://localhost:3002/api/post/addTo/team", {
       user_id: userID,
       team_name: teamName,
@@ -153,6 +182,9 @@ const PlayerPortalTeam = (props) => {
       competition_id: competition_id,
       team_location: locationValue,
     });
+    setTimeout(() => {
+      window.location.href = "http://localhost:3000/arena-main"
+    }, 500);
   };
 
   return (
@@ -185,12 +217,6 @@ const PlayerPortalTeam = (props) => {
                 className="player-portal-team-link1 Anchor"
               >
                 COMPETITIONS
-              </Link>
-              <Link
-                to="/player-portal-team"
-                className="player-portal-team-link2 Anchor"
-              >
-                TEAM
               </Link>
               <Link
                 to="/player-portal-contact"
@@ -275,7 +301,6 @@ const PlayerPortalTeam = (props) => {
         name="Create Team"
         disabled={disabled}
         onClick={handleInputSubmit}
-        code={"Team Code: " + code}
       ></TeamInputBox>
 
       <br></br>

@@ -135,9 +135,6 @@ const PlayerPortalProfile = (props) => {
               <Link to="/player-portal-competitions" className="player-portal-profile-link1 Anchor">
                 COMPETITIONS
               </Link>
-              <Link to="/player-portal-team" className="player-portal-profile-link2 Anchor">
-                TEAM
-              </Link>
               <Link to="/player-portal-contact" className="player-portal-profile-link3 Anchor">
                 CONTACT US
               </Link>
@@ -181,9 +178,6 @@ const PlayerPortalProfile = (props) => {
               </Link>
               <Link to="/player-portal-competitions" className="player-portal-profile-link1 Anchor">
                 COMPETITIONS
-              </Link>
-              <Link to="/player-portal-team" className="player-portal-profile-link2 Anchor">
-                TEAM
               </Link>
               <Link to="/player-portal-contact" className="player-portal-profile-link3 Anchor">
                 CONTACT US
@@ -243,7 +237,7 @@ const PlayerPortalProfile = (props) => {
           onClick={() => {
             console.log("Log out button clicked");
             sessionStorage.clear();
-            window.location.href = 'http://localhost:3000/login'
+            window.location.href = 'http://localhost:3000'
           }}
           rootClassName="button-root-class-name4"
         ></Button>
