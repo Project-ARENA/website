@@ -225,6 +225,7 @@ const AdminCompetitions = (props) => {
                   pdf,
                   parseInt(numtestcases)
                 );
+                window.location.reload();
               }}
             />
           </div>
