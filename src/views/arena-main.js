@@ -212,7 +212,7 @@ async function uploadSubmissions() {
   //Check if greater, then upload to highest
   //console.log(ScoredHigher())
   await postHighestScore();
-  window.location.reload(false);
+  
   //   setTimeout(function () {
 
   //   }, 500);a
@@ -268,6 +268,7 @@ const ArenaMain = (props) => {
   }, []);
 
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [isSubmit, setIsSubmitted] = React.useState(false);
 
   //latestSubmissionScores = latestSubmissionScores.slice(0,numTests);
   //console.log(latestSubmissionScores);
@@ -403,6 +404,9 @@ const ArenaMain = (props) => {
               latestSubmissionScores[tabIndex - 1] = generateRandomNumber();
               //console.log(latestSubmissionScores);
               uploadSubmissions();
+              setTimeout(function () {
+                window.location.reload(false);
+              }, 550);
               
             }}
             pickerOptions={{
