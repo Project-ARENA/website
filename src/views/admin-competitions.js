@@ -161,7 +161,7 @@ const AdminCompetitions = (props) => {
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
-              name="Upload Team Picture"
+              name="Upload Competition Picture"
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
@@ -225,7 +225,7 @@ const AdminCompetitions = (props) => {
                   pdf,
                   parseInt(numtestcases)
                 );
-                window.location.reload();
+                window.location.reload(false);
               }}
             />
           </div>

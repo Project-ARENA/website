@@ -149,7 +149,7 @@ export default function OverflowCardPP(props) {
             name={isRegistered ? "Leave" : "Register Now"}
             onClick={handleBtn1Click}
             style={
-              isRegistered ? { backgroundColor: "rgba(255, 0, 0, 0.5)" } : {}
+              isRegistered ? { backgroundColor: "rgba(255, 0, 0, 0.5)", color:"black" } : {}
             }
           />
         </CardOverflow>
