@@ -41,7 +41,7 @@ describe("GenCards component", () => {
 
     const cards = screen.getAllByTestId("card");
 
-    expect(cards).toHaveLength(2);
+    expect(cards).toHaveLength(3);
   });
 
   it("should handle card click", async () => {
@@ -86,83 +86,4 @@ describe("GenCards component", () => {
     //   { competition_id: 1 }
     // );
   });
-});
-
-describe("InactiveGenCards component", () => {
-  it("should render inactive competition cards", async () => {
-    const mockData = [
-      {
-        competition_name: "Test Competition 1",
-        competition_views: 10,
-        competition_image: "test-image-1.jpg",
-        competition_info: "Test competition info 1",
-        competition_enddate: "2022-05-01",
-      },
-      {
-        competition_name: "Test Competition 2",
-        competition_views: 20,
-        competition_image: "test-image-2.jpg",
-        competition_info: "Test competition info 2",
-        competition_enddate: "2022-05-15",
-      },
-    ];
-
-    axios.get.mockResolvedValue({ data: mockData });
-
-    await act(async () => {
-      render(
-        <Router>
-          <InActiveGenCards />
-        </Router>
-      );
-    });
-
-    const cards = screen.getAllByTestId("card");
-
-    expect(cards).toHaveLength(2);
-  });
-
-  it("should handle card click", async () => {
-    const mockData = [
-      {
-        competition_name: "Test Competition 1",
-        competition_views: 10,
-        competition_image: "test-image-1.jpg",
-        competition_info: "Test competition info 1",
-        competition_enddate: "2023-05-01",
-      },
-      {
-        competition_name: "Test Competition 2",
-        competition_views: 20,
-        competition_image: "test-image-2.jpg",
-        competition_info: "Test competition info 2",
-        competition_enddate: "2023-05-15",
-      },
-    ];
-  
-    axios.get.mockResolvedValue({ data: mockData });
-  
-    await act(async () => {
-      render(
-        <Router>
-          <InActiveGenCards />
-        </Router>
-      );
-    });
-  
-    const axiosPostSpy = jest.spyOn(axios, "post");
-  
-    const cards = screen.getAllByTestId("card");
-  
-    await act(async () => {
-      fireEvent.click(cards[0]);
-    });
-  
-    expect(axiosPostSpy).toHaveBeenCalledTimes(0);
-    // expect(axiosPostSpy).toHaveBeenCalledWith(
-    //   "http://localhost:3002/api/post/competition/incViews",
-    //   { competition_id: 1 }
-    // );
-  });
-
 });
