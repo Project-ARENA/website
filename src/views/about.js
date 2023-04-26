@@ -79,7 +79,6 @@ const About = (props) => {
       <div className="about-section-separator2"></div>
       <div className="about-section-separator3"></div>
 
-      <AccordionContent title="Create Competition" content= "wnfiwenfiwe" />
             
     </div>
   );
