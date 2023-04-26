@@ -84,10 +84,10 @@ function GenCards() {
 
   //if card is clicked
   const handleButton1Click = (index) => {
-    console.log(`Button on card ${index} was clicked!`);
+    // console.log(`Button on card ${index} was clicked!`);
     // Check if the card is registered or not
     if (cardsData[index].isRegistered) {
-      console.log(`User is already registered for card ${index}`);
+      // console.log(`User is already registered for card ${index}`);
       // Can use API route to leave competition
       axios
         .post("http://localhost:3002/api/post/leave/team", {
@@ -95,21 +95,21 @@ function GenCards() {
           user_id: userID,
         })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
         });
 
       const newCardsData = [...cardsData];
       newCardsData[index].isRegistered = false;
       setCardsData(newCardsData);
     } else {
-      console.log(`User is not registered for card ${index}`);
+      // console.log(`User is not registered for card ${index}`);
       axios
         .get(
           "http://localhost:3002/api/get/competitionIDGlobal/" +
             cardsData[index].title
         )
         .then(function (response) {
-          console.log(response.data[0].competition_id);
+          // console.log(response.data[0].competition_id);
           const compID = response.data[0].competition_id;
           sessionStorage.setItem("CompID", compID);
           setTimeout(function () {
@@ -132,14 +132,14 @@ function GenCards() {
           cardsData[index].title
       )
       .then(function (response) {
-        console.log(response.data[0].competition_id);
+        // console.log(response.data[0].competition_id);
         const compID = response.data[0].competition_id;
         sessionStorage.setItem("CompID", compID);
         setTimeout(function () {
           window.location.href = "http://localhost:3000/arena-main";
         }, 1000);
       });
-    console.log(`Enter Arena clicked for card ${index}`);
+    // console.log(`Enter Arena clicked for card ${index}`);
   };
 
   return (

@@ -95,13 +95,13 @@ const AdminCompetitions = (props) => {
       res.filesUploaded[0].mimetype === "image/jpeg" ||
       res.filesUploaded[0].mimetype === "image/jpg"
     ) {
-      console.log("Image uploaded");
-      console.log(res.filesUploaded[0].url);
+      // console.log("Image uploaded");
+      // console.log(res.filesUploaded[0].url);
       setpic(res.filesUploaded[0].url);
     }
 
     if (res.filesUploaded[0].mimetype === "application/pdf") {
-      console.log("PDF uploaded");
+      // console.log("PDF uploaded");
       setpdf(res.filesUploaded[0].url);
     }
   };
@@ -152,7 +152,7 @@ const AdminCompetitions = (props) => {
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
-                console.log("Picker clicked");
+                // console.log("Picker clicked");
               }}
             />
           </div>
@@ -163,7 +163,7 @@ const AdminCompetitions = (props) => {
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
-                console.log("Picker clicked");
+                // console.log("Picker clicked");
               }}
             />
           </div>
@@ -206,14 +206,14 @@ const AdminCompetitions = (props) => {
               onClick={() => {
                 setvisible(false);
                 setPickerVisible(false);
-                console.log("Create button clicked");
-                console.log("Competition Name is:" + compname);
-                console.log("Test cases are:" + numtestcases);
-                console.log("startDate: " + startDate);
-                console.log("endDate: " + endDate);
-                console.log("Desc: " + desc);
-                console.log("pic link is:" + pic);
-                console.log("pdf link is:" + pdf);
+                // console.log("Create button clicked");
+                // console.log("Competition Name is:" + compname);
+                // console.log("Test cases are:" + numtestcases);
+                // console.log("startDate: " + startDate);
+                // console.log("endDate: " + endDate);
+                // console.log("Desc: " + desc);
+                // console.log("pic link is:" + pic);
+                // console.log("pdf link is:" + pdf);
                 PostCompDetails(
                   compname,
                   pic,
@@ -234,7 +234,7 @@ const AdminCompetitions = (props) => {
               onClick={() => {
                 setvisible(false);
                 setPickerVisible(false);
-                console.log("button clicked");
+                // console.log("button clicked");
               }}
             />
           </div>
@@ -332,7 +332,7 @@ const AdminCompetitions = (props) => {
         name="Create Competition"
         onClick={() => {
           setvisible(true);
-          console.log("button clicked");
+          // console.log("button clicked");
         }}
         // rootClassName="button-root-class-name2"
       />

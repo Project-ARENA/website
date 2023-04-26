@@ -47,7 +47,7 @@ const Login = (props) => {
     axios
       .get("http://localhost:3002/api/get/isAdmin/" + username)
       .then(function (response) {
-        console.log((response.data)[0].user_admin);
+        // console.log((response.data)[0].user_admin);
         if ((response.data)[0].user_admin == "1") {
           setErrorMessage('Login Successful');
           setTimeout(function () {
@@ -56,7 +56,7 @@ const Login = (props) => {
           //take him to the admin page
         }
         else {
-          console.log("this guy is a normal user");
+          // console.log("this guy is a normal user");
           setErrorMessage('Login Successful');
           setTimeout(function () {
             window.location.href = 'http://localhost:3000/player-portal-home';
@@ -72,23 +72,23 @@ const Login = (props) => {
       if (isMatch) {
         // Store the username in local storage
         sessionStorage.setItem('username', username);
-        console.log("The passwords match");
+        // console.log("The passwords match");
         setErrorMessage('');
         checkIfAdmin();
       }
       else {
         //alert("Incorrect Password");
         setErrorMessage('Incorrect username or password');
-        console.log("Incorrect Password");
+        // console.log("Incorrect Password");
       }
 
     });
   }
 
 const handleLogin = () =>{
-  console.log(
-    `Username: ${username}, Password: ${password}`
-  );
+  // console.log(
+  //   `Username: ${username}, Password: ${password}`
+  // );
   sessionStorage.setItem('username', username);
   axios
   .get("http://localhost:3002/api/get/userID/" + username)
@@ -139,7 +139,7 @@ const handleLogin = () =>{
             type = "submit"
             name="Login"
             onClick={() => {
-              console.log("Login button clicked");
+              // console.log("Login button clicked");
               handleLogin();
             }}
             rootClassName="button-root-class-name2"
