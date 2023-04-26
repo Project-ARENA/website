@@ -11,7 +11,7 @@ import { Login } from "./views/login";
 import Competitions from "./views/competitions";
 import About from './views/about'
 import AdminHome from './views/admin-home'
-import AdminTeams from './views/admin-teams'
+import {AdminTeams} from './views/admin-teams'
 import AdminCompetitions from './views/admin-competitions'
 import { AdminProfile } from './views/admin-profile'
 import PlayerPortalHome from './views/player-portal-home'

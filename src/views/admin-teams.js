@@ -98,4 +98,4 @@ const AdminTeams = (props) => {
   )
 }
 
-export default AdminTeams
+export {AdminTeams}
