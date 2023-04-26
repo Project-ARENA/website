@@ -26,7 +26,7 @@ function postUserDetails(name, surname, email, username, hashedPassword) {
 async function checkIfUserExists(username, setErrorMessage) {
   const response = await axios.get("http://localhost:3002/api/get/doesExist/" + username);
   const userExists = response.data;
-  console.log(response.data);
+  // console.log(response.data);
   if (JSON.stringify(userExists) == "[]") {
     setErrorMessage('Account created successfully');
     return true;
@@ -148,7 +148,7 @@ const Register = (props) => {
           type = "submit"
           name="Register"
           onClick={() => {
-            console.log("Register button clicked");
+            // console.log("Register button clicked");
             doRegister(name, surname, email, username, password, setErrorMessage);
           }}
           rootClassName="button-root-class-name"

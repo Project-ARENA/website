@@ -17,7 +17,7 @@ const ArenaSubmissions = (props) => {
     axios.get(`http://localhost:3002/api/get/numTests/${competition_id}`)
       .then(response => {
         setNumTests(response.data[0].no_testcases); 
-        console.log(response.data[0].no_testcases) 
+        // console.log(response.data[0].no_testcases) 
       });
   
     axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
@@ -31,7 +31,7 @@ const ArenaSubmissions = (props) => {
           return testcaseData;
         });
         setData(newData);
-        console.log(newData);
+        // console.log(newData);
       });
   }, [competition_id, user_id, numTests]);
 

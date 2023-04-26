@@ -30,7 +30,7 @@ function getLatestScores() {
       )
       .then(function (response) {
         const latestString = response.data[0].testcase_latest;
-        //console.log(response.data[0].testcase_latest);
+        console.log(response.data[0].testcase_latest);
         const jsonArray = JSON.parse(latestString);
 
         let count = 0;
@@ -38,7 +38,7 @@ function getLatestScores() {
           latestSubmissionScores[count] = jsonArray[key];
           count++;
         }
-        //console.log(latestSubmissionScores);
+        console.log(latestSubmissionScores);
       });
     resolve(latestSubmissionScores);
   });
@@ -49,7 +49,7 @@ function getNumTestCases() {
     .get("http://localhost:3002/api/get/numTests/" + competition_id)
     .then(function (response) {
       numTests = response.data[0].no_testcases;
-      //console.log("Number of testcase" + numTests);
+      console.log("Number of testcase" + numTests);
     });
 }
 
@@ -79,7 +79,7 @@ function getCompTestCases(linkForPDF) {
     .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
     .then(function (response) {
       linkForPDF = response.data[0].competition_testcases;
-      console.log(linkForPDF);
+      // console.log(linkForPDF);
     });
 }
 
@@ -89,7 +89,7 @@ function getLinkForPDF() {
       .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
       .then(function (response) {
         const linkForPDF = response.data[0].competition_testcases;
-        console.log(linkForPDF);
+        // console.log(linkForPDF);
         resolve(linkForPDF);
       })
       .catch(function (error) {
@@ -110,7 +110,7 @@ function ScoredHigher() {
           user_id
       )
       .then(function (response) {
-        console.log("they have submitted before");
+        // console.log("they have submitted before");
         const latestString = response.data[0].testcase_highest;
         const jsonArray = JSON.parse(latestString);
         let highestSub = [];
@@ -120,7 +120,7 @@ function ScoredHigher() {
           count++;
         }
         for (let i = 0; i < latestSubmissionScores.length; i++) {
-          //   console.log(latestSubmissionScores[i] + " " + highestSub[i])
+            // console.log(latestSubmissionScores[i] + " " + highestSub[i])
           if (latestSubmissionScores[i] > highestSub[i]) {
             //Change only the one that is higher
             highestSub[i] = latestSubmissionScores[i];
@@ -142,7 +142,7 @@ function ScoredHigher() {
 async function postHighestScore() {
   try {
     const [isHigher, newHighestSub] = await ScoredHigher();
-    //   console.log(newHighestSub);
+      // console.log(newHighestSub);
 
     if (isHigher) {
       const response = await axios.post(
@@ -163,7 +163,7 @@ async function postHighestScore() {
 
 async function uploadSubmissions() {
   //Make the JSON String thing
-  console.log(latestSubmissionScores);
+  // console.log(latestSubmissionScores);
   const obj = {};
 
   latestSubmissionScores.map((value, index) => {
@@ -171,7 +171,7 @@ async function uploadSubmissions() {
   });
 
   const newSub = JSON.stringify(obj);
-  console.log("hello?");
+  // console.log("hello?");
   //Upload to submission history:
   axios
     .get(
@@ -190,12 +190,12 @@ async function uploadSubmissions() {
           testcase_prev: newString,
         });
       } else {
-        console.log(response.data[0].testcase_prev);
+        // console.log(response.data[0].testcase_prev);
         const data = JSON.parse(response.data[0].testcase_prev);
         const nextKey = Object.keys(data).length.toString();
         const updatedData = { ...data, [nextKey]: obj };
         const updatedDataString = JSON.stringify(updatedData);
-        console.log(updatedDataString);
+        // console.log(updatedDataString);
         axios.post("http://localhost:3002/api/post/testcasePrev/team", {
           team_name: sessionStorage.getItem("teamName"),
           testcase_prev: updatedDataString,
@@ -358,7 +358,7 @@ const ArenaMain = (props) => {
           onSubmit={(index) => {
             setPickerVisible(true);
             tabIndex = index + 1;
-            //console.log(tabIndex);
+            console.log(tabIndex);
           }}
         />
       )}
@@ -372,7 +372,7 @@ const ArenaMain = (props) => {
 
               //This sets the new score
               latestSubmissionScores[tabIndex - 1] = generateRandomNumber();
-              //console.log(latestSubmissionScores);
+              // console.log(latestSubmissionScores);
               uploadSubmissions();
               setTimeout(function () {
                 window.location.reload(false);

@@ -269,7 +269,7 @@ const PlayerPortalProfile = (props) => {
           type="submit"
           name="UPDATE"
           onClick={() => {
-            console.log("Register button clicked");
+            // console.log("Register button clicked");
             update(
               password,
               oldPassword,
@@ -286,7 +286,7 @@ const PlayerPortalProfile = (props) => {
         <Button
           name="LOG OUT"
           onClick={() => {
-            console.log("Log out button clicked");
+            // console.log("Log out button clicked");
             sessionStorage.clear();
             window.location.href = "http://localhost:3000";
           }}

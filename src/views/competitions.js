@@ -133,7 +133,7 @@ function GenCards() {
         const newCardsData = [...cardsData];
         newCardsData[competition_id - 1].views += 1;
         setCardsData(newCardsData);
-        console.log(response);
+        // console.log(response);
         setIsFlipped(false);
       } catch (error) {
         console.error(error);

@@ -38,9 +38,9 @@ const PlayerPortalTeam = (props) => {
     setDisabled(true);
     const code = uuidv4();
     setCode(code);
-    console.log("Team code generated");
-    console.log(code);
-    console.log(teamName);
+    // console.log("Team code generated");
+    // console.log(code);
+    // console.log(teamName);
     return code;
   };
 
@@ -94,9 +94,9 @@ const PlayerPortalTeam = (props) => {
 
   const createTeam = (teamName) => {
     const code = randomString();
-    console.log(userID);
-    console.log(competition_id);
-    console.log("this is location" + location);
+    // console.log(userID);
+    // console.log(competition_id);
+    // console.log("this is location" + location);
     axios.post("http://localhost:3002/api/post/create/team", {
       user_id: userID,
       team_name: teamName,
@@ -109,7 +109,7 @@ const PlayerPortalTeam = (props) => {
       testcase_highest: createJsonArray(no_testcases),
       team_name: teamName,
     });
-    console.log(username);
+    // console.log(username);
     Swal.fire({
       title: 'Team created!',
       text: "Team Code: " + code,
@@ -135,10 +135,10 @@ const PlayerPortalTeam = (props) => {
         const teamData = response.data;
 
         if (JSON.stringify(teamData) == "[]") {
-          console.log("Team doesn't exist");
+          // console.log("Team doesn't exist");
           createTeam(teamName);
         } else {
-          console.log("team exists");
+          // console.log("team exists");
           alert("This team name is already taken");
         }
       });
@@ -152,7 +152,7 @@ const PlayerPortalTeam = (props) => {
   */
   const handleInputSubmit2 = (value) => {
     const teamCode = value;
-    console.log("Input value: ", teamCode);
+    // console.log("Input value: ", teamCode);
     if (teamCode == "") {
       alert("Please enter a valid code");
     } else {
