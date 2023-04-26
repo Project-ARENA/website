@@ -1,10 +1,20 @@
-// import axios from 'axios';
-// import { render, act } from '@testing-library/react';
-// import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { render, act } from '@testing-library/react';
+import { useEffect, useState } from 'react';
 
-// jest.mock('axios');
+jest.mock('axios');
 
-// describe('useEffect', () => {
+describe('useEffect', () => {
+    it('should call axios and set the number of tests', async () => {
+        //     axios.get.mockResolvedValue({ data: mockResponse });
+        
+        //     const mockSetNumTests = jest.fn();
+        //     const mockConsoleLog = jest.spyOn(console, 'log');
+        
+        //     await act(async () => {
+        //       render(<MockComponent competition_id={competition_id} user_id={user_id} setNumTests={mockSetNumTests} />);
+            });
+});
 //   const competition_id = 1;
 //   const user_id = 2;
 //   const mockResponse = [
