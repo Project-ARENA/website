@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from 'axios';
 import bycrypt from "bcryptjs";
-import { putUserDetails, checkIfDetailsValid, update, AdminProfile } from './admin-profile';
+import { putUserDetails, checkIfDetailsValid, update, ArenaProfile } from './arena-profile';
 import React, { useState } from 'react';
 import InputBoxForInfo from "../components/input-box-for-info";
 
@@ -190,49 +190,49 @@ describe('update function', () => {
 //     });
 //   });
 
-describe('AdminProfile', () => {
+describe('ArenaProfile', () => {
     test('renders navbar', () => {
-      render(<Router> <AdminProfile /> </Router>);
+      render(<Router> <ArenaProfile /> </Router>);
       const navbar = screen.getByRole('Header');
       expect(navbar).toBeInTheDocument();
     });
   
     test('renders update profile section', () => {
-      render(<Router> <AdminProfile /> </Router>);
+      render(<Router> <ArenaProfile /> </Router>);
       const updateProfileSection = screen.getByText('UPDATE PROFILE');
       expect(updateProfileSection).toBeInTheDocument();
     });
 
     test('updates email when input field changes', () => {
-        render(<Router> <AdminProfile /> </Router>);
+        render(<Router> <ArenaProfile /> </Router>);
         const emailInput = screen.getByLabelText('USERNAME');
         fireEvent.change(emailInput, { target: { value: 'Namely' } });
         expect(emailInput.value).toBe('Namely');
       });
   
     test('updates email when input field changes', () => {
-      render(<Router> <AdminProfile /> </Router>);
+      render(<Router> <ArenaProfile /> </Router>);
       const emailInput = screen.getByLabelText('EMAIL');
       fireEvent.change(emailInput, { target: { value: 'newemail@example.com' } });
       expect(emailInput.value).toBe('newemail@example.com');
     });
   
     test('updates password when input field changes', () => {
-      render(<Router> <AdminProfile /> </Router>);
+      render(<Router> <ArenaProfile /> </Router>);
       const passwordInput = screen.getByLabelText('CURRENT PASSWORD');
       fireEvent.change(passwordInput, { target: { value: 'oldpassword' } });
       expect(passwordInput.value).toBe('oldpassword');
     });
   
     test('updates new password when input field changes', () => {
-      render(<Router> <AdminProfile /> </Router>);
+      render(<Router> <ArenaProfile /> </Router>);
       const newPasswordInput = screen.getByLabelText('NEW PASSWORD');
       fireEvent.change(newPasswordInput, { target: { value: 'newpassword' } });
       expect(newPasswordInput.value).toBe('newpassword');
     });
   
     test('updates confirm password when input field changes', () => {
-      render(<Router> <AdminProfile /> </Router>);
+      render(<Router> <ArenaProfile /> </Router>);
       const confirmPasswordInput = screen.getByLabelText('CONFIRM PASSWORD');
       fireEvent.change(confirmPasswordInput, { target: { value: 'newpassword' } });
       expect(confirmPasswordInput.value).toBe('newpassword');
