@@ -5,3 +5,5 @@ ignore:
   - "src/views/arena-team.js"
   - "src/views/arena-leaderboard.js"
   - "src/views/login.js"
+  - "src/views/player-portal-home.js"
+  - "src/views/admin-home.js"
