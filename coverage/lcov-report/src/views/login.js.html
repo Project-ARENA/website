@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/46</span>
+                <span class='fraction'>0/49</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/46</span>
+                <span class='fraction'>0/49</span>
             </div>
         
             
@@ -215,7 +215,14 @@
 <a name='L150'></a><a href='#L150'>150</a>
 <a name='L151'></a><a href='#L151'>151</a>
 <a name='L152'></a><a href='#L152'>152</a>
-<a name='L153'></a><a href='#L153'>153</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,6 +243,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -343,6 +356,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -388,6 +402,12 @@ const Login = <span class="cstat-no" title="statement not covered" ><span class=
   const [password, setPassword] = <span class="cstat-no" title="statement not covered" >useState("");</span>
   const [errorMessage, setErrorMessage] = <span class="cstat-no" title="statement not covered" >useState('');</span>
 &nbsp;
+  // Enter key triggers Login button
+  const handleSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >ev</span>ent =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    event.preventDefault();</span>
+<span class="cstat-no" title="statement not covered" >    handleLogin();</span>
+  };
+&nbsp;
   const doAPIStuff = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    axios</span>
       .get("http://localhost:3002/api/get/password/" + username)
@@ -415,7 +435,7 @@ const Login = <span class="cstat-no" title="statement not covered" ><span class=
 <span class="cstat-no" title="statement not covered" >          setErrorMessage('Login Successful');</span>
 <span class="cstat-no" title="statement not covered" >          setTimeout(<span class="fstat-no" title="function not covered" >fu</span>nction () {</span>
 <span class="cstat-no" title="statement not covered" >            window.location.href = 'http://localhost:3000/admin-home';</span>
-          }, 1000);
+          }, 500);
           //take him to the admin page
         }
         else {
@@ -423,7 +443,7 @@ const Login = <span class="cstat-no" title="statement not covered" ><span class=
 <span class="cstat-no" title="statement not covered" >          setErrorMessage('Login Successful');</span>
 <span class="cstat-no" title="statement not covered" >          setTimeout(<span class="fstat-no" title="function not covered" >fu</span>nction () {</span>
 <span class="cstat-no" title="statement not covered" >            window.location.href = 'http://localhost:3000/player-portal-home';</span>
-          }, 1000);
+          }, 500);
           //take him to the normal page
         }
 &nbsp;
@@ -483,7 +503,7 @@ const handleLogin = <span class="cstat-no" title="statement not covered" ><span 
             &lt;/svg&gt;
           &lt;/Link&gt;
         &lt;/div&gt;
-        &lt;div className="login-container3"&gt;
+        &lt;div className="login-container3" onSubmit={handleSubmit}&gt;
           &lt;span className="login-text"&gt;LOGIN&lt;/span&gt;
           &lt;br&gt;&lt;/br&gt;
           
@@ -499,6 +519,7 @@ const handleLogin = <span class="cstat-no" title="statement not covered" ><span 
           &lt;br&gt;&lt;/br&gt;
           {errorMessage &amp;&amp; &lt;div className="error"&gt;{errorMessage}&lt;/div&gt;}
           &lt;Button
+            type = "submit"
             name="Login"
             onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >              console.log("Login button clicked");</span>
@@ -518,7 +539,7 @@ const handleLogin = <span class="cstat-no" title="statement not covered" ><span 
   );
 };
 &nbsp;
-export default Login;
+export { Login };
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -526,7 +547,7 @@ export default Login;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-01T22:20:59.155Z
+                at 2023-04-26T18:12:44.610Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

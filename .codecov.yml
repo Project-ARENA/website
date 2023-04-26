@@ -1,3 +1,4 @@
 ignore:
   - "src/server/server.js"
   - "src/index.js"
+  - "src/views/arena-main.js"
