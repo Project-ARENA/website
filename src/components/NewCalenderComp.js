@@ -50,11 +50,22 @@ export default function CommonlyUsedComponents() {
           'DateRangePicker',
         ]}
       >
-        <DemoItem label={<Label componentName="Registration Date start"/>}>
-          <DatePicker />
-        </DemoItem>
-        <DemoItem label={<Label componentName="Registration Date End"/>}>
-          <DatePicker />
+        <DemoItem
+          label={
+            <Label
+              componentName="Registration Start and End Date"
+              valueType="date range"
+              isProOnly
+            />
+          }
+          component="DateRangePicker"
+        >
+          <DateRangePicker
+            localeText={{
+              start: '',
+              end: '',
+            }}
+          />
         </DemoItem>
         <DemoItem label={<Label componentName="Registration Time Start" valueType="time" />}>
           <TimePicker />
@@ -80,6 +91,14 @@ export default function CommonlyUsedComponents() {
             }}
           />
         </DemoItem>
+        
+        <DemoItem label={<Label componentName="Competition Time Start" valueType="time" />}>
+          <TimePicker />
+        </DemoItem>
+        <DemoItem label={<Label componentName="Competition Time End" valueType="time" />}>
+          <TimePicker />
+        </DemoItem>
+
       </DemoContainer>
     </LocalizationProvider>
   );
