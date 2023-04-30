@@ -11,11 +11,11 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 
 function Label({ componentName, valueType, isProOnly }) {
-  const content = (
-    <span>
-      <strong>{componentName}</strong> for {valueType} editing
-    </span>
-  );
+    const content = (
+        <span>
+          <strong>{componentName}</strong> 
+        </span>
+      );
 
   if (isProOnly) {
     return (
