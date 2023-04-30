@@ -8,7 +8,7 @@ import "reactjs-popup/dist/index.css";
 import Modal from "react-modal";
 import { useState } from "react";
 import InputBoxForInfo from "../components/input-box-for-info";
-
+import NewCalenderComp from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import {
   CalenderComp,
@@ -189,7 +189,7 @@ const AdminCompetitions = (props) => {
           )}
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
-            <CalenderComp></CalenderComp>
+            <NewCalenderComp></NewCalenderComp>
           </div>
 
           <div>
