@@ -127,13 +127,20 @@ function GenCards() {
       try {
         const response = axios.post(
           "http://localhost:3002/api/post/competition/incViews",
-          { competition_id: competition_id }
+          { competition_id }
         );
 
-        const newCardsData = [...cardsData];
-        newCardsData[competition_id - 1].views += 1;
+        const newCardsData = cardsData.map((cardData) => {
+          if (cardData.competition_id === competition_id) {
+            return {
+              ...cardData,
+              views: cardData.views + 1,
+            };
+          }
+          return cardData;
+        });
         setCardsData(newCardsData);
-        // console.log(response);
+        console.log(response);
         setIsFlipped(false);
       } catch (error) {
         console.error(error);
