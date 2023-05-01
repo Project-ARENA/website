@@ -324,6 +324,8 @@ const ArenaMain = (props) => {
       <div className="arena-main-section-separator3"></div>
       <br />
       <h1>{title}</h1>
+      <h2>Submissions</h2>
+      <br/>
       <p>{paragraph}</p>
       <br />
       <a

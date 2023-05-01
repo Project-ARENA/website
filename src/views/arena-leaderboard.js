@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import DataGrid from "../components/datagridArenaLeaderboard";
 import axios from "axios";
 import './arena-leaderboard.css'
+import { useEffect, useState } from 'react';
+
+const competition_id = sessionStorage.getItem('CompID');
 
 // gets number test cases and team name to generate table
 function getNoTests(comp_id, user_id) {
@@ -59,6 +62,15 @@ const ArenaLeaderboard = (props) => {
   const compID = sessionStorage.getItem('CompID');
   const userID = sessionStorage.getItem('userID');
   const [noTests, myTeam] = getNoTests(compID, userID);
+  const [title, setTitle] = useState("");
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/api/get/compDetails/" + competition_id)
+      .then(function (response) {
+        setTitle(response.data[0].competition_name);
+        setParagraph(response.data[0].competition_info);
+      });
+  });
 
   return (
     <div className="arena-leaderboard-container">
@@ -148,6 +160,10 @@ const ArenaLeaderboard = (props) => {
           </div>
         </div>
       </div>
+      <br />
+      <h1>{title}</h1>
+      <h2>Leaderboard</h2>
+      <br/>
       <div className="grid-container">
         <GenGrid no={noTests} team={myTeam} compID={compID}/>
       </div>

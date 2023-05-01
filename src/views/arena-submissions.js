@@ -12,14 +12,14 @@ const user_id  = sessionStorage.getItem('userID');
 const ArenaSubmissions = (props) => {
   const [numTests, setNumTests] = useState(0);
   const [data, setData] = useState([]);
-  
+  const [title, setTitle] = useState("");
   useEffect(() => {
     axios.get(`http://localhost:3002/api/get/numTests/${competition_id}`)
       .then(response => {
         setNumTests(response.data[0].no_testcases); 
         // console.log(response.data[0].no_testcases) 
       });
-  
+      
     axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
       .then(response => {
         const historyJSON = JSON.parse(response.data[0].testcase_prev);
@@ -32,6 +32,13 @@ const ArenaSubmissions = (props) => {
         });
         setData(newData);
         // console.log(newData);
+      });
+
+      axios
+      .get("http://localhost:3002/api/get/compDetails/" + competition_id)
+      .then(function (response) {
+        setTitle(response.data[0].competition_name);
+        setParagraph(response.data[0].competition_info);
       });
   }, [competition_id, user_id, numTests]);
 
@@ -121,8 +128,9 @@ const ArenaSubmissions = (props) => {
       <div className="arena-submissions-section-separator1"></div>
       <div className="arena-submissions-section-separator2"></div>
       <div className="arena-submissions-section-separator3"></div>
-      <br/>
-      <h1>Submission History</h1>
+      <br />
+      <h1>{title}</h1>
+      <h2>Submissions History</h2>
       <br/>
       <div>
       <DataGrid numColumns={numTests} data={data} />

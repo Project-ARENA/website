@@ -1,15 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TeamManager from '../components/team-manager'
-
+import axios from "axios";
 import './arena-team.css'
+
+const competition_id = sessionStorage.getItem('CompID');
 
 const ArenaTeam = (props) => {
 
 
   const [disabled, setDisabled] = useState(false);
-
+  const [title, setTitle] = useState("");
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/api/get/compDetails/" + competition_id)
+      .then(function (response) {
+        setTitle(response.data[0].competition_name);
+        setParagraph(response.data[0].competition_info);
+      });
+  });
   const handleInputSubmit = () => {
     console.log("Input value: Hello");
   }
@@ -92,7 +102,10 @@ const ArenaTeam = (props) => {
       <div className="arena-team-section-separator1"></div>
       <div className="arena-team-section-separator2"></div>
       <div className="arena-team-section-separator3"></div>
-
+      <br/>
+      <h1>{title}</h1>
+      <h2>Team Manager</h2>
+      
       <TeamManager
         TeamName="Team Name"
         TeamMember1="Team Member 1"
