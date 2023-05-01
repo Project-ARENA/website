@@ -30,18 +30,21 @@ function GenCards() {
     return axios
       .get(`http://localhost:3002/api/get/competition/registered/${userID}`)
       .then((response) => {
-        //console.log(response.data);
         const registeredComps = response.data.map(
           (data) => data.competition_id
         );
-        const newCardsData = [...cardsData];
-        for (let i = 0; i < newCardsData.length; i++) {
-          if (registeredComps.includes(i + 1)) {
-            newCardsData[i].isRegistered = true;
-          } else {
-            newCardsData[i].isRegistered = false;
+        const newCardsData = cardsData.map((cardData) => {
+          if (registeredComps.includes(cardData.competition_id)) {
+            return {
+              ...cardData,
+              isRegistered: true,
+            };
           }
-        }
+          return {
+            ...cardData,
+            isRegistered: false,
+          };
+        });
         return newCardsData;
       });
   };
@@ -61,18 +64,25 @@ function GenCards() {
   }, []);
 
   //views of card
-  const handleCardClick = async (index) => {
+  const handleCardClick = async (competition_id) => {
     setIsFlipped(true);
 
     if (isFlipped) {
       try {
         const response = axios.post(
           "http://localhost:3002/api/post/competition/incViews",
-          { competition_id: index + 1 }
+          { competition_id }
         );
 
-        const newCardsData = [...cardsData];
-        newCardsData[index].views += 1;
+        const newCardsData = cardsData.map((cardData) => {
+          if (cardData.competition_id === competition_id) {
+            return {
+              ...cardData,
+              views: cardData.views + 1,
+            };
+          }
+          return cardData;
+        });
         setCardsData(newCardsData);
         console.log(response);
         setIsFlipped(false);
@@ -81,65 +91,75 @@ function GenCards() {
       }
     }
   };
-
-  //if card is clicked
-  const handleButton1Click = (index) => {
-    // console.log(`Button on card ${index} was clicked!`);
+  const handleButton1Click = async (competition_id) => {
     // Check if the card is registered or not
-    if (cardsData[index].isRegistered) {
-      // console.log(`User is already registered for card ${index}`);
+    const cardData = cardsData.find(
+      (cardData) => cardData.competition_id === competition_id
+    );
+
+    if (cardData.isRegistered) {
       // Can use API route to leave competition
-      axios
-        .post("http://localhost:3002/api/post/leave/team", {
-          competition_id: index + 1,
-          user_id: userID,
-        })
-        .then((response) => {
-          // console.log(response);
-        });
+      try {
+        const response = await axios.post(
+          "http://localhost:3002/api/post/leave/team",
+          {
+            competition_id,
+            user_id: userID,
+          }
+        );
+        // console.log(response);
 
-      const newCardsData = [...cardsData];
-      newCardsData[index].isRegistered = false;
-      setCardsData(newCardsData);
+        const newCardsData = cardsData.map((cardData) => {
+          if (cardData.competition_id === competition_id) {
+            return {
+              ...cardData,
+              isRegistered: false,
+            };
+          }
+          return cardData;
+        });
+        setCardsData(newCardsData);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      // console.log(`User is not registered for card ${index}`);
-      axios
-        .get(
-          "http://localhost:3002/api/get/competitionIDGlobal/" +
-            cardsData[index].title
-        )
-        .then(function (response) {
-          // console.log(response.data[0].competition_id);
-          const compID = response.data[0].competition_id;
-          sessionStorage.setItem("CompID", compID);
-          setTimeout(function () {
-            window.location.href = "http://localhost:3000/player-portal-team";
-          }, 1000);
-        });
-
-      //console.log(cardsData[index].title);
-      // Can use API route to join competition
-      //Need to keep track of the competition_id
-    }
-    // Add your functionality for the button click here
-  };
-
-  // Handles "Enter Arena" button click
-  const handleButton2Click = (index) => {
-    axios
-      .get(
-        "http://localhost:3002/api/get/competitionIDGlobal/" +
-          cardsData[index].title
-      )
-      .then(function (response) {
+      try {
+        const response = await axios.get(
+          "http://localhost:3002/api/get/competitionIDGlobal/" + cardData.title
+        );
         // console.log(response.data[0].competition_id);
         const compID = response.data[0].competition_id;
         sessionStorage.setItem("CompID", compID);
         setTimeout(function () {
-          window.location.href = "http://localhost:3000/arena-main";
+          window.location.href = "http://localhost:3000/player-portal-team";
         }, 1000);
-      });
-    // console.log(`Enter Arena clicked for card ${index}`);
+
+        // Can use API route to join competition
+        // Need to keep track of the competition_id
+        const newCardsData = cardsData.map((cardData) => {
+          if (cardData.competition_id === competition_id) {
+            return {
+              ...cardData,
+              isRegistered: true,
+            };
+          }
+          return cardData;
+        });
+        setCardsData(newCardsData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  // Handles "Enter Arena" button click
+  const handleButton2Click = (competition_id) => {
+    const compID = competition_id;
+    sessionStorage.setItem("CompID", compID);
+    setTimeout(function () {
+      window.location.href = "http://localhost:3000/arena-main";
+    }, 1000);
+    // console.log(`Enter Arena clicked for competition ${competition_id}`);
   };
 
   return (
@@ -154,17 +174,17 @@ function GenCards() {
         justifyContent: "center",
       }}
     >
-      {cardsData.map((cardData, index) => (
+      {cardsData.map((cardData) => (
         <OverflowCard
-          key={index}
+          key={cardData.competition_id}
           onClick={() => {
-            handleCardClick(index);
+            handleCardClick(cardData.competition_id);
           }}
           onButton1Click={() => {
-            handleButton1Click(index);
+            handleButton1Click(cardData.competition_id);
           }}
           onButton2Click={() => {
-            handleButton2Click(index);
+            handleButton2Click(cardData.competition_id);
           }}
           isRegistered={cardData.isRegistered}
           {...cardData}
