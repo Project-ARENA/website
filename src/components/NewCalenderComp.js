@@ -10,6 +10,11 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 
+
+let regstrDate;
+let regendDate;
+let regTimeBegin;
+
 function Label({ componentName, valueType, isProOnly }) {
     const content = (
         <span>
@@ -60,16 +65,34 @@ export default function CommonlyUsedComponents() {
           }
           component="DateRangePicker"
         >
+          
           <DateRangePicker
-            localeText={{
-              start: '',
-              end: '',
-            }}
-          />
+  localeText={{
+    start: '',
+    end: '',
+  }}
+  onChange={(value) => {
+    if (value === null) {
+      console.log('No date range selected');
+    } else {
+      regstrDate = value[0] ? value[0].format('YYYY-MM-DD') : null;
+      regendDate = value[1] ? value[1].format('YYYY-MM-DD') : null;
+      console.log('Selected date range:', "Reg begins ",regstrDate," and Reg end date is ",regendDate);
+    }
+  }}
+/>
         </DemoItem>
+
         <DemoItem label={<Label componentName="Registration Time Start" valueType="time" />}>
-          <TimePicker />
-        </DemoItem>
+  <TimePicker
+    value={regTimeBegin}
+    onChange={(newValue) => {
+      regTimeBegin = newValue.format('HH:mm:ss');
+      console.log('Registration time start:', regTimeBegin);
+    }}
+  />
+</DemoItem>
+
         <DemoItem label={<Label componentName="Registration Time End" valueType="time" />}>
           <TimePicker />
         </DemoItem>

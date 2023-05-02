@@ -10,6 +10,7 @@ import { useState } from "react";
 import InputBoxForInfo from "../components/input-box-for-info";
 import NewCalenderComp from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
+import "../components/modal.css";
 import {
   CalenderComp,
   startDate,
@@ -112,15 +113,16 @@ const AdminCompetitions = (props) => {
 
   return (
     <div className="admin-competitions-container">
-      <Modal
+      <Modal 
         isOpen={visible}
         style={{
           content: {
-            width: "80%",
-            height: "80%",
+            width: "40%",
+            height: "100%",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
+            overflowY: "scroll"
           },
           overlay: { zIndex: 1000 },
         }}
