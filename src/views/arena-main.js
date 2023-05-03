@@ -8,8 +8,14 @@ import BasicTabs from "../components/tabs";
 import { PickerOverlay } from "filestack-react";
 import { sub } from "date-fns";
 import { ConstructionOutlined, ControlPointSharp } from "@mui/icons-material";
-import { Tab } from "@mui/material";
+import {Tab } from "@mui/material";
+import Modal from "react-modal";
+import "../components/modal.css";
 import { da, hi } from "date-fns/locale";
+import Button from "../components/button";
+import InputTextArea from "../components/input-textarea";
+
+
 
 const competition_id = sessionStorage.getItem("CompID");
 const user_id = sessionStorage.getItem("userID");
@@ -214,7 +220,8 @@ async function uploadSubmissions() {
 }
 
 const ArenaMain = (props) => {
-  
+
+  const [modalVisible, setModalVisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
 
   //This stores contents of tab, tab number and index in the array are related
@@ -253,6 +260,50 @@ const ArenaMain = (props) => {
   };
   return (
     <div className="arena-main-container">
+      <Modal
+        isOpen={modalVisible}
+        style={{
+          content: {
+            width: "90%",
+            height: "90%",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            overflowY: "scroll"
+          },
+          overlay: { zIndex: 1000 },
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "100%",
+            marginLeft: 200,
+            marginRight: 200,
+          }}
+        >
+          <h1>Submit your solutions</h1>
+          <br/>
+          <h3>Instructions:</h3>
+          <p>Please upload both your txt file as well as your zip file.
+            Once you have done that, you may include any neccesary comments for your submission
+            Then you may click the submit button to have your submission graded 
+          </p>
+          <br/>
+          <Button name = "Upload txt file"></Button>
+          <br/>
+          <Button name = "Upload Zip File"></Button>
+          <br/>
+          <InputTextArea
+                label="Type your comments here..."
+          ></InputTextArea>
+          <br/>
+          <Button name = "Submit"></Button>
+        </div>
+        
+      </Modal>
       <div data-role="Header" className="arena-main-navbar-container">
         <div className="arena-main-navbar">
           <div className="arena-main-left-side">
@@ -358,9 +409,11 @@ const ArenaMain = (props) => {
           tabContent={latestSubmissionScores}
           tabCount={numTests}
           onSubmit={(index) => {
-            setPickerVisible(true);
-            tabIndex = index + 1;
-            console.log(tabIndex);
+            // setPickerVisible(true);
+             tabIndex = index + 1;
+            // console.log(tabIndex);
+            //Sets the modal to visible
+            setModalVisible(true);
           }}
         />
       )}
