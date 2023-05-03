@@ -287,20 +287,56 @@ const ArenaMain = (props) => {
           <h1>Submit your solutions</h1>
           <br/>
           <h3>Instructions:</h3>
-          <p>Please upload both your txt file as well as your zip file.
-            Once you have done that, you may include any neccesary comments for your submission
-            Then you may click the submit button to have your submission graded 
+          <p>To submit your solution, make sure you have both a .txt file and a .zip file. The .txt file should contain the output of your code, while the .zip file should contain your actual code. Look for separate "Upload" buttons for each file on the submission page. Click the "Upload" button for the .txt file, select the file from your local computer, and wait for the upload to complete. Next, click the "Upload" button for the .zip file, select the file from your local computer, and wait for the upload to complete. You may also add any comments to your submission before submitting it. Review your submission and click the "Submit" button. If any errors occur, correct them before proceeding. 
           </p>
+          {pickerVisible && (
+            <div
+              className="center"
+              style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}
+            >
+              <PickerOverlay
+                key="picker-overlay"
+                apikey={process.env.REACT_APP_API_KEY_FILESTACK}
+                onUploadDone={(res) => {
+                  handleUploadDone(res);
+                }}
+                pickerOptions={{
+                  onClose: () => {
+                    handleClosePicker();
+                  },
+                }}
+              />
+            </div>
+          )}
           <br/>
-          <Button name = "Upload txt file"></Button>
+          <Button 
+          name = "Upload txt file"
+          onClick={() => {
+            setPickerVisible(true);
+         }}
+          ></Button>
           <br/>
-          <Button name = "Upload Zip File"></Button>
+          <Button 
+          name = "Upload Zip File"
+          onClick={() => {
+            setPickerVisible(true);
+         }}
+          ></Button>
           <br/>
           <InputTextArea
                 label="Type your comments here..."
           ></InputTextArea>
           <br/>
           <Button name = "Submit"></Button>
+          <br/>
+          <div style={{ marginLeft: 6, marginTop: 5 }}>
+          <Button 
+           name = "close"
+           onClick={() => {
+              setModalVisible(false);
+           }}
+          ></Button>
+          </div>
         </div>
         
       </Modal>
