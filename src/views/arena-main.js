@@ -7,7 +7,7 @@ import "./arena-main.css";
 import BasicTabs from "../components/tabs";
 import { PickerOverlay } from "filestack-react";
 import { sub } from "date-fns";
-import { ConstructionOutlined, ControlPointSharp } from "@mui/icons-material";
+import { ConstructionOutlined, ControlPointSharp, DisabledByDefault } from "@mui/icons-material";
 import {Tab } from "@mui/material";
 import Modal from "react-modal";
 import "../components/modal.css";
@@ -23,7 +23,16 @@ let tabIndex = -1;
 let latestSubmissionScores = [0];
 let newHighestSub = "";
 let numTests = 0;
+let uploadedTXT = false;
+let uploadedZIP = false
 
+function handleUploadTXTDone(res){
+  
+}
+
+function handleUploadZIPDone(res){
+
+}
 //Function to set the latest scores
 function getLatestScores() {
   return new Promise((resolve, reject) => {
@@ -222,14 +231,18 @@ async function uploadSubmissions() {
 const ArenaMain = (props) => {
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [pickerVisible, setPickerVisible] = useState(false);
+  const [pickerTXTVisible, setTXTPickerVisible] = useState(false);
+  const [pickerZIPVisible, setZIPPickerVisible] = useState(false);
 
   //This stores contents of tab, tab number and index in the array are related
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
 
+  // const [uploadedTXT, setUploadTXT] = useState(false);
+  // const [uploadedZIP, setUploadZIP] = useState(false);
   let linkForPDF = "";
-
+  
+  const [disabled, setDisabled] = useState(true);
   //Executes when the page is loaded
   React.useEffect(() => {
     const fetchData = async () => {
@@ -252,11 +265,12 @@ const ArenaMain = (props) => {
   const [isLoaded, setIsLoaded] = React.useState(false);
   //Sets the pickerVisible to false, so you can actually click it again
   const handleClosePicker = () => {
-    setPickerVisible(false);
+    setTXTPickerVisible(false);
+    setZIPPickerVisible(false);
   };
   //Returns the url for the file uploaded
   const handleUploadDone = (res) => {
-    
+
   };
   return (
     <div className="arena-main-container">
@@ -289,7 +303,8 @@ const ArenaMain = (props) => {
           <h3>Instructions:</h3>
           <p>To submit your solution, make sure you have both a .txt file and a .zip file. The .txt file should contain the output of your code, while the .zip file should contain your actual code. Look for separate "Upload" buttons for each file on the submission page. Click the "Upload" button for the .txt file, select the file from your local computer, and wait for the upload to complete. Next, click the "Upload" button for the .zip file, select the file from your local computer, and wait for the upload to complete. You may also add any comments to your submission before submitting it. Review your submission and click the "Submit" button. If any errors occur, correct them before proceeding. 
           </p>
-          {pickerVisible && (
+          
+          {pickerTXTVisible && (
             <div
               className="center"
               style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}
@@ -298,7 +313,12 @@ const ArenaMain = (props) => {
                 key="picker-overlay"
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
-                  handleUploadDone(res);
+                  handleUploadTXTDone(res);
+                  uploadedTXT = true;
+                  //Checks if both are uploaded
+                  if (uploadedZIP == true && uploadedTXT == true){
+                    setDisabled(false);
+                  }
                 }}
                 pickerOptions={{
                   onClose: () => {
@@ -308,18 +328,46 @@ const ArenaMain = (props) => {
               />
             </div>
           )}
+
+          {pickerZIPVisible && (
+            <div
+              className="center"
+              style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}
+            >
+              <PickerOverlay
+                key="picker-overlay"
+                apikey={process.env.REACT_APP_API_KEY_FILESTACK}
+                onUploadDone={(res) => {
+                  handleUploadZIPDone(res);
+                  uploadedZIP = true;                 
+                  if (uploadedZIP == true && uploadedTXT == true){
+                    setDisabled(false);
+                  }
+                  
+                }}
+                pickerOptions={{
+                  onClose: () => {
+                    handleClosePicker();
+                  },
+                }}
+              />
+            </div>
+          )}
+
+
           <br/>
           <Button 
           name = "Upload txt file"
           onClick={() => {
-            setPickerVisible(true);
+            console.log("Hello" + uploadedTXT)
+            setTXTPickerVisible(true);
          }}
           ></Button>
           <br/>
           <Button 
           name = "Upload Zip File"
           onClick={() => {
-            setPickerVisible(true);
+            setZIPPickerVisible(true);
          }}
           ></Button>
           <br/>
@@ -327,7 +375,10 @@ const ArenaMain = (props) => {
                 label="Type your comments here..."
           ></InputTextArea>
           <br/>
-          <Button name = "Submit"></Button>
+          <Button 
+          name = "Submit"
+          disabled={disabled}
+          ></Button>
           <br/>
           <div style={{ marginLeft: 6, marginTop: 5 }}>
           <Button 
@@ -454,7 +505,7 @@ const ArenaMain = (props) => {
         />
       )}
     </div>
-        {pickerVisible && (
+        {/* {pickerVisible && (
           <PickerOverlay
             key="picker-overlay"
             apikey={process.env.REACT_APP_API_KEY_FILESTACK}
@@ -476,7 +527,7 @@ const ArenaMain = (props) => {
               },
             }}
           />
-        )}
+        )} */}
       </div>
     </div>
   );
