@@ -9,8 +9,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-
-
+import { CalenderComp } from './CalenderComp';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import {
+  startDate,
+  endDate,
+} from "../components/CalenderComp.js";
 let regstrDate;
 let regendDate;
 let regTimeBegin;
@@ -55,18 +60,37 @@ export default function CommonlyUsedComponents() {
           'DateRangePicker',
         ]}
       >
-        <DemoItem
-          label={
-            <Label
-              componentName="Registration Start and End Date"
-              valueType="date range"
-              isProOnly
-            />
-          }
-          component="DateRangePicker"
-        >
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+  <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'inline-block', marginRight: '60px' }}>
+      <DatePicker label="Uncontrolled picker 1" />
+    </div>
+    <div style={{ display: 'inline-block' }}>
+      <DatePicker label="Uncontrolled picker 2" />
+    </div>
+  </div>
+</LocalizationProvider>
+            
+          </div>
+        
+        <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      
+      
+     
+    </Box>
           
-          <DateRangePicker
+        
+        
+        
+          {/* <DateRangePicker
   localeText={{
     start: '',
     end: '',
@@ -80,8 +104,8 @@ export default function CommonlyUsedComponents() {
       console.log('Selected date range:', "Reg begins ",regstrDate," and Reg end date is ",regendDate);
     }
   }}
-/>
-        </DemoItem>
+/> */}
+        
 
         <DemoItem label={<Label componentName="Registration Time Start" valueType="time" />}>
   <TimePicker
@@ -96,25 +120,20 @@ export default function CommonlyUsedComponents() {
         <DemoItem label={<Label componentName="Registration Time End" valueType="time" />}>
           <TimePicker />
         </DemoItem>
-
-        <DemoItem
-          label={
-            <Label
-              componentName="Competition Start and End Date"
-              valueType="date range"
-              isProOnly
-            />
-          }
-          component="DateRangePicker"
-        >
-          <DateRangePicker
-            localeText={{
-              start: '',
-              end: '',
-            }}
-          />
-        </DemoItem>
-        
+        <label style={{ marginLeft: 6, marginBottom: 0.4, marginTop: 5 }}> Competition Date Duration</label>
+        <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+  <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'inline-block', marginRight: '60px' }}>
+      <DatePicker label="Uncontrolled picker 1" />
+    </div>
+    <div style={{ display: 'inline-block' }}>
+      <DatePicker label="Uncontrolled picker 2" />
+    </div>
+  </div>
+</LocalizationProvider>
+            
+          </div>
         <DemoItem label={<Label componentName="Competition Time Start" valueType="time" />}>
           <TimePicker />
         </DemoItem>

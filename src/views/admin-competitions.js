@@ -11,6 +11,8 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import NewCalenderComp from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
+import TeamSizeSelector from "../components/TeamSizeSelector.js";
+
 import {
   CalenderComp,
   startDate,
@@ -38,6 +40,7 @@ function PostCompDetails(
     testcaseNum: testcaseNum,
   });
 }
+
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
@@ -117,7 +120,7 @@ const AdminCompetitions = (props) => {
         isOpen={visible}
         style={{
           content: {
-            width: "40%",
+            width: "90%",
             height: "100%",
             top: "50%",
             left: "50%",
@@ -142,7 +145,10 @@ const AdminCompetitions = (props) => {
             buttonText="Competition Name"
             onChange={(e) => setCompname(e.target.value)}
           />
-
+          <div>
+          <h1>Choose Team Size</h1>
+          <TeamSizeSelector />
+          </div>
           <InputBoxForInfo
             buttonText="Number of test cases"
             onChange={(e) => setNumTestCases(e.target.value)}
@@ -169,7 +175,7 @@ const AdminCompetitions = (props) => {
               }}
             />
           </div>
-
+     
           {pickerVisible && (
             <div
               className="center"
@@ -189,8 +195,9 @@ const AdminCompetitions = (props) => {
               />
             </div>
           )}
+          <label style={{ marginLeft: 6, marginBottom: 0.4, marginTop: 5 }}> Registration Date Duration</label>
 
-          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
             <NewCalenderComp></NewCalenderComp>
           </div>
 
