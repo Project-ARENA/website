@@ -4,6 +4,7 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { DataGrid } from "@mui/x-data-grid";
 import Modal from "react-modal";
 import Button from "../components/button";
+import DynamicSelect from "../components/DynamicSelect";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { set } from "date-fns";
@@ -16,6 +17,7 @@ export default function CustomDataGrid({ rows }) {
   const [clickedRowEdit, setClickedRowEdit] = React.useState();
   const [visible, setvisible] = React.useState(false);
   const [membersVisible, setMembersVisible] = React.useState(false);
+  const [buttonsEnabled, setButtonsDisabled] = React.useState(true);
 
   const [rowID, setRowID] = React.useState(null);
   const [teamCode, setTeamCode] = React.useState("");
@@ -169,6 +171,21 @@ export default function CustomDataGrid({ rows }) {
     },
   ];
 
+  const handleSelectionChange = (selectedValue) => {
+    console.log(`Selected value: ${selectedValue}`);
+    setButtonsDisabled(false);
+  };
+
+  //Replace value with user_id
+  const teamMemberList = [
+    { key: "member-1", label: "Sayfullah Jumoorty", value: 10 },
+    { key: "member-2", label: "Mu'aaz Bassa", value: 20 },
+    { key: "member-3", label: "Abdullah Karolia", value: 30 },
+    { key: "member-4", label: "Altaaf Ally", value: 40 },
+    { key: "member-5", label: "Rayhaan Hanslod", value: 50 },
+    { key: "member-6", label: "Mu'aaz Dawood", value: 60 },
+  ];
+
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       <Modal
@@ -275,21 +292,41 @@ export default function CustomDataGrid({ rows }) {
         >
           <h1>Members:</h1>
 
-          <AvatarGroup max={5}>
-            <Avatar {...stringAvatar("Sayfullah Jumoorty")} />
-            <Avatar {...stringAvatar("Mu'aaz Bassa")} />
-            <Avatar {...stringAvatar("Abdullah Karolia")} />
-            <Avatar {...stringAvatar("Altaaf Ally")} />
-            <Avatar {...stringAvatar("Rayhaan Hanslod")} />
-            <Avatar {...stringAvatar("Mu'aaz Dawood")} />
-          </AvatarGroup>
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <AvatarGroup max={5}>
+              <Avatar {...stringAvatar("Sayfullah Jumoorty")} />
+              <Avatar {...stringAvatar("Mu'aaz Bassa")} />
+              <Avatar {...stringAvatar("Abdullah Karolia")} />
+              <Avatar {...stringAvatar("Altaaf Ally")} />
+              <Avatar {...stringAvatar("Rayhaan Hanslod")} />
+              <Avatar {...stringAvatar("Mu'aaz Dawood")} />
+            </AvatarGroup>
+          </div>
+
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <DynamicSelect
+              menuItems={teamMemberList}
+              onSelectionChange={handleSelectionChange}
+            />
+          </div>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
-              name="Edit"
+              name="Remove"
               onClick={(e) => {
                 console.log("Edit button clicked");
               }}
+              disabled={buttonsEnabled}
+            />
+          </div>
+
+          <div style={{ marginLeft: 6, marginBottom: 15, marginTop: 5 }}>
+            <Button
+              name="Promote"
+              onClick={(e) => {
+                console.log("Edit button clicked");
+              }}
+              disabled={buttonsEnabled}
             />
           </div>
 
