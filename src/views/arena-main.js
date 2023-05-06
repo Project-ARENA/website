@@ -27,11 +27,13 @@ let uploadedTXT = false;
 let uploadedZIP = false
 
 function handleUploadTXTDone(res){
-  
+  res.filesUploaded[0].url 
+  console.log(res.filesUploaded[0].url )
 }
 
 function handleUploadZIPDone(res){
-
+  res.filesUploaded[0].url
+  console.log(res.filesUploaded[0].url)
 }
 //Function to set the latest scores
 function getLatestScores() {
@@ -237,6 +239,8 @@ const ArenaMain = (props) => {
   //This stores contents of tab, tab number and index in the array are related
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
+  // const [TXTLink, setTXTLink] = useState("");
+  // const [ZIPLink, setZIPLink] = useState("");
 
   // const [uploadedTXT, setUploadTXT] = useState(false);
   // const [uploadedZIP, setUploadZIP] = useState(false);
