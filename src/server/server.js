@@ -71,8 +71,12 @@ const checkActiveCompetitions = () => {
 };
 
 // Route to calculate score
-app.get("/api/get/upload/score", async (req, res) => {
-  const textFileUrl = "https://cdn.filestackcontent.com/N4r7m9lsSC2eI3fa9zCq"; // Replace with the URL of the text file for user from competition from DB
+app.post("/api/get/upload/score", async (req, res) => {
+  const textFileUrl = req.body.textFileUrl;
+  console.log(textFileUrl);
+
+  // const textFileUrl = "https://cdn.filestackcontent.com/N4r7m9lsSC2eI3fa9zCq";
+
   let text = "";
 
   try {
