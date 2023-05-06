@@ -19,25 +19,37 @@ import {
   endDate,
 } from "../components/CalenderComp.js";
 
+function getNumTestcases(testcases) {
+  var numtestcases = 1;
+  for (var i = 0; i < testcases.length; i++) {
+    if (testcases[i] === ",") {
+      numtestcases++;
+    }
+  }
+  return numtestcases;
+}
+
 // Modal.setAppElement(el)
 function PostCompDetails(
   compname,
   pic,
-  startDate,
-  endDate,
+  regstartDate,
+  regendDate,
   desc,
   pdf,
-  testcaseNum
+  testcaseNum,
+  testcases
 ) {
-  console.log(compname, pic, startDate, endDate, desc, pdf, testcaseNum);
+  console.log(compname, pic, regstartDate, regendDate, desc, pdf, testcaseNum, testcases);
   return axios.post("http://localhost:3002/api/post/Create_comp", {
     compname: compname,
     pic: pic,
-    startDate: startDate,
-    endDate: endDate,
+    startDate: "2023-05-27",
+    endDate: "2023-05-27",
     desc: desc,
     pdf: pdf,
     testcaseNum: testcaseNum,
+    testcases: testcases
   });
 }
 
@@ -69,8 +81,8 @@ function GenGrid() {
     { field: "competition_image", headerName: "Image", width: 150 },
     { field: "competition_startdate", headerName: "Start Date", width: 150 },
     { field: "competition_enddate", headerName: "End Date", width: 150 },
-    { field: "competition_info", headerName: "Info", width: 150 },
-    { field: "competition_testcases", headerName: "Test Cases", width: 150 },
+    { field: "competition_info", headerName: "Details", width: 150 },
+    { field: "competition_testcases", headerName: "PDF", width: 150 },
   ];
 
   return (
@@ -80,7 +92,7 @@ function GenGrid() {
 
 const AdminCompetitions = (props) => {
   const [compname, setCompname] = useState("");
-  const [numtestcases, setNumTestCases] = useState(0);
+  const [testcases, setTestCases] = useState(0);
   const [desc, setdesc] = useState("");
   const [pic, setpic] = useState("");
   const [pdf, setpdf] = useState("");
@@ -150,8 +162,8 @@ const AdminCompetitions = (props) => {
           <TeamSizeSelector />
           </div>
           <InputBoxForInfo
-            buttonText="Number of test cases"
-            onChange={(e) => setNumTestCases(e.target.value)}
+            buttonText="Test Cases"
+            onChange={(e) => setTestCases(e.target.value)}
           />
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
@@ -215,14 +227,15 @@ const AdminCompetitions = (props) => {
               onClick={() => {
                 setvisible(false);
                 setPickerVisible(false);
-                // console.log("Create button clicked");
-                // console.log("Competition Name is:" + compname);
-                // console.log("Test cases are:" + numtestcases);
-                // console.log("startDate: " + startDate);
-                // console.log("endDate: " + endDate);
-                // console.log("Desc: " + desc);
-                // console.log("pic link is:" + pic);
-                // console.log("pdf link is:" + pdf);
+                console.log("Create button clicked");
+                console.log("Competition Name is:" + compname);
+                console.log("Test cases are:" + testcases);
+                console.log("Num testcases is:" + getNumTestcases(testcases));
+                console.log("startDate: " + startDate);
+                console.log("endDate: " + endDate);
+                console.log("Desc: " + desc);
+                console.log("pic link is:" + pic);
+                console.log("pdf link is:" + pdf);
                 PostCompDetails(
                   compname,
                   pic,
@@ -230,7 +243,8 @@ const AdminCompetitions = (props) => {
                   endDate,
                   desc,
                   pdf,
-                  parseInt(numtestcases)
+                  getNumTestcases(testcases),
+                  testcases
                 );
                 window.location.reload(false);
               }}
