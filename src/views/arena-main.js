@@ -6,7 +6,7 @@ import "./arena-main.css";
 //import tabs from "../components/tabs"
 import BasicTabs from "../components/tabs";
 import { PickerOverlay } from "filestack-react";
-import { sub } from "date-fns";
+import { sub, subHours } from "date-fns";
 import {
   ConstructionOutlined,
   ControlPointSharp,
@@ -23,6 +23,7 @@ const competition_id = sessionStorage.getItem("CompID");
 const user_id = sessionStorage.getItem("userID");
 let tabIndex = -1;
 let latestSubmissionScores = [0];
+let subHistory = [0];
 let newHighestSub = "";
 let numTests = 0;
 let uploadedTXT = false;
@@ -203,12 +204,25 @@ async function uploadSubmissions() {
   //Make the JSON String thing
   // console.log(latestSubmissionScores);
   const obj = {};
+  const obj1 = {};
 
   latestSubmissionScores.map((value, index) => {
     obj[`testcase_${index + 1}`] = value;
   });
 
+  //Seperate one for submission history
+  latestSubmissionScores.map((value, index) => {
+    if (index != tabIndex-1){
+      obj1[`testcase_${index + 1}`] = 0;
+    }
+    else{
+      obj1[`testcase_${index + 1}`] = value;
+    }
+    });
+
   const newSub = JSON.stringify(obj);
+  const subHist = JSON.stringify(obj1);
+  console.log(subHist)
   // console.log("hello?");
   //Upload to submission history:
   axios
@@ -220,7 +234,7 @@ async function uploadSubmissions() {
     )
     .then(function (response) {
       if (response.data[0].testcase_prev == null) {
-        const originalObject = JSON.parse(newSub);
+        const originalObject = JSON.parse(subHist);
         const newObject = { 0: originalObject };
         const newString = JSON.stringify(newObject);
         axios.post("http://localhost:3002/api/post/testcasePrev/team", {
@@ -231,7 +245,7 @@ async function uploadSubmissions() {
         // console.log(response.data[0].testcase_prev);
         const data = JSON.parse(response.data[0].testcase_prev);
         const nextKey = Object.keys(data).length.toString();
-        const updatedData = { ...data, [nextKey]: obj };
+        const updatedData = { ...data, [nextKey]: obj1 };
         const updatedDataString = JSON.stringify(updatedData);
         // console.log(updatedDataString);
         axios.post("http://localhost:3002/api/post/testcasePrev/team", {
@@ -408,6 +422,12 @@ const ArenaMain = (props) => {
           onClick={() => {
             //This sets the new score
             latestSubmissionScores[tabIndex - 1] = Mark;
+            //This is to set the other scores to 0, to handle it better in the sub hist
+            // for (let i = 0; i < latestSubmissionScores.length; i++){
+            //   if (i != tabIndex-1){
+            //     latestSubmissionScores[i] = 0;
+            //   }
+            // }
             console.log(Mark)
             console.log(latestSubmissionScores)
             uploadSubmissions();

@@ -20,25 +20,27 @@ const ArenaSubmissions = (props) => {
         // console.log(response.data[0].no_testcases) 
       });
       
-    axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
+      axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
       .then(response => {
         const historyJSON = JSON.parse(response.data[0].testcase_prev);
         const newData = Object.values(historyJSON).map(testcaseObj => {
           const testcaseData = [];
           for (let i = 1; i <= numTests; i++) {
-            testcaseData.push(testcaseObj[`testcase_${i}`]);
+            const testcaseValue = testcaseObj[`testcase_${i}`];
+            testcaseData.push(testcaseValue === 0 ? '-' : testcaseValue);
           }
           return testcaseData;
         });
         setData(newData);
         // console.log(newData);
       });
+    
 
       axios
       .get("http://localhost:3002/api/get/compDetails/" + competition_id)
       .then(function (response) {
         setTitle(response.data[0].competition_name);
-        setParagraph(response.data[0].competition_info);
+        
       });
   }, [competition_id, user_id, numTests]);
 
