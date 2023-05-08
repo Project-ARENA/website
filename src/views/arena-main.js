@@ -27,9 +27,14 @@ let newHighestSub = "";
 let numTests = 0;
 let uploadedTXT = false;
 let uploadedZIP = false;
+let TXTLink = ""
+let ZIPLink = ""
+let Mark = 0
 
 async function handleUploadTXTDone(res) {
   console.log(res.filesUploaded[0].url);
+  TXTLink = res.filesUploaded[0].url;
+
   try {
     const response = await axios.post(
       "http://localhost:3002/api/get/upload/score",
@@ -37,16 +42,20 @@ async function handleUploadTXTDone(res) {
         textFileUrl: res.filesUploaded[0].url,
       }
     );
+    Mark = response.data;
     console.log(response.data);
   } catch (error) {
     console.error(error);
   }
 }
 
+
 function handleUploadZIPDone(res) {
-  res.filesUploaded[0].url;
   console.log(res.filesUploaded[0].url);
+  ZIPLink = res.filesUploaded[0].url
 }
+
+
 //Function to set the latest scores
 function getLatestScores() {
   return new Promise((resolve, reject) => {
@@ -249,8 +258,7 @@ const ArenaMain = (props) => {
   //This stores contents of tab, tab number and index in the array are related
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
-  // const [TXTLink, setTXTLink] = useState("");
-  // const [ZIPLink, setZIPLink] = useState("");
+
 
   // const [uploadedTXT, setUploadTXT] = useState(false);
   // const [uploadedZIP, setUploadZIP] = useState(false);
@@ -394,7 +402,21 @@ const ArenaMain = (props) => {
           <br />
           <InputTextArea label="Type your comments here..."></InputTextArea>
           <br />
-          <Button name="Submit" disabled={disabled}></Button>
+          <Button 
+          name="Submit" 
+          disabled={disabled}
+          onClick={() => {
+            //This sets the new score
+            latestSubmissionScores[tabIndex - 1] = Mark;
+            console.log(Mark)
+            console.log(latestSubmissionScores)
+            uploadSubmissions();
+            setTimeout(function () {
+              window.location.reload(false);
+            }, 550);
+          }}
+          
+          ></Button>
           <br />
           <div style={{ marginLeft: 6, marginTop: 5 }}>
             <Button
