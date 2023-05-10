@@ -162,6 +162,21 @@ function GenCards() {
     // console.log(`Enter Arena clicked for competition ${competition_id}`);
   };
 
+  const username = sessionStorage.getItem('username');
+
+  // Get user details from database, to make displaying it easier
+  const getUserDetails = () => {
+    axios
+      .get("http://localhost:3002/api/get/userDetails/" + username)
+      .then(function (response) {
+        sessionStorage.setItem('userID', (response.data)[0].user_id);
+        sessionStorage.setItem('useremail', (response.data)[0].user_email);
+        sessionStorage.setItem('userpassword',(response.data)[0].user_password);
+      });
+  }
+
+  window.onload = getUserDetails();
+
   return (
     <div
       data-testid="card"

@@ -33,14 +33,25 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 //   valueType: PropTypes.string.isRequired,
 // };
 
-export default function CommonlyUsedComponents(props) {
+// let RegBeginDate;
+// let RegEndDate;
+
+// function handleChange(value) {
+//   console.log(value); // this will be a moment date object
+//   // console.log(e.target.value); // this will be a string value in datepicker input field
+// }
+
+
+function CommonlyUsedComponents(props) {
   const { date1_label, time1_label, date2_label, time2_label} = props;
+  const [regStartDate, setRegStartDate] = React.useState(new Date());
+  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}  adapterLocale={"en-gb"}>
       <div style={{ display: 'flex', justifyContent: 'center' }} > 
         <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
-            <DatePicker label={date1_label} />
+            <DatePicker label={date1_label}/>
           </div>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
@@ -61,3 +72,4 @@ export default function CommonlyUsedComponents(props) {
     </LocalizationProvider>
   );
 }
+export { CommonlyUsedComponents }

@@ -8,7 +8,7 @@ import "reactjs-popup/dist/index.css";
 import Modal from "react-modal";
 import { useState } from "react";
 import InputBoxForInfo from "../components/input-box-for-info";
-import NewCalenderComp from "../components/NewCalenderComp.js"
+import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
 import TeamSizeSelector from "../components/TeamSizeSelector.js";
@@ -100,6 +100,20 @@ const AdminCompetitions = (props) => {
 
   const [visible, setvisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
+  const username = sessionStorage.getItem('username');
+  
+  // Get user details from database, to make displaying it easier
+  const getUserDetails = () => {
+    axios
+      .get("http://localhost:3002/api/get/userDetails/" + username)
+      .then(function (response) {
+        sessionStorage.setItem('userID', (response.data)[0].user_id);
+        sessionStorage.setItem('useremail', (response.data)[0].user_email);
+        sessionStorage.setItem('userpassword',(response.data)[0].user_password);
+      });
+  }
+
+  window.onload = getUserDetails();
 
   const handleUploadDone = (res) => {
     // setpic(res.filesUploaded[0].url)
@@ -286,17 +300,17 @@ const AdminCompetitions = (props) => {
                 console.log("Desc: " + desc);
                 console.log("pic link is:" + pic);
                 console.log("pdf link is:" + pdf);
-                PostCompDetails(
-                  compname,
-                  pic,
-                  startDate,
-                  endDate,
-                  desc,
-                  pdf,
-                  getNumTestcases(testcases),
-                  testcases
-                );
-                window.location.reload(false);
+                // PostCompDetails(
+                //   compname,
+                //   pic,
+                //   startDate,
+                //   endDate,
+                //   desc,
+                //   pdf,
+                //   getNumTestcases(testcases),
+                //   testcases
+                // );
+                // window.location.reload(false);
               }}
             />
           </div>
@@ -330,9 +344,6 @@ const AdminCompetitions = (props) => {
               </svg>
             </div>
             <div className="admin-competitions-links-container">
-              <Link to="/admin-home" className="admin-competitions-link">
-                HOME
-              </Link>
               <Link
                 to="/admin-competitions"
                 className="admin-competitions-link1 Anchor"
