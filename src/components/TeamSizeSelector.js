@@ -20,7 +20,7 @@ function TeamSizeSelector() {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box >
     <TextField
       label="Minimum team size"
       type="number"

@@ -51,28 +51,43 @@ Label.propTypes = {
 
 export default function CommonlyUsedComponents() {
   return (
+    
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer
-        components={[
-          'DatePicker',
-          'TimePicker',
-          'DateTimePicker',
-          'DateRangePicker',
-        ]}
-      >
-          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
+      <Box>
+      
+      </Box>
+    <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-  <div style={{ display: 'flex', justifyContent: 'center' }}>
-    <div style={{ display: 'inline-block', marginRight: '60px' }}>
-      <DatePicker label="Uncontrolled picker 1" />
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+    <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+      <DatePicker label="Registration Date Start" />
     </div>
-    <div style={{ display: 'inline-block' }}>
-      <DatePicker label="Uncontrolled picker 2" />
+
+    <div>
+    <DemoContainer components={['TimePicker']}>
+        <TimePicker label="Registration Time Start" />
+      </DemoContainer>
     </div>
+    <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+      <DatePicker label="Registration Date End" />
+    </div>
+    
+      <DemoContainer components={['TimePicker']}>
+        <TimePicker label="Basic time picker" />
+      </DemoContainer>
+    
   </div>
-</LocalizationProvider>
-            
-          </div>
+  
+  </LocalizationProvider>  
+  </div>
+
+  
+       
+      
+   
+  
+        
         
         <Box
       component="form"
@@ -82,44 +97,13 @@ export default function CommonlyUsedComponents() {
       noValidate
       autoComplete="off"
     >
-      
-      
-     
+
     </Box>
-          
-        
-        
-        
-          {/* <DateRangePicker
-  localeText={{
-    start: '',
-    end: '',
-  }}
-  onChange={(value) => {
-    if (value === null) {
-      console.log('No date range selected');
-    } else {
-      regstrDate = value[0] ? value[0].format('YYYY-MM-DD') : null;
-      regendDate = value[1] ? value[1].format('YYYY-MM-DD') : null;
-      console.log('Selected date range:', "Reg begins ",regstrDate," and Reg end date is ",regendDate);
-    }
-  }}
-/> */}
+
         
 
-        <DemoItem label={<Label componentName="Registration Time Start" valueType="time" />}>
-  <TimePicker
-    value={regTimeBegin}
-    onChange={(newValue) => {
-      regTimeBegin = newValue.format('HH:mm:ss');
-      console.log('Registration time start:', regTimeBegin);
-    }}
-  />
-</DemoItem>
+        
 
-        <DemoItem label={<Label componentName="Registration Time End" valueType="time" />}>
-          <TimePicker />
-        </DemoItem>
         <label style={{ marginLeft: 6, marginBottom: 0.4, marginTop: 5 }}> Competition Date Duration</label>
         <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -141,7 +125,7 @@ export default function CommonlyUsedComponents() {
           <TimePicker />
         </DemoItem>
 
-      </DemoContainer>
+      
     </LocalizationProvider>
   );
 }

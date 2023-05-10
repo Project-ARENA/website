@@ -12,7 +12,7 @@ import NewCalenderComp from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
 import TeamSizeSelector from "../components/TeamSizeSelector.js";
-
+import InputTextArea from "../components/input-textarea.js"
 import {
   CalenderComp,
   startDate,
@@ -132,7 +132,7 @@ const AdminCompetitions = (props) => {
         isOpen={visible}
         style={{
           content: {
-            width: "90%",
+            width: "50%",
             height: "100%",
             top: "50%",
             left: "50%",
@@ -142,6 +142,7 @@ const AdminCompetitions = (props) => {
           overlay: { zIndex: 1000 },
         }}
       >
+        
         <div
           style={{
             display: "flex",
@@ -214,7 +215,7 @@ const AdminCompetitions = (props) => {
           </div>
 
           <div>
-            <InputBoxForInfo
+            <InputTextArea
               style={{ width: 400, height: 400 }}
               buttonText="Competition Description"
               onChange={(e) => setdesc(e.target.value)}
