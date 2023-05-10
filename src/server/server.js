@@ -393,7 +393,7 @@ app.post("/api/post/addTo/team", (req, res) => {
   const competition_id = req.body.competition_id;
 
   db.query(
-    "INSERT INTO team_details (user_id, team_name, team_code, competition_id) VALUES (?, ?, ?,?);",
+    "INSERT INTO teams (user_id, team_name, team_code, competition_id) VALUES (?, ?, ?, ?);",
     [user_id, team_name, team_code, competition_id],
     (err, result) => {
       if (err) {
