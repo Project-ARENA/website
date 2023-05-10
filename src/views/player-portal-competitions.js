@@ -221,12 +221,6 @@ const PlayerPortalCompetitions = (props) => {
             </div>
             <div className="player-portal-competitions-links-container">
               <Link
-                to="/player-portal-home"
-                className="player-portal-competitions-link"
-              >
-                HOME
-              </Link>
-              <Link
                 to="/player-portal-competitions"
                 className="player-portal-competitions-link1 Anchor"
               >
@@ -276,12 +270,6 @@ const PlayerPortalCompetitions = (props) => {
               </div>
             </div>
             <div className="player-portal-competitions-links-container1">
-              <Link
-                to="/player-portal-home"
-                className="player-portal-competitions-link"
-              >
-                HOME
-              </Link>
               <Link
                 to="/player-portal-competitions"
                 className="player-portal-competitions-link1 Anchor"
