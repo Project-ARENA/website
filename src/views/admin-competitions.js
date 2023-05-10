@@ -86,7 +86,7 @@ function GenGrid() {
   ];
 
   return (
-    <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+    <DataGrid rows={rows} columns={columns} pageSize={25} checkboxSelection />
   );
 }
 
@@ -96,6 +96,7 @@ const AdminCompetitions = (props) => {
   const [desc, setdesc] = useState("");
   const [pic, setpic] = useState("");
   const [pdf, setpdf] = useState("");
+  const [marker, setmarker] = useState("");
 
   const [visible, setvisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
@@ -120,6 +121,11 @@ const AdminCompetitions = (props) => {
       // console.log("PDF uploaded");
       setpdf(res.filesUploaded[0].url);
     }
+
+    if (res.filesUploaded[0].mimetype === "text/x-python") {
+      // console.log("marker uploaded");
+      setmarker(res.filesUploaded[0].url);
+    }
   };
 
   const handleClosePicker = () => {
@@ -132,12 +138,13 @@ const AdminCompetitions = (props) => {
         isOpen={visible}
         style={{
           content: {
-            width: "50%",
+            width: "100%",
             height: "100%",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             overflowY: "scroll"
+            // maxHeight: "100vh"
           },
           overlay: { zIndex: 1000 },
         }}
@@ -149,27 +156,40 @@ const AdminCompetitions = (props) => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            height: "100%",
           }}
         >
-          <h1>Create a Competition</h1>
+          <h1 style={{ color: "#457B9D" }}>Create Competition</h1>
+          <br/>
 
           <InputBoxForInfo
             buttonText="Competition Name"
             onChange={(e) => setCompname(e.target.value)}
           />
-          <div>
-          <h1>Choose Team Size</h1>
-          <TeamSizeSelector />
+
+          <br/>
+
+          <h3 style={{ color: "#457B9D" }}>Team Size</h3>
+
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <TeamSizeSelector />
           </div>
-          <InputBoxForInfo
-            buttonText="Test Cases"
+
+          <br/>
+
+          <h3 style={{ color: "#457B9D" }}>Test Case Names</h3>
+
+          <InputTextArea 
+            label="testcase 1, testcase 2, etc..."
             onChange={(e) => setTestCases(e.target.value)}
-          />
+          ></InputTextArea>
+
+          <br/>
+
+          <h3 style={{ color: "#457B9D" }}>Uploads</h3>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
-              name="Upload PDF"
+              name="Upload Competition Picture"
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
@@ -180,7 +200,18 @@ const AdminCompetitions = (props) => {
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
-              name="Upload Competition Picture"
+              name="Upload Competition PDF"
+              style={{ background: "#457B9D", color: "white" }}
+              onClick={() => {
+                setPickerVisible(true);
+                // console.log("Picker clicked");
+              }}
+            />
+          </div>
+
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <Button
+              name="Upload Marker Script"
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
@@ -208,19 +239,37 @@ const AdminCompetitions = (props) => {
               />
             </div>
           )}
-          <label style={{ marginLeft: 6, marginBottom: 0.4, marginTop: 5 }}> Registration Date Duration</label>
+          <br/>
+          <h3 style={{ color: "#457B9D" }}>Registration Period Details</h3>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
-            <NewCalenderComp></NewCalenderComp>
+            <NewCalenderComp
+              date1_label="Registration Opening Date"
+              date2_label="Registration Closing Date"
+              time1_label="Registration Opening Time"
+              time2_label="Registration Closing Time"
+            ></NewCalenderComp>
           </div>
 
-          <div>
-            <InputTextArea
-              style={{ width: 400, height: 400 }}
-              buttonText="Competition Description"
-              onChange={(e) => setdesc(e.target.value)}
-            />
+          <br/>
+          <h3 style={{ color: "#457B9D" }}>Competing Period Details</h3>
+
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
+            <NewCalenderComp
+              date1_label="Competing Opening Date"
+              date2_label="Competing Closing Date"
+              time1_label="Competing Opening Time"
+              time2_label="Competing Closing Time"
+            ></NewCalenderComp>
           </div>
+
+          <br/>
+          <h3 style={{ color: "#457B9D" }}>Competition Description</h3>
+
+          <InputTextArea 
+            label="Competition Description"
+            onChange={(e) => setTestCases(e.target.value)}
+          ></InputTextArea>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button

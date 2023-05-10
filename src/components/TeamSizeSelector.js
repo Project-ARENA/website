@@ -27,6 +27,7 @@ function TeamSizeSelector() {
       value={minSize}
       onChange={handleMinSizeChange}
     />
+    {'  '}
     <TextField
       label="Maximum team size"
       type="number"
