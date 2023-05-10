@@ -24,6 +24,7 @@ const user_id = sessionStorage.getItem("userID");
 let tabIndex = -1;
 let latestSubmissionScores = [0];
 let subHistory = [0];
+let highestSubArray = [0]
 let newHighestSub = "";
 let numTests = 0;
 let uploadedTXT = false;
@@ -136,6 +137,19 @@ function getLinkForPDF() {
         reject(error);
       });
   });
+}
+
+function getHighest(){
+  axios.get("http://localhost:3002/api/get/testcase_highest/" +competition_id +"/" +user_id)
+  .then(function (response) {
+    const latestString = response.data[0].testcase_highest;
+        const jsonArray = JSON.parse(latestString);
+        let count = 0;
+        for (let key in jsonArray) {
+          highestSubArray[count] = jsonArray[key];
+          count++;
+        }
+  })
 }
 
 function ScoredHigher() {
@@ -285,6 +299,7 @@ const ArenaMain = (props) => {
       await getLatestScores();
       setIsLoaded(true);
     };
+    getHighest();
     fetchData();
     getNumTestCases(numTests);
     axios
@@ -551,6 +566,7 @@ const ArenaMain = (props) => {
           {isLoaded && (
             <BasicTabs
               tabContent={latestSubmissionScores}
+              tabContent2={highestSubArray}
               tabCount={numTests}
               onSubmit={(index) => {
                 // setPickerVisible(true);

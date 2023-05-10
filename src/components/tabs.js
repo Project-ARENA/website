@@ -50,7 +50,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs({ onSubmit, tabCount, tabContent }) { // Receive onSubmit, tabCount, and tabContent props
+export default function BasicTabs({ onSubmit, tabCount, tabContent, tabContent2 }) { // Receive onSubmit, tabCount, and tabContent props
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -78,7 +78,9 @@ export default function BasicTabs({ onSubmit, tabCount, tabContent }) { // Recei
           onSubmit={onSubmit}
         >
           {/* Render content for each tab from the tabContent prop */}
-          {"Score: " + tabContent[index]}
+          {" Latest Score: " + tabContent[index]}
+          <br/>
+          {"Highest Score: " + tabContent2[index]}
         </TabPanel>
       ))}
     </Box>
