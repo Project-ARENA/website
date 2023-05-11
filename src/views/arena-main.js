@@ -18,6 +18,8 @@ import "../components/modal.css";
 import { da, hi } from "date-fns/locale";
 import Button from "../components/button";
 import InputTextArea from "../components/input-textarea";
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const competition_id = sessionStorage.getItem("CompID");
 const user_id = sessionStorage.getItem("userID");
@@ -173,8 +175,9 @@ function ScoredHigher() {
           count++;
         }
         for (let i = 0; i < latestSubmissionScores.length; i++) {
-          // console.log(latestSubmissionScores[i] + " " + highestSub[i])
+           console.log(latestSubmissionScores[i] + " " + highestSub[i])
           if (latestSubmissionScores[i] > highestSub[i]) {
+            
             //Change only the one that is higher
             highestSub[i] = latestSubmissionScores[i];
             isHigher = true;
@@ -282,7 +285,7 @@ const ArenaMain = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pickerTXTVisible, setTXTPickerVisible] = useState(false);
   const [pickerZIPVisible, setZIPPickerVisible] = useState(false);
-
+  const [showTXTAlert, setShowTXTAlert] = useState(false);
   //This stores contents of tab, tab number and index in the array are related
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
@@ -373,11 +376,16 @@ const ArenaMain = (props) => {
                 key="picker-overlay"
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
+                  if (res.filesUploaded[0].mimetype === 'text/plain') {
                   handleUploadTXTDone(res);
                   uploadedTXT = true;
                   //Checks if both are uploaded
                   if (uploadedZIP == true && uploadedTXT == true) {
                     setDisabled(false);
+                  }
+                  }else{
+                    setShowTXTAlert(true)
+                    console.log(showTXTAlert)
                   }
                 }}
                 pickerOptions={{
@@ -398,11 +406,13 @@ const ArenaMain = (props) => {
                 key="picker-overlay"
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
-                  handleUploadZIPDone(res);
-                  uploadedZIP = true;
-                  if (uploadedZIP == true && uploadedTXT == true) {
-                    setDisabled(false);
-                  }
+                    handleUploadDone(res);
+                    uploadedZIP = true;
+                    // Checks if both are uploaded
+                    if (uploadedZIP && uploadedTXT) {
+                      setDisabled(false);
+                    }
+                  
                 }}
                 pickerOptions={{
                   onClose: () => {
@@ -412,7 +422,7 @@ const ArenaMain = (props) => {
               />
             </div>
           )}
-
+          
           <br />
           <Button
             name="Upload txt file"
@@ -448,7 +458,7 @@ const ArenaMain = (props) => {
             uploadSubmissions();
             setTimeout(function () {
               window.location.reload(false);
-            }, 550);
+            }, 800);
           }}
           
           ></Button>
@@ -463,6 +473,23 @@ const ArenaMain = (props) => {
           </div>
         </div>
       </Modal>
+      {showTXTAlert && (
+              <div
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                zIndex: 9999,
+              }}
+            >
+            <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert
+            severity="error"
+            onClose={() => {setShowTXTAlert(false)}}>Please submit a txt file</Alert>
+          </Stack>
+          </div>
+          )}
       <div data-role="Header" className="arena-main-navbar-container">
         <div className="arena-main-navbar">
           <div className="arena-main-left-side">
