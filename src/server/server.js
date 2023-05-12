@@ -865,6 +865,42 @@ app.post("/api/post/initTests/team", (req, res) => {
   );
 });
 
+// Route to get all team members of a team
+app.get("/api/get/teamMembers", (req, res) => {
+  const competition_id = req.body.competition_id;
+
+  const sql = `
+    SELECT t.user_id, 
+           CASE WHEN td.team_captain IS NOT NULL THEN 1 ELSE 0 END AS is_captain
+    FROM teams t
+    LEFT JOIN team_details td ON t.team_code = td.team_code AND t.user_id = td.user_id
+    WHERE t.team_code = (
+      SELECT team_code
+      FROM teams
+      WHERE competition_id = ${competition_id}
+      LIMIT 1
+    )
+  `;
+
+  // Execute the query
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error");
+    } else {
+      const response = result.map(row => {
+        return {
+          user_id: row.user_id,
+          is_captain: row.is_captain === 1 ? true : false
+        }
+      });
+      res.status(200).send(response);
+    }
+  });
+});
+
+
+
 //!Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
