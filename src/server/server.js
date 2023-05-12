@@ -867,6 +867,7 @@ app.post("/api/post/initTests/team", (req, res) => {
 
 // Route to get all team members of a team
 app.get("/api/get/teamMembers", (req, res) => {
+  const user_id = req.body.user_id;
   const competition_id = req.body.competition_id;
 
   const sql = `
@@ -877,7 +878,7 @@ app.get("/api/get/teamMembers", (req, res) => {
     WHERE t.team_code = (
       SELECT team_code
       FROM teams
-      WHERE competition_id = ${competition_id}
+      WHERE competition_id = ${competition_id} AND user_id = ${user_id}
       LIMIT 1
     )
   `;
