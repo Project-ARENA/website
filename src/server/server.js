@@ -529,7 +529,7 @@ app.get("/api/get/competitionIDGlobal/:competition_name", (req, res) => {
 app.get("/api/get/competition/registered/:user_id", (req, res) => {
   const user_id = req.params.user_id;
   db.query(
-    "SELECT competition_id from team_details WHERE user_id = ?;",
+    "SELECT competition_id from teams WHERE user_id = ?;",
     user_id,
     (err, result) => {
       if (err) {
@@ -787,7 +787,7 @@ app.get("/api/get/compTeamDeatils/:comp_id/:user_id", (req, res) => {
   const user_id = req.params.user_id;
 
   db.query(
-    "SELECT cd.no_testcases, td.team_name FROM competition_details cd JOIN team_details td ON cd.competition_id = td.competition_id WHERE cd.competition_id = ? AND td.competition_id = ? AND td.user_id = ?;",
+    "SELECT cd.no_testcases, td.team_name FROM competition_details cd JOIN teams td ON cd.competition_id = td.competition_id WHERE cd.competition_id = ? AND td.competition_id = ? AND td.user_id = ?;",
     [comp_id, comp_id, user_id],
     (err, result) => {
       if (err) {
@@ -820,6 +820,22 @@ app.get("/api/get/numTests/:comp_id", (req, res) => {
 
   db.query(
     "SELECT no_testcases FROM competition_details WHERE competition_id = ?;",
+    comp_id,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+// Get test cases in competition
+app.get("/api/get/Testcases/:comp_id", (req, res) => {
+  const comp_id = req.params.comp_id;
+
+  db.query(
+    "SELECT testcases FROM competition_details WHERE competition_id = ?;",
     comp_id,
     (err, result) => {
       if (err) {
