@@ -73,6 +73,13 @@ function GenCards() {
       return endDate > now;
     });
 
+    // Sort by end date
+    activeCards.sort((a, b) => {
+      const dateA = new Date(a.endDate);
+      const dateB = new Date(b.endDate);
+      return dateA - dateB;
+    });
+
     return activeCards;
   };
 
@@ -85,8 +92,16 @@ function GenCards() {
       return endDate <= now;
     });
 
+    // Sort by start date
+    InactiveCards.sort((a, b) => {
+      const dateA = new Date(a.endDate);
+      const dateB = new Date(b.endDate);
+      return dateB - dateA;
+    });
+
     return InactiveCards;
   };
+
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -140,6 +155,8 @@ function GenCards() {
           return cardData;
         });
         setCardsData(newCardsData);
+        setActiveData(fetchActiveData(newCardsData));
+        setInactiveData(fetchInactiveData(newCardsData));
         console.log(response);
         setIsFlipped(false);
       } catch (error) {
