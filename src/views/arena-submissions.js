@@ -11,38 +11,47 @@ const user_id  = sessionStorage.getItem('userID');
 
 const ArenaSubmissions = (props) => {
   const [numTests, setNumTests] = useState(0);
+  const [testcases, setTestcases] = React.useState("");
   const [data, setData] = useState([]);
   const [title, setTitle] = useState("");
   useEffect(() => {
     axios.get(`http://localhost:3002/api/get/numTests/${competition_id}`)
       .then(response => {
         setNumTests(response.data[0].no_testcases); 
-        // console.log(response.data[0].no_testcases) 
       });
       
-      axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
-      .then(response => {
-        const historyJSON = JSON.parse(response.data[0].testcase_prev);
-        const newData = Object.values(historyJSON).map(testcaseObj => {
-          const testcaseData = [];
-          for (let i = 1; i <= numTests; i++) {
-            const testcaseValue = testcaseObj[`testcase_${i}`];
-            testcaseData.push(testcaseValue === 0 ? '-' : testcaseValue);
-          }
-          return testcaseData;
-        });
-        setData(newData);
-        // console.log(newData);
+    axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
+    .then(response => {
+      const historyJSON = JSON.parse(response.data[0].testcase_prev);
+      const newData = Object.values(historyJSON).map(testcaseObj => {
+        const testcaseData = [];
+        for (let i = 1; i <= numTests; i++) {
+          const testcaseValue = testcaseObj[`testcase_${i}`];
+          testcaseData.push(testcaseValue === 0 ? '-' : testcaseValue);
+        }
+        return testcaseData;
       });
+      setData(newData);
+      // console.log(newData);
+    });
     
 
-      axios
-      .get("http://localhost:3002/api/get/compDetails/" + competition_id)
-      .then(function (response) {
-        setTitle(response.data[0].competition_name);
-        
-      });
+    axios
+    .get("http://localhost:3002/api/get/compDetails/" + competition_id)
+    .then(function (response) {
+      setTitle(response.data[0].competition_name);
+      
+    });
+  
+    axios
+    .get("http://localhost:3002/api/get/Testcases/" + competition_id)
+    .then(function(response){
+      setTestcases(response.data[0].testcases);
+    });
+
   }, [competition_id, user_id, numTests]);
+
+  let testsArray = testcases.split(",");
 
   return (
     <div className="arena-submissions-container">
@@ -137,7 +146,7 @@ const ArenaSubmissions = (props) => {
       <h2>Submissions History</h2>
       <br/>
       <div>
-      <DataGrid numColumns={numTests} data={data} />
+      <DataGrid numColumns={numTests} testcases={testsArray} data={data} />
     </div>
     </div >
     

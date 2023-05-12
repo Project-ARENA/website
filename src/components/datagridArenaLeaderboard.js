@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 import './datagridArenaLeaderboard.css'
 
-export default function CustomDataGrid({ rows, noTests, myTeam }) {
+export default function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
 
     // Sort the rows based on team_score in descending order
     const sortedRows = React.useMemo(() => {
@@ -40,7 +40,7 @@ export default function CustomDataGrid({ rows, noTests, myTeam }) {
         },
         // TODO: #3 Figure out how to add no. test case columns dynamically
         ...Array.from({ length: noTests }, (_, i) => ({
-            field: `testcase_${i+1}`, headerName: `Test Case ${i+1}`, width: 150
+            field: `testcase_${i+1}`, headerName: `${testcases[i]}`, width: 150
           })),
         { field: 'team_score', headerName: 'Team Score', width: 150 },
     ];

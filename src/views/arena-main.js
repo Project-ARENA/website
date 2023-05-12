@@ -29,6 +29,7 @@ let subHistory = [0];
 let highestSubArray = [0]
 let newHighestSub = "";
 let numTests = 0;
+let testcases = "";
 let uploadedTXT = false;
 let uploadedZIP = false;
 let TXTLink = ""
@@ -123,6 +124,12 @@ function getCompTestCases(linkForPDF) {
       linkForPDF = response.data[0].competition_testcases;
       // console.log(linkForPDF);
     });
+
+  axios
+  .get("http://localhost:3002/api/get/Testcases/" + competition_id)
+  .then(function(response){
+    testcases = response.data[0].testcases;
+  });
 }
 
 function getLinkForPDF() {
@@ -595,6 +602,7 @@ const ArenaMain = (props) => {
               tabContent={latestSubmissionScores}
               tabContent2={highestSubArray}
               tabCount={numTests}
+              labels={testcases.split(",")}
               onSubmit={(index) => {
                 // setPickerVisible(true);
                 tabIndex = index + 1;

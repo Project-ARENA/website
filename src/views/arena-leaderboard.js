@@ -11,6 +11,7 @@ const competition_id = sessionStorage.getItem('CompID');
 function getNoTests(comp_id, user_id) {
   const [noTests, setNoTests] = React.useState(0);
   const [myTeam, setMyTeam] = React.useState("");
+  const [testcases, setTestcases] = React.useState("");
 
   React.useEffect(() => {
   axios
@@ -19,8 +20,14 @@ function getNoTests(comp_id, user_id) {
         setNoTests(response.data[0].no_testcases);
         setMyTeam(response.data[0].team_name);
       });
+  
+  axios
+  .get("http://localhost:3002/api/get/Testcases/" + comp_id)
+  .then(function(response){
+    setTestcases(response.data[0].testcases);
+  });
   }, []);
-  return [noTests, myTeam];
+  return [noTests, testcases, myTeam];
 }
 
 // used to generate the table with correct data
@@ -55,14 +62,16 @@ function GenGrid(params) {
         setData(data);
       });
   }, []);
-  return <DataGrid rows={rows} noTests={params.no} myTeam={params.team} pageSize={5} />
+  return <DataGrid rows={rows} noTests={params.no} testcases={params.tests} myTeam={params.team} pageSize={5} />
 }
 
 const ArenaLeaderboard = (props) => {
   const compID = sessionStorage.getItem('CompID');
   const userID = sessionStorage.getItem('userID');
-  const [noTests, myTeam] = getNoTests(compID, userID);
+  const [noTests, testcases, myTeam] = getNoTests(compID, userID);
   const [title, setTitle] = useState("");
+  let testsArray = testcases.split(",");
+
   useEffect(() => {
     axios
       .get("http://localhost:3002/api/get/compDetails/" + competition_id)
@@ -165,7 +174,7 @@ const ArenaLeaderboard = (props) => {
       <h2>Leaderboard</h2>
       <br/>
       <div className="grid-container">
-        <GenGrid no={noTests} team={myTeam} compID={compID}/>
+        <GenGrid no={noTests} tests = {testsArray} team={myTeam} compID={compID}/>
       </div>
     </div>
   )
