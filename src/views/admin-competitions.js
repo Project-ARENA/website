@@ -13,11 +13,10 @@ import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
 import TeamSizeSelector from "../components/TeamSizeSelector.js";
 import InputTextArea from "../components/input-textarea.js"
-import {
-  CalenderComp,
-  startDate,
-  endDate,
-} from "../components/CalenderComp.js";
+// import {
+//   startDate,
+//   endDate,
+// } from "../components/CalenderComp.js";
 
 function getNumTestcases(testcases) {
   var numtestcases = 1;
@@ -116,30 +115,26 @@ const AdminCompetitions = (props) => {
   window.onload = getUserDetails();
 
   const handleUploadDone = (res) => {
-    // setpic(res.filesUploaded[0].url)
-    // setpdf(res.filesUploaded[0].mimetype)
-    // console.log(pic);
-    // console.log(pdf);
+    console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
+  console.log(res.filesUploaded[0].mimetype); // Print the MIME type of the uploaded file
 
-    if (
-      res.filesUploaded[0].mimetype === "image/png" ||
-      res.filesUploaded[0].mimetype === "image/jpeg" ||
-      res.filesUploaded[0].mimetype === "image/jpg"
-    ) {
-      // console.log("Image uploaded");
-      // console.log(res.filesUploaded[0].url);
-      setpic(res.filesUploaded[0].url);
-    }
+  setpic(res.filesUploaded[0].url);
+  setpdf(res.filesUploaded[0].mimetype);
+  setmarker(res.filesUploaded[0].url);
 
-    if (res.filesUploaded[0].mimetype === "application/pdf") {
-      // console.log("PDF uploaded");
-      setpdf(res.filesUploaded[0].url);
-    }
+  if (res.filesUploaded[0].mimetype === "image/png" ||
+    res.filesUploaded[0].mimetype === "image/jpeg" ||
+    res.filesUploaded[0].mimetype === "image/jpg") {
+    setpic(res.filesUploaded[0].url);
+  }
 
-    if (res.filesUploaded[0].mimetype === "text/x-python") {
-      // console.log("marker uploaded");
-      setmarker(res.filesUploaded[0].url);
-    }
+  if (res.filesUploaded[0].mimetype === "application/pdf") {
+    setpdf(res.filesUploaded[0].url);
+  }
+
+  if (res.filesUploaded[0].mimetype === "text/x-python") {
+    setmarker(res.filesUploaded[0].url);
+  }
   };
 
   const handleClosePicker = () => {
@@ -176,9 +171,13 @@ const AdminCompetitions = (props) => {
           <br/>
 
           <InputBoxForInfo
-            buttonText="Competition Name"
-            onChange={(e) => setCompname(e.target.value)}
+          buttonText="Competition Name"
+          onChange={(e) => {
+          setCompname(e.target.value);
+          console.log("Compname value:", e.target.value);
+          }}
           />
+
 
           <br/>
 
@@ -207,7 +206,7 @@ const AdminCompetitions = (props) => {
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
-                // console.log("Picker clicked");
+                console.log(pic);
               }}
             />
           </div>
@@ -218,7 +217,7 @@ const AdminCompetitions = (props) => {
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
-                // console.log("Picker clicked");
+                console.log(pdf);
               }}
             />
           </div>
@@ -229,7 +228,7 @@ const AdminCompetitions = (props) => {
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
-                // console.log("Picker clicked");
+                console.log(marker);
               }}
             />
           </div>
