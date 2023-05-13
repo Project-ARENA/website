@@ -51,18 +51,18 @@ export default function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
     };
 
     return (
-        <Box sx={{ height: 400, width: '100%' }}>
+        <Box sx={{ height: 800, width: '100%' }}>
             <DataGrid
                 rows={sortedRows}
                 columns={columns}
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 15,
+                            pageSize: 50,
                         },
                     },
                 }}
-                pageSizeOptions={[15]}
+                pageSizeOptions={[50]}
                 getRowClassName={getRowClassName} // Add getRowClassName prop
             />
         </Box>

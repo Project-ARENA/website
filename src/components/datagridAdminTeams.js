@@ -187,7 +187,7 @@ export default function CustomDataGrid({ rows }) {
   ];
 
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <Box sx={{ height: 800, width: "100%" }}>
       <Modal
         isOpen={visible}
         style={{
@@ -348,11 +348,11 @@ export default function CustomDataGrid({ rows }) {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 50,
             },
           },
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[50]}
       />
     </Box>
   );
