@@ -11,12 +11,9 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
-import TeamSizeSelector from "../components/TeamSizeSelector.js";
+import { TeamSizeSelector, min, max } from "../components/TeamSizeSelector.js";
 import InputTextArea from "../components/input-textarea.js"
-// import {
-//   startDate,
-//   endDate,
-// } from "../components/CalenderComp.js";
+import { set } from "date-fns";
 
 function getNumTestcases(testcases) {
   var numtestcases = 1;
@@ -85,7 +82,7 @@ function GenGrid() {
   ];
 
   return (
-    <DataGrid rows={rows} columns={columns} pageSize={25} checkboxSelection />
+    <DataGrid rows={rows} columns={columns} pageSize={25} autoHeight={true} checkboxSelection />
   );
 }
 
@@ -96,6 +93,18 @@ const AdminCompetitions = (props) => {
   const [pic, setpic] = useState("");
   const [pdf, setpdf] = useState("");
   const [marker, setmarker] = useState("");
+  const [RegStart, setRegStart] = useState(null);
+  const [RegEnd, setRegEnd] = useState(null);
+  const [RegStartTime, setRegStartTime] = useState(null);
+  const [RegEndTime, setRegEndTime] = useState(null);
+  const [CompStart, setCompStart] = useState(null);
+  const [CompEnd, setCompEnd] = useState(null);
+  const [CompStartTime, setCompStartTime] = useState(null);
+  const [CompEndTime, setCompEndTime] = useState(null);
+  let CombinedRegStart = RegStart + " " + RegStartTime;
+  let CombinedRegEnd = RegEnd + " " + RegEndTime;
+  let CombinedCompStart = CompStart + " " + CompStartTime;
+  let CombinedCompEnd = CompEnd + " " + CompEndTime;
 
   const [visible, setvisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
@@ -118,10 +127,6 @@ const AdminCompetitions = (props) => {
     console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
   console.log(res.filesUploaded[0].mimetype); // Print the MIME type of the uploaded file
 
-  setpic(res.filesUploaded[0].url);
-  setpdf(res.filesUploaded[0].mimetype);
-  setmarker(res.filesUploaded[0].url);
-
   if (res.filesUploaded[0].mimetype === "image/png" ||
     res.filesUploaded[0].mimetype === "image/jpeg" ||
     res.filesUploaded[0].mimetype === "image/jpg") {
@@ -142,7 +147,7 @@ const AdminCompetitions = (props) => {
   };
 
   return (
-    <div className="admin-competitions-container">
+    <div className="admin-competitions-container" style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
       <Modal 
         isOpen={visible}
         style={{
@@ -178,7 +183,6 @@ const AdminCompetitions = (props) => {
           }}
           />
 
-
           <br/>
 
           <h3 style={{ color: "#457B9D" }}>Team Size</h3>
@@ -206,7 +210,6 @@ const AdminCompetitions = (props) => {
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
-                console.log(pic);
               }}
             />
           </div>
@@ -217,7 +220,6 @@ const AdminCompetitions = (props) => {
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
-                console.log(pdf);
               }}
             />
           </div>
@@ -228,7 +230,6 @@ const AdminCompetitions = (props) => {
               style={{ background: "#457B9D", color: "white" }}
               onClick={() => {
                 setPickerVisible(true);
-                console.log(marker);
               }}
             />
           </div>
@@ -261,6 +262,10 @@ const AdminCompetitions = (props) => {
               date2_label="Registration Closing Date"
               time1_label="Registration Opening Time"
               time2_label="Registration Closing Time"
+              onStartDateChange={(date) => {setRegStart(date)}}
+              onEndDateChange={(date) => {setRegEnd(date)}}
+              onStartTimeChange={(date) => {setRegStartTime(date)}}
+              onEndTimeChange={(date) => {setRegEndTime(date)}}
             ></NewCalenderComp>
           </div>
 
@@ -273,6 +278,10 @@ const AdminCompetitions = (props) => {
               date2_label="Competing Closing Date"
               time1_label="Competing Opening Time"
               time2_label="Competing Closing Time"
+              onStartDateChange={(date) => {setCompStart(date)}}
+              onEndDateChange={(date) => {setCompEnd(date)}}
+              onStartTimeChange={(date) => {setCompStartTime(date)}}
+              onEndTimeChange={(date) => {setCompEndTime(date)}}
             ></NewCalenderComp>
           </div>
 
@@ -282,8 +291,7 @@ const AdminCompetitions = (props) => {
           <InputTextArea 
           label="Competition Description"
           onChange={(e) => {
-          setTestCases(e.target.value);
-          console.log(`Competition Description: ${e.target.value}`);
+          setdesc(e.target.value);
           }}
           ></InputTextArea>
 
@@ -296,13 +304,18 @@ const AdminCompetitions = (props) => {
                 setPickerVisible(false);
                 console.log("Create button clicked");
                 console.log("Competition Name is:" + compname);
+                console.log("Team min is:" + min);
+                console.log("Team max is:" + max);
                 console.log("Test cases are:" + testcases);
                 console.log("Num testcases is:" + getNumTestcases(testcases));
-                console.log("startDate: " + startDate);
-                console.log("endDate: " + endDate);
-                console.log("Desc: " + desc);
                 console.log("pic link is:" + pic);
                 console.log("pdf link is:" + pdf);
+                console.log("marker link is:" + marker);
+                console.log("regStartDate: " + CombinedRegStart);
+                console.log("regEndDate: " + CombinedRegEnd);
+                console.log("compStartDate: " + CombinedCompStart);
+                console.log("compEndDate: " + CombinedCompEnd);
+                console.log("Desc: " + desc);
                 // PostCompDetails(
                 //   compname,
                 //   pic,
@@ -411,7 +424,7 @@ const AdminCompetitions = (props) => {
         </div>
       </div>
 
-      <div className="grid-container">
+      <div className="grid-container" style={{height: "800px"}}>
         <GenGrid />
       </div>
 

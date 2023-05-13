@@ -2,21 +2,21 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
+let min = 1;
+let max = 10;
 
 function TeamSizeSelector() {
   const [minSize, setMinSize] = useState(1);
   const [maxSize, setMaxSize] = useState(10);
 
   function handleMinSizeChange(event) {
-    const newMinSize = parseInt(event.target.value);
-    setMinSize(newMinSize);
-    console.log(`Minimum team size set to ${newMinSize}`);
+    min = parseInt(event.target.value);
+    setMinSize(min);
   }
 
   function handleMaxSizeChange(event) {
-    const newMaxSize = parseInt(event.target.value);
-    setMaxSize(newMaxSize);
-    console.log(`Maximum team size set to ${newMaxSize}`);
+    max = parseInt(event.target.value)
+    setMaxSize(max);
   }
 
   return (
@@ -25,24 +25,18 @@ function TeamSizeSelector() {
     label="Minimum team size"
     type="number"
     value={minSize}
-    onChange={(e) => {
-      setMinSize(e.target.value);
-      console.log("Minimum team size:", e.target.value);
-    }}
+    onChange={handleMinSizeChange}
   />
   {'  '}
   <TextField
     label="Maximum team size"
     type="number"
     value={maxSize}
-    onChange={(e) => {
-      setMaxSize(e.target.value);
-      console.log("Maximum team size:", e.target.value);
-    }}
+    onChange={handleMaxSizeChange}
   />
 </Box>
 
   );
 }
 
-export default TeamSizeSelector;
+export { TeamSizeSelector, min, max };
