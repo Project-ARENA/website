@@ -10,22 +10,40 @@ function CommonlyUsedComponents(props) {
   const [regEndDate, setRegEndDate] = React.useState(null);
 
   const handleStartDateChange = (date) => {
-    console.log(`Registration start date: ${date.toLocaleString()}`);
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + 1); // add 1 day
+    const formattedDate = newDate.toISOString().slice(0, 10);
+    console.log(`Registration start date: ${formattedDate}`);
     setRegStartDate(date);
   };
-
+  
   const handleEndDateChange = (date) => {
-    console.log(`Registration end date: ${date.toLocaleString()}`);
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + 1); // add 1 day
+    const formattedDate = newDate.toISOString().slice(0, 10);
+    console.log(`Registration end date: ${formattedDate}`);
     setRegEndDate(date);
   };
   
   const handleStartTimeChange = (date) => {
-    console.log(`Registration start time: ${date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`);
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + 1); // add 1 day
+    const hours = newDate.getHours().toString().padStart(2, '0');
+    const minutes = newDate.getMinutes().toString().padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}`;
+    console.log(`Registration start time: ${formattedTime}`);
   };
-
+  
   const handleEndTimeChange = (date) => {
-    console.log(`Registration end time: ${date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`);
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + 1); // add 1 day
+    const hours = newDate.getHours().toString().padStart(2, '0');
+    const minutes = newDate.getMinutes().toString().padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}`;
+    console.log(`Registration end time: ${formattedTime}`);
   };
+  
+  
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"en-gb"}>

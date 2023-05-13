@@ -280,9 +280,13 @@ const AdminCompetitions = (props) => {
           <h3 style={{ color: "#457B9D" }}>Competition Description</h3>
 
           <InputTextArea 
-            label="Competition Description"
-            onChange={(e) => setTestCases(e.target.value)}
+          label="Competition Description"
+          onChange={(e) => {
+          setTestCases(e.target.value);
+          console.log(`Competition Description: ${e.target.value}`);
+          }}
           ></InputTextArea>
+
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
