@@ -865,10 +865,27 @@ app.post("/api/post/initTests/team", (req, res) => {
   );
 });
 
+// Route to get the teamName
+app.get("/api/get/teamName/:user_id/:competition_id", (req, res) => {
+  const user_id = req.params.user_id;
+  const competition_id = req.params.competition_id;
+
+  db.query(
+    "SELECT team_name FROM teams WHERE user_id = ? AND competition_id = ?;",
+    [user_id, competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
 // Route to get all team members of a team
-app.get("/api/get/teamMembers", (req, res) => {
-  const user_id = req.body.user_id;
-  const competition_id = req.body.competition_id;
+app.post("/api/get/teamMembers", (req, res) => {
+  const user_id = req.query.user_id;
+  const competition_id = req.query.competition_id;
 
   const sql = `
     SELECT t.user_id, 
@@ -899,6 +916,7 @@ app.get("/api/get/teamMembers", (req, res) => {
     }
   });
 });
+
 
 
 
