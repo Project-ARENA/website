@@ -10,7 +10,7 @@ import Select from '@mui/material/Select';
 import "./team-manager.css";
 
 export default function TeamManager(props) {
-  const { rootClassName, TeamName,TeamMember1,TeamMember2,TeamMember3,TeamMember4, location, LonClick,Ldisabled, DName, DonClick,Ddisabled } = props;
+  const { rootClassName, TeamName, teamMembers, location, LonClick,Ldisabled, DName, DonClick,Ddisabled } = props;
   const [inputValue, setInputValue] = useState("");
   //const [location, setLocation] = useState('');
 
@@ -24,13 +24,18 @@ export default function TeamManager(props) {
   return (
     <div className="team-manager-container">
       <div className="team-manager-container1">
-        <span className="team-manager-text">TeamManager</span>
+        <span className="team-manager-text"></span>
       </div>
       <h1 className="team-manager-text1">{TeamName}</h1>
-      <span className="team-manager-text2">{TeamMember1}</span>
-      <span className="team-manager-text3">{TeamMember2}</span>
-      <span className="team-manager-text4">{TeamMember3}</span>
-      <span className="team-manager-text5">{TeamMember4}</span>
+      <br/>
+      <h2>Team Members</h2>
+      <br/>
+      {teamMembers.map((member, index) => (
+        <div key={index} style={{marginBottom: "5px"}}>
+          <span className={`team-manager-text${index+2}`}>{member}</span>
+        </div>
+      ))}
+      <br/>
       <span className="team-manager-location">Location: {location}</span>
       {/* <span className="team-manager-location">Location:</span>
 

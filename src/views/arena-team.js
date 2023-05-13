@@ -6,18 +6,83 @@ import axios from "axios";
 import './arena-team.css'
 
 const competition_id = sessionStorage.getItem('CompID');
+const user_id = sessionStorage.getItem('userID');
+let teamIds = [];
+let teamLocation = ""
 
 const ArenaTeam = (props) => {
 
 
   const [disabled, setDisabled] = useState(false);
   const [title, setTitle] = useState("");
+  const [teamName, setTeamName] = useState("");
+  const [userNicknames, setUserNicknames] = useState([]);
+  //const [teamLocation, setTeamLocation] = useState("");
   useEffect(() => {
+    //Gets the team Name
+    axios
+    .get("http://localhost:3002/api/get/teamName/" + user_id + "/" + competition_id)
+    .then(function (response) {
+      setTeamName(response.data[0].team_name)
+      axios
+      .get("http://localhost:3002/api/get/teamLocation/" + response.data[0].team_name + "/" + competition_id)
+      .then(function (response) {
+        console.log(response.data)
+        teamLocation = response.data[0].team_location
+      });
+    });
+  
+
+  // Gets the teamMembers
+  axios.post('http://localhost:3002/api/get/teamMembers', null, {
+    params: {
+      user_id: user_id,
+      competition_id: competition_id
+    }
+  })
+  .then(response => {
+    const teamMembers = response.data;
+    console.log(teamMembers);
+
+    // Make an array of promises for the axios requests
+    const promises = teamMembers.map(member => {
+      return axios.get(`http://localhost:3002/api/get/userNickname/${member.user_id}`)
+    })
+
+    // Wait for all promises to resolve
+    Promise.all(promises)
+      .then(responses => {
+        // Map the response data to an array of user nicknames
+         const userNicknamesMap = responses.map((response, index) => {
+          const nickname = response.data[0].user_nickname;
+          const isCaptain = teamMembers[index].is_captain;
+
+          return isCaptain ? `${nickname} (Captain)` : nickname;
+        });
+        setUserNicknames(userNicknamesMap)
+        console.log(userNicknamesMap);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+
+
+
+    
+  
+    
+
+    //Gets the competion info
     axios
       .get("http://localhost:3002/api/get/compDetails/" + competition_id)
       .then(function (response) {
         setTitle(response.data[0].competition_name);
-        setParagraph(response.data[0].competition_info);
+        //setParagraph(response.data[0].competition_info);
       });
   });
   const handleInputSubmit = () => {
@@ -107,12 +172,9 @@ const ArenaTeam = (props) => {
       <h2>Team Manager</h2>
       
       <TeamManager
-        TeamName="Team Name"
-        TeamMember1="Team Member 1"
-        TeamMember2="Team Member 2"
-        TeamMember3="Team Member 3"
-        TeamMember4="Team Member 4"
-        location = "Gauteng"
+        TeamName={teamName}
+        teamMembers = {userNicknames}
+        location = {teamLocation}
         Ldisabled={disabled}
         LonClick={handleInputSubmit}
         DName="Delete this team"

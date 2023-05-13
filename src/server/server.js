@@ -919,6 +919,38 @@ app.post("/api/get/teamMembers", (req, res) => {
 
 
 
+// Route to get the username linked to user_id
+app.get("/api/get/userNickname/:user_id", (req, res) => {
+  const user_id = req.params.user_id;
+
+  db.query(
+    "SELECT user_nickname FROM users WHERE user_id = ?;",
+    [user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+app.get("/api/get/teamLocation/:teamName/:competition_id", (req, res) => {
+  const team_name = req.params.teamName;
+  const competition_id = req.params.competition_id;
+
+  db.query(
+    "SELECT team_location FROM team_details WHERE team_name = ? AND competition_id = ?;",
+    [team_name, competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
 
 //!Type above this
 app.listen(PORT, () => {
