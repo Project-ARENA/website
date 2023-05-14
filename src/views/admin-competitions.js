@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import DataGrid from "../components/datagrid";
+import DataGrid from "../components/datagridAdminCompetitions";
 import "./admin-competitions.css";
 import Button from "../components/button";
 import "reactjs-popup/dist/index.css";
@@ -73,35 +73,24 @@ function GenGrid() {
         competition_id: data.competition_id,
         competition_name: data.competition_name,
         competition_views: data.competition_views,
-        competition_image: data.competition_image,
+        registration_startdate: data.registration_startdate,
+        registration_enddate: data.registration_enddate,
         competition_startdate: data.competition_startdate,
         competition_enddate: data.competition_enddate,
-        competition_info: data.competition_info,
-        competition_testcases: data.competition_testcases,
+        competition_no_testcases: data.no_testcases,
       }));
       setData(data);
     });
   }, []);
 
-  const columns = [
-    { field: "competition_id", headerName: "ID", width: 150 },
-    { field: "competition_name", headerName: "Title", width: 150 },
-    { field: "competition_views", headerName: "Views", width: 150 },
-    { field: "competition_image", headerName: "Image", width: 150 },
-    { field: "competition_startdate", headerName: "Start Date", width: 150 },
-    { field: "competition_enddate", headerName: "End Date", width: 150 },
-    { field: "competition_info", headerName: "Details", width: 150 },
-    { field: "competition_testcases", headerName: "PDF", width: 150 },
-  ];
-
   return (
-    <DataGrid rows={rows} columns={columns} pageSize={25} autoHeight={true} checkboxSelection />
+    <DataGrid rows={rows} pageSize={25} autoHeight={true}/>
   );
 }
 
 const AdminCompetitions = (props) => {
   const [compname, setCompname] = useState("");
-  const [testcases, setTestCases] = useState(0);
+  const [testcases, setTestCases] = useState("");
   const [desc, setdesc] = useState("");
   const [pic, setpic] = useState("");
   const [pdf, setpdf] = useState("");
@@ -170,7 +159,7 @@ const AdminCompetitions = (props) => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            overflowY: "scroll"
+            overflowY: "scroll",
             // maxHeight: "100vh"
           },
           overlay: { zIndex: 1000 },
@@ -454,6 +443,7 @@ const AdminCompetitions = (props) => {
         }}
         // rootClassName="button-root-class-name2"
       />
+      <br/>
     </div>
   );
 };

@@ -140,10 +140,10 @@ export default function CustomDataGrid({ rows }) {
   };
 
   const columns = [
-    { field: "team_code", headerName: "Team Code", width: 350 },
+    { field: "team_code", headerName: "Team Code", width: 250 },
     { field: "user_id", headerName: "User ID", width: 100 },
-    { field: "team_name", headerName: "Team Name", width: 150 },
-    { field: "team_score", headerName: "Team Score", width: 150 },
+    { field: "team_name", headerName: "Team Name", width: 130 },
+    { field: "team_score", headerName: "Team Score", width: 130 },
     { field: "competition_name", headerName: "Competition Name", width: 200 },
     {
       field: "deleteButton",

@@ -715,6 +715,22 @@ app.post("/api/post/remove/team", (req, res) => {
   );
 });
 
+// Route to remove/delete a team
+app.post("/api/post/remove/competition", (req, res) => {
+  const comp_id = req.body.comp_id;
+
+  db.query(
+    "DELETE cd, td, t, s FROM competition_details cd LEFT JOIN team_details td ON cd.competition_id = td.competition_id LEFT JOIN teams t ON cd.competition_id = t.competition_id LEFT JOIN submissions s ON cd.competition_id = s.competition_id WHERE cd.competition_id = ?;",
+    [comp_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
 //!Route to get competition test cases
 app.get("/api/get/compTestCases/:comp_id", (req, res) => {
   const comp_id = req.params.comp_id;
