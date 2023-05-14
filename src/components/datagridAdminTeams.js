@@ -11,6 +11,10 @@ import { set } from "date-fns";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Stack from "@mui/material/Stack";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 export default function CustomDataGrid({ rows }) {
   const [clickedRowDelete, setClickedRowDelete] = React.useState();
@@ -97,6 +101,15 @@ export default function CustomDataGrid({ rows }) {
     }
   };
 
+  const [value, setValue] = React.useState("");
+
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    setValue(selectedValue);
+    setButtonsDisabled(false);
+    console.log(selectedValue);
+  };
+
   const onButtonEditMembers = (e, row) => {
     e.stopPropagation();
     setClickedRowEdit(row);
@@ -180,11 +193,6 @@ export default function CustomDataGrid({ rows }) {
     },
   ];
 
-  const handleSelectionChange = (selectedValue) => {
-    console.log(`Selected value: ${selectedValue}`);
-    setButtonsDisabled(false);
-  };
-
   //Global variable to store team members
   const [teamMemberList, setTeamMemberList] = React.useState([]);
 
@@ -203,10 +211,12 @@ export default function CustomDataGrid({ rows }) {
       // Add team members to list
       const newTeamMemberList = [];
       for (let i = 0; i < response.data.length; i++) {
+        const teamMember = response.data[i];
         newTeamMemberList.push({
           key: `member-${i + 1}`,
-          label: `${response.data[i].user_firstname} ${response.data[i].user_surname}`,
+          label: `${teamMember.user_firstname} ${teamMember.user_surname}`,
           value: i + 1,
+          user_id: teamMember.user_id // include user_id as a property of the team member object
         });
       }
       setTeamMemberList(newTeamMemberList); // Update the state with new list
@@ -218,20 +228,26 @@ export default function CustomDataGrid({ rows }) {
   const onButtonRemove = async (e) => {
     console.log("Remove button clicked");
 
+    // Get the user_id of the user that is selected in the drop down menu
+    const index = teamMemberList.findIndex((item) => item.value === value);
+    const sel_userID = teamMemberList[index].user_id;
+
+    console.log(sel_userID);
+
     // Check if user is not a team captain
     try {
       const response = await axios.post(
         "http://localhost:3002/api/get/admin/teamMembers",
         {
           team_code: teamCode,
-          user_id: userID,
+          user_id: sel_userID,
         }
       );
       console.log(response.data);
 
       // Find where the row in the data where the user_id is the same as the user_id of the response
       const index = response.data.findIndex(
-        (row) => row.user_id === userID
+        (row) => row.user_id === sel_userID
       );
 
       // Check if the user is a team captain, true or false in response.data[index].team_captain
@@ -249,7 +265,7 @@ export default function CustomDataGrid({ rows }) {
             "http://localhost:3002/api/post/remove/teamMember",
             {
               team_code: teamCode,
-              user_id: userID,
+              user_id: sel_userID,
             }
           );
           console.log(response.data);
@@ -270,12 +286,16 @@ export default function CustomDataGrid({ rows }) {
   const onButtonPromote = async (e) => {
     console.log("Promote button clicked");
 
+    // Get the user_id of the user that is selected in the drop down menu
+    const index = teamMemberList.findIndex((item) => item.value === value);
+    const sel_userID = teamMemberList[index].user_id;
+
     try {
       const response = await axios.post(
         "http://localhost:3002/api/post/change/teamCaptain",
         {
           team_code: teamCode,
-          user_id: userID,
+          user_id: sel_userID,
         }
       );
       console.log(response.data);
@@ -403,10 +423,24 @@ export default function CustomDataGrid({ rows }) {
           </div>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
-            <DynamicSelect
-              menuItems={teamMemberList}
-              onSelectionChange={handleSelectionChange}
-            />
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="dynamic-select-label">Select</InputLabel>
+                <Select
+                  labelId="dynamic-select-label"
+                  id="dynamic-select"
+                  value={value}
+                  label="Select"
+                  onChange={handleChange}
+                >
+                  {teamMemberList.map((item) => (
+                    <MenuItem key={item.value} value={item.value}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
           </div>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
