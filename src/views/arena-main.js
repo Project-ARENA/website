@@ -32,6 +32,7 @@ let numTests = 0;
 let testcases = "";
 let uploadedTXT = false;
 let uploadedZIP = false;
+let linkForPDF = "";
 let TXTLink = ""
 let ZIPLink = ""
 let Mark = 0
@@ -118,19 +119,20 @@ function getTeamID() {
 }
 
 //! Gets the testCases for the competition
-function getCompTestCases(linkForPDF) {
-  axios
-    .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
-    .then(function (response) {
-      linkForPDF = response.data[0].competition_testcases;
-      // console.log(linkForPDF);
+function getCompTestCases() {
+    return new Promise((resolve, reject) => {
+      axios
+      .get("http://localhost:3002/api/get/Testcases/" + competition_id)
+      .then(function(response){
+        testcases = response.data[0].testcases;
+        console.log(testcases);
+        resolve(testcases);
+      })
+      .catch(function (error) {
+        console.error(error);
+        reject(error);
+      });
     });
-
-  axios
-  .get("http://localhost:3002/api/get/Testcases/" + competition_id)
-  .then(function(response){
-    testcases = response.data[0].testcases;
-  });
 }
 
 function getLinkForPDF() {
@@ -301,13 +303,13 @@ const ArenaMain = (props) => {
 
   // const [uploadedTXT, setUploadTXT] = useState(false);
   // const [uploadedZIP, setUploadZIP] = useState(false);
-  let linkForPDF = "";
 
   const [disabled, setDisabled] = useState(true);
   //Executes when the page is loaded
   React.useEffect(() => {
     const fetchData = async () => {
       await getLatestScores();
+      await getCompTestCases();
       setIsLoaded(true);
     };
     getHighest();
@@ -320,7 +322,6 @@ const ArenaMain = (props) => {
         setParagraph(response.data[0].competition_info);
       });
     //Sets the link for the competition testcases
-    getCompTestCases(linkForPDF);
     getTeamID();
   }, []);
 

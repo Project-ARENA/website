@@ -6,28 +6,30 @@ import './arena-leaderboard.css'
 import { useEffect, useState } from 'react';
 
 const competition_id = sessionStorage.getItem('CompID');
+const user_id = sessionStorage.getItem('userID');
+let noTests = 0;
+let myTeam = "";
+let testcases = "";
+let testsArray = [];
 
 // gets number test cases and team name to generate table
-function getNoTests(comp_id, user_id) {
-  const [noTests, setNoTests] = React.useState(0);
-  const [myTeam, setMyTeam] = React.useState("");
-  const [testcases, setTestcases] = React.useState("");
-
-  React.useEffect(() => {
-  axios
-      .get("http://localhost:3002/api/get/compTeamDeatils/" + comp_id + "/" + user_id)
-      .then(function(response){
-        setNoTests(response.data[0].no_testcases);
-        setMyTeam(response.data[0].team_name);
-      });
-  
-  axios
-  .get("http://localhost:3002/api/get/Testcases/" + comp_id)
-  .then(function(response){
-    setTestcases(response.data[0].testcases);
+function getNoTests() {
+  return new Promise((resolve, reject) => {
+    axios
+        .get("http://localhost:3002/api/get/compTeamDeatils/" + competition_id + "/" + user_id)
+        .then(function(response){
+          noTests = response.data[0].no_testcases;
+          myTeam = response.data[0].team_name;
+        });
+      
+    axios
+    .get("http://localhost:3002/api/get/Testcases/" + competition_id)
+    .then(function(response){
+      testcases = response.data[0].testcases;
+      console.log(testcases);
+    });
+    resolve([noTests, testcases, myTeam]);
   });
-  }, []);
-  return [noTests, testcases, myTeam];
 }
 
 // used to generate the table with correct data
@@ -61,18 +63,21 @@ function GenGrid(params) {
         });
         setData(data);
       });
+
   }, []);
   return <DataGrid rows={rows} noTests={params.no} testcases={params.tests} myTeam={params.team} pageSize={5} />
 }
 
 const ArenaLeaderboard = (props) => {
-  const compID = sessionStorage.getItem('CompID');
-  const userID = sessionStorage.getItem('userID');
-  const [noTests, testcases, myTeam] = getNoTests(compID, userID);
+
   const [title, setTitle] = useState("");
-  let testsArray = testcases.split(",");
 
   useEffect(() => {
+    const fetchData = async () => {
+      await getNoTests();
+    };
+    fetchData();
+    
     axios
       .get("http://localhost:3002/api/get/compDetails/" + competition_id)
       .then(function (response) {
@@ -80,6 +85,8 @@ const ArenaLeaderboard = (props) => {
         setParagraph(response.data[0].competition_info);
       });
   });
+
+  testsArray = testcases.split(",");
 
   return (
     <div className="arena-leaderboard-container">
@@ -174,7 +181,7 @@ const ArenaLeaderboard = (props) => {
       <h2>Leaderboard</h2>
       <br/>
       <div className="grid-container">
-        <GenGrid no={noTests} tests = {testsArray} team={myTeam} compID={compID}/>
+        <GenGrid no={noTests} tests = {testsArray} team={myTeam} compID={competition_id}/>
       </div>
     </div>
   )

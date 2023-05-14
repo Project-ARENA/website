@@ -7,14 +7,30 @@ import DataGrid from "../components/dataGridSubmissions";
 
 const competition_id = sessionStorage.getItem('CompID');
 const user_id  = sessionStorage.getItem('userID');
+let testcases = "";
 
+function getTests() {
+  return new Promise((resolve, reject) => {
+    axios
+    .get("http://localhost:3002/api/get/Testcases/" + competition_id)
+    .then(function(response){
+      testcases = response.data[0].testcases;
+    });
+    resolve(testcases);
+  });
+}
 
 const ArenaSubmissions = (props) => {
   const [numTests, setNumTests] = useState(0);
-  const [testcases, setTestcases] = React.useState("");
   const [data, setData] = useState([]);
   const [title, setTitle] = useState("");
   useEffect(() => {
+
+    const fetchData = async () => {
+      await getTests();
+    };
+    fetchData();
+
     axios.get(`http://localhost:3002/api/get/numTests/${competition_id}`)
       .then(response => {
         setNumTests(response.data[0].no_testcases); 
@@ -43,16 +59,9 @@ const ArenaSubmissions = (props) => {
       
     });
   
-    axios
-    .get("http://localhost:3002/api/get/Testcases/" + competition_id)
-    .then(function(response){
-      setTestcases(response.data[0].testcases);
-    });
-
   }, [competition_id, user_id, numTests]);
-
   let testsArray = testcases.split(",");
-
+  
   return (
     <div className="arena-submissions-container">
       <div data-role="Header" className="arena-submissions-navbar-container">
