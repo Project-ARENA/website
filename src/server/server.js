@@ -1020,6 +1020,40 @@ app.get("/api/get/teamCode/:teamName/:competition_id", (req, res) => {
   );
 });
 
+// Route to remove team member
+app.post("/api/post/remove/teamMember", (req, res) => {
+  const user_id = req.body.user_id;
+  const team_code = req.body.team_code;
+
+  db.query(
+    "DELETE FROM teams WHERE user_id = ? AND team_code = ?;",
+    [user_id, team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+// Route to change team captain
+app.post("/api/post/change/teamCaptain", (req, res) => {
+  const user_id = req.body.user_id;
+  const team_code = req.body.team_code;
+
+  db.query(
+    "UPDATE team_details SET team_captain = 1 WHERE team_code = ? AND user_id = ?;",
+    [team_code, user_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
 //!Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

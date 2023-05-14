@@ -215,6 +215,48 @@ export default function CustomDataGrid({ rows }) {
     }
   };
 
+  const onButtonRemove = async (e) => {
+    console.log("Remove button clicked");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/api/post/remove/teamMember",
+        {
+          team_code: clickedRowEdit.team_code,
+          user_id: clickedRowEdit.user_id,
+        }
+      );
+      console.log(response.data);
+
+      window.location.reload(false);
+
+      setvisible(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onButtonPromote = async (e) => {
+    console.log("Promote button clicked");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/api/post/promote/teamMember",
+        {
+          team_code: clickedRowEdit.team_code,
+          user_id: clickedRowEdit.user_id,
+        }
+      );
+      console.log(response.data);
+
+      window.location.reload(false);
+
+      setvisible(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Box sx={{ height: 800, width: "100%" }}>
       <Modal
@@ -340,7 +382,7 @@ export default function CustomDataGrid({ rows }) {
             <Button
               name="Remove"
               onClick={(e) => {
-                console.log("Edit button clicked");
+                console.log("Remove button clicked");
               }}
               disabled={buttonsEnabled}
             />
@@ -350,7 +392,8 @@ export default function CustomDataGrid({ rows }) {
             <Button
               name="Promote"
               onClick={(e) => {
-                console.log("Edit button clicked");
+                console.log("Promote button clicked");
+                onButtonPromote(e.target.value);
               }}
               disabled={buttonsEnabled}
             />
