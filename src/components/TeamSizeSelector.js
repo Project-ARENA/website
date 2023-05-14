@@ -31,16 +31,23 @@ function TeamSizeSelector() {
   }
 
   return (
-    <Box>
+    <Box
+    sx={{
+    display: 'grid',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '15px',
+    }}>
       <TextField
         label="Max number of teams"
         type="number"
         inputProps={{ min: 0 }}
         value={numTeams}
         onChange={handleNumTeamsChange}
+        style={{ marginBottom: "10px"}}
       />
 
-     <h3 style={{ color: "#457B9D" }}>Team Members</h3>
+     <h3 style={{ color: "#457B9D", textAlign: "center",marginBottom: "10px"   }}>Team Members</h3>
 
       <TextField
         label="Minimum team size"
