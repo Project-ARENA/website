@@ -192,17 +192,7 @@ app.post("/api/post/Create_comp", (req, res) => {
   const max = req.body.max;
 
   db.query(
-    `INSERT INTO competition_details (competition_name, competition_views, 
-                                      competition_image, competition_startdate, 
-                                      competition_enddate, competition_info, 
-                                      competition_testcases, competition_active, 
-                                      no_testcases, testcases,competition_marker,
-                                      registration_startdate,registration_enddate,
-                                      max_teams,teamsize_min,teamsize_max)
-    VALUES (?, 0,?, ?, 
-            ?, ?, ?, 0,
-            ?, ?, ?, ?,
-            ?, ?, ?, ?)`,
+    "INSERT INTO competition_details (competition_name, competition_views, competition_image, competition_startdate, competition_enddate, competition_info, competition_testcases, competition_active, no_testcases, testcases,competition_marker, registration_startdate,registration_enddate, max_teams,teamsize_min,teamsize_max) VALUES (?, 0, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       compname,
       pic,

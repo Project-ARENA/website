@@ -11,9 +11,8 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
-import { TeamSizeSelector, min, max ,numTeams} from "../components/TeamSizeSelector.js";
+import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSelector.js";
 import InputTextArea from "../components/input-textarea.js"
-import { set } from "date-fns";
 
 function getNumTestcases(testcases) {
   var numtestcases = 1;
@@ -33,31 +32,15 @@ function PostCompDetails(
   CombinedCompEnd,
   desc,
   pdf,
+  testcaseNum,
   testcases,
   marker,
   CombinedRegStart,
   CombinedRegEnd,
-  numTeams,
+  maxTeams,
   min,
   max
 ) {
-  const testcaseNum = getNumTestcases(testcases);
-  console.log(
-    compname,
-    pic,
-    CombinedCompStart,
-    CombinedCompEnd,
-    desc,
-    pdf,
-    testcaseNum,
-    testcases,
-    marker,
-    CombinedRegStart,
-    CombinedRegEnd,
-    numTeams,
-    min,
-    max
-  );
   return axios.post("http://localhost:3002/api/post/Create_comp", {
     compname: compname,
     pic: pic,
@@ -70,7 +53,7 @@ function PostCompDetails(
     marker: marker,
     CombinedRegStart: CombinedRegStart,
     CombinedRegEnd: CombinedRegEnd,
-    numTeams: numTeams,
+    numTeams: maxTeams,
     min: min,
     max: max
   });
@@ -334,7 +317,7 @@ const AdminCompetitions = (props) => {
                 setPickerVisible(false);
                 console.log("Create button clicked");
                 console.log("Competition Name is:" + compname);
-                console.log("Number of teams is " + numTeams);
+                console.log("Number of teams is " + maxTeams);
                 console.log("Team min is:" + min);
                 console.log("Team max is:" + max);
                 console.log("Test cases are:" + testcases);
@@ -359,7 +342,7 @@ const AdminCompetitions = (props) => {
                   marker,
                   CombinedRegStart,
                   CombinedRegEnd,
-                  numTeams,
+                  maxTeams,
                   min,
                   max
                 );

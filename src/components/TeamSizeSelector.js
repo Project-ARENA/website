@@ -4,11 +4,11 @@ import Box from "@mui/material/Box";
 
 let min = 1;
 let max = 10;
-let numTeams = 0;
+let maxTeams = 50;
 function TeamSizeSelector() {
   const [minSize, setMinSize] = useState(1);
   const [maxSize, setMaxSize] = useState(10);
-  const [numTeams, setNumTeams] = useState(1);
+  const [numTeams, setNumTeams] = useState(50);
 
   function handleMinSizeChange(event) {
     min = parseInt(event.target.value);
@@ -23,14 +23,15 @@ function TeamSizeSelector() {
   }
 
   function handleNumTeamsChange(event) {
-    setNumTeams(parseInt(event.target.value));
+    maxTeams = parseInt(event.target.value);
+    setNumTeams(maxTeams);
     console.log(`Number of teams changed to ${event.target.value}`);
   }
 
   return (
     <Box>
       <TextField
-        label="Number of teams"
+        label="Max number of teams"
         type="number"
         value={numTeams}
         onChange={handleNumTeamsChange}
@@ -53,4 +54,4 @@ function TeamSizeSelector() {
   );
 }
 
-export { TeamSizeSelector, min, max,numTeams };
+export { TeamSizeSelector, min, max, maxTeams };
