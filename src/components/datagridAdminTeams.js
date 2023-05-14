@@ -101,6 +101,15 @@ export default function CustomDataGrid({ rows }) {
     e.stopPropagation();
     setClickedRowEdit(row);
 
+    setRowID(row.id);
+    setTeamCode(row.team_code);
+    setUserID(row.user_id);
+    setTeamName(row.team_name);
+    setTeamScore(row.team_score);
+    setCompetitionName(row.competition_name);
+
+    getTeamMembers(e, row);
+
     setMembersVisible(true);
   };
 
@@ -176,15 +185,35 @@ export default function CustomDataGrid({ rows }) {
     setButtonsDisabled(false);
   };
 
-  //Replace value with user_id
-  const teamMemberList = [
-    { key: "member-1", label: "Sayfullah Jumoorty", value: 10 },
-    { key: "member-2", label: "Mu'aaz Bassa", value: 20 },
-    { key: "member-3", label: "Abdullah Karolia", value: 30 },
-    { key: "member-4", label: "Altaaf Ally", value: 40 },
-    { key: "member-5", label: "Rayhaan Hanslod", value: 50 },
-    { key: "member-6", label: "Mu'aaz Dawood", value: 60 },
-  ];
+  //Global variable to store team members
+  const [teamMemberList, setTeamMemberList] = React.useState([]);
+
+  // Function to get list of team members
+  const getTeamMembers = async (e, row) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3002/api/get/admin/teamMembers",
+        {
+          team_code: row.team_code,
+          user_id: row.user_id,
+        }
+      );
+      console.log(response.data);
+
+      // Add team members to list
+      const newTeamMemberList = [];
+      for (let i = 0; i < response.data.length; i++) {
+        newTeamMemberList.push({
+          key: `member-${i + 1}`,
+          label: `${response.data[i].user_firstname} ${response.data[i].user_surname}`,
+          value: i + 1,
+        });
+      }
+      setTeamMemberList(newTeamMemberList); // Update the state with new list
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Box sx={{ height: 800, width: "100%" }}>
@@ -294,12 +323,9 @@ export default function CustomDataGrid({ rows }) {
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <AvatarGroup max={5}>
-              <Avatar {...stringAvatar("Sayfullah Jumoorty")} />
-              <Avatar {...stringAvatar("Mu'aaz Bassa")} />
-              <Avatar {...stringAvatar("Abdullah Karolia")} />
-              <Avatar {...stringAvatar("Altaaf Ally")} />
-              <Avatar {...stringAvatar("Rayhaan Hanslod")} />
-              <Avatar {...stringAvatar("Mu'aaz Dawood")} />
+              {teamMemberList.map((member) => (
+                <Avatar key={member.key} {...stringAvatar(member.label)} />
+              ))}
             </AvatarGroup>
           </div>
 
@@ -335,6 +361,7 @@ export default function CustomDataGrid({ rows }) {
               name="Close"
               onClick={() => {
                 setMembersVisible(false);
+                setButtonsDisabled(true);
                 console.log("Close button clicked");
               }}
             />
