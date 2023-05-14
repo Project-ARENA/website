@@ -207,7 +207,7 @@ app.post("/api/post/Create_comp", (req, res) => {
       CombinedRegEnd,
       numTeams,
       min,
-      max
+      max,
     ],
     (err, result) => {
       if (err) {
@@ -218,7 +218,6 @@ app.post("/api/post/Create_comp", (req, res) => {
     }
   );
 });
-
 
 //!Route to check Login Details
 app.post("/api/post/login", (req, res) => {
@@ -927,18 +926,49 @@ app.post("/api/get/teamMembers", (req, res) => {
       console.log(err);
       res.status(500).send("Internal server error");
     } else {
-      const response = result.map(row => {
+      const response = result.map((row) => {
         return {
           user_id: row.user_id,
-          is_captain: row.is_captain === 1 ? true : false
-        }
+          is_captain: row.is_captain === 1 ? true : false,
+        };
       });
       res.status(200).send(response);
     }
   });
 });
 
+// DO NOT TOUCH, THIS FOR SAYF
+app.post("/api/get/admin/teamMembers", (req, res) => {
+  const team_code = req.body.team_code;
+  const user_id = req.body.user_id;
 
+  const sql = `
+    SELECT t.user_id, u.user_firstname, u.user_surname,
+           CASE WHEN td.team_captain IS NOT NULL THEN 1 ELSE 0 END AS is_captain
+    FROM teams t
+    LEFT JOIN team_details td ON t.team_code = td.team_code AND t.user_id = td.user_id
+    JOIN users u ON t.user_id = u.user_id
+    WHERE t.team_code = '${team_code}'
+  `;
+
+  // Execute the query
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Internal server error");
+    } else {
+      const response = result.map((row) => {
+        return {
+          user_id: row.user_id,
+          user_firstname: row.user_firstname,
+          user_surname: row.user_surname,
+          is_captain: row.is_captain === 1 ? true : false,
+        };
+      });
+      res.status(200).send(response);
+    }
+  });
+});
 
 // Route to get the username linked to user_id
 app.get("/api/get/userNickname/:user_id", (req, res) => {
@@ -989,7 +1019,6 @@ app.get("/api/get/teamCode/:teamName/:competition_id", (req, res) => {
     }
   );
 });
-
 
 //!Type above this
 app.listen(PORT, () => {
