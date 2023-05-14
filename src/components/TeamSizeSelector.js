@@ -31,25 +31,29 @@ function TeamSizeSelector() {
   return (
     <Box>
       <TextField
-        label="Max number of teams"
-        type="number"
-        value={numTeams}
-        onChange={handleNumTeamsChange}
-      />
-      {'  '}
-      <TextField
-        label="Minimum team size"
-        type="number"
-        value={minSize}
-        onChange={handleMinSizeChange}
-      />
-      {'  '}
-      <TextField
-        label="Maximum team size"
-        type="number"
-        value={maxSize}
-        onChange={handleMaxSizeChange}
-      />
+  label="Max number of teams"
+  type="number"
+  inputProps={{ min: 0 }}
+  value={numTeams}
+  onChange={handleNumTeamsChange}
+/>
+
+<TextField
+  label="Minimum team size"
+  type="number"
+  inputProps={{ min: 0 }}
+  value={minSize}
+  onChange={handleMinSizeChange}
+/>
+
+<TextField
+  label="Maximum team size"
+  type="number"
+  inputProps={{ min: 0 }}
+  value={maxSize}
+  onChange={handleMaxSizeChange}
+/>
+
     </Box>
   );
 }
