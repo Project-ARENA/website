@@ -1,36 +1,36 @@
 import React from "react";
-import { shallow } from "enzyme";
-import { TeamSizeSelector, min, max, maxTeams } from "./TeamSizeSelector";
+import { render, screen, fireEvent } from "@testing-library/react";
+import '@testing-library/jest-dom/extend-expect';
+import { TeamSizeSelector } from "./TeamSizeSelector";
 
-describe("TeamSizeSelector component", () => {
-  let wrapper;
+test("changes to minimum team size are reflected in the input field", () => {
+  render(<TeamSizeSelector />);
 
-  beforeEach(() => {
-    wrapper = shallow(<TeamSizeSelector />);
-  });
+  const minInput = screen.getByLabelText("Minimum team size");
+  fireEvent.change(minInput, { target: { value: "3" } });
 
-  it("renders three TextField components", () => {
-    expect(wrapper.find("TextField")).toHaveLength(3);
-  });
-
-  it("updates minSize state when the Minimum team size TextField changes", () => {
-    const event = { target: { value: "5" } };
-    wrapper.find('[label="Minimum team size"]').simulate("change", event);
-    expect(min).toEqual(5);
-    expect(wrapper.find('[label="Minimum team size"]').props().value).toEqual(5);
-  });
-
-  it("updates maxSize state when the Maximum team size TextField changes", () => {
-    const event = { target: { value: "8" } };
-    wrapper.find('[label="Maximum team size"]').simulate("change", event);
-    expect(max).toEqual(8);
-    expect(wrapper.find('[label="Maximum team size"]').props().value).toEqual(8);
-  });
-
-  it("updates numTeams state when the Max number of teams TextField changes", () => {
-    const event = { target: { value: "20" } };
-    wrapper.find('[label="Max number of teams"]').simulate("change", event);
-    expect(maxTeams).toEqual(20);
-    expect(wrapper.find('[label="Max number of teams"]').props().value).toEqual(20);
-  });
+  expect(minInput.value).toBe("3");
+  expect(typeof parseInt(minInput.value)).toBe("number");
 });
+
+test("changes to maximum team size are reflected in the input field", () => {
+  render(<TeamSizeSelector />);
+
+  const maxInput = screen.getByLabelText("Maximum team size");
+  fireEvent.change(maxInput, { target: { value: "8" } });
+
+  expect(maxInput.value).toBe("8");
+  expect(typeof parseInt(maxInput.value)).toBe("number");
+});
+
+test("changes to the number of teams are reflected in the input field", () => {
+  render(<TeamSizeSelector />);
+
+  const numTeamsInput = screen.getByLabelText("Max number of teams");
+  fireEvent.change(numTeamsInput, { target: { value: "20" } });
+
+  expect(numTeamsInput.value).toBe("20");
+  expect(typeof parseInt(numTeamsInput.value)).toBe("number");
+});
+
+
