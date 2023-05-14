@@ -218,20 +218,51 @@ export default function CustomDataGrid({ rows }) {
   const onButtonRemove = async (e) => {
     console.log("Remove button clicked");
 
+    // Check if user is not a team captain
     try {
       const response = await axios.post(
-        "http://localhost:3002/api/post/remove/teamMember",
+        "http://localhost:3002/api/get/admin/teamMembers",
         {
-          team_code: clickedRowEdit.team_code,
-          user_id: clickedRowEdit.user_id,
+          team_code: teamCode,
+          user_id: userID,
         }
       );
       console.log(response.data);
 
-      window.location.reload(false);
+      // Find where the row in the data where the user_id is the same as the user_id of the response
+      const index = response.data.findIndex(
+        (row) => row.user_id === userID
+      );
 
-      setvisible(false);
-    } catch (error) {
+      // Check if the user is a team captain, true or false in response.data[index].team_captain
+      if (response.data[index].is_captain === true) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "You cannot remove a team captain!",
+        });
+      }
+      // If user is not a team captain, remove the user from the team
+      else {
+        try {
+          const response = await axios.post(
+            "http://localhost:3002/api/post/remove/teamMember",
+            {
+              team_code: teamCode,
+              user_id: userID,
+            }
+          );
+          console.log(response.data);
+
+          window.location.reload(false);
+
+          setvisible(false);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+    catch (error) {
       console.error(error);
     }
   };
@@ -241,10 +272,10 @@ export default function CustomDataGrid({ rows }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/api/post/promote/teamMember",
+        "http://localhost:3002/api/post/change/teamCaptain",
         {
-          team_code: clickedRowEdit.team_code,
-          user_id: clickedRowEdit.user_id,
+          team_code: teamCode,
+          user_id: userID,
         }
       );
       console.log(response.data);
@@ -383,6 +414,7 @@ export default function CustomDataGrid({ rows }) {
               name="Remove"
               onClick={(e) => {
                 console.log("Remove button clicked");
+                onButtonRemove(e.target.value);
               }}
               disabled={buttonsEnabled}
             />

@@ -30,6 +30,7 @@ function GenCards() {
           image: data.competition_image,
           description: data.competition_info,
           endDate: data.competition_enddate,
+          registration_startdate: data.registration_startdate,
         }));
         return data;
       });
@@ -319,6 +320,7 @@ function GenCards() {
             }}
             isRegistered={inactiveData.isRegistered}
             {...inactiveData}
+            isDisabled={true}
           />
         ))}
       </div>
