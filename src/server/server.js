@@ -177,18 +177,48 @@ app.post("/api/post/register", (req, res) => {
 //Create a competition
 app.post("/api/post/Create_comp", (req, res) => {
   const compname = req.body.compname;
+  const pic = req.body.pic;
+  const CombinedCompStart = req.body.CombinedCompStart;
+  const CombinedCompEnd = req.body.CombinedCompEnd;
+  const desc = req.body.desc;
+  const pdf = req.body.pdf;
   const testcaseNum = req.body.testcaseNum;
   const testcases = req.body.testcases;
-  const startDate = req.body.startDate;
-  const endDate = req.body.endDate;
-  const desc = req.body.desc;
-  const pic = req.body.pic;
-  const pdf = req.body.pdf;
+  const marker = req.body.marker;
+  const CombinedRegStart = req.body.CombinedRegStart;
+  const CombinedRegEnd = req.body.CombinedRegEnd;
+  const numTeams = req.body.numTeams;
+  const min = req.body.min;
+  const max = req.body.max;
 
   db.query(
-    `INSERT INTO competition_details (competition_name, competition_views, competition_image, competition_startdate, competition_enddate, competition_info, competition_testcases, competition_active, no_testcases, testcases)
-VALUES (?, 0, ?, ?, ?, ?, ?, 0, ?, ?)`,
-    [compname, pic, startDate, endDate, desc, pdf, testcaseNum, testcases],
+    `INSERT INTO competition_details (competition_name, competition_views, 
+                                      competition_image, competition_startdate, 
+                                      competition_enddate, competition_info, 
+                                      competition_testcases, competition_active, 
+                                      no_testcases, testcases,competition_marker,
+                                      registration_startdate,registration_enddate,
+                                      max_teams,teamsize_min,teamsize_max)
+    VALUES (?, 0,?, ?, 
+            ?, ?, ?, 0,
+            ?, ?, ?, ?,
+            ?, ?, ?, ?)`,
+    [
+      compname,
+      pic,
+      CombinedCompStart,
+      CombinedCompEnd,
+      desc,
+      pdf,
+      testcaseNum,
+      testcases,
+      marker,
+      CombinedRegStart,
+      CombinedRegEnd,
+      numTeams,
+      min,
+      max
+    ],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -198,6 +228,7 @@ VALUES (?, 0, ?, ?, ?, ?, ?, 0, ?, ?)`,
     }
   );
 });
+
 
 //!Route to check Login Details
 app.post("/api/post/login", (req, res) => {

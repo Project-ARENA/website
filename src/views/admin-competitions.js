@@ -11,7 +11,7 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
-import { TeamSizeSelector, min, max } from "../components/TeamSizeSelector.js";
+import { TeamSizeSelector, min, max ,numTeams} from "../components/TeamSizeSelector.js";
 import InputTextArea from "../components/input-textarea.js"
 import { set } from "date-fns";
 
@@ -29,25 +29,55 @@ function getNumTestcases(testcases) {
 function PostCompDetails(
   compname,
   pic,
-  regstartDate,
-  regendDate,
+  CombinedCompStart,
+  CombinedCompEnd,
   desc,
   pdf,
-  testcaseNum,
-  testcases
+  testcases,
+  marker,
+  CombinedRegStart,
+  CombinedRegEnd,
+  numTeams,
+  min,
+  max
 ) {
-  console.log(compname, pic, regstartDate, regendDate, desc, pdf, testcaseNum, testcases);
+  const testcaseNum = getNumTestcases(testcases);
+  console.log(
+    compname,
+    pic,
+    CombinedCompStart,
+    CombinedCompEnd,
+    desc,
+    pdf,
+    testcaseNum,
+    testcases,
+    marker,
+    CombinedRegStart,
+    CombinedRegEnd,
+    numTeams,
+    min,
+    max
+  );
   return axios.post("http://localhost:3002/api/post/Create_comp", {
     compname: compname,
     pic: pic,
-    startDate: "2023-05-27",
-    endDate: "2023-05-27",
+    CombinedCompStart: CombinedCompStart,
+    CombinedCompEnd: CombinedCompEnd,
     desc: desc,
     pdf: pdf,
     testcaseNum: testcaseNum,
-    testcases: testcases
+    testcases: testcases,
+    marker: marker,
+    CombinedRegStart: CombinedRegStart,
+    CombinedRegEnd: CombinedRegEnd,
+    numTeams: numTeams,
+    min: min,
+    max: max
   });
 }
+
+
+
 
 
 function GenGrid() {
@@ -304,6 +334,7 @@ const AdminCompetitions = (props) => {
                 setPickerVisible(false);
                 console.log("Create button clicked");
                 console.log("Competition Name is:" + compname);
+                console.log("Number of teams is " + numTeams);
                 console.log("Team min is:" + min);
                 console.log("Team max is:" + max);
                 console.log("Test cases are:" + testcases);
@@ -316,17 +347,23 @@ const AdminCompetitions = (props) => {
                 console.log("compStartDate: " + CombinedCompStart);
                 console.log("compEndDate: " + CombinedCompEnd);
                 console.log("Desc: " + desc);
-                // PostCompDetails(
-                //   compname,
-                //   pic,
-                //   startDate,
-                //   endDate,
-                //   desc,
-                //   pdf,
-                //   getNumTestcases(testcases),
-                //   testcases
-                // );
-                // window.location.reload(false);
+                PostCompDetails(
+                  compname,
+                  pic,
+                  CombinedCompStart,
+                  CombinedCompEnd,
+                  desc,
+                  pdf,
+                  getNumTestcases(testcases),
+                  testcases,
+                  marker,
+                  CombinedRegStart,
+                  CombinedRegEnd,
+                  numTeams,
+                  min,
+                  max
+                );
+                window.location.reload(false);
               }}
             />
           </div>
