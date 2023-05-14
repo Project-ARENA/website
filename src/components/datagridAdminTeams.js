@@ -226,42 +226,45 @@ export default function CustomDataGrid({ rows }) {
   };
 
   const onButtonRemove = async (e) => {
-    console.log("Remove button clicked");
 
-    // Get the user_id of the user that is selected in the drop down menu
-    const index = teamMemberList.findIndex((item) => item.value === value);
-    const sel_userID = teamMemberList[index].user_id;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to remove this user from the team!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Remove",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
 
-    console.log(sel_userID);
+        // Get the user_id of the user that is selected in the drop down menu
+        const index = teamMemberList.findIndex((item) => item.value === value);
+        const sel_userID = teamMemberList[index].user_id;
 
-    // Check if user is not a team captain
-    try {
-      const response = await axios.post(
-        "http://localhost:3002/api/get/admin/teamMembers",
-        {
-          team_code: teamCode,
-          user_id: sel_userID,
+        const response = await axios.post(
+          "http://localhost:3002/api/get/admin/teamMembers",
+          {
+            team_code: teamCode,
+            user_id: sel_userID,
+          }
+        );
+        console.log(response.data);
+
+        // Find where the row in the data where the user_id is the same as the user_id of the response
+        const indexSel = response.data.findIndex(
+          (item) => item.user_id === sel_userID
+        );
+
+        // Check if the user is a team captain, true or false in response.data[index].team_captain
+        if (response.data[indexSel].is_captain === true) {
+          Swal.fire("Error!", "Cannot remove captain", "error").then(() => {
+            // window.location.reload(false);
+          });
         }
-      );
-      console.log(response.data);
-
-      // Find where the row in the data where the user_id is the same as the user_id of the response
-      const index = response.data.findIndex(
-        (row) => row.user_id === sel_userID
-      );
-
-      // Check if the user is a team captain, true or false in response.data[index].team_captain
-      if (response.data[index].is_captain === true) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "You cannot remove a team captain!",
-        });
-      }
-      // If user is not a team captain, remove the user from the team
-      else {
-        try {
-          const response = await axios.post(
+        // If user is not a team captain, remove the user from the team
+        else {
+          const response = axios.post(
             "http://localhost:3002/api/post/remove/teamMember",
             {
               team_code: teamCode,
@@ -270,42 +273,44 @@ export default function CustomDataGrid({ rows }) {
           );
           console.log(response.data);
 
-          window.location.reload(false);
-
-          setvisible(false);
-        } catch (error) {
-          console.error(error);
+          Swal.fire("Removed!", "User has been removed", "success").then(() => {
+            window.location.reload(false);
+          });
         }
       }
-    }
-    catch (error) {
-      console.error(error);
-    }
+    });
   };
 
   const onButtonPromote = async (e) => {
-    console.log("Promote button clicked");
 
-    // Get the user_id of the user that is selected in the drop down menu
-    const index = teamMemberList.findIndex((item) => item.value === value);
-    const sel_userID = teamMemberList[index].user_id;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to promote this user to team captain!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Promote",
+    }).then((result) => {
+      if (result.isConfirmed) {
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3002/api/post/change/teamCaptain",
-        {
-          team_code: teamCode,
-          user_id: sel_userID,
-        }
-      );
-      console.log(response.data);
+        // Get the user_id of the user that is selected in the drop down menu
+        const index = teamMemberList.findIndex((item) => item.value === value);
+        const sel_userID = teamMemberList[index].user_id;
 
-      window.location.reload(false);
+        axios.post(
+          "http://localhost:3002/api/post/change/teamCaptain",
+          {
+            team_code: teamCode,
+            user_id: sel_userID,
+          }
+        );
 
-      setvisible(false);
-    } catch (error) {
-      console.error(error);
-    }
+        Swal.fire("Promoted!", "User has been promoted", "success").then(() => {
+          window.location.reload(false);
+        });
+      }
+    });
   };
 
   return (
@@ -471,6 +476,7 @@ export default function CustomDataGrid({ rows }) {
               onClick={() => {
                 setMembersVisible(false);
                 setButtonsDisabled(true);
+                setValue("");
                 console.log("Close button clicked");
               }}
             />

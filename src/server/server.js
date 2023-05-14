@@ -1146,8 +1146,8 @@ app.post("/api/post/change/teamCaptain", (req, res) => {
   const team_code = req.body.team_code;
 
   db.query(
-    "UPDATE team_details SET team_captain = 1 WHERE team_code = ? AND user_id = ?;",
-    [team_code, user_id],
+    "UPDATE team_details SET user_id = ? WHERE team_code = ?;",
+    [user_id, team_code],
     (err, result) => {
       if (err) {
         console.log(err);
