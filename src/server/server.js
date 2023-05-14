@@ -137,6 +137,93 @@ app.post("/api/get/upload/score", async (req, res) => {
     });
 });
 
+app.post("/api/get/uploadTest/score", async (req, res) => {
+  const textFileUrl = req.body.textFileUrl;
+  const competitionId = req.body.competitionId;
+  console.log(textFileUrl);
+
+  // const textFileUrl = "https://cdn.filestackcontent.com/N4r7m9lsSC2eI3fa9zCq";
+
+  let text = "";
+
+  try {
+    const response = await axios.get(textFileUrl);
+    if (typeof response.data === "string") {
+      text = response.data.trim();
+    } else {
+      text = response.data.toString().trim();
+    }
+  } catch (error) {
+    console.error(`Error fetching text file: ${error}`);
+    res.status(500).send("Error fetching text file");
+    return;
+  }
+
+  try {
+    // Get competition_marker from the database using competitionId
+    const getCompetitionDetails = (competitionId) => {
+      return new Promise((resolve, reject) => {
+        db.query(
+          "SELECT competition_marker FROM competition_details WHERE competition_id = ?",
+          [competitionId],
+          (err, result) => {
+            if (err) {
+              reject(err);
+            }
+            resolve(result[0].competition_marker);
+          }
+        );
+      });
+    };
+
+    const competitionDetails = await getCompetitionDetails(competitionId);
+    console.log("Link: " + competitionDetails);
+
+    const markerScriptUrl = competitionDetails;
+    const markerScriptResponse = await axios.get(markerScriptUrl);
+    let markerScript = "";
+    if (typeof markerScriptResponse.data === "string") {
+      markerScript = markerScriptResponse.data.trim();
+    } else {
+      markerScript = markerScriptResponse.data.toString().trim();
+    }
+
+    const pythonProcess = spawn("python", ["-c", markerScript], {
+      stdio: ["pipe", "pipe", process.stderr],
+    });
+
+    pythonProcess.stdin.write(`${text}\n`); // Pass the text as input
+    pythonProcess.stdin.end();
+
+    let responseSent = false;
+
+    pythonProcess.stdout &&
+      pythonProcess.stdout.on("data", (data) => {
+        console.log(`Received data from Python script: ${data}`);
+        if (!responseSent) {
+          res.send(`${data}`);
+          responseSent = true;
+        }
+      });
+
+    pythonProcess.stderr &&
+      pythonProcess.stderr.on("data", (data) => {
+        console.error(`Error executing Python script: ${data}`);
+        if (!responseSent) {
+          res.status(500).send("Error executing Python script");
+          responseSent = true;
+        }
+      });
+  } catch (error) {
+    console.error(`Error fetching marker script: ${error}`);
+    res.status(500).send("Error fetching marker script");
+    return;
+  }
+});
+
+
+
+
 //!Test route
 app.get("/", (req, res) => {
   res.send("Hello World");

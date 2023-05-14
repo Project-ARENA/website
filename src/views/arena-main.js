@@ -45,6 +45,7 @@ async function handleUploadTXTDone(res) {
       "http://localhost:3002/api/get/upload/score",
       {
         textFileUrl: res.filesUploaded[0].url,
+        competitionId : competition_id
       }
     );
     Mark = response.data;
