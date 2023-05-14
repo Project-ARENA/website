@@ -204,9 +204,7 @@ const AdminCompetitions = (props) => {
             <TeamSizeSelector />
           </div>
 
-          <br/>
-
-          <h3 style={{ color: "#457B9D" }}>Test Case Names</h3>
+          <h3 style={{ color: "#457B9D", textAlign: "center"  }}>Test Case Names</h3>
 
           <InputTextArea 
             label="testcase 1, testcase 2, etc..."
@@ -315,21 +313,21 @@ const AdminCompetitions = (props) => {
               onClick={() => {
                 setvisible(false);
                 setPickerVisible(false);
-                console.log("Create button clicked");
-                console.log("Competition Name is:" + compname);
-                console.log("Number of teams is " + maxTeams);
-                console.log("Team min is:" + min);
-                console.log("Team max is:" + max);
-                console.log("Test cases are:" + testcases);
-                console.log("Num testcases is:" + getNumTestcases(testcases));
-                console.log("pic link is:" + pic);
-                console.log("pdf link is:" + pdf);
-                console.log("marker link is:" + marker);
-                console.log("regStartDate: " + CombinedRegStart);
-                console.log("regEndDate: " + CombinedRegEnd);
-                console.log("compStartDate: " + CombinedCompStart);
-                console.log("compEndDate: " + CombinedCompEnd);
-                console.log("Desc: " + desc);
+                // console.log("Create button clicked");
+                // console.log("Competition Name is:" + compname);
+                // console.log("Number of teams is " + maxTeams);
+                // console.log("Team min is:" + min);
+                // console.log("Team max is:" + max);
+                // console.log("Test cases are:" + testcases);
+                // console.log("Num testcases is:" + getNumTestcases(testcases));
+                // console.log("pic link is:" + pic);
+                // console.log("pdf link is:" + pdf);
+                // console.log("marker link is:" + marker);
+                // console.log("regStartDate: " + CombinedRegStart);
+                // console.log("regEndDate: " + CombinedRegEnd);
+                // console.log("compStartDate: " + CombinedCompStart);
+                // console.log("compEndDate: " + CombinedCompEnd);
+                // console.log("Desc: " + desc);
                 PostCompDetails(
                   compname,
                   pic,
