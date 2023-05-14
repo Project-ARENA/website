@@ -4,11 +4,22 @@ import { useState, useEffect } from "react";
 import TeamManager from '../components/team-manager'
 import axios from "axios";
 import './arena-team.css'
+import Swal from 'sweetalert2'
 
 const competition_id = sessionStorage.getItem('CompID');
 const user_id = sessionStorage.getItem('userID');
 let teamIds = [];
 let teamLocation = ""
+
+// Function to copy a value to clipboard
+const copyToClipboard = (value) => {
+  const textarea = document.createElement('textarea'); // Create a textarea element
+  textarea.value = value; // Set the value to the textarea
+  document.body.appendChild(textarea); // Append the textarea to the body
+  textarea.select(); // Select the textarea
+  document.execCommand('copy'); // Copy the selected text to clipboard
+  document.body.removeChild(textarea); // Remove the textarea from the body
+};
 
 const ArenaTeam = (props) => {
 
@@ -17,6 +28,7 @@ const ArenaTeam = (props) => {
   const [title, setTitle] = useState("");
   const [teamName, setTeamName] = useState("");
   const [userNicknames, setUserNicknames] = useState([]);
+  const [teamCode, setTeamCode] = useState("");
   //const [teamLocation, setTeamLocation] = useState("");
   useEffect(() => {
     //Gets the team Name
@@ -27,11 +39,18 @@ const ArenaTeam = (props) => {
       axios
       .get("http://localhost:3002/api/get/teamLocation/" + response.data[0].team_name + "/" + competition_id)
       .then(function (response) {
-        console.log(response.data)
         teamLocation = response.data[0].team_location
+
       });
     });
   
+    //Gets the competion info
+    axios
+      .get("http://localhost:3002/api/get/teamCode/" + teamName + "/" + competition_id)
+      .then(function (response) {
+        setTeamCode(response.data[0].team_code);
+        //setParagraph(response.data[0].competition_info);
+      });
 
   // Gets the teamMembers
   axios.post('http://localhost:3002/api/get/teamMembers', null, {
@@ -70,12 +89,6 @@ const ArenaTeam = (props) => {
     console.error(error);
   });
 
-
-
-
-    
-  
-    
 
     //Gets the competion info
     axios
@@ -180,6 +193,22 @@ const ArenaTeam = (props) => {
         DName="Delete this team"
         Ddisabled={disabled}
         DonClick={handleInputSubmit}
+        onCopyClick={() => {
+          Swal.fire({
+            title: 'Team created!',
+            text: "Team Code: " + teamCode,
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Copy'
+            }).then((result) => {
+            if (result.isConfirmed) {
+              copyToClipboard(teamCode);
+              
+            }
+          })
+        }}
       />
 
     </div>
