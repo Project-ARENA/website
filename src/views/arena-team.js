@@ -43,7 +43,7 @@ const ArenaTeam = (props) => {
   
         // Get the team location
         const teamLocationResponse = await axios.get(`http://localhost:3002/api/get/teamLocation/${teamName}/${competition_id}`);
-        const teamLocation = teamLocationResponse.data[0].team_location;
+         teamLocation = teamLocationResponse.data[0].team_location;
   
         // Get the team code
         const teamCodeResponse = await axios.get(`http://localhost:3002/api/get/teamCode/${teamName}/${competition_id}`);
