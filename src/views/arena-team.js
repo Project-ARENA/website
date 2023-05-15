@@ -21,6 +21,10 @@ const copyToClipboard = (value) => {
   document.body.removeChild(textarea); // Remove the textarea from the body
 };
 
+function handleInputSubmit(){
+  
+}
+
 const ArenaTeam = (props) => {
 
 
@@ -31,76 +35,54 @@ const ArenaTeam = (props) => {
   const [teamCode, setTeamCode] = useState("");
   //const [teamLocation, setTeamLocation] = useState("");
   useEffect(() => {
-    //Gets the team Name
-    axios
-    .get("http://localhost:3002/api/get/teamName/" + user_id + "/" + competition_id)
-    .then(function (response) {
-      setTeamName(response.data[0].team_name)
-      axios
-      .get("http://localhost:3002/api/get/teamLocation/" + response.data[0].team_name + "/" + competition_id)
-      .then(function (response) {
-        teamLocation = response.data[0].team_location
-
-      });
-    });
+    const fetchData = async () => {
+      try {
+        // Get the team name
+        const teamNameResponse = await axios.get(`http://localhost:3002/api/get/teamName/${user_id}/${competition_id}`);
+        const teamName = teamNameResponse.data[0].team_name;
   
-    //Gets the competion info
-    axios
-      .get("http://localhost:3002/api/get/teamCode/" + teamName + "/" + competition_id)
-      .then(function (response) {
-        setTeamCode(response.data[0].team_code);
-        //setParagraph(response.data[0].competition_info);
-      });
-
-  // Gets the teamMembers
-  axios.post('http://localhost:3002/api/get/teamMembers', null, {
-    params: {
-      user_id: user_id,
-      competition_id: competition_id
-    }
-  })
-  .then(response => {
-    const teamMembers = response.data;
-    console.log(teamMembers);
-
-    // Make an array of promises for the axios requests
-    const promises = teamMembers.map(member => {
-      return axios.get(`http://localhost:3002/api/get/userNickname/${member.user_id}`)
-    })
-
-    // Wait for all promises to resolve
-    Promise.all(promises)
-      .then(responses => {
-        // Map the response data to an array of user nicknames
-         const userNicknamesMap = responses.map((response, index) => {
+        // Get the team location
+        const teamLocationResponse = await axios.get(`http://localhost:3002/api/get/teamLocation/${teamName}/${competition_id}`);
+        const teamLocation = teamLocationResponse.data[0].team_location;
+  
+        // Get the team code
+        const teamCodeResponse = await axios.get(`http://localhost:3002/api/get/teamCode/${teamName}/${competition_id}`);
+        const teamCode = teamCodeResponse.data[0].team_code;
+  
+        // Get the competition details
+        const compDetailsResponse = await axios.get(`http://localhost:3002/api/get/compDetails/${competition_id}`);
+        const title = compDetailsResponse.data[0].competition_name;
+  
+        // Get the team members
+        const teamMembersResponse = await axios.post(`http://localhost:3002/api/get/teamMembers`, null, {
+          params: {
+            user_id: user_id,
+            competition_id: competition_id
+          }
+        });
+        const teamMembers = teamMembersResponse.data;
+  
+        // Get the user nicknames
+        const userIds = teamMembers.map(member => member.user_id);
+        const userNicknameResponses = await Promise.all(userIds.map(userId => axios.get(`http://localhost:3002/api/get/userNickname/${userId}`)));
+        const userNicknames = userNicknameResponses.map((response, index) => {
           const nickname = response.data[0].user_nickname;
-          const isCaptain = teamMembers[index].is_captain;
-
+          const isCaptain = teamMembers.find(member => member.user_id === userIds[index]).is_captain;
           return isCaptain ? `${nickname} (Captain)` : nickname;
         });
-        setUserNicknames(userNicknamesMap)
-        console.log(userNicknamesMap);
-      })
-      .catch(error => {
+  
+        // Update the state
+        setTeamName(teamName);
+        setTeamCode(teamCode);
+        setTitle(title);
+        setUserNicknames(userNicknames);
+      } catch (error) {
         console.error(error);
-      });
-  })
-  .catch(error => {
-    console.error(error);
-  });
-
-
-    //Gets the competion info
-    axios
-      .get("http://localhost:3002/api/get/compDetails/" + competition_id)
-      .then(function (response) {
-        setTitle(response.data[0].competition_name);
-        //setParagraph(response.data[0].competition_info);
-      });
-  });
-  const handleInputSubmit = () => {
-    console.log("Input value: Hello");
-  }
+      }
+    };
+    fetchData();
+  }, []);
+  
 
 
   return (

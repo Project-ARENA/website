@@ -467,7 +467,7 @@ const ArenaMain = (props) => {
             uploadSubmissions();
             setTimeout(function () {
               window.location.reload(false);
-            }, 800);
+            }, 1000);
           }}
           
           ></Button>
