@@ -63,7 +63,6 @@ function handleUploadZIPDone(res) {
 }
 
 
-//Function to set the latest scores
 function getLatestScores() {
   return new Promise((resolve, reject) => {
     axios
@@ -84,10 +83,15 @@ function getLatestScores() {
           count++;
         }
         console.log(latestSubmissionScores);
+        
+        resolve(latestSubmissionScores); // Resolve the promise inside the `then` block
+      })
+      .catch(function (error) {
+        reject(error);
       });
-    resolve(latestSubmissionScores);
   });
 }
+
 
 function getNumTestCases() {
   axios
@@ -104,19 +108,25 @@ function generateRandomNumber() {
   return number;
 }
 
-//!Gets the teamID
 function getTeamID() {
-  axios
-    .get(
-      "http://localhost:3002/api/get/team_name/" +
-        competition_id +
-        "/" +
-        user_id
-    )
-    .then(function (response) {
-      sessionStorage.setItem("teamName", response.data[0].team_name);
-    });
+  return new Promise((resolve, reject) => {
+    axios
+      .get(
+        "http://localhost:3002/api/get/team_name/" +
+          competition_id +
+          "/" +
+          user_id
+      )
+      .then(function (response) {
+        sessionStorage.setItem("teamName", response.data[0].team_name);
+        resolve(); // Resolve the promise without any value
+      })
+      .catch(function (error) {
+        reject(error); // Reject the promise with the error
+      });
+  });
 }
+
 
 //! Gets the testCases for the competition
 function getCompTestCases() {
@@ -151,18 +161,31 @@ function getLinkForPDF() {
   });
 }
 
-function getHighest(){
-  axios.get("http://localhost:3002/api/get/testcase_highest/" +competition_id +"/" +user_id)
-  .then(function (response) {
-    const latestString = response.data[0].testcase_highest;
+function getHighest() {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(
+        "http://localhost:3002/api/get/testcase_highest/" +
+          competition_id +
+          "/" +
+          user_id
+      )
+      .then(function (response) {
+        const latestString = response.data[0].testcase_highest;
         const jsonArray = JSON.parse(latestString);
         let count = 0;
         for (let key in jsonArray) {
           highestSubArray[count] = jsonArray[key];
           count++;
         }
-  })
+        resolve(highestSubArray); // Resolve the promise with the highestSubArray
+      })
+      .catch(function (error) {
+        reject(error); // Reject the promise with the error
+      });
+  });
 }
+
 
 function ScoredHigher() {
   let isHigher = false;
