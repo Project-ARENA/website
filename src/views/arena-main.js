@@ -36,6 +36,7 @@ let linkForPDF = "";
 let TXTLink = ""
 let ZIPLink = ""
 let Mark = 0
+let team_code = ""
 
 async function handleUploadTXTDone(res) {
   console.log(res.filesUploaded[0].url);
@@ -57,6 +58,7 @@ async function handleUploadTXTDone(res) {
 }
 
 
+
 function handleUploadZIPDone(res) {
   console.log(res.filesUploaded[0].url);
   ZIPLink = res.filesUploaded[0].url
@@ -67,10 +69,7 @@ function getLatestScores() {
   return new Promise((resolve, reject) => {
     axios
       .get(
-        "http://localhost:3002/api/get/testcase_latest/" +
-          competition_id +
-          "/" +
-          user_id
+        "http://localhost:3002/api/get/testcase_latest/" + team_code
       )
       .then(function (response) {
         const latestString = response.data[0].testcase_latest;
@@ -165,10 +164,7 @@ function getHighest() {
   return new Promise((resolve, reject) => {
     axios
       .get(
-        "http://localhost:3002/api/get/testcase_highest/" +
-          competition_id +
-          "/" +
-          user_id
+        "http://localhost:3002/api/get/testcase_highest/" + team_code
       )
       .then(function (response) {
         const latestString = response.data[0].testcase_highest;
@@ -192,10 +188,7 @@ function ScoredHigher() {
   return new Promise((resolve, reject) => {
     axios
       .get(
-        "http://localhost:3002/api/get/testcase_highest/" +
-          competition_id +
-          "/" +
-          user_id
+        "http://localhost:3002/api/get/testcase_highest/" + team_code
       )
       .then(function (response) {
         // console.log("they have submitted before");
@@ -277,10 +270,7 @@ async function uploadSubmissions() {
   //Upload to submission history:
   axios
     .get(
-      "http://localhost:3002/api/get/testcase_prev/" +
-        competition_id +
-        "/" +
-        user_id
+      "http://localhost:3002/api/get/testcase_prev/" + team_code
     )
     .then(function (response) {
       if (response.data[0].testcase_prev == null) {
@@ -314,6 +304,22 @@ async function uploadSubmissions() {
   await postHighestScore();
 }
 
+function getTeamCode(){
+  return new Promise((resolve, reject) => {
+  axios
+    .get("http://localhost:3002/api/get/teamCode/" + (sessionStorage.getItem("teamName")) + "/" + competition_id)
+    .then(function (response) {
+      team_code = response.data[0].team_code;
+      console.log(team_code)
+
+    });
+    resolve(team_code); // Resolve the promise with the team_code
+  })
+  .catch(function (error) {
+    reject(error); // Reject the promise with the error
+  });
+}
+
 const ArenaMain = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pickerTXTVisible, setTXTPickerVisible] = useState(false);
@@ -328,25 +334,27 @@ const ArenaMain = (props) => {
   // const [uploadedZIP, setUploadZIP] = useState(false);
 
   const [disabled, setDisabled] = useState(true);
-  //Executes when the page is loaded
   React.useEffect(() => {
     const fetchData = async () => {
-      await getLatestScores();
+      await getTeamCode();
       await getCompTestCases();
       setIsLoaded(true);
+      getLatestScores();
+      getHighest();
+      getNumTestCases(numTests);
+      axios
+        .get("http://localhost:3002/api/get/compDetails/" + competition_id)
+        .then(function (response) {
+          setTitle(response.data[0].competition_name);
+          setParagraph(response.data[0].competition_info);
+        });
+      //Sets the link for the competition testcases
+      getTeamID();
     };
-    getHighest();
+  
     fetchData();
-    getNumTestCases(numTests);
-    axios
-      .get("http://localhost:3002/api/get/compDetails/" + competition_id)
-      .then(function (response) {
-        setTitle(response.data[0].competition_name);
-        setParagraph(response.data[0].competition_info);
-      });
-    //Sets the link for the competition testcases
-    getTeamID();
   }, []);
+  
 
   const [isLoaded, setIsLoaded] = React.useState(false);
   //Sets the pickerVisible to false, so you can actually click it again

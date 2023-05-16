@@ -751,7 +751,7 @@ app.get("/api/get/team_name/:comp_id/:user_id", (req, res) => {
   const comp_id = req.params.comp_id;
   const user_id = req.params.user_id;
   db.query(
-    "SELECT team_name from team_details WHERE competition_id = ? AND user_id = ?;",
+    "SELECT team_name from teams WHERE competition_id = ? AND user_id = ?;",
     [comp_id, user_id],
     (err, result) => {
       if (err) {
@@ -763,12 +763,11 @@ app.get("/api/get/team_name/:comp_id/:user_id", (req, res) => {
 });
 
 //! Route to get latest test_case
-app.get("/api/get/testcase_latest/:comp_id/:user_id", (req, res) => {
-  const comp_id = req.params.comp_id;
-  const user_id = req.params.user_id;
+app.get("/api/get/testcase_latest/:team_code", (req, res) => {
+  const team_code = req.params.team_code;
   db.query(
-    "SELECT testcase_latest from team_details WHERE competition_id = ? AND user_id = ?;",
-    [comp_id, user_id],
+    "SELECT testcase_latest from team_details WHERE team_code = ?;",
+    [team_code],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -779,12 +778,11 @@ app.get("/api/get/testcase_latest/:comp_id/:user_id", (req, res) => {
 });
 
 //! Route to get highest score
-app.get("/api/get/testcase_highest/:comp_id/:user_id", (req, res) => {
-  const comp_id = req.params.comp_id;
-  const user_id = req.params.user_id;
+app.get("/api/get/testcase_highest/:team_code", (req, res) => {
+  const team_code = req.params.team_code;
   db.query(
-    "SELECT testcase_highest from team_details WHERE competition_id = ? AND user_id = ?;",
-    [comp_id, user_id],
+    "SELECT testcase_highest from team_details WHERE team_code = ?;",
+    [team_code],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -795,12 +793,11 @@ app.get("/api/get/testcase_highest/:comp_id/:user_id", (req, res) => {
 });
 
 //! Route to get submission history
-app.get("/api/get/testcase_prev/:comp_id/:user_id", (req, res) => {
-  const comp_id = req.params.comp_id;
-  const user_id = req.params.user_id;
+app.get("/api/get/testcase_prev/:team_code", (req, res) => {
+  team_code = req.params.team_code;
   db.query(
-    "SELECT testcase_prev from team_details WHERE competition_id = ? AND user_id = ?;",
-    [comp_id, user_id],
+    "SELECT testcase_prev from team_details WHERE team_code = ?;",
+    [team_code],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1112,7 +1109,7 @@ app.get("/api/get/teamCode/:teamName/:competition_id", (req, res) => {
   const competition_id = req.params.competition_id;
 
   db.query(
-    "SELECT team_code FROM team_details WHERE team_name = ? AND competition_id = ?;",
+    "SELECT team_code FROM teams WHERE team_name = ? AND competition_id = ?;",
     [team_name, competition_id],
     (err, result) => {
       if (err) {
@@ -1122,6 +1119,8 @@ app.get("/api/get/teamCode/:teamName/:competition_id", (req, res) => {
     }
   );
 });
+
+
 
 // Route to remove team member
 app.post("/api/post/remove/teamMember", (req, res) => {
