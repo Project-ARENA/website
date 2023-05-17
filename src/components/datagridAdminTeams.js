@@ -215,7 +215,7 @@ export default function CustomDataGrid({ rows }) {
           key: `member-${i + 1}`,
           label: `${teamMember.user_firstname} ${teamMember.user_surname}`,
           value: i + 1,
-          user_id: teamMember.user_id // include user_id as a property of the team member object
+          user_id: teamMember.user_id, // include user_id as a property of the team member object
         });
       }
       setTeamMemberList(newTeamMemberList); // Update the state with new list
@@ -225,7 +225,6 @@ export default function CustomDataGrid({ rows }) {
   };
 
   const onButtonRemove = async (e) => {
-
     Swal.fire({
       title: "Are you sure?",
       text: "You are about to remove this user from the team!",
@@ -236,7 +235,6 @@ export default function CustomDataGrid({ rows }) {
       confirmButtonText: "Remove",
     }).then(async (result) => {
       if (result.isConfirmed) {
-
         // Get the user_id of the user that is selected in the drop down menu
         const index = teamMemberList.findIndex((item) => item.value === value);
         const sel_userID = teamMemberList[index].user_id;
@@ -281,7 +279,6 @@ export default function CustomDataGrid({ rows }) {
   };
 
   const onButtonPromote = async (e) => {
-
     Swal.fire({
       title: "Are you sure?",
       text: "You are about to promote this user to team captain!",
@@ -292,18 +289,14 @@ export default function CustomDataGrid({ rows }) {
       confirmButtonText: "Promote",
     }).then((result) => {
       if (result.isConfirmed) {
-
         // Get the user_id of the user that is selected in the drop down menu
         const index = teamMemberList.findIndex((item) => item.value === value);
         const sel_userID = teamMemberList[index].user_id;
 
-        axios.post(
-          "http://localhost:3002/api/post/change/teamCaptain",
-          {
-            team_code: teamCode,
-            user_id: sel_userID,
-          }
-        );
+        axios.post("http://localhost:3002/api/post/change/teamCaptain", {
+          team_code: teamCode,
+          user_id: sel_userID,
+        });
 
         Swal.fire("Promoted!", "User has been promoted", "success").then(() => {
           window.location.reload(false);
