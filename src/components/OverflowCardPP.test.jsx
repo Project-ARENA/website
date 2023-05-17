@@ -38,7 +38,13 @@ describe("OverflowCardPP", () => {
     const { getByText } = render(
       <OverflowCardPP description={description} isRegistered={false} />
     );
-    expect(getByText(description)).toBeInTheDocument();
+    // {description.length > 100 ? description.substring(0, 100) + "..." : description}
+    expect(
+      getByText(
+        description.length > 100 ? description.substring(0, 100) + "..." : description
+      )
+    ).toBeInTheDocument();
+    
   });
 
   it("displays the correct button text when not registered", () => {
