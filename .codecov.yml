@@ -6,6 +6,3 @@ coverage:
 ignore:
   - "src/server/server.js"
   - "src/index.js"
-  - "src/views/arena-main.js"
-  - "src/views/arena-team.js"
-  - "src/views/arena-leaderboard.js"

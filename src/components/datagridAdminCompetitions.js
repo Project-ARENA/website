@@ -141,7 +141,7 @@ export default function CustomDataGrid({ rows }) {
         return (
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button
-              name="Delete Team"
+              name="Delete Competition"
               onClick={(e) => onButtonDelete(e, params.row)}
             >
               Delete Team
