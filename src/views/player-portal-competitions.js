@@ -11,6 +11,15 @@ const GetDate = () => {
   //console.log(CurrentTime);
 };
 
+function getTeamDetails(user_id, comp_id){
+  axios
+    .get("http://localhost:3002/api/get/teamCodeAlt/" + user_id + "/" + comp_id)
+    .then(function (response) {
+      sessionStorage.setItem('teamCode', (response.data)[0].team_code);
+      sessionStorage.setItem('teamName', (response.data)[0].team_name);
+    });
+}
+
 function GenCards() {
   const [cardsData, setCardsData] = React.useState([]);
   const [isFlipped, setIsFlipped] = React.useState(false);
@@ -174,73 +183,75 @@ function GenCards() {
       }
     }
   };
-  const handleButton1Click = async (competition_id) => {
-    // Check if the card is registered or not
-    const cardData = cardsData.find(
-      (cardData) => cardData.competition_id === competition_id
-    );
+  // const handleButton1Click = async (competition_id) => {
+  //   // Check if the card is registered or not
+  //   const cardData = cardsData.find(
+  //     (cardData) => cardData.competition_id === competition_id
+  //   );
 
-    if (cardData.isRegistered) {
-      // Can use API route to leave competition
-      try {
-        const response = await axios.post(
-          "http://localhost:3002/api/post/leave/team",
-          {
-            competition_id,
-            user_id: userID,
-          }
-        );
-        // console.log(response);
+  //   if (cardData.isRegistered) {
+  //     // Can use API route to leave competition
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:3002/api/post/leave/team",
+  //         {
+  //           competition_id,
+  //           user_id: userID,
+  //         }
+  //       );
+  //       // console.log(response);
 
-        const newCardsData = cardsData.map((cardData) => {
-          if (cardData.competition_id === competition_id) {
-            return {
-              ...cardData,
-              isRegistered: false,
-            };
-          }
-          return cardData;
-        });
-        setCardsData(newCardsData);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      try {
-        const response = await axios.get(
-          "http://localhost:3002/api/get/competitionIDGlobal/" + cardData.title
-        );
-        // console.log(response.data[0].competition_id);
-        const compID = response.data[0].competition_id;
-        sessionStorage.setItem("CompID", compID);
-        setTimeout(function () {
-          window.location.href = "http://localhost:3000/player-portal-team";
-        }, 1000);
+  //       const newCardsData = cardsData.map((cardData) => {
+  //         if (cardData.competition_id === competition_id) {
+  //           return {
+  //             ...cardData,
+  //             isRegistered: false,
+  //           };
+  //         }
+  //         return cardData;
+  //       });
+  //       setCardsData(newCardsData);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   } else {
+  //     try {
+  //       const response = await axios.get(
+  //         "http://localhost:3002/api/get/competitionIDGlobal/" + cardData.title
+  //       );
+  //       // console.log(response.data[0].competition_id);
+  //       const compID = response.data[0].competition_id;
+  //       sessionStorage.setItem("CompID", compID);
+  //       setTimeout(function () {
+  //         window.location.href = "http://localhost:3000/player-portal-team";
+  //       }, 1000);
 
-        // Can use API route to join competition
-        // Need to keep track of the competition_id
-        const newCardsData = cardsData.map((cardData) => {
-          if (cardData.competition_id === competition_id) {
-            return {
-              ...cardData,
-              isRegistered: true,
-            };
-          }
-          return cardData;
-        });
-        setCardsData(newCardsData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
+  //       // Can use API route to join competition
+  //       // Need to keep track of the competition_id
+  //       const newCardsData = cardsData.map((cardData) => {
+  //         if (cardData.competition_id === competition_id) {
+  //           return {
+  //             ...cardData,
+  //             isRegistered: true,
+  //           };
+  //         }
+  //         return cardData;
+  //       });
+  //       setCardsData(newCardsData);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  // };
 
   // Handles "Enter Arena" button click
   const handleButton2Click = (competition_id) => {
     const compID = competition_id;
     sessionStorage.setItem("CompID", compID);
+    getTeamDetails(userID, compID);
+
     setTimeout(function () {
-      window.location.href = "http://localhost:3000/arena-main";
+      window.location.href = "http://localhost:3000/arena-main";  
     }, 1000);
     // console.log(`Enter Arena clicked for competition ${competition_id}`);
   };
@@ -279,9 +290,9 @@ function GenCards() {
             onClick={() => {
               handleCardClick(activeData.competition_id);
             }}
-            onButton1Click={() => {
-              handleButton1Click(activeData.competition_id);
-            }}
+            // onButton1Click={() => {
+            //   handleButton1Click(activeData.competition_id);
+            // }}
             onButton2Click={() => {
               handleButton2Click(activeData.competition_id);
             }}
@@ -312,9 +323,9 @@ function GenCards() {
             onClick={() => {
               handleCardClick(inactiveData.competition_id);
             }}
-            onButton1Click={() => {
-              handleButton1Click(inactiveData.competition_id);
-            }}
+            // onButton1Click={() => {
+            //   handleButton1Click(inactiveData.competition_id);
+            // }}
             onButton2Click={() => {
               handleButton2Click(inactiveData.competition_id);
             }}
@@ -346,9 +357,9 @@ function GenCards() {
             onClick={() => {
               handleCardClick(registeredData.competition_id);
             }}
-            onButton1Click={() => {
-              handleButton1Click(registeredData.competition_id);
-            }}
+            // onButton1Click={() => {
+            //   handleButton1Click(registeredData.competition_id);
+            // }}
             onButton2Click={() => {
               handleButton2Click(registeredData.competition_id);
             }}

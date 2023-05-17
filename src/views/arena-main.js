@@ -62,7 +62,7 @@ function handleUploadZIPDone(res) {
   ZIPLink = res.filesUploaded[0].url;
 }
 
-function getLatestScores() {
+async function getLatestScores() {
   return new Promise((resolve, reject) => {
     console.log("http://localhost:3002/api/get/testcase_latest/" + team_code)
     axios
@@ -154,7 +154,7 @@ function getLinkForPDF() {
   });
 }
 
-function getHighest() {
+async function getHighest() {
   return new Promise((resolve, reject) => {
     axios
       .get("http://localhost:3002/api/get/testcase_highest/" + team_code)

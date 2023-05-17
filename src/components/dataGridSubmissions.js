@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 export default function CustomDataGrid(props) {
   const { numColumns, testcases, data } = props;
+  const [loading, setLoading] = React.useState(true);
 
   const columns = [
     {
@@ -29,6 +30,17 @@ export default function CustomDataGrid(props) {
     return row;
   });
 
+  React.useEffect(() => {
+    // Simulating an asynchronous API call
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Box sx={{ height: 800, width: '100%' }}>
       <DataGrid
@@ -47,3 +59,4 @@ export default function CustomDataGrid(props) {
     </Box>
   );
 }
+

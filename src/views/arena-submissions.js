@@ -36,8 +36,6 @@ const ArenaSubmissions = (props) => {
       .then(response => {
         setNumTests(response.data[0].no_testcases); 
       });
-
-    console.log(team_code)
       
     axios.get(`http://localhost:3002/api/get/testcase_prev/${team_code}`)
     .then(response => {

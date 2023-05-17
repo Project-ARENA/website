@@ -6,38 +6,31 @@ import './arena-leaderboard.css'
 import { useEffect, useState } from 'react';
 
 const competition_id = sessionStorage.getItem('CompID');
-const user_id = sessionStorage.getItem('userID');
+const teamName = sessionStorage.getItem('teamName');
 let noTests = 0;
-let myTeam = "";
 let testcases = "";
 let testsArray = [];
 
 // gets number test cases and team name to generate table
-function getNoTests() {
+async function getNoTests() {
   return new Promise((resolve, reject) => {
-    axios
-        .get("http://localhost:3002/api/get/compTeamDeatils/" + competition_id + "/" + user_id)
-        .then(function(response){
-          noTests = response.data[0].no_testcases;
-          myTeam = response.data[0].team_name;
-        });
-      
     axios
     .get("http://localhost:3002/api/get/Testcases/" + competition_id)
     .then(function(response){
       testcases = response.data[0].testcases;
+      noTests = testcases.split(",").length;
       console.log(testcases);
+      console.log(noTests);
     });
-    resolve([noTests, testcases, myTeam]);
+    resolve([noTests, testcases]);
   });
 }
 
 // used to generate the table with correct data
 function GenGrid(params) {
-  const [rows, setData] = React.useState([]);
-  var sum = 0;
-  // TODO: #5 #4 Change API call to get correct info from db
-  
+  const [rows, setData] = React.useState(Array(noTests).fill(null));
+  const [loading, setLoading] = React.useState(true);
+
   React.useEffect(() => {
     axios
       .get("http://localhost:3002/api/get/leaderboard/" + params.compID)
@@ -50,22 +43,30 @@ function GenGrid(params) {
             team_location: data.team_location ? data.team_location : "",
             team_score: 0
           };
+          let sum = 0;
           // Iterate through the key-value pairs of testcase_highest
           for (const [key, value] of Object.entries(JSON.parse(data.testcase_highest))) {
             // Dynamically create fields with key as field name and value as field value
-            newData[key] = value;
+            newData[key] = value === 0 ? '-' : value;
             sum += value;
           }
           newData.team_score = sum;
-          sum = 0;
-
           return newData;
         });
         setData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
       });
+  }, [params.compID]);
 
-  }, []);
-  return <DataGrid rows={rows} noTests={params.no} testcases={params.tests} myTeam={params.team} pageSize={5} />
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return <DataGrid rows={rows} noTests={params.no} testcases={params.tests} myTeam={params.team} pageSize={50} />;
 }
 
 const ArenaLeaderboard = (props) => {
@@ -76,13 +77,13 @@ const ArenaLeaderboard = (props) => {
     const fetchData = async () => {
       await getNoTests();
     };
+
     fetchData();
-    
+
     axios
       .get("http://localhost:3002/api/get/compDetails/" + competition_id)
       .then(function (response) {
         setTitle(response.data[0].competition_name);
-        setParagraph(response.data[0].competition_info);
       });
   });
 
@@ -181,7 +182,7 @@ const ArenaLeaderboard = (props) => {
       <h2>Leaderboard</h2>
       <br/>
       <div className="grid-container">
-        <GenGrid no={noTests} tests = {testsArray} team={myTeam} compID={competition_id}/>
+        <GenGrid no={noTests} tests = {testsArray} team={teamName} compID={competition_id}/>
       </div>
     </div>
   )

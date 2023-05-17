@@ -902,12 +902,12 @@ app.post("/api/post/submission", (req, res) => {
 });
 
 // Get number of test cases in competition and team name
-app.get("/api/get/compTeamDeatils/:comp_id/:user_id", (req, res) => {
+app.get("/api/get/compTeamDeatils/:comp_id/:team_code", (req, res) => {
   const comp_id = req.params.comp_id;
-  const user_id = req.params.user_id;
+  const user_id = req.params.team_code;
 
   db.query(
-    "SELECT cd.no_testcases, td.team_name FROM competition_details cd JOIN teams td ON cd.competition_id = td.competition_id WHERE cd.competition_id = ? AND td.competition_id = ? AND td.user_id = ?;",
+    "SELECT team_name from team_details WHERE competition_id = ? AND team_code = ?;",
     [comp_id, comp_id, user_id],
     (err, result) => {
       if (err) {
@@ -1111,6 +1111,23 @@ app.get("/api/get/teamCode/:teamName/:competition_id", (req, res) => {
   db.query(
     "SELECT team_code FROM teams WHERE team_name = ? AND competition_id = ?;",
     [team_name, competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+// Team Code alternative with user_id
+app.get("/api/get/teamCodeAlt/:user_id/:competition_id", (req, res) => {
+  const user_id = req.params.user_id;
+  const competition_id = req.params.competition_id;
+
+  db.query(
+    "SELECT team_code, team_name FROM teams WHERE user_id = ? AND competition_id = ?;",
+    [user_id, competition_id],
     (err, result) => {
       if (err) {
         console.log(err);
