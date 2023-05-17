@@ -20,7 +20,7 @@ import { ArenaProfile } from "./views/arena-profile";
 import ArenaSubmissions from "./views/arena-submissions";
 import ArenaLeaderboard from "./views/arena-leaderboard";
 import ArenaTeam from "./views/arena-team";
-import ArenaMain from "./views/arena-main";
+import { ArenaMain } from "./views/arena-main";
 
 const App = () => {
   return (
