@@ -18,25 +18,25 @@ import "../components/modal.css";
 import { da, hi } from "date-fns/locale";
 import Button from "../components/button";
 import InputTextArea from "../components/input-textarea";
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 
 const competition_id = sessionStorage.getItem("CompID");
 const user_id = sessionStorage.getItem("userID");
 let tabIndex = -1;
 let latestSubmissionScores = [0];
 let subHistory = [0];
-let highestSubArray = [0]
+let highestSubArray = [0];
 let newHighestSub = "";
 let numTests = 0;
 let testcases = "";
 let uploadedTXT = false;
 let uploadedZIP = false;
 let linkForPDF = "";
-let TXTLink = ""
-let ZIPLink = ""
-let Mark = 0
-let team_code = ""
+let TXTLink = "";
+let ZIPLink = "";
+let Mark = 0;
+let team_code = "";
 
 async function handleUploadTXTDone(res) {
   console.log(res.filesUploaded[0].url);
@@ -47,7 +47,7 @@ async function handleUploadTXTDone(res) {
       "http://localhost:3002/api/get/upload/score",
       {
         textFileUrl: res.filesUploaded[0].url,
-        competitionId : competition_id
+        competitionId: competition_id,
       }
     );
     Mark = response.data;
@@ -57,20 +57,15 @@ async function handleUploadTXTDone(res) {
   }
 }
 
-
-
 function handleUploadZIPDone(res) {
   console.log(res.filesUploaded[0].url);
-  ZIPLink = res.filesUploaded[0].url
+  ZIPLink = res.filesUploaded[0].url;
 }
-
 
 function getLatestScores() {
   return new Promise((resolve, reject) => {
     axios
-      .get(
-        "http://localhost:3002/api/get/testcase_latest/" + team_code
-      )
+      .get("http://localhost:3002/api/get/testcase_latest/" + team_code)
       .then(function (response) {
         const latestString = response.data[0].testcase_latest;
         console.log(response.data[0].testcase_latest);
@@ -82,7 +77,7 @@ function getLatestScores() {
           count++;
         }
         console.log(latestSubmissionScores);
-        
+
         resolve(latestSubmissionScores); // Resolve the promise inside the `then` block
       })
       .catch(function (error) {
@@ -90,7 +85,6 @@ function getLatestScores() {
       });
   });
 }
-
 
 function getNumTestCases() {
   axios
@@ -126,13 +120,12 @@ function getTeamID() {
   });
 }
 
-
 //! Gets the testCases for the competition
 function getCompTestCases() {
-    return new Promise((resolve, reject) => {
-      axios
+  return new Promise((resolve, reject) => {
+    axios
       .get("http://localhost:3002/api/get/Testcases/" + competition_id)
-      .then(function(response){
+      .then(function (response) {
         testcases = response.data[0].testcases;
         console.log(testcases);
         resolve(testcases);
@@ -141,7 +134,7 @@ function getCompTestCases() {
         console.error(error);
         reject(error);
       });
-    });
+  });
 }
 
 function getLinkForPDF() {
@@ -163,9 +156,7 @@ function getLinkForPDF() {
 function getHighest() {
   return new Promise((resolve, reject) => {
     axios
-      .get(
-        "http://localhost:3002/api/get/testcase_highest/" + team_code
-      )
+      .get("http://localhost:3002/api/get/testcase_highest/" + team_code)
       .then(function (response) {
         const latestString = response.data[0].testcase_highest;
         const jsonArray = JSON.parse(latestString);
@@ -182,14 +173,11 @@ function getHighest() {
   });
 }
 
-
 function ScoredHigher() {
   let isHigher = false;
   return new Promise((resolve, reject) => {
     axios
-      .get(
-        "http://localhost:3002/api/get/testcase_highest/" + team_code
-      )
+      .get("http://localhost:3002/api/get/testcase_highest/" + team_code)
       .then(function (response) {
         // console.log("they have submitted before");
         const latestString = response.data[0].testcase_highest;
@@ -201,9 +189,8 @@ function ScoredHigher() {
           count++;
         }
         for (let i = 0; i < latestSubmissionScores.length; i++) {
-           console.log(latestSubmissionScores[i] + " " + highestSub[i])
+          console.log(latestSubmissionScores[i] + " " + highestSub[i]);
           if (latestSubmissionScores[i] > highestSub[i]) {
-            
             //Change only the one that is higher
             highestSub[i] = latestSubmissionScores[i];
             isHigher = true;
@@ -255,23 +242,20 @@ async function uploadSubmissions() {
 
   //Seperate one for submission history
   latestSubmissionScores.map((value, index) => {
-    if (index != tabIndex-1){
+    if (index != tabIndex - 1) {
       obj1[`testcase_${index + 1}`] = 0;
-    }
-    else{
+    } else {
       obj1[`testcase_${index + 1}`] = value;
     }
-    });
+  });
 
   const newSub = JSON.stringify(obj);
   const subHist = JSON.stringify(obj1);
-  console.log(subHist)
+  console.log(subHist);
   // console.log("hello?");
   //Upload to submission history:
   axios
-    .get(
-      "http://localhost:3002/api/get/testcase_prev/" + team_code
-    )
+    .get("http://localhost:3002/api/get/testcase_prev/" + team_code)
     .then(function (response) {
       if (response.data[0].testcase_prev == null) {
         const originalObject = JSON.parse(subHist);
@@ -304,18 +288,21 @@ async function uploadSubmissions() {
   await postHighestScore();
 }
 
-function getTeamCode(){
+function getTeamCode() {
   return new Promise((resolve, reject) => {
-  axios
-    .get("http://localhost:3002/api/get/teamCode/" + (sessionStorage.getItem("teamName")) + "/" + competition_id)
-    .then(function (response) {
-      team_code = response.data[0].team_code;
-      console.log(team_code)
-
-    });
+    axios
+      .get(
+        "http://localhost:3002/api/get/teamCode/" +
+          sessionStorage.getItem("teamName") +
+          "/" +
+          competition_id
+      )
+      .then(function (response) {
+        team_code = response.data[0].team_code;
+        console.log(team_code);
+      });
     resolve(team_code); // Resolve the promise with the team_code
-  })
-  .catch(function (error) {
+  }).catch(function (error) {
     reject(error); // Reject the promise with the error
   });
 }
@@ -328,7 +315,6 @@ const ArenaMain = (props) => {
   //This stores contents of tab, tab number and index in the array are related
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
-
 
   // const [uploadedTXT, setUploadTXT] = useState(false);
   // const [uploadedZIP, setUploadZIP] = useState(false);
@@ -351,10 +337,9 @@ const ArenaMain = (props) => {
       //Sets the link for the competition testcases
       getTeamID();
     };
-  
+
     fetchData();
   }, []);
-  
 
   const [isLoaded, setIsLoaded] = React.useState(false);
   //Sets the pickerVisible to false, so you can actually click it again
@@ -416,16 +401,16 @@ const ArenaMain = (props) => {
                 key="picker-overlay"
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
-                  if (res.filesUploaded[0].mimetype === 'text/plain') {
-                  handleUploadTXTDone(res);
-                  uploadedTXT = true;
-                  //Checks if both are uploaded
-                  if (uploadedZIP == true && uploadedTXT == true) {
-                    setDisabled(false);
-                  }
-                  }else{
-                    setShowTXTAlert(true)
-                    console.log(showTXTAlert)
+                  if (res.filesUploaded[0].mimetype === "text/plain") {
+                    handleUploadTXTDone(res);
+                    uploadedTXT = true;
+                    //Checks if both are uploaded
+                    if (uploadedZIP == true && uploadedTXT == true) {
+                      setDisabled(false);
+                    }
+                  } else {
+                    setShowTXTAlert(true);
+                    console.log(showTXTAlert);
                   }
                 }}
                 pickerOptions={{
@@ -446,13 +431,12 @@ const ArenaMain = (props) => {
                 key="picker-overlay"
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
-                    handleUploadDone(res);
-                    uploadedZIP = true;
-                    // Checks if both are uploaded
-                    if (uploadedZIP && uploadedTXT) {
-                      setDisabled(false);
-                    }
-                  
+                  handleUploadDone(res);
+                  uploadedZIP = true;
+                  // Checks if both are uploaded
+                  if (uploadedZIP && uploadedTXT) {
+                    setDisabled(false);
+                  }
                 }}
                 pickerOptions={{
                   onClose: () => {
@@ -462,7 +446,7 @@ const ArenaMain = (props) => {
               />
             </div>
           )}
-          
+
           <br />
           <Button
             name="Upload txt file"
@@ -481,26 +465,25 @@ const ArenaMain = (props) => {
           <br />
           <InputTextArea label="Type your comments here..."></InputTextArea>
           <br />
-          <Button 
-          name="Submit" 
-          disabled={disabled}
-          onClick={() => {
-            //This sets the new score
-            latestSubmissionScores[tabIndex - 1] = Mark;
-            //This is to set the other scores to 0, to handle it better in the sub hist
-            // for (let i = 0; i < latestSubmissionScores.length; i++){
-            //   if (i != tabIndex-1){
-            //     latestSubmissionScores[i] = 0;
-            //   }
-            // }
-            console.log(Mark)
-            console.log(latestSubmissionScores)
-            uploadSubmissions();
-            setTimeout(function () {
-              window.location.reload(false);
-            }, 1000);
-          }}
-          
+          <Button
+            name="Submit"
+            disabled={disabled}
+            onClick={() => {
+              //This sets the new score
+              latestSubmissionScores[tabIndex - 1] = Mark;
+              //This is to set the other scores to 0, to handle it better in the sub hist
+              // for (let i = 0; i < latestSubmissionScores.length; i++){
+              //   if (i != tabIndex-1){
+              //     latestSubmissionScores[i] = 0;
+              //   }
+              // }
+              console.log(Mark);
+              console.log(latestSubmissionScores);
+              uploadSubmissions();
+              setTimeout(function () {
+                window.location.reload(false);
+              }, 1000);
+            }}
           ></Button>
           <br />
           <div style={{ marginLeft: 6, marginTop: 5 }}>
@@ -514,22 +497,27 @@ const ArenaMain = (props) => {
         </div>
       </Modal>
       {showTXTAlert && (
-              <div
-              style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                zIndex: 9999,
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 9999,
+          }}
+        >
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            <Alert
+              severity="error"
+              onClose={() => {
+                setShowTXTAlert(false);
               }}
             >
-            <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert
-            severity="error"
-            onClose={() => {setShowTXTAlert(false)}}>Please submit a txt file</Alert>
+              Please submit a txt file
+            </Alert>
           </Stack>
-          </div>
-          )}
+        </div>
+      )}
       <div data-role="Header" className="arena-main-navbar-container">
         <div className="arena-main-navbar">
           <div className="arena-main-left-side">
@@ -674,4 +662,11 @@ const ArenaMain = (props) => {
   );
 };
 
-export default ArenaMain;
+export {
+  ArenaMain,
+  getLatestScores,
+  getHighest,
+  getNumTestCases,
+  handleUploadTXTDone,
+  handleUploadZIPDone,
+};
