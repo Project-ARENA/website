@@ -38,6 +38,7 @@ const PlayerPortalTeam = (props) => {
     setDisabled(true);
     const code = uuidv4();
     setCode(code);
+
     // console.log("Team code generated");
     // console.log(code);
     // console.log(teamName);
@@ -94,6 +95,7 @@ const PlayerPortalTeam = (props) => {
 
   const createTeam = (teamName) => {
     const code = randomString();
+    sessionStorage.setItem("teamCode", code);
     // console.log(userID);
     // console.log(competition_id);
     // console.log("this is location" + location);
@@ -175,6 +177,7 @@ const PlayerPortalTeam = (props) => {
           alert("Please enter a valid code");
         } else {
           joinTeam(codeResponse[0].team_name, teamCode);
+          sessionStorage.setItem("teamCode", teamCode);
         }
       });
   };

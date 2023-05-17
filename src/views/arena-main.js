@@ -36,7 +36,7 @@ let linkForPDF = "";
 let TXTLink = "";
 let ZIPLink = "";
 let Mark = 0;
-let team_code = "";
+let team_code = sessionStorage.getItem("teamCode");
 
 async function handleUploadTXTDone(res) {
   console.log(res.filesUploaded[0].url);
@@ -64,6 +64,7 @@ function handleUploadZIPDone(res) {
 
 function getLatestScores() {
   return new Promise((resolve, reject) => {
+    console.log("http://localhost:3002/api/get/testcase_latest/" + team_code)
     axios
       .get("http://localhost:3002/api/get/testcase_latest/" + team_code)
       .then(function (response) {
@@ -167,9 +168,9 @@ function getHighest() {
         }
         resolve(highestSubArray); // Resolve the promise with the highestSubArray
       })
-      .catch(function (error) {
-        reject(error); // Reject the promise with the error
-      });
+      // .catch(function (error) {
+      //   // reject(error); // Reject the promise with the error
+      // });
   });
 }
 
@@ -288,24 +289,7 @@ async function uploadSubmissions() {
   await postHighestScore();
 }
 
-function getTeamCode() {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(
-        "http://localhost:3002/api/get/teamCode/" +
-          sessionStorage.getItem("teamName") +
-          "/" +
-          competition_id
-      )
-      .then(function (response) {
-        team_code = response.data[0].team_code;
-        console.log(team_code);
-      });
-    resolve(team_code); // Resolve the promise with the team_code
-  }).catch(function (error) {
-    reject(error); // Reject the promise with the error
-  });
-}
+
 
 const ArenaMain = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -322,7 +306,6 @@ const ArenaMain = (props) => {
   const [disabled, setDisabled] = useState(true);
   React.useEffect(() => {
     const fetchData = async () => {
-      await getTeamCode();
       await getCompTestCases();
       setIsLoaded(true);
       getLatestScores();

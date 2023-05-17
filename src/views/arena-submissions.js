@@ -7,6 +7,7 @@ import DataGrid from "../components/dataGridSubmissions";
 
 const competition_id = sessionStorage.getItem('CompID');
 const user_id  = sessionStorage.getItem('userID');
+const team_code  = sessionStorage.getItem('teamCode');
 let testcases = "";
 
 function getTests() {
@@ -35,8 +36,10 @@ const ArenaSubmissions = (props) => {
       .then(response => {
         setNumTests(response.data[0].no_testcases); 
       });
+
+    console.log(team_code)
       
-    axios.get(`http://localhost:3002/api/get/testcase_prev/${competition_id}/${user_id}`)
+    axios.get(`http://localhost:3002/api/get/testcase_prev/${team_code}`)
     .then(response => {
       const historyJSON = JSON.parse(response.data[0].testcase_prev);
       const newData = Object.values(historyJSON).map(testcaseObj => {
