@@ -4,7 +4,6 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { DataGrid } from "@mui/x-data-grid";
 import Modal from "react-modal";
 import Button from "../components/button";
-import DynamicSelect from "../components/DynamicSelect";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { set } from "date-fns";

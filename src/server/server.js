@@ -704,7 +704,7 @@ app.post("/api/post/remove/team", (req, res) => {
   const team_code = req.body.team_code;
 
   db.query(
-    "DELETE FROM team_details WHERE user_id = ? AND team_code = ?;",
+    "DELETE cd, td, t, s FROM competition_details cd LEFT JOIN team_details td ON cd.competition_id = td.competition_id LEFT JOIN teams t ON cd.competition_id = t.competition_id LEFT JOIN submissions s ON cd.competition_id = s.competition_id WHERE cd.competition_id = ?;",
     [user_id, team_code],
     (err, result) => {
       if (err) {

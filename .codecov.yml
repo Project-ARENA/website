@@ -1,5 +1,5 @@
 coverage:
-  range: 25..50
+  range: 50..60
   round: up
   precision: 2
 
@@ -9,6 +9,3 @@ ignore:
   - "src/views/arena-main.js"
   - "src/views/arena-team.js"
   - "src/views/arena-leaderboard.js"
-  - "src/views/login.js"
-  - "src/views/player-portal-home.js"
-  - "src/views/admin-home.js"
