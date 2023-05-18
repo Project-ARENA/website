@@ -73,7 +73,7 @@ function TeamInputBox(props) {
 </Box>
 
           <Button
-            data-testid="team-input-box-button"
+            id="button"
             className="team-input-box-button"
             name={name}
             disabled = {disabled}

@@ -2,7 +2,7 @@ import * as React from "react";
 import Button from "@mui/joy/Button";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
-export default function ButtonIcons({ name, onClick,disabled,style }) {
+export default function ButtonIcons({ name, onClick,disabled,style, id }) {
   return (
     <Button
       variant="soft"
@@ -12,7 +12,7 @@ export default function ButtonIcons({ name, onClick,disabled,style }) {
       onClick={onClick}
       name={name}
       style={style}
-      data-testid="button"
+      data-testid={id}
     >
       {name}
     </Button>
