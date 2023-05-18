@@ -151,7 +151,8 @@ export default function OverflowCardPP(props) {
           </Typography>
 
           {isRegistered && (
-            <Button name="Enter Arena" onClick={handleBtn2Click} />
+            <Button name="Enter Arena" onClick={handleBtn2Click}
+            />
           )}
 
           <br />

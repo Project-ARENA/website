@@ -39,7 +39,6 @@ describe("OverflowCardPP", () => {
     const { getByText } = render(
       <OverflowCardPP description={description} isRegistered={false} />
     );
-    // {description.length > 100 ? description.substring(0, 100) + "..." : description}
     expect(
       getByText(
         description.length > 100 ? description.substring(0, 100) + "..." : description
@@ -48,21 +47,14 @@ describe("OverflowCardPP", () => {
     
   });
 
-  
-
-  // test("displays the correct button text when not registered", () => {
-  //   const { getByText } = render(<OverflowCardPP isRegistered={false} />);
-  //   const buttonTextRegex = /register now/i;
-  //   expect(getByText(buttonTextRegex)).toBeInTheDocument();
-  // });
   it("displays the correct button text when not registered", () => {
     const { getByText } = render(<OverflowCardPP isRegistered={false} />);
-    //expect(getByText("Register Now")).toBeInTheDocument();
+    expect(getByText("Register Now")).toBeInTheDocument();
   });
 
   it("displays the correct button text when already registered", () => {
     const { getByText } = render(<OverflowCardPP isRegistered={true} />);
-    //expect(getByText("Leave")).toBeInTheDocument();
+    expect(getByText("Leave")).toBeInTheDocument();
   });
 
   it("calls onClick prop when card is clicked", () => {
@@ -73,16 +65,16 @@ describe("OverflowCardPP", () => {
 
   it("calls onButton1Click prop when first button is clicked", () => {
     render(<OverflowCardPP {...props} />);
-    //fireEvent.click(screen.getByRole("button"));
-    //fireEvent.click(screen.getByText("Register Now"));
+    // fireEvent.click(screen.getByRole("button"));
+    // fireEvent.click(screen.getByText("Register Now"));
     expect(props.onButton1Click).toHaveBeenCalledTimes(0);
   });
 
   it("calls onButton2Click prop when second button is clicked", () => {
     const newProps = { ...props, isRegistered: true };
     render(<OverflowCardPP {...newProps} />);
-    //fireEvent.click(screen.getByRole("button"));
-    //fireEvent.click(screen.getByText("Enter Arena"));
+    // fireEvent.click(screen.getByRole("button"));
+    // fireEvent.click(screen.getByText("Enter Arena"));
     expect(props.onButton2Click).toHaveBeenCalledTimes(0);
   });
 });
