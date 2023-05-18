@@ -35,10 +35,10 @@ export default function JoinTeam(props) {
             value={inputValue}
             onChange={handleInputChange}
             placeholder="Enter your input"
-            data-testid="input"
+            id="input"
           />
           <Button
-            data-testid="button"
+            id="button"
             className="team-input-box-button"
             name={name}
             disabled={disabled}
