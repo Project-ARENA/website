@@ -25,4 +25,3 @@ describe('ArenaTeam Component', () => {
     expect(screen.getByText(/team manager/i)).toBeInTheDocument();
   });
 });
-

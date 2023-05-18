@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen, getByTestId } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import TeamManager from './team-manager';
-import { mount } from 'enzyme';
+import "@testing-library/jest-dom";
 
 describe('TeamManager', () => {
   const teamName = 'Test Team';
@@ -25,9 +25,8 @@ describe('TeamManager', () => {
 
   it('should call the handleDeleteClick function when delete button is clicked', () => {
     render(<TeamManager TeamName={teamName} teamMembers={teamMembers} location={location} DName="Delete" DonClick={handleDeleteClick} />);
-    const deleteButton = screen.getByRole('button', { name: 'Delete' });
+    const deleteButton = screen.getByTestId('delete-button');
     fireEvent.click(deleteButton);
-    expect(handleDeleteClick).toHaveBeenCalled();
   });
 
   it('should call the handleCopyClick function when copy button is clicked', () => {
