@@ -35,8 +35,8 @@ export default function CustomDataGrid({ rows }) {
   const [pickerVisible, setPickerVisible] = useState(false);
 
   const handleUploadDone = (res) => {
-    console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
-    console.log(res.filesUploaded[0].mimetype); // Print the MIME type of the uploaded file
+    // console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
+    // console.log(res.filesUploaded[0].mimetype); // Print the MIME type of the uploaded file
 
     if (res.filesUploaded[0].mimetype === "image/png" ||
         res.filesUploaded[0].mimetype === "image/jpeg" ||
@@ -98,7 +98,7 @@ export default function CustomDataGrid({ rows }) {
   const onButtonDelete = async (e, row) => {
     e.stopPropagation();
     setClickedRowDelete(row);
-    console.log(row.competition_id);
+    // console.log(row.competition_id);
 
     Swal.fire({
       title: "Are you sure?",
@@ -110,7 +110,7 @@ export default function CustomDataGrid({ rows }) {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(row.competition_id);
+        // console.log(row.competition_id);
         axios.post("http://localhost:3002/api/post/remove/competition", {
           comp_id: row.competition_id,
         });
@@ -193,7 +193,7 @@ export default function CustomDataGrid({ rows }) {
           initialValue={compname}
           onChange={(e) => {
           setCompname(e.target.value);
-          console.log("Compname value:", e.target.value);
+          // console.log("Compname value:", e.target.value);
           }}
           />
 
@@ -316,21 +316,21 @@ export default function CustomDataGrid({ rows }) {
               onClick={() => {
                 setvisible(false);
                 setPickerVisible(false);
-                console.log("Create button clicked");
-                console.log("Competition Name is:" + compname);
-                console.log("Number of teams is " + maxTeams);
-                console.log("Team min is:" + min);
-                console.log("Team max is:" + max);
-                console.log("Test cases are:" + testcases);
-                console.log("Num testcases is:" + getNumTestcases(testcases));
-                console.log("pic link is:" + pic);
-                console.log("pdf link is:" + pdf);
-                console.log("marker link is:" + marker);
-                console.log("regStartDate: " + CombinedRegStart);
-                console.log("regEndDate: " + CombinedRegEnd);
-                console.log("compStartDate: " + CombinedCompStart);
-                console.log("compEndDate: " + CombinedCompEnd);
-                console.log("Desc: " + desc);
+                // console.log("Create button clicked");
+                // console.log("Competition Name is:" + compname);
+                // console.log("Number of teams is " + maxTeams);
+                // console.log("Team min is:" + min);
+                // console.log("Team max is:" + max);
+                // console.log("Test cases are:" + testcases);
+                // console.log("Num testcases is:" + getNumTestcases(testcases));
+                // console.log("pic link is:" + pic);
+                // console.log("pdf link is:" + pdf);
+                // console.log("marker link is:" + marker);
+                // console.log("regStartDate: " + CombinedRegStart);
+                // console.log("regEndDate: " + CombinedRegEnd);
+                // console.log("compStartDate: " + CombinedCompStart);
+                // console.log("compEndDate: " + CombinedCompEnd);
+                // console.log("Desc: " + desc);
                 PostCompDetails(
                   compname,
                   pic,
