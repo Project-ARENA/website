@@ -73,12 +73,12 @@ export default function CustomDataGrid({ rows }) {
   };
 
   const onButtonEditSubmit = async (e) => {
-    console.log(rowID);
-    console.log(teamCode);
-    console.log(userID);
-    console.log(teamName);
-    console.log(teamScore);
-    console.log(competitionName);
+    // console.log(rowID);
+    // console.log(teamCode);
+    // console.log(userID);
+    // console.log(teamName);
+    // console.log(teamScore);
+    // console.log(competitionName);
 
     try {
       const response = await axios.post(
@@ -90,7 +90,7 @@ export default function CustomDataGrid({ rows }) {
           team_score: teamScore,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       window.location.reload(false);
 
@@ -106,7 +106,7 @@ export default function CustomDataGrid({ rows }) {
     const selectedValue = event.target.value;
     setValue(selectedValue);
     setButtonsDisabled(false);
-    console.log(selectedValue);
+    // console.log(selectedValue);
   };
 
   const onButtonEditMembers = (e, row) => {
@@ -205,7 +205,7 @@ export default function CustomDataGrid({ rows }) {
           user_id: row.user_id,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       // Add team members to list
       const newTeamMemberList = [];
@@ -246,7 +246,7 @@ export default function CustomDataGrid({ rows }) {
             user_id: sel_userID,
           }
         );
-        console.log(response.data);
+        // console.log(response.data);
 
         // Find where the row in the data where the user_id is the same as the user_id of the response
         const indexSel = response.data.findIndex(
@@ -268,7 +268,7 @@ export default function CustomDataGrid({ rows }) {
               user_id: sel_userID,
             }
           );
-          console.log(response.data);
+          // console.log(response.data);
 
           Swal.fire("Removed!", "User has been removed", "success").then(() => {
             window.location.reload(false);
@@ -370,7 +370,7 @@ export default function CustomDataGrid({ rows }) {
               name="Edit"
               onClick={(e) => {
                 onButtonEditSubmit(e.target.value);
-                console.log("Edit button clicked");
+                // console.log("Edit button clicked");
               }}
             />
           </div>
@@ -380,7 +380,7 @@ export default function CustomDataGrid({ rows }) {
               name="Close"
               onClick={() => {
                 setvisible(false);
-                console.log("Close button clicked");
+                // console.log("Close button clicked");
               }}
             />
           </div>
@@ -444,7 +444,7 @@ export default function CustomDataGrid({ rows }) {
             <Button
               name="Remove"
               onClick={(e) => {
-                console.log("Remove button clicked");
+                // console.log("Remove button clicked");
                 onButtonRemove(e.target.value);
               }}
               disabled={buttonsEnabled}
@@ -455,7 +455,7 @@ export default function CustomDataGrid({ rows }) {
             <Button
               name="Promote"
               onClick={(e) => {
-                console.log("Promote button clicked");
+                // console.log("Promote button clicked");
                 onButtonPromote(e.target.value);
               }}
               disabled={buttonsEnabled}
@@ -469,7 +469,7 @@ export default function CustomDataGrid({ rows }) {
                 setMembersVisible(false);
                 setButtonsDisabled(true);
                 setValue("");
-                console.log("Close button clicked");
+                // console.log("Close button clicked");
               }}
             />
           </div>
