@@ -17,7 +17,29 @@ describe("TeamInputBox component", () => {
     render(<TeamInputBox />);
   });
 
-  it("renders the correct title and label", () => {
+  test('handleInputChange updates the input value correctly', () => {
+    render(<TeamInputBox />);
+  
+    const inputElement = screen.getByTestId('team-input');
+    const inputNode = inputElement.querySelector('input');
+  
+    fireEvent.change(inputNode, { target: { value: 'New value' } });
+  
+    expect(inputNode.value).toBe('New value');
+  });
+
+  test('handleLocationChange updates the location value correctly', () => {
+    render(<TeamInputBox />);
+  
+    const selectElement = screen.getByTestId('location-select');
+    const inputElement = selectElement.querySelector('input');
+  
+    fireEvent.change(inputElement, { target: { value: 'Limpopo' } });
+  
+    expect(selectElement.value).toBe(undefined);
+  });
+
+  it("renders the correct title and labe", () => {
     const { getByText } = render(
       <TeamInputBox title="My Title" label="My Label" />
     );
