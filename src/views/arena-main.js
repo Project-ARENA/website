@@ -39,7 +39,6 @@ let Mark = 0;
 let team_code = sessionStorage.getItem("teamCode");
 
 async function handleUploadTXTDone(res) {
-  console.log(res.filesUploaded[0].url);
   TXTLink = res.filesUploaded[0].url;
 
   try {
@@ -51,25 +50,21 @@ async function handleUploadTXTDone(res) {
       }
     );
     Mark = response.data;
-    console.log(response.data);
   } catch (error) {
     console.error(error);
   }
 }
 
 function handleUploadZIPDone(res) {
-  console.log(res.filesUploaded[0].url);
   ZIPLink = res.filesUploaded[0].url;
 }
 
 async function getLatestScores() {
   return new Promise((resolve, reject) => {
-    console.log("http://localhost:3002/api/get/testcase_latest/" + team_code)
     axios
       .get("http://localhost:3002/api/get/testcase_latest/" + team_code)
       .then(function (response) {
         const latestString = response.data[0].testcase_latest;
-        console.log(response.data[0].testcase_latest);
         const jsonArray = JSON.parse(latestString);
 
         let count = 0;
@@ -77,7 +72,6 @@ async function getLatestScores() {
           latestSubmissionScores[count] = jsonArray[key];
           count++;
         }
-        console.log(latestSubmissionScores);
 
         resolve(latestSubmissionScores); // Resolve the promise inside the `then` block
       })
@@ -92,8 +86,6 @@ function getNumTestCases() {
     .get("http://localhost:3002/api/get/numTests/" + competition_id)
     .then(function (response) {
       numTests = response.data[0].no_testcases;
-      console.log("Number of testcase" + numTests);
-      console.log("Team Code" + team_code);
     });
 }
 
@@ -129,7 +121,6 @@ function getCompTestCases() {
       .get("http://localhost:3002/api/get/Testcases/" + competition_id)
       .then(function (response) {
         testcases = response.data[0].testcases;
-        console.log(testcases);
         resolve(testcases);
       })
       .catch(function (error) {
@@ -145,7 +136,6 @@ function getLinkForPDF() {
       .get("http://localhost:3002/api/get/compTestCases/" + competition_id)
       .then(function (response) {
         const linkForPDF = response.data[0].competition_testcases;
-        // console.log(linkForPDF);
         resolve(linkForPDF);
       })
       .catch(function (error) {
@@ -181,7 +171,6 @@ function ScoredHigher() {
     axios
       .get("http://localhost:3002/api/get/testcase_highest/" + team_code)
       .then(function (response) {
-        // console.log("they have submitted before");
         const latestString = response.data[0].testcase_highest;
         const jsonArray = JSON.parse(latestString);
         let highestSub = [];
@@ -191,7 +180,6 @@ function ScoredHigher() {
           count++;
         }
         for (let i = 0; i < latestSubmissionScores.length; i++) {
-          console.log(latestSubmissionScores[i] + " " + highestSub[i]);
           if (latestSubmissionScores[i] > highestSub[i]) {
             //Change only the one that is higher
             highestSub[i] = latestSubmissionScores[i];
@@ -203,7 +191,6 @@ function ScoredHigher() {
           obj[`testcase_${index + 1}`] = value;
         });
         const newHighestSub = JSON.stringify(obj);
-        // console.log(newHighestSub);
         resolve([isHigher, newHighestSub]); // Resolve the promise with both values
       })
       .catch(reject);
@@ -213,7 +200,6 @@ function ScoredHigher() {
 async function postHighestScore() {
   try {
     const [isHigher, newHighestSub] = await ScoredHigher();
-    // console.log(newHighestSub);
 
     if (isHigher) {
       const response = await axios.post(
@@ -234,7 +220,6 @@ async function postHighestScore() {
 
 async function uploadSubmissions() {
   //Make the JSON String thing
-  // console.log(latestSubmissionScores);
   const obj = {};
   const obj1 = {};
 
@@ -253,8 +238,6 @@ async function uploadSubmissions() {
 
   const newSub = JSON.stringify(obj);
   const subHist = JSON.stringify(obj1);
-  console.log(subHist);
-  // console.log("hello?");
   //Upload to submission history:
   axios
     .get("http://localhost:3002/api/get/testcase_prev/" + team_code)
@@ -268,12 +251,10 @@ async function uploadSubmissions() {
           testcase_prev: newString,
         });
       } else {
-        // console.log(response.data[0].testcase_prev);
         const data = JSON.parse(response.data[0].testcase_prev);
         const nextKey = Object.keys(data).length.toString();
         const updatedData = { ...data, [nextKey]: obj1 };
         const updatedDataString = JSON.stringify(updatedData);
-        // console.log(updatedDataString);
         axios.post("http://localhost:3002/api/post/testcasePrev/team", {
           team_name: sessionStorage.getItem("teamName"),
           testcase_prev: updatedDataString,
@@ -394,7 +375,6 @@ const ArenaMain = (props) => {
                     }
                   } else {
                     setShowTXTAlert(true);
-                    console.log(showTXTAlert);
                   }
                 }}
                 pickerOptions={{
@@ -435,7 +415,6 @@ const ArenaMain = (props) => {
           <Button
             name="Upload txt file"
             onClick={() => {
-              console.log("Hello" + uploadedTXT);
               setTXTPickerVisible(true);
             }}
           ></Button>
@@ -461,8 +440,6 @@ const ArenaMain = (props) => {
               //     latestSubmissionScores[i] = 0;
               //   }
               // }
-              console.log(Mark);
-              console.log(latestSubmissionScores);
               uploadSubmissions();
               setTimeout(function () {
                 window.location.reload(false);
@@ -611,7 +588,6 @@ const ArenaMain = (props) => {
               onSubmit={(index) => {
                 // setPickerVisible(true);
                 tabIndex = index + 1;
-                // console.log(tabIndex);
                 //Sets the modal to visible
                 setModalVisible(true);
               }}
@@ -627,7 +603,6 @@ const ArenaMain = (props) => {
 
               //This sets the new score
               latestSubmissionScores[tabIndex - 1] = generateRandomNumber();
-              // console.log(latestSubmissionScores);
               uploadSubmissions();
               setTimeout(function () {
                 window.location.reload(false);
