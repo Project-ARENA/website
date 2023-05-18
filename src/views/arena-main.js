@@ -93,6 +93,7 @@ function getNumTestCases() {
     .then(function (response) {
       numTests = response.data[0].no_testcases;
       console.log("Number of testcase" + numTests);
+      console.log("Team Code" + team_code);
     });
 }
 
@@ -155,8 +156,8 @@ function getLinkForPDF() {
 }
 
 async function getHighest() {
-  return new Promise((resolve, reject) => {
-    axios
+  return new Promise(async (resolve, reject) => {
+    await axios
       .get("http://localhost:3002/api/get/testcase_highest/" + team_code)
       .then(function (response) {
         const latestString = response.data[0].testcase_highest;
