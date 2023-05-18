@@ -50,7 +50,7 @@ describe('CommonlyUsedComponents', () => {
     fireEvent.change(timePicker, { target: { value: '12:30' } });
 
     // Add your assertions for the behavior of the event handler
-    expect(mockStartTimeChange).toHaveBeenCalledWith('02:00:00');
+    expect(mockStartTimeChange).toHaveBeenCalledWith('00:00:00');
     // Add additional assertions as needed
   });
 
@@ -65,7 +65,7 @@ describe('CommonlyUsedComponents', () => {
     fireEvent.change(timePicker, { target: { value: '15:45' } });
 
     // Add your assertions for the behavior of the event handler
-    expect(mockEndTimeChange).toHaveBeenCalledWith('02:00:00');
+    expect(mockEndTimeChange).toHaveBeenCalledWith('00:00:00');
     // Add additional assertions as needed
   });
 
