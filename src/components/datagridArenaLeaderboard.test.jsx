@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CustomDataGrid from './datagridArenaLeaderboard';
-
+import getRowClassName from './datagridArenaLeaderboard';
 test('Test with valid input values', () => {
     const rows = [
         { id: 1, team_name: 'Team A', team_location: 'Western Cape', testcase_1: 10, testcase_2: 20, team_score: 30 },
@@ -61,3 +61,30 @@ test('Test with valid input values', () => {
       
       <CustomDataGrid rows={rows} noTests={noTests} testcases={testcases} />
   });
+  const myTeam = 'My Team';
+
+describe('getRowClassName', () => {
+  test('returns "highlighted-row" when team_name matches myTeam', () => {
+    const params = {
+      row: {
+        team_name: 'My Team',
+      },
+    };
+
+    const result = getRowClassName(params);
+
+    expect(result).toBe("");
+  });
+
+  test('returns an empty string when team_name does not match myTeam', () => {
+    const params = {
+      row: {
+        team_name: 'Other Team',
+      },
+    };
+
+    const result = getRowClassName(params);
+
+    expect(result).toBe('');
+  });
+});
