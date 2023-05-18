@@ -12,6 +12,5 @@ ignore:
   - "src/components/datagridAdminTeams.js"
   - "src/views/admin-competitions.js"
   - "src/views/arena-leaderboard.js"
-  - "src/views/arena-submissions.js"
   - "src/views/contact.js"
   - "src/views/login.js"
