@@ -5,11 +5,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import './datagridArenaLeaderboard.css'
 
 
-function getRowClassName(params, myTeam) {
-    return params.row.team_name === myTeam ? 'highlighted-row' : '';
-  }
+
   
-export function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
+export default function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
 
     // Sort the rows based on team_score in descending order
     const sortedRows = React.useMemo(() => {
@@ -51,7 +49,9 @@ export function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
     ];
     // Highlight row based on "team_name" field
     
-
+    const getRowClassName = (params) => {
+        return params.row.team_name === myTeam ? 'highlighted-row' : '';
+    };
     return (
         <Box sx={{ height: 800, width: '100%' }}>
             <DataGrid
@@ -70,4 +70,3 @@ export function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
         </Box>
     );
 }
-export default getRowClassName
