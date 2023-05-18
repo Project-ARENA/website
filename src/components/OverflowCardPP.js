@@ -15,6 +15,7 @@ export default function OverflowCardPP(props) {
     endDate,
     onClick,
     isRegistered,
+    onButton1Click,
     onButton2Click,
     registration_startdate,
     isDisabled,
@@ -42,10 +43,10 @@ export default function OverflowCardPP(props) {
     onClick();
   };
 
-  // const handleBtn1Click = (event) => {
-  //   event.stopPropagation();
-  //   onButton1Click();
-  // };
+  const handleBtn1Click = (event) => {
+    event.stopPropagation();
+    onButton1Click();
+  };
 
   const handleBtn2Click = (event) => {
     event.stopPropagation();
@@ -156,7 +157,7 @@ export default function OverflowCardPP(props) {
           <br />
           <br />
 
-          {/* <Button
+          <Button
             name={isRegistered ? "Leave" : "Register Now"}
             onClick={handleBtn1Click}
             style={
@@ -165,7 +166,7 @@ export default function OverflowCardPP(props) {
                 : {}
             }
             disabled={isDisabled} // Add this line
-          /> */}
+          />
         </CardOverflow>
       </div>
     </Card>
