@@ -38,7 +38,7 @@ export default function JoinTeam(props) {
             data-testid="input"
           />
           <Button
-            data-testid="team-input-box-button"
+            data-testid="button"
             className="team-input-box-button"
             name={name}
             disabled={disabled}
