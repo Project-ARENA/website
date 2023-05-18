@@ -20,15 +20,44 @@ describe("OverflowCard", () => {
     expect(getByText("Sample title")).toBeInTheDocument();
   });
 
-  it("displays the correct content on the front of the card", () => {
+  
+  it("should render the front of the card with correct details", () => {
+    const imageSrc = "http://localhost/example.jpg/";
+    const titleText = "Card Title";
+    const viewsCount = 100;
+    const registrationStartDate = new Date().toISOString();
+    const onClickMock = jest.fn();
+
     const { getByText, getByAltText } = render(
-      <OverflowCard {...defaultProps} />
+      <OverflowCard
+        image={imageSrc}
+        title={titleText}
+        description="Card Description"
+        views={viewsCount}
+        registration_startdate={registrationStartDate}
+        onClick={onClickMock}
+      />
     );
-    expect(getByText("Sample title")).toBeInTheDocument();
-    expect(getByAltText("")).toBeInTheDocument();
-    expect(getByText("1000 views")).toBeInTheDocument();
-    expect(getByText("2023-12-31")).toBeInTheDocument();
+
+    // Assert the presence of the card elements
+    const imageElement = getByAltText("");
+    expect(imageElement.src).toBe(imageSrc);
+
+    const titleElement = getByText(titleText);
+    expect(titleElement).toBeInTheDocument();
+
+    const viewsElement = getByText(`${viewsCount} views`);
+    expect(viewsElement).toBeInTheDocument();
+
+    const registrationElement = getByText(
+      `Reg Date: ${new Date(registrationStartDate).toLocaleDateString()} ${new Date(
+        registrationStartDate
+      ).toLocaleTimeString()}`
+    );
+    expect(registrationElement).toBeInTheDocument();
   });
+
+
 
   it("returns to original position when clicked again", () => {
   const { getByTestId } = render(<OverflowCard {...defaultProps} />);
