@@ -126,8 +126,8 @@ const AdminCompetitions = (props) => {
   window.onload = getUserDetails();
 
   const handleUploadDone = (res) => {
-    console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
-  console.log(res.filesUploaded[0].mimetype); // Print the MIME type of the uploaded file
+  //   console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
+  // console.log(res.filesUploaded[0].mimetype); // Print the MIME type of the uploaded file
 
   if (res.filesUploaded[0].mimetype === "image/png" ||
     res.filesUploaded[0].mimetype === "image/jpeg" ||
@@ -181,7 +181,7 @@ const AdminCompetitions = (props) => {
           buttonText="Competition Name"
           onChange={(e) => {
           setCompname(e.target.value);
-          console.log("Compname value:", e.target.value);
+          // console.log("Compname value:", e.target.value);
           }}
           />
 
