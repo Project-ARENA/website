@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 export default function BasicTextFields(props) {
-  const { buttonText, onChange, isPassword, initialValue} = props;
+  const { buttonText, onChange, isPassword, initialValue, id} = props;
 
   return (
     <Box
@@ -18,7 +18,7 @@ export default function BasicTextFields(props) {
         id="outlined-basic"
         label={buttonText}
         variant="outlined"
-        data-testid="input"
+        data-testid={id}
         inputProps={{
           onChange: onChange,
         }}

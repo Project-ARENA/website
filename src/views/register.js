@@ -116,24 +116,28 @@ const Register = (props) => {
           buttonText="NAME"
           onChange={(e) => setName(e.target.value)}
           rootClassName="input-box-for-info-root-class-name"
+          id="name"
         ></InputBoxForInfo>
 
         <InputBoxForInfo
           buttonText="SURNAME"
           onChange={(e) => setSurname(e.target.value)}
           rootClassName="input-box-for-info-root-class-name2"
+          id="surname"
         ></InputBoxForInfo>
 
         <InputBoxForInfo
           buttonText="EMAIL"
           onChange={(e) => setEmail(e.target.value)}
           rootClassName="input-box-for-info-root-class-name3"
+          id="email"
         ></InputBoxForInfo>
 
         <InputBoxForInfo
           buttonText="USERNAME"
           onChange={(e) => setUsername(e.target.value)}
           rootClassName="input-box-for-info-root-class-name4"
+          id="username"
         ></InputBoxForInfo>
 
         <InputBoxForInfo
@@ -141,6 +145,7 @@ const Register = (props) => {
           onChange={(e) => setPassword(e.target.value)}
           isPassword
           rootClassName="input-box-for-info-root-class-name5"
+          id="password"
         ></InputBoxForInfo>
         
         <br></br>
@@ -152,6 +157,7 @@ const Register = (props) => {
             doRegister(name, surname, email, username, password, setErrorMessage);
           }}
           rootClassName="button-root-class-name"
+          id="submitBtn"
         ></Button>
 
         <br></br>
@@ -165,4 +171,4 @@ const Register = (props) => {
   );
 };
 
-export { Register, validateInput };
+export { Register, validateInput, postUserDetails, checkIfUserExists, hashPassword, doRegister };
