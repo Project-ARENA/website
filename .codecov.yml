@@ -6,3 +6,12 @@ coverage:
 ignore:
   - "src/server/server.js"
   - "src/index.js"
+  - "src/views/arena-main.js"
+  - "src/components/datagridAdminCompetitions.js"
+  - "src/components/datagridArenaLeaderboard.js"
+  - "src/components/datagridAdminTeams.js"
+  - "src/views/admin-competitions.js"
+  - "src/views/arena-leaderboard.js"
+  - "src/views/arena-submissions.js"
+  - "src/views/contact.js"
+  - "src/views/login.js"

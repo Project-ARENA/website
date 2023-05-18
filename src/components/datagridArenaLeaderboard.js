@@ -4,6 +4,9 @@ import { DataGrid } from '@mui/x-data-grid';
 
 import './datagridArenaLeaderboard.css'
 
+
+
+  
 export default function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
 
     // Sort the rows based on team_score in descending order
@@ -44,12 +47,11 @@ export default function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
           })),
         { field: 'team_score', headerName: 'Team Score', width: 150 },
     ];
-
     // Highlight row based on "team_name" field
+    
     const getRowClassName = (params) => {
         return params.row.team_name === myTeam ? 'highlighted-row' : '';
     };
-
     return (
         <Box sx={{ height: 800, width: '100%' }}>
             <DataGrid

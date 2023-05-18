@@ -21,19 +21,14 @@ const copyToClipboard = (value) => {
   document.body.removeChild(textarea); // Remove the textarea from the body
 };
 
-function handleInputSubmit(){
-  
-}
-
 const ArenaTeam = (props) => {
-
-
   const [disabled, setDisabled] = useState(false);
   const [title, setTitle] = useState("");
   const [teamName, setTeamName] = useState("");
   const [userNicknames, setUserNicknames] = useState([]);
   const [teamCode, setTeamCode] = useState("");
   //const [teamLocation, setTeamLocation] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -83,8 +78,6 @@ const ArenaTeam = (props) => {
     fetchData();
   }, []);
   
-
-
   return (
     <div className="arena-team-container">
       <div data-role="Header" className="arena-team-navbar-container">
@@ -171,10 +164,8 @@ const ArenaTeam = (props) => {
         teamMembers = {userNicknames}
         location = {teamLocation}
         Ldisabled={disabled}
-        LonClick={handleInputSubmit}
         DName="Delete this team"
         Ddisabled={disabled}
-        DonClick={handleInputSubmit}
         onCopyClick={() => {
           Swal.fire({
             title: 'Team created!',

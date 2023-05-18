@@ -19,8 +19,8 @@ async function getNoTests() {
     .then(function(response){
       testcases = response.data[0].testcases;
       noTests = testcases.split(",").length;
-      console.log(testcases);
-      console.log(noTests);
+      // console.log(testcases);
+      // console.log(noTests);
     });
     resolve([noTests, testcases]);
   });

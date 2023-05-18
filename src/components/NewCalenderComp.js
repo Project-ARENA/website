@@ -12,7 +12,7 @@ function CommonlyUsedComponents(props) {
     newDate.setDate(newDate.getDate() + 1); // add 1 day
     const formattedDate = newDate.toISOString().slice(0, 10);
     onStartDateChange(formattedDate);
-    console.log(`Registration start date: ${formattedDate}`);
+    // console.log(`Registration start date: ${formattedDate}`);
   };
   
   const handleEndDateChange = (date) => {
@@ -20,7 +20,7 @@ function CommonlyUsedComponents(props) {
     newDate.setDate(newDate.getDate() + 1); // add 1 day
     const formattedDate = newDate.toISOString().slice(0, 10);
     onEndDateChange(formattedDate);
-    console.log(`Registration end date: ${formattedDate}`);
+    // console.log(`Registration end date: ${formattedDate}`);
   };
   
   const handleStartTimeChange = (date) => {
@@ -30,7 +30,7 @@ function CommonlyUsedComponents(props) {
     const minutes = newDate.getMinutes().toString().padStart(2, '0');
     const formattedTime = `${hours}:${minutes}:00`;
     onStartTimeChange(formattedTime);
-    console.log(`Registration start time: ${formattedTime}`);
+    // console.log(`Registration start time: ${formattedTime}`);
   };
   
   const handleEndTimeChange = (date) => {
@@ -40,7 +40,7 @@ function CommonlyUsedComponents(props) {
     const minutes = newDate.getMinutes().toString().padStart(2, '0');
     const formattedTime = `${hours}:${minutes}:00`;
     onEndTimeChange(formattedTime);
-    console.log(`Registration end time: ${formattedTime}`);
+    // console.log(`Registration end time: ${formattedTime}`);
   };
   
   return (

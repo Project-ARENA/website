@@ -21,7 +21,7 @@ function TeamInputBox(props) {
   };
 
   const handleLocationChange = (event) => {
-    console.log("handleLocationChange called"); // <-- add this line
+    // console.log("handleLocationChange called"); // <-- add this line
     setLocationValue(event.target.value);
     location = event.target.value;
   };

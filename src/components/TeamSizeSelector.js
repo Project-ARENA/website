@@ -15,19 +15,19 @@ function TeamSizeSelector() {
   function handleMinSizeChange(event) {
     min = parseInt(event.target.value);
     setMinSize(min);
-    console.log(`Minimum team size changed to ${min}`);
+    // console.log(`Minimum team size changed to ${min}`);
   }
 
   function handleMaxSizeChange(event) {
     max = parseInt(event.target.value)
     setMaxSize(max);
-    console.log(`Maximum team size changed to ${max}`);
+    // console.log(`Maximum team size changed to ${max}`);
   }
 
   function handleNumTeamsChange(event) {
     maxTeams = parseInt(event.target.value);
     setNumTeams(maxTeams);
-    console.log(`Number of teams changed to ${event.target.value}`);
+    // console.log(`Number of teams changed to ${event.target.value}`);
   }
 
   return (

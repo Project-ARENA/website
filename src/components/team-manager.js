@@ -1,24 +1,10 @@
 import { Input } from "@mui/material";
 import React, { useState } from "react";
 import Button from '../components/button';
-import InputBoxForInfo from "./input-box-for-info";
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import "./team-manager.css";
 
 export default function TeamManager(props) {
-  const { rootClassName, TeamName, teamMembers, location, LonClick,Ldisabled, DName, DonClick,Ddisabled, onCopyClick } = props;
-  const [inputValue, setInputValue] = useState("");
-
-  const handleChange = (event) => {
-    setLocation(event.target.value);
-  };
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
+  const { rootClassName, TeamName, teamMembers, location, DName, Ddisabled, onCopyClick } = props;
 
   return (
     <div className="team-manager-container">
@@ -40,17 +26,18 @@ export default function TeamManager(props) {
 
       {/* Buttons*/}
       <Button
+        id={"delete-button"}
         className="team-manager-delete-button"
         name={DName}
         disabled={Ddisabled}
-        onClick={() => DonClick(inputValue)}
         style={{ marginTop: "25px" }}
       />
       <br/>
       <Button
-          className="team-manager-copy-button"
-          name="Copy Team Code"
-          onClick={onCopyClick}
+        id={"copy-button"}
+        className="team-manager-copy-button"
+        name="Copy Team Code"
+        onClick={onCopyClick}
         />
     </div>
   );
