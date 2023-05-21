@@ -6,7 +6,7 @@ import "./arena-main.css";
 //import tabs from "../components/tabs"
 import BasicTabs from "../components/tabs";
 import { PickerOverlay } from "filestack-react";
-import { sub, subHours } from "date-fns";
+import { set, sub, subHours } from "date-fns";
 import {
   ConstructionOutlined,
   ControlPointSharp,
@@ -37,10 +37,14 @@ let TXTLink = "";
 let ZIPLink = "";
 let Mark = 0;
 let team_code = sessionStorage.getItem("teamCode");
+let testcaseName = "";
 
-async function handleUploadTXTDone(res) {
+async function handleUploadTXTDone(res, setTXTFileName) {
   TXTLink = res.filesUploaded[0].url;
 
+  //Join the string "Text file uploaded" with the filename
+  setTXTFileName("Text file uploaded: " + res.filesUploaded[0].filename);
+  console.log(testcaseName)
   try {
     const response = await axios.post(
       "http://localhost:3002/api/get/upload/score",
@@ -55,8 +59,12 @@ async function handleUploadTXTDone(res) {
   }
 }
 
-function handleUploadZIPDone(res) {
+function handleUploadZIPDone(res, setZIPFileName) {
   ZIPLink = res.filesUploaded[0].url;
+
+  //Join the string "ZIP file uploaded" with the filename
+  setZIPFileName("ZIP file uploaded: " + res.filesUploaded[0].filename);
+  console.log(res.filesUploaded[0].filename);
 }
 
 async function getLatestScores() {
@@ -282,6 +290,10 @@ const ArenaMain = (props) => {
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
 
+  //These store the names of the files that we uplaoded
+  const [txtFileName, setTXTFileName] = useState("");
+  const [zipFileName, setZIPFileName] = useState("");
+
   // const [uploadedTXT, setUploadTXT] = useState(false);
   // const [uploadedZIP, setUploadZIP] = useState(false);
 
@@ -367,7 +379,7 @@ const ArenaMain = (props) => {
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
                   if (res.filesUploaded[0].mimetype === "text/plain") {
-                    handleUploadTXTDone(res);
+                    handleUploadTXTDone(res, setTXTFileName);
                     uploadedTXT = true;
                     //Checks if both are uploaded
                     if (uploadedZIP == true && uploadedTXT == true) {
@@ -395,7 +407,7 @@ const ArenaMain = (props) => {
                 key="picker-overlay"
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
-                  handleUploadDone(res);
+                  handleUploadZIPDone(res, setZIPFileName);
                   uploadedZIP = true;
                   // Checks if both are uploaded
                   if (uploadedZIP && uploadedTXT) {
@@ -417,7 +429,9 @@ const ArenaMain = (props) => {
             onClick={() => {
               setTXTPickerVisible(true);
             }}
+            
           ></Button>
+          <p>{txtFileName}</p>
           <br />
           <Button
             name="Upload Zip File"
@@ -425,6 +439,7 @@ const ArenaMain = (props) => {
               setZIPPickerVisible(true);
             }}
           ></Button>
+          <p>{zipFileName}</p>
           <br />
           <InputTextArea label="Type your comments here..."></InputTextArea>
           <br />
@@ -434,12 +449,6 @@ const ArenaMain = (props) => {
             onClick={() => {
               //This sets the new score
               latestSubmissionScores[tabIndex - 1] = Mark;
-              //This is to set the other scores to 0, to handle it better in the sub hist
-              // for (let i = 0; i < latestSubmissionScores.length; i++){
-              //   if (i != tabIndex-1){
-              //     latestSubmissionScores[i] = 0;
-              //   }
-              // }
               uploadSubmissions();
               setTimeout(function () {
                 window.location.reload(false);
@@ -586,7 +595,7 @@ const ArenaMain = (props) => {
               tabCount={numTests}
               labels={testcases.split(",")}
               onSubmit={(index) => {
-                // setPickerVisible(true);
+                testcaseName = testcases.split(",")[index];
                 tabIndex = index + 1;
                 //Sets the modal to visible
                 setModalVisible(true);
