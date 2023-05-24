@@ -47,10 +47,11 @@ async function handleUploadTXTDone(res, setTXTFileName) {
   console.log(testcaseName)
   try {
     const response = await axios.post(
-      "http://localhost:3002/api/get/upload/score",
+      "http://localhost:3002/api/get/uploadTest/score",
       {
         textFileUrl: res.filesUploaded[0].url,
         competitionId: competition_id,
+        testcaseName: testcaseName,
       }
     );
     Mark = response.data;
