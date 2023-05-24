@@ -140,9 +140,13 @@ app.post("/api/get/upload/score", async (req, res) => {
 app.post("/api/get/uploadTest/score", async (req, res) => {
   const textFileUrl = req.body.textFileUrl;
   const competitionId = req.body.competitionId;
+  const testcaseName = req.body.testcaseName;
   console.log(textFileUrl);
 
-  // const textFileUrl = "https://cdn.filestackcontent.com/N4r7m9lsSC2eI3fa9zCq";
+  // For testing:
+  // textFileUrl = "https://cdn.filestackcontent.com/N4r7m9lsSC2eI3fa9zCq";
+  // competitionId = 31;
+  // testcaseName = "sorting";
 
   let text = "";
 
@@ -158,6 +162,9 @@ app.post("/api/get/uploadTest/score", async (req, res) => {
     res.status(500).send("Error fetching text file");
     return;
   }
+
+  // Testing Input:
+  // text = "5";
 
   try {
     // Get competition_marker from the database using competitionId
@@ -180,6 +187,10 @@ app.post("/api/get/uploadTest/score", async (req, res) => {
     console.log("Link: " + competitionDetails);
 
     const markerScriptUrl = competitionDetails;
+
+    // Testing:
+    // const markerScriptUrl = "https://cdn.filestackcontent.com/Bk4gvNVzQiynbKe7tfgx";
+
     const markerScriptResponse = await axios.get(markerScriptUrl);
     let markerScript = "";
     if (typeof markerScriptResponse.data === "string") {
@@ -192,19 +203,24 @@ app.post("/api/get/uploadTest/score", async (req, res) => {
       stdio: ["pipe", "pipe", process.stderr],
     });
 
-    pythonProcess.stdin.write(`${text}\n`); // Pass the text as input
+    pythonProcess.stdin.write(`${testcaseName},${text}\n`);
     pythonProcess.stdin.end();
 
     let responseSent = false;
 
     pythonProcess.stdout &&
-      pythonProcess.stdout.on("data", (data) => {
-        console.log(`Received data from Python script: ${data}`);
-        if (!responseSent) {
+    pythonProcess.stdout.on("data", (data) => {
+      console.log(`Received data from Python script: ${data}`);
+      if (!responseSent) {
+        if (data.includes("Error")) {
+          // Send the error
+          res.status(500).send(`${data}`);
+        } else {
           res.send(`${data}`);
-          responseSent = true;
         }
-      });
+        responseSent = true;
+      }
+    });
 
     pythonProcess.stderr &&
       pythonProcess.stderr.on("data", (data) => {
@@ -220,9 +236,6 @@ app.post("/api/get/uploadTest/score", async (req, res) => {
     return;
   }
 });
-
-
-
 
 //!Test route
 app.get("/", (req, res) => {
