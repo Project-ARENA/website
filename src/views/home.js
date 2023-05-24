@@ -1,54 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Typewriter from "typewriter-effect";
-import { Helmet } from "react-helmet";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import "./home.css";
+import './home.css'
 
 const Home = (props) => {
   return (
     <div className="home-container">
-      <Helmet>
-        <title>Project ARENA</title>
-        <meta property="og:title" content="Project ARENA" />
-      </Helmet>
       <div data-role="Header" className="home-navbar-container">
         <div className="home-navbar">
           <div className="home-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="home-image"
-            />
             <div data-role="BurgerMenu" className="home-burger-menu">
               <svg viewBox="0 0 1024 1024" className="home-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
             </div>
             <div className="home-links-container">
-              <Link to="/" className="home-link">
+              <Link to="/home" className="home-link">
+                &lt;ProjectArena/&gt;
+              </Link>
+              <Link to="/home" className="home-link1">
                 HOME
               </Link>
-              <Link to="/competitions" className="home-link1 Anchor">
+              <Link to="/competitions" className="home-link2 Anchor">
                 COMPETITIONS
               </Link>
-              <Link to="/contact" className="home-link2 Anchor">
+              <Link to="/contact" className="home-link3 Anchor">
                 CONTACT
               </Link>
-              <Link to="/about" className="contact-link3 Anchor">
+              <Link to="/about" className="home-link4 Anchor">
                 ABOUT
               </Link>
-              {/* <Link to="/admin-home" className="contact-link3 Anchor">
-                ADMIN
-              </Link> */}
             </div>
           </div>
           <div className="home-right-side">
             <Link to="/login" className="home-cta-btn button">
-              <span>
-                <span className="home-text1">PROJECT PORTAL</span>
-                <br></br>
-              </span>
+              <span>LOGIN</span>
             </Link>
           </div>
           <div data-role="MobileMenu" className="home-mobile-menu">
@@ -56,7 +42,7 @@ const Home = (props) => {
               <img
                 alt="image"
                 src="https://play.teleporthq.io/static/svg/default-img.svg"
-                className="home-image1"
+                className="home-image"
               />
               <div data-role="CloseMobileMenu" className="home-close-menu">
                 <svg viewBox="0 0 1024 1024" className="home-icon2">
@@ -65,44 +51,57 @@ const Home = (props) => {
               </div>
             </div>
             <div className="home-links-container1">
-              <Link to="/" className="home-link">
-                HOME
-              </Link>
-              <Link to="/competitions" className="home-link1 Anchor">
-                COMPETITIONS
-              </Link>
-              <Link to="/contact" className="home-link2 Anchor">
-                CONTACT
-              </Link>
-              <Link to="/about" className="contact-link3 Anchor">
-                ABOUT
-              </Link>
-              <Link to="/admin-home" className="contact-link4 Anchor">
-                ADMIN
-              </Link>
+              <span className="home-link5 Anchor">Resources</span>
+              <span className="home-link6 Anchor">Inspiration</span>
+              <span className="home-link7 Anchor">Process</span>
+              <span className="home-link8 Anchor">Our story</span>
             </div>
           </div>
         </div>
       </div>
-      <br></br>
-      <Typewriter
-        autoStart={true}
-        loop={false}
-        onInit={(typewriter) => {
-          typewriter
-            .changeDelay(100)
-            .typeString('Welcome fellow warrior!')
-            .pauseFor(100)
-            .deleteChars(15)
-            .typeString('to the Arena!')
-            .pauseFor(100)
-            .deleteAll()
-            .typeString('Project Arena')
-            .start();
-        }}
-      />
+      <div className="home-section-separator"></div>
+      <div className="home-section-separator1"></div>
+      <div className="home-section-separator2"></div>
+      <div className="home-section-separator3">
+        <div className="home-hero">
+          <div className="home-container2">
+            <h1 className="home-text1">
+              Welcome to our online platform for competitive programming!
+            </h1>
+            <span className="home-text2">
+              <span>
+                Our platform offers a competitive space for programmers to
+                showcase their skills and participate in challenges. Join or
+                create a team and submit your solutions to earn a score, with
+                the top performers showcased on the leaderboard. Test your
+                skills against other talented programmers and join us today to
+                start competing!
+              </span>
+              <span>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: ' ',
+                  }}
+                />
+              </span>
+              <span>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: ' ',
+                  }}
+                />
+              </span>
+            </span>
+          </div>
+          <img
+            alt="image"
+            src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDEzfHxjb21wdXRlcnxlbnwwfHx8fDE2NzkxNDM2ODM&amp;ixlib=rb-4.0.3&amp;w=1200"
+            className="home-image1"
+          />
+        </div>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
