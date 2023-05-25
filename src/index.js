@@ -19,6 +19,7 @@ import { PlayerPortalProfile } from "./views/player-portal-profile";
 import { ArenaProfile } from "./views/arena-profile";
 import ArenaSubmissions from "./views/arena-submissions";
 import ArenaLeaderboard from "./views/arena-leaderboard";
+import Leaderboard from "./views/leaderboard";
 import ArenaTeam from "./views/arena-team";
 import { ArenaMain } from "./views/arena-main";
 
@@ -54,6 +55,7 @@ const App = () => {
         <Route component={ArenaProfile} exact path="/arena-profile" />
         <Route component={ArenaSubmissions} exact path="/arena-submissions" />
         <Route component={ArenaLeaderboard} exact path="/arena-leaderboard" />
+        <Route component={Leaderboard} exact path="/leaderboard" />
         <Route component={ArenaTeam} exact path="/arena-team" />
         <Route component={ArenaMain} exact path="/arena-main" />
       </div>

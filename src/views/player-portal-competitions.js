@@ -188,60 +188,32 @@ function GenCards() {
     const cardData = cardsData.find(
       (cardData) => cardData.competition_id === competition_id
     );
+    try {
+      const response = await axios.get(
+        "http://localhost:3002/api/get/competitionIDGlobal/" + cardData.title
+      );
 
-    if (cardData.isRegistered) {
-      // Can use API route to leave competition
-      try {
-        console.log("Leaving competition");
-        // const response = await axios.post(
-        //   "http://localhost:3002/api/post/leave/team",
-        //   {
-        //     competition_id,
-        //     user_id: userID,
-        //   }
-        // );
-        // // console.log(response);
+      // console.log(response.data[0].competition_id);
+      const compID = response.data[0].competition_id;
+      sessionStorage.setItem("CompID", compID);
+      setTimeout(function () {
+        window.location.href = "http://localhost:3000/player-portal-team";
+      }, 1000);
 
-        // const newCardsData = cardsData.map((cardData) => {
-        //   if (cardData.competition_id === competition_id) {
-        //     return {
-        //       ...cardData,
-        //       isRegistered: false,
-        //     };
-        //   }
-        //   return cardData;
-        // });
-        // setCardsData(newCardsData);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      try {
-        const response = await axios.get(
-          "http://localhost:3002/api/get/competitionIDGlobal/" + cardData.title
-        );
-        // console.log(response.data[0].competition_id);
-        const compID = response.data[0].competition_id;
-        sessionStorage.setItem("CompID", compID);
-        setTimeout(function () {
-          window.location.href = "http://localhost:3000/player-portal-team";
-        }, 1000);
-
-        // Can use API route to join competition
-        // Need to keep track of the competition_id
-        const newCardsData = cardsData.map((cardData) => {
-          if (cardData.competition_id === competition_id) {
-            return {
-              ...cardData,
-              isRegistered: true,
-            };
-          }
-          return cardData;
-        });
-        setCardsData(newCardsData);
-      } catch (error) {
-        console.error(error);
-      }
+      // Can use API route to join competition
+      // Need to keep track of the competition_id
+      const newCardsData = cardsData.map((cardData) => {
+        if (cardData.competition_id === competition_id) {
+          return {
+            ...cardData,
+            isRegistered: true,
+          };
+        }
+        return cardData;
+      });
+      setCardsData(newCardsData);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -253,6 +225,17 @@ function GenCards() {
 
     setTimeout(function () {
       window.location.href = "http://localhost:3000/arena-main";  
+    }, 1000);
+    // console.log(`Enter Arena clicked for competition ${competition_id}`);
+  };
+
+  const handleButton3Click = (competition_id) => {
+    const compID = competition_id;
+    sessionStorage.setItem("CompID", compID);
+    getTeamDetails(userID, compID);
+
+    setTimeout(function () {
+      window.location.href = "http://localhost:3000/leaderboard";  
     }, 1000);
     // console.log(`Enter Arena clicked for competition ${competition_id}`);
   };
@@ -297,6 +280,10 @@ function GenCards() {
             onButton2Click={() => {
               handleButton2Click(activeData.competition_id);
             }}
+            onButton3Click={() => {
+              handleButton3Click(activeData.competition_id);
+            }}
+
             isRegistered={activeData.isRegistered}
             {...activeData}
           />
@@ -329,6 +316,9 @@ function GenCards() {
             }}
             onButton2Click={() => {
               handleButton2Click(inactiveData.competition_id);
+            }}
+            onButton3Click={() => {
+              handleButton3Click(inactiveData.competition_id);
             }}
             isRegistered={inactiveData.isRegistered}
             {...inactiveData}
@@ -363,6 +353,9 @@ function GenCards() {
             }}
             onButton2Click={() => {
               handleButton2Click(registeredData.competition_id);
+            }}
+            onButton3Click={() => {
+              handleButton3Click(registeredData.competition_id);
             }}
             isRegistered={registeredData.isRegistered}
             {...registeredData}
@@ -411,11 +404,9 @@ const PlayerPortalCompetitions = (props) => {
       >
         <div className="player-portal-competitions-navbar">
           <div className="player-portal-competitions-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="player-portal-competitions-image"
-            />
+            <Link to="/player-portal-competitions" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div
               data-role="BurgerMenu"
               className="player-portal-competitions-burger-menu"

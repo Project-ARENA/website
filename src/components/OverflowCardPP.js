@@ -17,6 +17,7 @@ export default function OverflowCardPP(props) {
     isRegistered,
     onButton1Click,
     onButton2Click,
+    onButton3Click,
     registration_startdate,
     isDisabled,
   } = props;
@@ -51,6 +52,11 @@ export default function OverflowCardPP(props) {
   const handleBtn2Click = (event) => {
     event.stopPropagation();
     onButton2Click();
+  };
+
+  const handleBtn3Click = (event) => {
+    event.stopPropagation();
+    onButton3Click();
   };
 
   const frontStyles = {
@@ -151,23 +157,29 @@ export default function OverflowCardPP(props) {
           </Typography>
 
           {isRegistered && (
-            <Button name="Enter Arena" onClick={handleBtn2Click}
+            <Button 
+              name="Enter Arena" 
+              onClick={handleBtn2Click}
             />
           )}
 
           <br />
-          <br />
+          
+          <div style={{ paddingBottom: "10px" }}>
+          {!isRegistered && (
+            <Button
+              name={"Register Now"}
+              onClick={handleBtn1Click}
+              disabled={isDisabled}
+            />
+          )}
+          </div>
 
           <Button
-            name={isRegistered ? "Leave" : "Register Now"}
-            onClick={handleBtn1Click}
-            style={
-              isRegistered
-                ? { backgroundColor: "rgba(255, 0, 0, 0.5)", color: "black" }
-                : {}
-            }
-            disabled={isDisabled} // Add this line
+            name={"Leaderboard"}
+            onClick={handleBtn3Click}
           />
+
         </CardOverflow>
       </div>
     </Card>
