@@ -5,12 +5,15 @@ const emailjs = require("@emailjs/nodejs");
 const mysql = require("mysql");
 const axios = require("axios");
 const { spawn } = require("child_process");
+const sgMail = require('@sendgrid/mail');
 dotenv.config();
 
 const app = express();
 const PORT = 3002;
 app.use(cors());
 app.use(express.json());
+
+sgMail.setApiKey(process.env.REACT_APP_API_KEY_EMAIL_TWILIO);
 
 const db = mysql.createConnection({
   host: process.env.REACT_APP_API_KEY_DB_HOST,
@@ -1200,6 +1203,64 @@ app.post("/api/post/change/teamCaptain", (req, res) => {
       console.log(result);
     }
   );
+});
+
+// Route to send code for password reset
+app.post("/api/post/password/reset/sendCode", (req, res) => {
+  const user_email = req.body.user_email;
+  const user_code = req.body.user_code;
+
+  // Use sendgrid to send email using dynamic template
+  const msg = {
+    to: user_email, // Replace with the recipient's email address
+    from: '2430888@students.wits.ac.za', // Replace with your email address
+    subject: 'Project Arena: Password Reset',
+    templateId: 'd-17cf23dca0ef40d1a262f33771d1df04', // Replace with your dynamic template ID
+    dynamicTemplateData: {
+      code: user_code,
+    },
+  };
+  
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent successfully');
+      res.status(200).send("Email sent successfully");
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Internal server error");
+    });
+
+});
+
+// Route to send code for password reset
+app.post("/api/post/user/verify/sendCode", (req, res) => {
+  const user_email = req.body.user_email;
+  const user_code = req.body.user_code;
+
+  // Use sendgrid to send email using dynamic template
+  const msg = {
+    to: user_email, // Replace with the recipient's email address
+    from: '2430888@students.wits.ac.za', // Replace with your email address
+    subject: 'Project Arena: Verify Account',
+    templateId: 'd-97821ad555ad4071acacdb29704264e6', // Replace with your dynamic template ID
+    dynamicTemplateData: {
+      code: user_code,
+    },
+  };
+  
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent successfully');
+      res.status(200).send("Email sent successfully");
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Internal server error");
+    });
+
 });
 
 //!Type above this
