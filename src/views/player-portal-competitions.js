@@ -11,12 +11,12 @@ const GetDate = () => {
   //console.log(CurrentTime);
 };
 
-function getTeamDetails(user_id, comp_id){
+function getTeamDetails(user_id, comp_id) {
   axios
     .get("http://localhost:3002/api/get/teamCodeAlt/" + user_id + "/" + comp_id)
     .then(function (response) {
-      sessionStorage.setItem('teamCode', (response.data)[0].team_code);
-      sessionStorage.setItem('teamName', (response.data)[0].team_name);
+      sessionStorage.setItem("teamCode", response.data[0].team_code);
+      sessionStorage.setItem("teamName", response.data[0].team_name);
     });
 }
 
@@ -38,8 +38,10 @@ function GenCards() {
           views: data.competition_views,
           image: data.competition_image,
           description: data.competition_info,
+          startDate: data.competition_startdate,
           endDate: data.competition_enddate,
           registration_startdate: data.registration_startdate,
+          registration_enddate: data.registration_enddate,
         }));
         return data;
       });
@@ -111,8 +113,7 @@ function GenCards() {
 
     const registeredCards = newCardsData.filter((card) => {
       return card.isRegistered;
-    }
-    );
+    });
 
     // Sort by end date
     registeredCards.sort((a, b) => {
@@ -122,7 +123,7 @@ function GenCards() {
     });
 
     return registeredCards;
-  }
+  };
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -218,14 +219,30 @@ function GenCards() {
   };
 
   // Handles "Enter Arena" button click
-  const handleButton2Click = (competition_id) => {
+  const handleButton2Click = (competition_id, comp_startDate) => {
     const compID = competition_id;
     sessionStorage.setItem("CompID", compID);
     getTeamDetails(userID, compID);
+    //Get Current date
+    var today = new Date();
+    console.log(today);
+    //Get start date of competition
+    // Check if competition has started
 
-    setTimeout(function () {
-      window.location.href = "http://localhost:3000/arena-main";  
-    }, 1000);
+    console.log(comp_startDate);
+    var startDate = new Date(comp_startDate);
+    console.log(startDate);
+    if (today <  startDate) {
+      //TODO: Add alert
+      alert("Competition has not started");
+      setTimeout(function () {
+        window.location.href = "http://localhost:3000/teams";
+      }, 1000);
+    } else {
+      setTimeout(function () {
+        window.location.href = "http://localhost:3000/arena-main";
+      }, 1000);
+    }
     // console.log(`Enter Arena clicked for competition ${competition_id}`);
   };
 
@@ -247,11 +264,11 @@ function GenCards() {
     axios
       .get("http://localhost:3002/api/get/userDetails/" + username)
       .then(function (response) {
-        sessionStorage.setItem('userID', (response.data)[0].user_id);
-        sessionStorage.setItem('useremail', (response.data)[0].user_email);
-        sessionStorage.setItem('userpassword', (response.data)[0].user_password);
+        sessionStorage.setItem("userID", response.data[0].user_id);
+        sessionStorage.setItem("useremail", response.data[0].user_email);
+        sessionStorage.setItem("userpassword", response.data[0].user_password);
       });
-  }
+  };
 
   window.onload = getUserDetails();
 
@@ -278,12 +295,11 @@ function GenCards() {
               handleButton1Click(activeData.competition_id);
             }}
             onButton2Click={() => {
-              handleButton2Click(activeData.competition_id);
+              handleButton2Click(activeData.competition_id, activeData.startDate);
             }}
             onButton3Click={() => {
               handleButton3Click(activeData.competition_id);
             }}
-
             isRegistered={activeData.isRegistered}
             {...activeData}
           />
@@ -315,7 +331,7 @@ function GenCards() {
               handleButton1Click(inactiveData.competition_id);
             }}
             onButton2Click={() => {
-              handleButton2Click(inactiveData.competition_id);
+              handleButton2Click(inactiveData.competition_id, inactiveData.startDate);
             }}
             onButton3Click={() => {
               handleButton3Click(inactiveData.competition_id);
@@ -352,7 +368,7 @@ function GenCards() {
               handleButton1Click(registeredData.competition_id);
             }}
             onButton2Click={() => {
-              handleButton2Click(registeredData.competition_id);
+              handleButton2Click(registeredData.competition_id, registeredData.startDate);
             }}
             onButton3Click={() => {
               handleButton3Click(registeredData.competition_id);
