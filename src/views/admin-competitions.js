@@ -14,6 +14,21 @@ import "../components/modal.css";
 import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSelector.js";
 import InputTextArea from "../components/input-textarea.js"
 
+let validcomp = false;
+async function checkIfUserExists(username, setErrorMessage) {
+  const response = await axios.get("http://localhost:3002/api/get/doesExist/" + compname);
+  const userExists = response.data;
+  // console.log(response.data);
+  if (JSON.stringify(userExists) == "[]") {
+    setErrorMessage('Account created successfully');
+    return true;
+  }
+  else {
+    setErrorMessage('Username already exists');
+    return false;
+  }
+}
+
 function getNumTestcases(testcases) {
   var numtestcases = 1;
   for (var i = 0; i < testcases.length; i++) {
@@ -25,6 +40,26 @@ function getNumTestcases(testcases) {
 }
 
 // Modal.setAppElement(el)
+function validationCompName(compname){
+  axios
+    .get("http://localhost:3002/api/get/doesCompExist/" + compname)
+    .then(function (response) {
+      const codeResponse = response.data;
+
+      if (JSON.stringify(codeResponse) == "[]") {
+        validcomp=true;
+        console.log("valid name");
+        // alert("valid name");
+      } else {
+        console.log("invalid name");
+        alert("invalid name");
+      }
+    });
+};
+
+function validate(){
+  
+}
 function PostCompDetails(
   compname,
   pic,
@@ -41,6 +76,7 @@ function PostCompDetails(
   min,
   max
 ) {
+  
   return axios.post("http://localhost:3002/api/post/Create_comp", {
     compname: compname,
     pic: pic,
@@ -89,6 +125,7 @@ function GenGrid() {
 }
 
 const AdminCompetitions = (props) => {
+  // const [validcomp, setvalidcomp] = useState(false);
   const [compname, setCompname] = useState("");
   const [testcases, setTestCases] = useState("");
   const [desc, setdesc] = useState("");
@@ -300,8 +337,30 @@ const AdminCompetitions = (props) => {
             <Button
               name="Create"
               onClick={() => {
-                setvisible(false);
-                setPickerVisible(false);
+                
+                validationCompName(compname);
+                if(validcomp==true){
+                  validcomp=false
+                  setvisible(false);
+                  setPickerVisible(false);
+                  PostCompDetails(
+                    compname,
+                    pic,
+                    CombinedCompStart,
+                    CombinedCompEnd,
+                    desc,
+                    pdf,
+                    getNumTestcases(testcases),
+                    testcases,
+                    marker,
+                    CombinedRegStart,
+                    CombinedRegEnd,
+                    maxTeams,
+                    min,
+                    max
+                  );
+                  window.location.reload(false);
+                }
                 // console.log("Create button clicked");
                 // console.log("Competition Name is:" + compname);
                 // console.log("Number of teams is " + maxTeams);
@@ -317,23 +376,9 @@ const AdminCompetitions = (props) => {
                 // console.log("compStartDate: " + CombinedCompStart);
                 // console.log("compEndDate: " + CombinedCompEnd);
                 // console.log("Desc: " + desc);
-                PostCompDetails(
-                  compname,
-                  pic,
-                  CombinedCompStart,
-                  CombinedCompEnd,
-                  desc,
-                  pdf,
-                  getNumTestcases(testcases),
-                  testcases,
-                  marker,
-                  CombinedRegStart,
-                  CombinedRegEnd,
-                  maxTeams,
-                  min,
-                  max
-                );
-                window.location.reload(false);
+
+                
+
               }}
             />
           </div>

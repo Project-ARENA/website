@@ -473,6 +473,22 @@ app.get("/api/get/doesTeamExist/:team_name", (req, res) => {
   );
 });
 
+//!Route to check if the comp name already exists
+//* Returns [] if DNE, else returns something
+app.get("/api/get/doesCompExist/:competition_name", (req, res) => {
+  const competition_name = req.params.competition_name;
+  db.query(
+    "SELECT competition_name from competition_details WHERE competition_name = ?;",
+    competition_name,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
 //!Route to check if the team_code exists
 //* Returns [] if DNE, else returns something
 app.get("/api/get/doesCodeExist/:team_code", (req, res) => {
