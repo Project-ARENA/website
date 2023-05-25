@@ -1263,6 +1263,40 @@ app.post("/api/post/user/verify/sendCode", (req, res) => {
 
 });
 
+//Route to check if email exists
+app.get("/api/get/emailExists/:email", (req, res) => {
+  const email = req.params.email;
+
+  db.query(
+    "SELECT user_email FROM users WHERE user_email = ?;",
+    [email],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+//Route to update password
+app.post("/api/post/updatePassword", (req, res) => {
+  const user_email = req.body.user_email;
+  const user_password = req.body.user_password;
+
+  db.query(
+    "UPDATE users SET user_password = ? WHERE user_email = ?;",
+    [user_password, user_email],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+
 //!Type above this
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

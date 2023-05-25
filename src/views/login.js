@@ -3,21 +3,78 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
-
+import { v4 as uuidv4 } from "uuid";
 import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import "./login.css";
 import bycrypt from 'bcryptjs';
-
+import Modal from "react-modal";
+import { doesSectionFormatHaveLeadingZeros } from "@mui/x-date-pickers/internals/hooks/useField/useField.utils";
 
 /*
     API to get the password associacted with the username -> username might not exist-> throw an error
     call to that API to get the hashed password from the database and then we'll use bcrypt to compare
 */
+
+let code = "";
+
+
+function checkEmailExists(email, setEmailError){
+  axios
+      .get("http://localhost:3002/api/get/emailExists/" + email)
+      .then(function (response) {
+        const userData = response.data;
+
+        if (JSON.stringify(userData) == "[]") {
+          //Email does not exist
+          setEmailError('Email does not exist');
+          console.log("Email does not exist");
+        }
+        else {
+          //Email exists, so send email
+          setEmailError('');
+          console.log("Email exists");
+          sendEmail(email);
+        }
+
+      });
+}
+
+function sendEmail(email){
+  code = uuidv4();
+  console.log(code);
+  axios.post("http://localhost:3002/api/post/password/reset/sendCode", {
+    user_email: email,
+    user_code: code
+  })
+  .then(function (response) {
+    console.log(response);
+  }
+  )
+
+}
+
+function changePassword(email, newPass, setModalVisible){
+  axios.post("http://localhost:3002/api/post/updatePassword", {
+    user_email: email,
+    user_password: newPass
+  })
+  .then(function (response) {
+    console.log(response);
+    setModalVisible(false);
+  }
+  )
+}
+
 const Login = (props) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
+  const [emailError, setEmailError] = useState(null);
+  const [email, setEmail] = useState("");
+  const [verfCode, setVerfCode] = useState("");
+  const [newPass, setNewPass] = useState("");
 
   // Enter key triggers Login button
   const handleSubmit = event => {
@@ -133,6 +190,97 @@ const Login = (props) => {
             isPassword
             onChange={(e) => setPassword(e.target.value)}
           ></InputBoxForInfo>
+          <br/>
+          <Modal
+        isOpen={modalVisible}
+        style={{
+          content: {
+            width: "90%",
+            height: "90%",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            overflowY: "scroll",
+          },
+          overlay: { zIndex: 1000 },
+        }}
+        
+        >
+          <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "100%",
+            marginLeft: 200,
+            marginRight: 200,
+          }}
+        >
+          <h4>Please enter your recovery email address</h4>
+          
+          <br/>
+          <InputBoxForInfo
+            buttonText="Email Address"
+            onChange={(e) => setEmail(e.target.value)}
+          ></InputBoxForInfo>
+          
+          <br/>
+
+          <Button
+              name="Send verification code"
+              onClick={() => {
+                console.log(email);
+                checkEmailExists(email, setEmailError);
+              }}
+          ></Button>
+          <br/>
+
+          <br/>
+          <p>Please enter the verification code you received. If you did not receive the email, please check you spam folder.
+            Thereafter enter your new password.
+          </p>
+          <br/>
+          <InputBoxForInfo
+            buttonText="Verification code"
+            onChange={(e) => setVerfCode(e.target.value)}
+          ></InputBoxForInfo>
+          <InputBoxForInfo
+            buttonText="New Password"
+            onChange={(e) => setNewPass(e.target.value)}
+          ></InputBoxForInfo>
+          <br/>
+          <Button
+              name="Change Password"
+              onClick={() => {
+                console.log(email);
+                console.log(verfCode);
+                console.log(newPass);
+                if (verfCode == code){
+                  console.log("Code is correct");
+                  const salt = bycrypt.genSaltSync(10);
+                  const cryptedPass = bycrypt.hashSync(newPass, salt);
+                  console.log(cryptedPass);
+                  changePassword(email, cryptedPass, setModalVisible);
+                }
+              }}
+          ></Button>
+          <br/>
+          <Button
+              name="close"
+              onClick={() => {
+                setModalVisible(false);
+              }}
+          ></Button>
+        </div>
+        </Modal>
+          <a href="#"
+            onClick={() => {
+              console.log("Forgot Password clicked");
+              setModalVisible(true);
+            }}
+          >
+            Forgot Password?
+          </a>
           <br></br>
           {errorMessage && <div className="error">{errorMessage}</div>}
           <Button
