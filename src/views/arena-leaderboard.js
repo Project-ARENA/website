@@ -94,12 +94,9 @@ const ArenaLeaderboard = (props) => {
       <div data-role="Header" className="arena-leaderboard-navbar-container">
         <div className="arena-leaderboard-navbar">
           <div className="arena-leaderboard-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="arena-leaderboard-image"
-
-            />
+            <Link to="/player-portal-competitions" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div
               data-role="BurgerMenu"
               className="arena-leaderboard-burger-menu"

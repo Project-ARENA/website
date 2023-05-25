@@ -253,11 +253,9 @@ const Competitions = (props) => {
       <div data-role="Header" className="competitions-navbar-container">
         <div className="competitions-navbar">
           <div className="competitions-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="competitions-image"
-            />
+            <Link to="/" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div data-role="BurgerMenu" className="competitions-burger-menu">
               <svg viewBox="0 0 1024 1024" className="competitions-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
@@ -280,7 +278,7 @@ const Competitions = (props) => {
           </div>
           <div className="competitions-right-side">
             <Link to="/login" className="competitions-cta-btn button">
-              PROJECT PORTAL
+              LOGIN
             </Link>
           </div>
           <div data-role="MobileMenu" className="competitions-mobile-menu">

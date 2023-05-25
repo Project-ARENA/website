@@ -68,11 +68,9 @@ const ArenaSubmissions = (props) => {
       <div data-role="Header" className="arena-submissions-navbar-container">
         <div className="arena-submissions-navbar">
           <div className="arena-submissions-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="arena-submissions-image"
-            />
+            <Link to="/player-portal-competitions" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div
               data-role="BurgerMenu"
               className="arena-submissions-burger-menu"

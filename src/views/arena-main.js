@@ -492,11 +492,9 @@ const ArenaMain = (props) => {
       <div data-role="Header" className="arena-main-navbar-container">
         <div className="arena-main-navbar">
           <div className="arena-main-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="arena-main-image"
-            />
+            <Link to="/player-portal-competitions" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div data-role="BurgerMenu" className="arena-main-burger-menu">
               <svg viewBox="0 0 1024 1024" className="arena-main-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>

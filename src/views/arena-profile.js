@@ -181,11 +181,9 @@ const ArenaProfile = (props) => {
           </div>
           <div data-role="MobileMenu" className="arena-profile-mobile-menu">
             <div className="arena-profile-container2">
-              <img
-                alt="image"
-                src="https://play.teleporthq.io/static/svg/default-img.svg"
-                className="arena-profile-image1"
-              />
+              <Link to="/player-portal-competitions" className="home-link">
+                  &lt;ProjectArena/&gt;
+              </Link>
               <div
                 data-role="CloseMobileMenu"
                 className="arena-profile-close-menu"

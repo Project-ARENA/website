@@ -126,29 +126,29 @@ export default function CustomDataGrid({ rows }) {
     { field: "competition_id", headerName: "ID", width: 50 },
     { field: "competition_name", headerName: "Title", width: 120 },
     { field: "competition_views", headerName: "Views", width: 80 },
-    { field: "registration_startdate", headerName: "Registration Starts", width: 160 },
-    { field: "registration_enddate", headerName: "Registration Ends", width: 160 },
-    { field: "competition_startdate", headerName: "Competition Starts", width: 160 },
-    { field: "competition_enddate", headerName: "Competition Ends", width: 160 },
+    { field: "registration_startdate", headerName: "Registration Starts", width: 170 },
+    { field: "registration_enddate", headerName: "Registration Ends", width: 170 },
+    { field: "competition_startdate", headerName: "Competition Starts", width: 170 },
+    { field: "competition_enddate", headerName: "Competition Ends", width: 170 },
     { field: "competition_no_testcases", headerName: "No. Tests", width: 100 },
     {
       field: "deleteButton",
       headerName: "Actions",
       description: "Actions column.",
       sortable: false,
-      width: 340,
+      width: 300,
       renderCell: (params) => {
         return (
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button
-              name="Delete Competition"
+              name="Delete"
               onClick={(e) => onButtonDelete(e, params.row)}
             >
               Delete Team
             </Button>
 
             <Button
-              name="Edit Details"
+              name="Edit"
               onClick={(e) => onButtonEdit(e, params.row)}
             >
               Edit Details

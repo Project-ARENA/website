@@ -60,11 +60,9 @@ const AdminTeams = (props) => {
           </div>
           <div data-role="MobileMenu" className="admin-teams-mobile-menu">
             <div className="admin-teams-container2">
-              <img
-                alt="image"
-                src="https://play.teleporthq.io/static/svg/default-img.svg"
-                className="admin-teams-image1"
-              />
+              <Link to="/admin-competitions" className="home-link">
+                  &lt;ProjectArena/&gt;
+              </Link>
               <div
                 data-role="CloseMobileMenu"
                 className="admin-teams-close-menu"

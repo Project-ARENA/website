@@ -12,11 +12,9 @@ const PlayerPortalContact = (props) => {
       >
         <div className="player-portal-contact-navbar">
           <div className="player-portal-contact-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="player-portal-contact-image"
-            />
+            <Link to="/player-portal-competitions" className="home-link">
+                  &lt;ProjectArena/&gt;
+            </Link>
             <div
               data-role="BurgerMenu"
               className="player-portal-contact-burger-menu"
@@ -53,11 +51,9 @@ const PlayerPortalContact = (props) => {
             className="player-portal-contact-mobile-menu"
           >
             <div className="player-portal-contact-container2">
-              <img
-                alt="image"
-                src="https://play.teleporthq.io/static/svg/default-img.svg"
-                className="player-portal-contact-image1"
-              />
+              <Link to="/player-portal-competitions" className="home-link">
+                  &lt;ProjectArena/&gt;
+              </Link>
               <div
                 data-role="CloseMobileMenu"
                 className="player-portal-contact-close-menu"
