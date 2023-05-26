@@ -425,6 +425,9 @@ const ArenaMain = (props) => {
           <br />
           <Button
             name="Upload txt file"
+            style={{
+              alignItems: "center",
+            }}
             onClick={() => {
               setTXTPickerVisible(true);
             }}
@@ -433,17 +436,22 @@ const ArenaMain = (props) => {
           <br />
           <Button
             name="Upload Zip File"
+            style={{
+              alignItems: "center",
+            }}
             onClick={() => {
               setZIPPickerVisible(true);
             }}
           ></Button>
           <p>{zipFileName}</p>
           <br />
-          <InputTextArea label="Type your comments here..."></InputTextArea>
-          <br />
           <Button
             name="Submit"
             disabled={disabled}
+            style={{
+              color: "black",
+              alignItems: "center",
+            }}
             onClick={() => {
               //This sets the new score
               latestSubmissionScores[tabIndex - 1] = Mark;
@@ -454,23 +462,17 @@ const ArenaMain = (props) => {
             }}
           ></Button>
           <br />
-          <div
-            style={{
-              marginLeft: 6,
-              marginTop: 5,
+          <Button
+            name="Close"
+            onClick={() => {
+              setModalVisible(false);
             }}
-          >
-            <Button
-              name="Close"
-              onClick={() => {
-                setModalVisible(false);
-              }}
-              style={{
-                backgroundColor: "rgba(255, 0, 0, 0.5)",
-                color: "black",
-              }}
-            ></Button>
-          </div>
+            style={{
+              backgroundColor: "rgba(255, 0, 0, 0.5)",
+              color: "black",
+              alignItems: "center",
+            }}
+          ></Button>
         </div>
       </Modal>
       {showTXTAlert && (
@@ -498,14 +500,18 @@ const ArenaMain = (props) => {
       <div data-role="Header" className="arena-main-navbar-container">
         <div className="arena-main-navbar">
           <div className="arena-main-left-side">
-            <Link to="/player-portal-competitions" className="home-link">
-              &lt;ProjectArena/&gt;
-            </Link>
             <div data-role="BurgerMenu" className="arena-main-burger-menu">
               <svg viewBox="0 0 1024 1024" className="arena-main-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
             </div>
+            <Link
+              href="https://youtu.be/dQw4w9WgXcQ"
+              className="home-link"
+            >
+              &lt;ProjectArena/&gt;
+            </Link>
+            
             <Link to="/player-portal-competitions" className="arena-back-link">
               <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
                 <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
@@ -563,10 +569,18 @@ const ArenaMain = (props) => {
       <div className="arena-main-section-separator2"></div>
       <div className="arena-main-section-separator3"></div>
       <br />
-      <h1>{title}</h1>
-      <h2>Submissions</h2>
+      <h1 style={{ textAlign: "center" }}>{title}</h1>
+      <h2 style={{ textAlign: "center" }}>Arena</h2>
       <br />
-      <p>{paragraph}</p>
+      <p
+        style={{
+          textAlign: "center",
+          overflowWrap: "break-word",
+          width: "800px",
+        }}
+      >
+        {paragraph}
+      </p>
       <br />
       <a
         href="#"
