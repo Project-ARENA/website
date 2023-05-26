@@ -11,11 +11,9 @@ const About = (props) => {
       <div data-role="Header" className="about-navbar-container" data-testid="Header-container">
         <div className="about-navbar">
           <div className="about-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="about-image"
-            />
+            <Link to="/" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div data-role="BurgerMenu" className="about-burger-menu">
               <svg viewBox="0 0 1024 1024" className="about-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
@@ -41,7 +39,7 @@ const About = (props) => {
           </div>
           <div className="about-right-side">
             <Link to="/login" className="about-cta-btn button">
-              PROJECT PORTAL
+              LOGIN
             </Link>
           </div>
           <div data-role="MobileMenu" className="about-mobile-menu" data-testid="MobileMenu-container">

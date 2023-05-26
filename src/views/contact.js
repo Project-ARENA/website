@@ -87,10 +87,9 @@ const Contact = (props) => {
       <div data-role="Header" className="contact-navbar-container">
         <div className="contact-navbar">
           <div className="contact-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="contact-image" />
+            <Link to="" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div data-role="BurgerMenu" className="contact-burger-menu">
               <svg viewBox="0 0 1024 1024" className="contact-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
@@ -113,7 +112,7 @@ const Contact = (props) => {
           </div>
           <div className="contact-right-side">
             <Link to="/login" className="contact-cta-btn button">
-              PROJECT PORTAL
+              LOGIN
             </Link>
           </div>
           <div data-role="MobileMenu" className="contact-mobile-menu">

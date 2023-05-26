@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from "react";
 import TeamManager from '../components/team-manager'
 import axios from "axios";
-import './arena-team.css'
+import './teams.css'
 import Swal from 'sweetalert2'
 
 const competition_id = sessionStorage.getItem('CompID');
@@ -21,7 +21,7 @@ const copyToClipboard = (value) => {
   document.body.removeChild(textarea); // Remove the textarea from the body
 };
 
-const ArenaTeam = (props) => {
+const Teams = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [title, setTitle] = useState("");
   const [teamName, setTeamName] = useState("");
@@ -83,9 +83,11 @@ const ArenaTeam = (props) => {
       <div data-role="Header" className="arena-team-navbar-container">
         <div className="arena-team-navbar">
           <div className="arena-team-left-side">
-            <Link to="/player-portal-competitions" className="home-link">
-                &lt;ProjectArena/&gt;
-            </Link>
+            <img
+              alt="image"
+              src="https://play.teleporthq.io/static/svg/default-img.svg"
+              className="arena-team-image"
+            />
             <div data-role="BurgerMenu" className="arena-team-burger-menu">
               <svg viewBox="0 0 1024 1024" className="arena-team-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
@@ -97,18 +99,6 @@ const ArenaTeam = (props) => {
                   </svg>
               </Link>
             <div className="arena-team-links-container">
-              <Link to="/arena-main" className="arena-main-link">
-                ARENA
-              </Link>
-              <Link to="/arena-submissions" className="arena-team-link">
-                Submissions
-              </Link>
-              <Link
-                to="/arena-leaderboard"
-                className="arena-team-link1 Anchor"
-              >
-                lEADERBOARD
-              </Link>
               <Link
                 to="/arena-team"
                 className="arena-team-link2 Anchor"
@@ -187,4 +177,4 @@ const ArenaTeam = (props) => {
   )
 }
 
-export default ArenaTeam
+export default Teams

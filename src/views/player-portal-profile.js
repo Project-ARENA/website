@@ -139,11 +139,9 @@ const PlayerPortalProfile = (props) => {
       <div role="Header" className="player-portal-profile-navbar-container">
         <div className="player-portal-profile-navbar">
           <div className="player-portal-profile-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="player-portal-profile-image"
-            />
+            <Link to="/player-portal-competitions" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div
               data-role="BurgerMenu"
               className="player-portal-profile-burger-menu"

@@ -15,10 +15,10 @@ const Home = (props) => {
               </svg>
             </div>
             <div className="home-links-container">
-              <Link to="/home" className="home-link">
+              <Link to="/" className="home-link">
                 &lt;ProjectArena/&gt;
               </Link>
-              <Link to="/home" className="home-link1">
+              <Link to="/" className="home-link1">
                 HOME
               </Link>
               <Link to="/competitions" className="home-link2 Anchor">

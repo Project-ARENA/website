@@ -412,11 +412,9 @@ const AdminCompetitions = (props) => {
       <div data-role="Header" className="admin-competitions-navbar-container">
         <div className="admin-competitions-navbar">
           <div className="admin-competitions-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="admin-competitions-image"
-            />
+            <Link to="/admin-competitions" className="home-link">
+                &lt;ProjectArena/&gt;
+            </Link>
             <div
               data-role="BurgerMenu"
               className="admin-competitions-burger-menu"
