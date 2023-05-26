@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Button from "../components/button";
-
+import { Padding } from "@mui/icons-material";
 
 function TabPanel(props) {
   const { children, value, index, onSubmit, labels, ...other } = props;
@@ -13,7 +13,7 @@ function TabPanel(props) {
   const handleButtonClick = () => {
     onSubmit(index);
   };
-  
+
   return (
     <div
       role="tabpanel"
@@ -25,11 +25,7 @@ function TabPanel(props) {
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
-          <Button 
-          name = "Upload Solution"
-          onClick={handleButtonClick}>
-            
-          </Button>
+          <Button name="Upload Solution" onClick={handleButtonClick}></Button>
         </Box>
       )}
     </div>
@@ -46,11 +42,18 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-export default function BasicTabs({ onSubmit, labels, tabCount, tabContent, tabContent2 }) { // Receive onSubmit, tabCount, and tabContent props
+export default function BasicTabs({
+  onSubmit,
+  labels,
+  tabCount,
+  tabContent,
+  tabContent2,
+}) {
+  // Receive onSubmit, tabCount, and tabContent props
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -58,15 +61,15 @@ export default function BasicTabs({ onSubmit, labels, tabCount, tabContent, tabC
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
           {Array.from({ length: tabCount }, (_, index) => (
-            <Tab
-              key={index}
-              label={`${labels[index]}`}
-              {...a11yProps(index)}
-            />
+            <Tab key={index} label={`${labels[index]}`} {...a11yProps(index)} />
           ))}
         </Tabs>
       </Box>
@@ -76,11 +79,15 @@ export default function BasicTabs({ onSubmit, labels, tabCount, tabContent, tabC
           value={value}
           index={index}
           onSubmit={onSubmit}
+          style={{ textAlign: "center" }}
         >
           {/* Render content for each tab from the tabContent prop */}
-          {" Latest Score: " + tabContent[index]}
-          <br/>
-          {"Highest Score: " + tabContent2[index]}
+          <div style={{ textAlign: "center", paddingTop:"1em" }}>
+            Latest Score: {tabContent[index]}
+            </div>
+          <div style={{ textAlign: "center", paddingTop:"1em",paddingBottom:"1em"  }}>
+            Highest Score: {tabContent2[index]}
+          </div>
         </TabPanel>
       ))}
     </Box>
