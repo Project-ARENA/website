@@ -469,7 +469,7 @@ const ArenaMain = (props) => {
             }}
             style={{
               backgroundColor: "rgba(255, 0, 0, 0.5)",
-              color: "black",
+              color: "rgba(255, 0, 0, 0.5)",
               alignItems: "center",
             }}
           ></Button>
@@ -505,13 +505,10 @@ const ArenaMain = (props) => {
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
             </div>
-            <Link
-              href="https://youtu.be/dQw4w9WgXcQ"
-              className="home-link"
-            >
+            <Link href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
               &lt;ProjectArena/&gt;
             </Link>
-            
+
             <Link to="/player-portal-competitions" className="arena-back-link">
               <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
                 <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
