@@ -467,11 +467,7 @@ const ArenaMain = (props) => {
             onClick={() => {
               setModalVisible(false);
             }}
-            style={{
-              backgroundColor: "rgba(255, 0, 0, 0.5)",
-              color: "rgba(255, 0, 0, 0.5)",
-              alignItems: "center",
-            }}
+            style={{backgroundColor: "rgba(255, 0, 0, 0.5)", color: "black"}}
           ></Button>
         </div>
       </Modal>
