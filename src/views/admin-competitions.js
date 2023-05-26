@@ -15,6 +15,7 @@ import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSele
 import InputTextArea from "../components/input-textarea.js"
 
 let validcomp = false;
+let valid = false;
 async function checkIfUserExists(username, setErrorMessage) {
   const response = await axios.get("http://localhost:3002/api/get/doesExist/" + compname);
   const userExists = response.data;
@@ -57,9 +58,16 @@ function validationCompName(compname){
     });
 };
 
-function validate(){
-  
+function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf,testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max) {
+  // Check if any of the required inputs are missing
+  if (!compname || !pic || !CombinedCompStart || !CombinedCompEnd || !desc || !pdf || !testcases || !marker || !CombinedRegStart || !CombinedRegEnd || !maxTeams || !min || !max) {
+    alert('Please fill in all the required fields.');
+    return false;
+  }
+
+  return true;
 }
+
 function PostCompDetails(
   compname,
   pic,
@@ -337,7 +345,11 @@ const AdminCompetitions = (props) => {
             <Button
               name="Create"
               onClick={() => {
-                
+                // Validate inputs before making the API call
+              if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max)) {
+              return; // Stop further execution if validation fails
+              }
+              else{
                 validationCompName(compname);
                 if(validcomp==true){
                   validcomp=false
@@ -361,6 +373,8 @@ const AdminCompetitions = (props) => {
                   );
                   window.location.reload(false);
                 }
+              }
+                
                 // console.log("Create button clicked");
                 // console.log("Competition Name is:" + compname);
                 // console.log("Number of teams is " + maxTeams);
