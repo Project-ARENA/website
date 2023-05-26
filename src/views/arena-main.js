@@ -44,7 +44,7 @@ async function handleUploadTXTDone(res, setTXTFileName) {
 
   //Join the string "Text file uploaded" with the filename
   setTXTFileName("Text file uploaded: " + res.filesUploaded[0].filename);
-  console.log(testcaseName)
+  console.log(testcaseName);
   try {
     const response = await axios.post(
       "http://localhost:3002/api/get/uploadTest/score",
@@ -167,10 +167,10 @@ async function getHighest() {
           count++;
         }
         resolve(highestSubArray); // Resolve the promise with the highestSubArray
-      })
-      // .catch(function (error) {
-      //   // reject(error); // Reject the promise with the error
-      // });
+      });
+    // .catch(function (error) {
+    //   // reject(error); // Reject the promise with the error
+    // });
   });
 }
 
@@ -279,8 +279,6 @@ async function uploadSubmissions() {
 
   await postHighestScore();
 }
-
-
 
 const ArenaMain = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -430,7 +428,6 @@ const ArenaMain = (props) => {
             onClick={() => {
               setTXTPickerVisible(true);
             }}
-            
           ></Button>
           <p>{txtFileName}</p>
           <br />
@@ -457,9 +454,16 @@ const ArenaMain = (props) => {
             }}
           ></Button>
           <br />
-          <div style={{ marginLeft: 6, marginTop: 5 }}>
+          <div
+            style={{
+              marginLeft: 6,
+              marginTop: 5,
+              backgroundColor: "rgba(255, 0, 0, 0.5)",
+              color: "black",
+            }}
+          >
             <Button
-              name="close"
+              name="Close"
               onClick={() => {
                 setModalVisible(false);
               }}
@@ -493,7 +497,7 @@ const ArenaMain = (props) => {
         <div className="arena-main-navbar">
           <div className="arena-main-left-side">
             <Link to="/player-portal-competitions" className="home-link">
-                &lt;ProjectArena/&gt;
+              &lt;ProjectArena/&gt;
             </Link>
             <div data-role="BurgerMenu" className="arena-main-burger-menu">
               <svg viewBox="0 0 1024 1024" className="arena-main-icon">
