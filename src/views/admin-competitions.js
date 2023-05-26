@@ -58,15 +58,35 @@ function validationCompName(compname){
     });
 };
 
-function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf,testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max) {
-  // Check if any of the required inputs are missing
-  if (!compname || !pic || !CombinedCompStart || !CombinedCompEnd || !desc || !pdf || !testcases || !marker || !CombinedRegStart || !CombinedRegEnd || !maxTeams || !min || !max) {
-    alert('Please fill in all the required fields.');
+function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max) {
+  // Create an array to store the names of the missing fields
+  const missingFields = [];
+
+  // Check if any of the required inputs are missing and add their names to the missingFields array
+  if (!compname) missingFields.push('Company Name');
+  if (!pic) missingFields.push('Picture');
+  if (!CombinedCompStart) missingFields.push('Combined Competition Start');
+  if (!CombinedCompEnd) missingFields.push('Combined Competition End');
+  if (!desc) missingFields.push('Description');
+  if (!pdf) missingFields.push('PDF');
+  if (!testcases) missingFields.push('Test Cases');
+  if (!marker) missingFields.push('Marker');
+  if (!CombinedRegStart) missingFields.push('Combined Registration Start');
+  if (!CombinedRegEnd) missingFields.push('Combined Registration End');
+  if (!maxTeams) missingFields.push('Max Teams');
+  if (!min) missingFields.push('Min');
+  if (!max) missingFields.push('Max');
+
+  // Check if any fields are missing
+  if (missingFields.length > 0) {
+    const missingFieldsString = missingFields.join(', ');
+    alert(`Please fill in the following required fields: ${missingFieldsString}.`);
     return false;
   }
 
   return true;
 }
+
 
 function PostCompDetails(
   compname,
