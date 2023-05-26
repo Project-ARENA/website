@@ -458,14 +458,16 @@ const ArenaMain = (props) => {
             style={{
               marginLeft: 6,
               marginTop: 5,
-              backgroundColor: "rgba(255, 0, 0, 0.5)",
-              color: "black",
             }}
           >
             <Button
               name="Close"
               onClick={() => {
                 setModalVisible(false);
+              }}
+              style={{
+                backgroundColor: "rgba(255, 0, 0, 0.5)",
+                color: "black",
               }}
             ></Button>
           </div>
