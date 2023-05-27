@@ -139,11 +139,9 @@ const ArenaProfile = (props) => {
       <div role="Header" className="arena-profile-navbar-container">
         <div className="arena-profile-navbar">
           <div className="arena-profile-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="arena-profile-image"
-            />
+          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
+                &lt;ProjectArena/&gt;
+              </a>
             <div data-role="BurgerMenu" className="arena-profile-burger-menu">
               <svg viewBox="0 0 1024 1024" className="arena-profile-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>

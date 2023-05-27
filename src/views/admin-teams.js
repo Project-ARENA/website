@@ -32,11 +32,9 @@ const AdminTeams = (props) => {
       <div data-role="Header" className="admin-teams-navbar-container">
         <div className="admin-teams-navbar">
           <div className="admin-teams-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="admin-teams-image"
-            />
+          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
+                &lt;ProjectArena/&gt;
+              </a>
             <div data-role="BurgerMenu" className="admin-teams-burger-menu">
               <svg viewBox="0 0 1024 1024" className="admin-teams-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>

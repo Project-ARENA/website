@@ -432,9 +432,9 @@ const AdminCompetitions = (props) => {
       <div data-role="Header" className="admin-competitions-navbar-container">
         <div className="admin-competitions-navbar">
           <div className="admin-competitions-left-side">
-            <Link to="/admin-competitions" className="home-link">
+          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
                 &lt;ProjectArena/&gt;
-            </Link>
+              </a>
             <div
               data-role="BurgerMenu"
               className="admin-competitions-burger-menu"

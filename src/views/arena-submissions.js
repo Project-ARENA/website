@@ -68,9 +68,9 @@ const ArenaSubmissions = (props) => {
       <div data-role="Header" className="arena-submissions-navbar-container">
         <div className="arena-submissions-navbar">
           <div className="arena-submissions-left-side">
-            <Link to="/player-portal-competitions" className="home-link">
+          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
                 &lt;ProjectArena/&gt;
-            </Link>
+              </a>
             <div
               data-role="BurgerMenu"
               className="arena-submissions-burger-menu"

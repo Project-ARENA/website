@@ -15,9 +15,9 @@ const Home = (props) => {
               </svg>
             </div>
             <div className="home-links-container">
-              <Link to="/" className="home-link">
+              <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
                 &lt;ProjectArena/&gt;
-              </Link>
+              </a>
               <Link to="/" className="home-link1">
                 HOME
               </Link>

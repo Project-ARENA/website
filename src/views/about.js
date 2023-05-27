@@ -11,9 +11,9 @@ const About = (props) => {
       <div data-role="Header" className="about-navbar-container" data-testid="Header-container">
         <div className="about-navbar">
           <div className="about-left-side">
-            <Link to="/" className="home-link">
+          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
                 &lt;ProjectArena/&gt;
-            </Link>
+              </a>
             <div data-role="BurgerMenu" className="about-burger-menu">
               <svg viewBox="0 0 1024 1024" className="about-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
@@ -44,11 +44,9 @@ const About = (props) => {
           </div>
           <div data-role="MobileMenu" className="about-mobile-menu" data-testid="MobileMenu-container">
             <div className="about-container1">
-              <img
-                alt="image"
-                src="https://play.teleporthq.io/static/svg/default-img.svg"
-                className="about-image1"
-              />
+            <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
+                &lt;ProjectArena/&gt;
+              </a>
               <div data-role="CloseMobileMenu" className="about-close-menu" data-testid="CloseMobileMenu-container">
                 <svg viewBox="0 0 1024 1024" className="about-icon2">
                   <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>

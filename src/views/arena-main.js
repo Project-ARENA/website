@@ -501,9 +501,9 @@ const ArenaMain = (props) => {
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
             </div>
-            <Link href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
-              &lt;ProjectArena/&gt;
-            </Link>
+            <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
+                &lt;ProjectArena/&gt;
+              </a>
 
             <Link to="/player-portal-competitions" className="arena-back-link">
               <svg viewBox="0 0 1024 1024" className="arena-main-icon2">

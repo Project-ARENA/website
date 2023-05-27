@@ -139,9 +139,9 @@ const AdminProfile = (props) => {
       <div role="Header" className="admin-profile-navbar-container">
         <div className="admin-profile-navbar">
           <div className="admin-profile-left-side">
-            <Link to="/admin-competitions" className="home-link">
+          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
                 &lt;ProjectArena/&gt;
-            </Link>
+              </a>
             <div data-role="BurgerMenu" className="admin-profile-burger-menu">
               <svg viewBox="0 0 1024 1024" className="admin-profile-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>

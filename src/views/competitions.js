@@ -253,9 +253,9 @@ const Competitions = (props) => {
       <div data-role="Header" className="competitions-navbar-container">
         <div className="competitions-navbar">
           <div className="competitions-left-side">
-            <Link to="/" className="home-link">
+          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
                 &lt;ProjectArena/&gt;
-            </Link>
+              </a>
             <div data-role="BurgerMenu" className="competitions-burger-menu">
               <svg viewBox="0 0 1024 1024" className="competitions-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
