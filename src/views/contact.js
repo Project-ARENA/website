@@ -185,13 +185,14 @@ const Contact = (props) => {
               ></InputTextArea>
 
             </div>
-          </div>
-          <Button
+            <Button
             name="Submit"
             type="submit"
             onClick={sendEmail}
             rootClassName="button-root-class-name2"
           >Send</Button>
+          </div>
+
         </div>
         <div className="contact-container-for-big-page">
           <div className="contact-container06">
