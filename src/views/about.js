@@ -74,7 +74,41 @@ const About = (props) => {
       <div className="about-section-separator1"></div>
       <div className="about-section-separator2"></div>
       <div className="about-section-separator3"></div>
-
+      
+      <div className="about-group-message">
+        <div className="about-container2">
+          <h1 className="about-text">Lets Meet the Team</h1>
+          <span className="about-text1">
+            <span>
+              We are a talented team of developers with diverse skills and
+              abilities. We created this platform from scratch. Keep an eye out
+              for the hidden surprises we&apos;ve placed on the website—happy
+              hunting and programming! May the most exceptional team emerge
+              victorious.
+            </span>
+            <span>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: ' ',
+                }}
+              />
+            </span>
+            <span>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: ' ',
+                }}
+              />
+            </span>
+          </span>
+          <div className="about-container3"></div>
+        </div>
+        <img
+          alt="image"
+          src="https://www.wits.ac.za/media/wits-university/home-page/Wits%20University%20Great%20Hall%202023.png"
+          className="about-image2"
+        />
+      </div>
             
     </div>
   );
