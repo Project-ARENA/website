@@ -1296,6 +1296,23 @@ app.post("/api/post/updatePassword", (req, res) => {
   );
 });
 
+//Route to get competition end date
+app.get("/api/get/compEndDate/:competition_id", (req, res) => {
+  const competition_id = req.params.competition_id;
+
+  db.query(
+    "SELECT competition_enddate FROM competition_details WHERE competition_id = ?;",
+    [competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+
 
 //!Type above this
 app.listen(PORT, () => {

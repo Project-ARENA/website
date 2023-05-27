@@ -38,8 +38,9 @@ let ZIPLink = "";
 let Mark = 0;
 let team_code = sessionStorage.getItem("teamCode");
 let testcaseName = "";
+let endDate = "";
 
-async function handleUploadTXTDone(res, setTXTFileName) {
+async function handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTAlert) {
   TXTLink = res.filesUploaded[0].url;
 
   //Join the string "Text file uploaded" with the filename
@@ -56,6 +57,8 @@ async function handleUploadTXTDone(res, setTXTFileName) {
     );
     Mark = response.data;
   } catch (error) {
+    setAlertMsg(error.response.data);
+    setShowTXTAlert(true);
     console.error(error);
   }
 }
@@ -280,11 +283,22 @@ async function uploadSubmissions() {
   await postHighestScore();
 }
 
+function getEndDate (){
+  axios.get("http://localhost:3002/api/get/compEndDate/" + competition_id)
+  .then(function (response) {
+    endDate = response.data[0].competition_enddate;
+    console.log(response.data[0].competition_enddate);
+  }
+  )
+}
+
 const ArenaMain = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pickerTXTVisible, setTXTPickerVisible] = useState(false);
   const [pickerZIPVisible, setZIPPickerVisible] = useState(false);
   const [showTXTAlert, setShowTXTAlert] = useState(false);
+  const [timeRemaining , setTimeRemaining] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
   //This stores contents of tab, tab number and index in the array are related
   const [title, setTitle] = useState("");
   const [paragraph, setParagraph] = useState("");
@@ -303,6 +317,7 @@ const ArenaMain = (props) => {
       setIsLoaded(true);
       getLatestScores();
       getHighest();
+      getEndDate();
       getNumTestCases(numTests);
       axios
         .get("http://localhost:3002/api/get/compDetails/" + competition_id)
@@ -313,7 +328,51 @@ const ArenaMain = (props) => {
       //Sets the link for the competition testcases
       getTeamID();
     };
+    const interval = setInterval(() => {
+      // Perform your background check or task here
+      console.log('Background check running...');
+      console.log(endDate)
+      // Target date to subtract
+      const targetDate = new Date('2023-05-22T15:00:00.000Z');
 
+      // Current date and time
+      const currentDate = new Date();
+
+      // Calculate the difference in milliseconds
+      const difference = targetDate - currentDate;
+
+      // Convert milliseconds to days, hours, minutes, and seconds
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      setTimeRemaining(`Remaining time: ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`)
+
+      // Output the remaining time
+      console.log(`Remaining time: ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`);
+      //If there is one minute remaining, then show the alert
+      if (minutes == 1 && seconds == 0) {
+        setAlertMsg("You have 1 minute remaining!")
+        setShowTXTAlert(true);
+      }
+
+      //If there is 30 minutes remaining, then show the alert
+      if (minutes == 30 && seconds == 0) {
+        setAlertMsg("You have 30 minutes remaining!")
+        setShowTXTAlert(true);
+      }
+
+
+      //If the seconds remaining is less than 0, then the competition is over
+      if (seconds < 0) {
+        setTimeRemaining("Competition has ended");
+        //Relocate the user to the competition page
+        window.location.href = "http://localhost:3000/player-portal-competitions";
+      }
+
+
+    }, 1000); //1000ms = 1 sec
     fetchData();
   }, []);
 
@@ -378,13 +437,14 @@ const ArenaMain = (props) => {
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
                   if (res.filesUploaded[0].mimetype === "text/plain") {
-                    handleUploadTXTDone(res, setTXTFileName);
+                    handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTAlert);
                     uploadedTXT = true;
                     //Checks if both are uploaded
                     if (uploadedZIP == true && uploadedTXT == true) {
                       setDisabled(false);
                     }
                   } else {
+                    setAlertMsg("Please upload a .txt file");
                     setShowTXTAlert(true);
                   }
                 }}
@@ -488,7 +548,7 @@ const ArenaMain = (props) => {
                 setShowTXTAlert(false);
               }}
             >
-              Please submit a txt file
+              {alertMsg}
             </Alert>
           </Stack>
         </div>
@@ -596,6 +656,7 @@ const ArenaMain = (props) => {
       </a>
 
       <br />
+      <h4>{timeRemaining}</h4>
       <br />
       <h1>Submit your code here:</h1>
       <div className="arena-main-tabs">
