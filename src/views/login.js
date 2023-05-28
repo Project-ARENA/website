@@ -155,7 +155,7 @@ const Login = (props) => {
         sessionStorage.setItem('userID', userID);
       });
     if (username == "Steve" && password == "SteveIsDaBest") {
-      window.location.href = 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiUzc-Bi-39AhWPtqQKHRYUCJQQwqsBegQIChAF&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ&usg=AOvVaw0aHtehaphMhOCAkCydRLZU';
+      window.location.href = 'https://www.youtube.com/watch?v=hoBb9oIFu8E';
     }
     else {
       doAPIStuff();
