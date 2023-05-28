@@ -11,7 +11,6 @@ const competition_id = sessionStorage.getItem('CompID');
 const user_id = sessionStorage.getItem('userID');
 let teamIds = [];
 let teamLocation = ""
-let isCaptain = false;
 
 // Function to copy a value to clipboard
 const copyToClipboard = (value) => {
@@ -24,7 +23,6 @@ const copyToClipboard = (value) => {
 };
 
 const ArenaTeam = (props) => {
-  const [disabled, setDisabled] = useState(false);
   const [title, setTitle] = useState("");
   const [teamName, setTeamName] = useState("");
   const [userNicknames, setUserNicknames] = useState([]);
@@ -67,8 +65,6 @@ const ArenaTeam = (props) => {
           }
         }
 
-
-        
         // Get the user nicknames
         const userIds = teamMembers.map(member => member.user_id);
         const userNicknameResponses = await Promise.all(userIds.map(userId => axios.get(`http://localhost:3002/api/get/userNickname/${userId}`)));
@@ -77,7 +73,7 @@ const ArenaTeam = (props) => {
           const isCaptain = teamMembers.find(member => member.user_id === userIds[index]).is_captain;
           return isCaptain ? `${nickname} (Captain)` : nickname;
         });
-  
+        
         // Update the state
         setTeamName(teamName);
         setTeamCode(teamCode);
@@ -173,12 +169,9 @@ const ArenaTeam = (props) => {
         TeamName={teamName}
         teamMembers = {userNicknames}
         location = {teamLocation}
-        Ldisabled={disabled}
-        DName="Delete this team"
-        Ddisabled={!isCaptain}
         onCopyClick={() => {
           Swal.fire({
-            title: 'Team created!',
+            title: 'Team Code',
             text: "Team Code: " + teamCode,
             icon: 'success',
             showCancelButton: false,
