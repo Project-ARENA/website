@@ -102,7 +102,7 @@ const About = (props) => {
 
       <div className="about-group-message">
         <div className="about-container2">
-          <h1 className="about-text">Lets Meet the Team</h1>
+          <h1 className="about-text">Let's Meet the Team</h1>
           <span className="about-text1">
             <span>
               We are a talented team of developers with diverse skills and

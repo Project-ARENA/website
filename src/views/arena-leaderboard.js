@@ -105,11 +105,13 @@ const ArenaLeaderboard = (props) => {
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
             </div>
+            <div style={{paddingTop: "10px"}}>
               <Link to="/player-portal-competitions" className="arena-back-link">
                   <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
                       <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
                   </svg>
               </Link>
+            </div>
             <div className="arena-leaderboard-links-container">
               <Link to="/arena-main" className="arena-main-link">
                 ARENA

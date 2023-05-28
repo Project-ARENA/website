@@ -8,7 +8,6 @@ import Swal from 'sweetalert2'
 
 const competition_id = sessionStorage.getItem('CompID');
 const user_id = sessionStorage.getItem('userID');
-let teamIds = [];
 let teamLocation = ""
 
 // Function to copy a value to clipboard
@@ -22,7 +21,6 @@ const copyToClipboard = (value) => {
 };
 
 const Teams = (props) => {
-  const [disabled, setDisabled] = useState(false);
   const [title, setTitle] = useState("");
   const [teamName, setTeamName] = useState("");
   const [userNicknames, setUserNicknames] = useState([]);
@@ -83,21 +81,21 @@ const Teams = (props) => {
       <div data-role="Header" className="arena-team-navbar-container">
         <div className="arena-team-navbar">
           <div className="arena-team-left-side">
-            <img
-              alt="image"
-              src="https://play.teleporthq.io/static/svg/default-img.svg"
-              className="arena-team-image"
-            />
+          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
+                &lt;ProjectArena/&gt;
+              </a>
             <div data-role="BurgerMenu" className="arena-team-burger-menu">
               <svg viewBox="0 0 1024 1024" className="arena-team-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
             </div>
+            <div style={{paddingTop: "10px"}}>
               <Link to="/player-portal-competitions" className="arena-back-link">
                   <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
                       <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
                   </svg>
               </Link>
+            </div>
             <div className="arena-team-links-container">
               <Link
                 to="/arena-team"
@@ -151,9 +149,6 @@ const Teams = (props) => {
         TeamName={teamName}
         teamMembers = {userNicknames}
         location = {teamLocation}
-        Ldisabled={disabled}
-        DName="Delete this team"
-        Ddisabled={disabled}
         onCopyClick={() => {
           Swal.fire({
             title: 'Team created!',

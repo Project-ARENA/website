@@ -566,11 +566,13 @@ const ArenaMain = (props) => {
                 &lt;ProjectArena/&gt;
               </a>
 
-            <Link to="/player-portal-competitions" className="arena-back-link">
-              <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
-                <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
-              </svg>
-            </Link>
+            <div style={{paddingTop: "10px"}}>
+              <Link to="/player-portal-competitions" className="arena-back-link">
+                  <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
+                      <path d="M896 470v84h-604l152 154-60 60-256-256 256-256 60 60-152 154h604z"></path>
+                  </svg>
+              </Link>
+            </div>
             <div className="arena-main-links-container">
               <Link to="/arena-main" className="arena-main-link">
                 ARENA
