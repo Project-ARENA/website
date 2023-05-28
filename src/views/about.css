@@ -91,6 +91,7 @@
     padding-bottom: var(--dl-space-space-unit);
     text-decoration: none;
     background-color: var(--dl-color-gray-black);
+    white-space:normal
   }
   .about-mobile-menu {
     top: 0px;
@@ -230,6 +231,10 @@
     justify-content: center;
     display: flex;
     gap: 25px;
+  }
+  .social-links:hover {
+    transform: scale(1.2);
+    transition: all 0.5s ease-in-out;
   }
   
   .social-logo {
