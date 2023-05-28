@@ -275,7 +275,7 @@ const About = (props) => {
                   </a>
                   {/* LINKEDIN */}
                   <a
-                    href="https://www.linkedin.com/in/muaazbassa/"
+                    href="https://www.linkedin.com/in/altaaf-ally-9488ba278/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -329,7 +329,7 @@ const About = (props) => {
                   </a>
                   {/* LINKEDIN */}
                   <a
-                    href="https://www.linkedin.com/in/muaazbassa/"
+                    href="https://www.linkedin.com/in/muhammed-muaaz-dawood-5b8890196/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
