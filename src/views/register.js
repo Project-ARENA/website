@@ -261,13 +261,15 @@ function handleClickToSendEmail(email) {
       left: "50%",
       transform: "translate(-50%, -50%)",
       overflowY: "hidden",
+      borderRadius: "10px", // Add border-radius for curved corners
+      padding: "20px" // Add padding for spacing
     },
     overlay: { zIndex: 1000 },
   }}
 >
   <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-    <h4>A code has been sent to your email</h4>
-    <h4>Please enter your code to verify your email</h4>
+    <h4 style={{ marginBottom: "10px", textAlign: "center",fontFamily: "Bebas Neue" }}>A code has been sent to your email</h4> {/* Improve text appearance */}
+    <h4 style={{ marginBottom: "20px", textAlign: "center",fontFamily: "Bebas Neue" }}>Please enter your code to verify your email</h4> {/* Improve text appearance */}
 
     <br />
     <div style={{ display: "flex", alignItems: "center" }}>
@@ -279,17 +281,18 @@ function handleClickToSendEmail(email) {
     </div>
     <br />
     <Button
-     onClick={handleCodeVerification}
-     name={"Verify Code"}
-     >
-     </Button>
+      onClick={handleCodeVerification}
+      name={"Verify Code"}
+    >
+    </Button>
     <br />
     <Button
       name={"Email incorrect? Click here to change your email"}
-     onClick={() => setModalVisible(false)}
-     ></Button>
+      onClick={() => setModalVisible(false)}
+    ></Button>
   </div>
 </Modal>
+
 
 
         <br></br>
