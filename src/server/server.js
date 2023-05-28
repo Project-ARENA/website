@@ -680,13 +680,29 @@ app.get("/api/get/competition/registered/:user_id", (req, res) => {
 });
 
 // Route to leave a team
-app.post("/api/post/leave/team", (req, res) => {
+app.post("/api/post/leave/team/:team_code/:user_id", (req, res) => {
   const user_id = req.body.user_id;
-  const competition_id = req.body.competition_id;
+  const team_code = req.body.team_code;
 
   db.query(
-    "DELETE FROM team_details WHERE user_id = ? AND competition_id = ?;",
-    [user_id, competition_id],
+    "DELETE FROM teams WHERE user_id = ? AND team_code = ?;",
+    [user_id, team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
+
+// Route to delete a team
+app.post("/api/post/delete/team/:team_code", (req, res) => {
+  const team_code = req.body.team_code;
+
+  db.query(
+    "DELETE td, t FROM team_details AS td JOIN teams AS t ON td.team_code = t.team_code WHERE td.team_code = ?;",
+    [team_code],
     (err, result) => {
       if (err) {
         console.log(err);

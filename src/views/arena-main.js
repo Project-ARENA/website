@@ -357,6 +357,12 @@ const ArenaMain = (props) => {
         setShowTXTAlert(true);
       }
 
+      //If there is 1 hour remaining, then show the alert
+      if (hours == 1 && minutes == 0 && seconds == 1) {
+        setAlertMsg("You have 1 hour remaining!")
+        setShowTXTAlert(true);
+      }
+
 
       //If the seconds remaining is less than 0, then the competition is over
       if (seconds < 0) {
@@ -404,6 +410,7 @@ const ArenaMain = (props) => {
             marginRight: 200,
           }}
         >
+          <h1>{testcaseName}</h1>
           <h1>Submit your solutions</h1>
           <br />
           <h3>Instructions:</h3>

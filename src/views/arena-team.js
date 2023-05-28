@@ -5,6 +5,7 @@ import TeamManager from '../components/team-manager'
 import axios from "axios";
 import './arena-team.css'
 import Swal from 'sweetalert2'
+import { is } from 'date-fns/locale';
 
 const competition_id = sessionStorage.getItem('CompID');
 const user_id = sessionStorage.getItem('userID');
@@ -22,7 +23,6 @@ const copyToClipboard = (value) => {
 };
 
 const ArenaTeam = (props) => {
-  const [disabled, setDisabled] = useState(false);
   const [title, setTitle] = useState("");
   const [teamName, setTeamName] = useState("");
   const [userNicknames, setUserNicknames] = useState([]);
@@ -56,7 +56,15 @@ const ArenaTeam = (props) => {
           }
         });
         const teamMembers = teamMembersResponse.data;
-  
+        console.log(teamMembersResponse.data[0]);
+        //Check if the user with user_id = user_id is a captain
+        for (const member of teamMembers) {
+          if (member.user_id == user_id && member.is_captain == true) {
+            isCaptain = true;
+            break;
+          }
+        }
+
         // Get the user nicknames
         const userIds = teamMembers.map(member => member.user_id);
         const userNicknameResponses = await Promise.all(userIds.map(userId => axios.get(`http://localhost:3002/api/get/userNickname/${userId}`)));
@@ -65,7 +73,7 @@ const ArenaTeam = (props) => {
           const isCaptain = teamMembers.find(member => member.user_id === userIds[index]).is_captain;
           return isCaptain ? `${nickname} (Captain)` : nickname;
         });
-  
+        
         // Update the state
         setTeamName(teamName);
         setTeamCode(teamCode);
@@ -161,12 +169,9 @@ const ArenaTeam = (props) => {
         TeamName={teamName}
         teamMembers = {userNicknames}
         location = {teamLocation}
-        Ldisabled={disabled}
-        DName="Delete this team"
-        Ddisabled={disabled}
         onCopyClick={() => {
           Swal.fire({
-            title: 'Team created!',
+            title: 'Team Code',
             text: "Team Code: " + teamCode,
             icon: 'success',
             showCancelButton: false,
