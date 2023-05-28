@@ -43,7 +43,7 @@ const About = (props) => {
             </div>
           </div>
           <div className="about-right-side">
-            <Link to="/login" className="about-cta-btn button">
+            <Link to="/login" className="about-cta-btn button" style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
               LOGIN
             </Link>
           </div>
