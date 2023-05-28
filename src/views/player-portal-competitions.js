@@ -232,7 +232,7 @@ function GenCards() {
     console.log(comp_startDate);
     var startDate = new Date(comp_startDate);
     console.log(startDate);
-    if (today <  startDate) {
+    if (today < startDate) {
       //TODO: Add alert
       alert("Competition has not started");
       setTimeout(function () {
@@ -252,12 +252,12 @@ function GenCards() {
     getTeamDetails(userID, compID);
 
     setTimeout(function () {
-      window.location.href = "http://localhost:3000/leaderboard";  
+      window.location.href = "http://localhost:3000/leaderboard";
     }, 1000);
     // console.log(`Enter Arena clicked for competition ${competition_id}`);
   };
 
-  const username = sessionStorage.getItem('username');
+  const username = sessionStorage.getItem("username");
 
   // Get user details from database, to make displaying it easier
   const getUserDetails = () => {
@@ -295,7 +295,10 @@ function GenCards() {
               handleButton1Click(activeData.competition_id);
             }}
             onButton2Click={() => {
-              handleButton2Click(activeData.competition_id, activeData.startDate);
+              handleButton2Click(
+                activeData.competition_id,
+                activeData.startDate
+              );
             }}
             onButton3Click={() => {
               handleButton3Click(activeData.competition_id);
@@ -331,7 +334,10 @@ function GenCards() {
               handleButton1Click(inactiveData.competition_id);
             }}
             onButton2Click={() => {
-              handleButton2Click(inactiveData.competition_id, inactiveData.startDate);
+              handleButton2Click(
+                inactiveData.competition_id,
+                inactiveData.startDate
+              );
             }}
             onButton3Click={() => {
               handleButton3Click(inactiveData.competition_id);
@@ -368,7 +374,10 @@ function GenCards() {
               handleButton1Click(registeredData.competition_id);
             }}
             onButton2Click={() => {
-              handleButton2Click(registeredData.competition_id, registeredData.startDate);
+              handleButton2Click(
+                registeredData.competition_id,
+                registeredData.startDate
+              );
             }}
             onButton3Click={() => {
               handleButton3Click(registeredData.competition_id);
@@ -421,7 +430,7 @@ const PlayerPortalCompetitions = (props) => {
         <div className="player-portal-competitions-navbar">
           <div className="player-portal-competitions-left-side">
             <Link to="/player-portal-competitions" className="home-link">
-                &lt;ProjectArena/&gt;
+              &lt;ProjectArena/&gt;
             </Link>
             <div
               data-role="BurgerMenu"

@@ -129,7 +129,7 @@ const PlayerPortalTeam = (props) => {
       if (result.isConfirmed) {
         copyToClipboard(code);
         setTimeout(() => {
-          window.location.href = "http://localhost:3000/arena-main"
+          window.location.href = "http://localhost:3000/teams"
         }, 1000);
       }
     })
@@ -190,7 +190,7 @@ const PlayerPortalTeam = (props) => {
       competition_id: parseInt(competition_id,)
     });
     setTimeout(() => {
-      window.location.href = "http://localhost:3000/arena-main"
+      window.location.href = "http://localhost:3000/teams"
     }, 500);
   };
 
