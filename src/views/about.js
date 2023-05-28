@@ -4,6 +4,8 @@ import AccordionContent from "../components/collapse";
 
 import "./about.css";
 var GithubLogo = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+var LinkedInLogo = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/800px-LinkedIn_logo_initials.png"
+var EmailLogo = "https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
 const About = (props) => {
   return (
     <div className="about-container">
@@ -141,7 +143,7 @@ const About = (props) => {
           <div class="card">
             <img
               src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
-              alt="Jane"
+              alt="Mu'aaz Bassa"
               style={{ width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
@@ -156,7 +158,7 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                      src={GithubLogo}
                       alt="GitHub"
                       className="social-logo"
                     />
@@ -168,7 +170,7 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/800px-LinkedIn_logo_initials.png"
+                      src={LinkedInLogo}
                       alt="LinkedIn"
                       className="social-logo"
                     />
@@ -180,8 +182,8 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
-                      alt="LinkedIn"
+                      src={EmailLogo}
+                      alt="Email"
                       className="social-logo"
                     />
                   </a>
@@ -195,7 +197,7 @@ const About = (props) => {
           <div class="card">
             <img
               src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
-              alt="Mike"
+              alt="Sayfullah Jumoorty"
               style={{ width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
@@ -212,7 +214,7 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                      src={GithubLogo}
                       alt="GitHub"
                       className="social-logo"
                     />
@@ -224,20 +226,20 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/800px-LinkedIn_logo_initials.png"
+                      src={LinkedInLogo}
                       alt="LinkedIn"
                       className="social-logo"
                     />
                   </a>
                   {/* EMAIL */}
                   <a
-                    href="https://www.linkedin.com/in/muaazbassa/"
+                    href="mailto:sayfullah.jumoorty@live.com"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
-                      alt="LinkedIn"
+                      src={EmailLogo}
+                      alt="Email"
                       className="social-logo"
                     />
                   </a>
@@ -251,7 +253,7 @@ const About = (props) => {
           <div class="card">
             <img
               src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
-              alt="Jane"
+              alt="Altaaf Ally"
               style={{ width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
@@ -266,7 +268,7 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                      src={GithubLogo}
                       alt="GitHub"
                       className="social-logo"
                     />
@@ -278,20 +280,20 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/800px-LinkedIn_logo_initials.png"
+                      src={LinkedInLogo}
                       alt="LinkedIn"
                       className="social-logo"
                     />
                   </a>
                   {/* EMAIL */}
                   <a
-                    href="https://www.linkedin.com/in/muaazbassa/"
+                    href="mailto:altaaf313@gmail.com"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
-                      alt="LinkedIn"
+                      src={EmailLogo}
+                      alt="Email"
                       className="social-logo"
                     />
                   </a>
@@ -305,7 +307,7 @@ const About = (props) => {
           <div class="card">
             <img
               src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
-              alt="Jane"
+              alt="Muhammed Muaaz Dawood"
               style={{ width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
@@ -320,7 +322,7 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                      src={GithubLogo}
                       alt="GitHub"
                       className="social-logo"
                     />
@@ -332,20 +334,20 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/800px-LinkedIn_logo_initials.png"
+                      src={LinkedInLogo}
                       alt="LinkedIn"
                       className="social-logo"
                     />
                   </a>
                   {/* EMAIL */}
                   <a
-                    href="https://www.linkedin.com/in/muaazbassa/"
+                    href="mailto:momosuli8@gmail.com"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
-                      alt="LinkedIn"
+                      src={EmailLogo}
+                      alt="Email"
                       className="social-logo"
                     />
                   </a>
@@ -359,7 +361,7 @@ const About = (props) => {
           <div class="card">
             <img
               src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
-              alt="John"
+              alt="Rayhaan Hanslod"
               style={{ width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
@@ -374,7 +376,7 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                      src={GithubLogo}
                       alt="GitHub"
                       className="social-logo"
                     />
@@ -386,20 +388,20 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/800px-LinkedIn_logo_initials.png"
+                      src={LinkedInLogo}
                       alt="LinkedIn"
                       className="social-logo"
                     />
                   </a>
                   {/* EMAIL */}
                   <a
-                    href="https://www.linkedin.com/in/muaazbassa/"
+                    href="mailto:rayhaanhanslod6@gmail.com"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
-                      alt="LinkedIn"
+                      src={EmailLogo}
+                      alt="Email"
                       className="social-logo"
                     />
                   </a>
@@ -414,7 +416,7 @@ const About = (props) => {
           <div class="card">
             <img
               src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
-              alt="Jane"
+              alt="Hamdullah Dadabhoy (Abdullah Karolia)"
               style={{ width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
@@ -429,7 +431,7 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                      src={GithubLogo}
                       alt="GitHub"
                       className="social-logo"
                     />
@@ -441,20 +443,20 @@ const About = (props) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/800px-LinkedIn_logo_initials.png"
+                      src={LinkedInLogo}
                       alt="LinkedIn"
                       className="social-logo"
                     />
                   </a>
                   {/* EMAIL */}
                   <a
-                    href="https://www.linkedin.com/in/muaazbassa/"
+                    href="mailto:abdullahkarolia47@gmail.com"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
-                      alt="LinkedIn"
+                      src={EmailLogo}
+                      alt="Email"
                       className="social-logo"
                     />
                   </a>
