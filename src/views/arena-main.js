@@ -329,36 +329,30 @@ const ArenaMain = (props) => {
       getTeamID();
     };
     const interval = setInterval(() => {
-      // Perform your background check or task here
-      console.log('Background check running...');
-      console.log(endDate)
-      // Target date to subtract
-      const targetDate = new Date('2023-05-22T15:00:00.000Z');
-
-      // Current date and time
+      const targetDate = new Date(endDate);
       const currentDate = new Date();
 
-      // Calculate the difference in milliseconds
-      const difference = targetDate - currentDate;
+      const timeDifference = targetDate.getTime() - currentDate.getTime();
 
-      // Convert milliseconds to days, hours, minutes, and seconds
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      // Calculate remaining days, hours, minutes, and seconds
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-      setTimeRemaining(`Remaining time: ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`)
+      setTimeRemaining(`${days}d ${hours}h ${minutes}m ${seconds}s`);
 
-      // Output the remaining time
-      console.log(`Remaining time: ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`);
+      setTimeRemaining(`Remaining time: ${days}d ${hours}h ${minutes}m ${seconds}s`);
+
+      
       //If there is one minute remaining, then show the alert
-      if (minutes == 1 && seconds == 0) {
+      if (minutes == 1 && seconds == 1) {
         setAlertMsg("You have 1 minute remaining!")
         setShowTXTAlert(true);
       }
 
       //If there is 30 minutes remaining, then show the alert
-      if (minutes == 30 && seconds == 0) {
+      if (minutes == 30 && seconds == 1) {
         setAlertMsg("You have 30 minutes remaining!")
         setShowTXTAlert(true);
       }
