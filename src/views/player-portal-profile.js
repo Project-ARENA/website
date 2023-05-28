@@ -278,7 +278,6 @@ const PlayerPortalProfile = (props) => {
           }}
           rootClassName="button-root-class-name4"
         ></Button>
-        <div className="player-portal-profile-container4"></div>
       </div>
     </div>
   );

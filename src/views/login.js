@@ -294,7 +294,7 @@ const Login = (props) => {
           ></Button>
           <br></br>
           <span className="login-text1">Don&apos;t have an account? </span>
-          <Link to="/register" className="register-navlink1 button">
+          <Link to="/register" className="register-navlink1-button">
             Register Here
           </Link>
         </div>
