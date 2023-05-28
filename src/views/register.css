@@ -65,3 +65,10 @@
   border-width: 5px;
   text-decoration: none;
 }
+
+.register-navlink1:hover {
+  color: #008cff;
+  border-color: #ffffff;
+  border-width: 5px;
+  text-decoration: none;
+}

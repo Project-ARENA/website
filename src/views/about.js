@@ -43,7 +43,7 @@ const About = (props) => {
             </div>
           </div>
           <div className="about-right-side">
-            <Link to="/login" className="about-cta-btn button" style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
+            <Link to="/login" className="about-cta-btn" style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
               LOGIN
             </Link>
           </div>
@@ -416,11 +416,11 @@ const About = (props) => {
           <div class="card">
             <img
               src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
-              alt="Hamdullah Dadabhoy (Abdullah Karolia)"
+              alt="Hamdullah Dadabhoy (Abdullah)"
               style={{ width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
-              <h2>Hamdullah Dadabhoy (Abdullah Karolia)</h2>
+              <h2>Hamdullah Dadabhoy (Abdullah)</h2>
               <p class="title">Programmer</p>
               <p>
                 <div className="social-links">

@@ -33,7 +33,7 @@ const Home = (props) => {
             </div>
           </div>
           <div className="home-right-side">
-            <Link to="/login" className="home-cta-btn button" style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
+            <Link to="/login" className="home-cta-btn" style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
               <span> LOGIN </span>
             </Link>
           </div>

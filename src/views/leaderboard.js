@@ -116,7 +116,7 @@ const ArenaLeaderboard = (props) => {
           </div>
           <div className="arena-leaderboard-container1">
             <Link
-              to="/arena-profile"
+              to="/player-portal-profile"
               className="arena-leaderboard-navlink"
             >
               <svg viewBox="0 0 1024 1024" className="arena-leaderboard-icon4">

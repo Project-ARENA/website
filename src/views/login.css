@@ -27,6 +27,23 @@
 .login-navlink {
   display: contents;
 }
+
+.login-navlink1 {
+  color: #818181;
+  font-size: 25px;
+  font-family: Bebas Neue;
+  border-color: #ffffff;
+  border-width: 5px;
+  text-decoration: none;
+}
+
+.login-navlink1:hover {
+  color: #008cff;
+  border-color: #ffffff;
+  border-width: 5px;
+  text-decoration: none;
+}
+
 .login-icon {
   width: 125px;
   height: 78px;

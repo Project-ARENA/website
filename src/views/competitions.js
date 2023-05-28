@@ -277,7 +277,7 @@ const Competitions = (props) => {
             </div>
           </div>
           <div className="competitions-right-side">
-            <Link to="/login" className="competitions-cta-btn button"style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
+            <Link to="/login" className="competitions-cta-btn"style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
               LOGIN
             </Link>
           </div>

@@ -88,16 +88,17 @@ const ArenaTeam = (props) => {
   return (
     <div className="arena-team-container">
       <div data-role="Header" className="arena-team-navbar-container">
-        <div className="arena-team-navbar">
-          <div className="arena-team-left-side">
-          <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
-                &lt;ProjectArena/&gt;
-              </a>
-            <div data-role="BurgerMenu" className="arena-team-burger-menu">
-              <svg viewBox="0 0 1024 1024" className="arena-team-icon">
+      <div className="arena-main-navbar">
+          <div className="arena-main-left-side">
+            <div data-role="BurgerMenu" className="arena-main-burger-menu">
+              <svg viewBox="0 0 1024 1024" className="arena-main-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
             </div>
+            <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
+                &lt;ProjectArena/&gt;
+              </a>
+
             <div style={{paddingTop: "10px"}}>
               <Link to="/player-portal-competitions" className="arena-back-link">
                   <svg viewBox="0 0 1024 1024" className="arena-main-icon2">
@@ -105,55 +106,49 @@ const ArenaTeam = (props) => {
                   </svg>
               </Link>
             </div>
-            <div className="arena-team-links-container">
+            <div className="arena-main-links-container">
               <Link to="/arena-main" className="arena-main-link">
                 ARENA
               </Link>
-              <Link to="/arena-submissions" className="arena-team-link">
-                Submissions
+              <Link to="/arena-submissions" className="arena-submissions-link">
+                SUBMISSIONS
               </Link>
-              <Link
-                to="/arena-leaderboard"
-                className="arena-team-link1 Anchor"
-              >
+              <Link to="/arena-leaderboard" className="arena-main-link1 Anchor">
                 lEADERBOARD
               </Link>
-              <Link
-                to="/arena-team"
-                className="arena-team-link2 Anchor"
-              >
+              <Link to="/arena-team" className="arena-main-link2 Anchor">
                 TEAM
               </Link>
             </div>
           </div>
-          <div className="arena-team-container1">
-            <Link to="/arena-profile" className="arena-team-navlink">
-              <svg viewBox="0 0 1024 1024" className="arena-team-icon4">
+          <div className="arena-main-container1">
+            <Link to="/arena-profile" className="arena-main-navlink">
+              <svg viewBox="0 0 1024 1024" className="arena-main-icon4">
                 <path d="M576 706.612v-52.78c70.498-39.728 128-138.772 128-237.832 0-159.058 0-288-192-288s-192 128.942-192 288c0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h896c0-128.968-166.898-235.64-384-253.388z"></path>
               </svg>
             </Link>
           </div>
-          <div data-role="MobileMenu" className="arena-team-mobile-menu">
-            <div className="arena-team-container2">
+          <div data-role="MobileMenu" className="arena-main-mobile-menu">
+            <div className="arena-main-container2">
               <img
                 alt="image"
                 src="https://play.teleporthq.io/static/svg/default-img.svg"
-                className="arena-team-image1"
+                className="arena-main-image1"
               />
               <div
                 data-role="CloseMobileMenu"
-                className="arena-team-close-menu"
+                className="arena-main-close-menu"
               >
-                <svg viewBox="0 0 1024 1024" className="arena-team-icon6">
+                <svg viewBox="0 0 1024 1024" className="arena-main-icon6">
                   <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
                 </svg>
               </div>
             </div>
-            <div className="arena-team-links-container1">
-              <span className="arena-team-link3 Anchor">Resources</span>
-              <span className="arena-team-link4 Anchor">Inspiration</span>
-              <span className="arena-team-link5 Anchor">Process</span>
-              <span className="arena-team-link6 Anchor">Our story</span>
+            <div className="arena-main-links-container1">
+              <span className="arena-main-link3 Anchor">Resources</span>
+              <span className="arena-main-link4 Anchor">Inspiration</span>
+              <span className="arena-main-link5 Anchor">Process</span>
+              <span className="arena-main-link6 Anchor">Our story</span>
             </div>
           </div>
         </div>

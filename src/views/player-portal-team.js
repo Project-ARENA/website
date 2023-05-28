@@ -271,12 +271,6 @@ const PlayerPortalTeam = (props) => {
               >
                 TEAM
               </Link>
-              <Link
-                to="/player-portal-contact"
-                className="player-portal-team-link3"
-              >
-                CONTACT US
-              </Link>
             </div>
           </div>
         </div>

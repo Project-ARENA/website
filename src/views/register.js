@@ -298,7 +298,7 @@ function handleClickToSendEmail(email) {
         <br></br>
         {errorMessage && <div className="error">{errorMessage}</div>}
         <span className="register-text3">Already have an account?</span>
-        <Link to="/login" className="register-navlink1-button">
+        <Link to="/login" className="register-navlink1">
           Login here
         </Link>
       </div>

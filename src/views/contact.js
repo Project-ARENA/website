@@ -111,7 +111,7 @@ const Contact = (props) => {
             </div>
           </div>
           <div className="contact-right-side">
-            <Link to="/login" className="contact-cta-btn button"style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
+            <Link to="/login" className="contact-cta-btn"style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
               LOGIN
             </Link>
           </div>

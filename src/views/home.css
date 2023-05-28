@@ -79,7 +79,9 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  justify-content: space-between;
+ 
+
+  /* justify-content: space-between; */
   /* margin-left: 40em; Move more inwards */
   /* margin-right: 40px; Move more outwards */
 }
