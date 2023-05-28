@@ -33,8 +33,8 @@ const Home = (props) => {
             </div>
           </div>
           <div className="home-right-side">
-            <Link to="/login" className="home-cta-btn button">
-              <span>LOGIN</span>
+            <Link to="/login" className="home-cta-btn button" style={{whiteSpace:"normal", paddingLeft:"25px", paddingRight:"25px"}}>
+              <span> LOGIN </span>
             </Link>
           </div>
           <div data-role="MobileMenu" className="home-mobile-menu">
