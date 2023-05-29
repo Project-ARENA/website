@@ -47,7 +47,7 @@ function TeamSizeSelector() {
         style={{ marginBottom: "10px"}}
       />
 
-     <h3 style={{ color: "#457B9D", textAlign: "center",marginBottom: "10px"   }}>Team Members</h3>
+     <h3 style={{ color: "#457B9D", textAlign: "center",marginBottom: "1px"   }}>Team Size</h3>
 
       <TextField
         label="Minimum team size"

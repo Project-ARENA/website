@@ -31,27 +31,38 @@ export default function CustomDataGrid({ rows }) {
   const [pic, setpic] = useState("");
   const [pdf, setpdf] = useState("");
   const [marker, setmarker] = useState("");
+  const [zip, setzip] = useState("");
+  const [picName, setpicName] = useState("");
+  const [pdfName, setpdfName] = useState("");
+  const [zipName, setzipName] = useState("");
+  const [markerName, setmarkerName] = useState("");
 
   const [pickerVisible, setPickerVisible] = useState(false);
 
   const handleUploadDone = (res) => {
-    // console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
+    //   console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
     // console.log(res.filesUploaded[0].mimetype); // Print the MIME type of the uploaded file
-
+  
     if (res.filesUploaded[0].mimetype === "image/png" ||
-        res.filesUploaded[0].mimetype === "image/jpeg" ||
-        res.filesUploaded[0].mimetype === "image/jpg") {
-        setpic(res.filesUploaded[0].url);
+      res.filesUploaded[0].mimetype === "image/jpeg" ||
+      res.filesUploaded[0].mimetype === "image/jpg") {
+      setpic(res.filesUploaded[0].url);
+      setpicName("Picture uploaded: " + res.filesUploaded[0].filename);
     }
-
     if (res.filesUploaded[0].mimetype === "application/pdf") {
-        setpdf(res.filesUploaded[0].url);
+      setpdf(res.filesUploaded[0].url);
+      setpdfName("PDF uploaded: " + res.filesUploaded[0].filename);
     }
-
     if (res.filesUploaded[0].mimetype === "text/x-python") {
-        setmarker(res.filesUploaded[0].url);
+      setmarker(res.filesUploaded[0].url);
+      setmarkerName("Marker uploaded: " + res.filesUploaded[0].filename);
     }
-  };
+    if (res.filesUploaded[0].mimetype === "application/zip" ||
+      res.filesUploaded[0].mimetype ===  "application/x-zip-compressed") {
+      setzip(res.filesUploaded[0].url);
+      setzipName("ZIP uploaded: " + res.filesUploaded[0].filename);
+    }
+    };
 
   const onButtonEdit = (e, row) => {
     e.stopPropagation();
@@ -171,7 +182,8 @@ export default function CustomDataGrid({ rows }) {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            overflowY: "scroll"
+            overflowY: "scroll",
+            // maxHeight: "100vh"
           },
           overlay: { zIndex: 1000 },
         }}
@@ -190,7 +202,6 @@ export default function CustomDataGrid({ rows }) {
 
           <InputBoxForInfo
           buttonText="Competition Name"
-          initialValue={compname}
           onChange={(e) => {
           setCompname(e.target.value);
           // console.log("Compname value:", e.target.value);
@@ -199,15 +210,13 @@ export default function CustomDataGrid({ rows }) {
 
           <br/>
 
-          <h3 style={{ color: "#457B9D" }}>Team Size</h3>
+          <h3 style={{ color: "#457B9D" }}>Number of Teams</h3>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <TeamSizeSelector />
           </div>
 
-          <br/>
-
-          <h3 style={{ color: "#457B9D" }}>Test Case Names</h3>
+          <h3 style={{ color: "#457B9D", textAlign: "center"  }}>Test Case Names</h3>
 
           <InputTextArea 
             label="testcase 1, testcase 2, etc..."
@@ -227,6 +236,7 @@ export default function CustomDataGrid({ rows }) {
               }}
             />
           </div>
+          <p>{picName}</p>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
@@ -237,6 +247,7 @@ export default function CustomDataGrid({ rows }) {
               }}
             />
           </div>
+          <p>{pdfName}</p>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
@@ -247,7 +258,18 @@ export default function CustomDataGrid({ rows }) {
               }}
             />
           </div>
-     
+          <p>{markerName}</p>
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <Button
+              name="Upload Input's Zip"
+              style={{ background: "#457B9D", color: "white" }}
+              onClick={() => {
+                setPickerVisible(true);
+              }}
+            />
+          </div>
+          <p>{zipName}</p>
+          
           {pickerVisible && (
             <div
               className="center"
@@ -276,10 +298,10 @@ export default function CustomDataGrid({ rows }) {
               date2_label="Registration Closing Date"
               time1_label="Registration Opening Time"
               time2_label="Registration Closing Time"
-            //   onStartDateChange={(date) => {setRegStart(date)}}
-            //   onEndDateChange={(date) => {setRegEnd(date)}}
-            //   onStartTimeChange={(date) => {setRegStartTime(date)}}
-            //   onEndTimeChange={(date) => {setRegEndTime(date)}}
+              onStartDateChange={(date) => {setRegStart(date)}}
+              onEndDateChange={(date) => {setRegEnd(date)}}
+              onStartTimeChange={(date) => {setRegStartTime(date)}}
+              onEndTimeChange={(date) => {setRegEndTime(date)}}
             ></NewCalenderComp>
           </div>
 
@@ -292,10 +314,10 @@ export default function CustomDataGrid({ rows }) {
               date2_label="Competing Closing Date"
               time1_label="Competing Opening Time"
               time2_label="Competing Closing Time"
-            //   onStartDateChange={(date) => {setCompStart(date)}}
-            //   onEndDateChange={(date) => {setCompEnd(date)}}
-            //   onStartTimeChange={(date) => {setCompStartTime(date)}}
-            //   onEndTimeChange={(date) => {setCompEndTime(date)}}
+              onStartDateChange={(date) => {setCompStart(date)}}
+              onEndDateChange={(date) => {setCompEnd(date)}}
+              onStartTimeChange={(date) => {setCompStartTime(date)}}
+              onEndTimeChange={(date) => {setCompEndTime(date)}}
             ></NewCalenderComp>
           </div>
 
@@ -314,8 +336,37 @@ export default function CustomDataGrid({ rows }) {
             <Button
               name="Create"
               onClick={() => {
-                setvisible(false);
-                setPickerVisible(false);
+                // Validate inputs before making the API call
+              if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip)) {
+              return; // Stop further execution if validation fails
+              }
+              else{
+                validationCompName(compname);
+                if(validcomp==true){
+                  validcomp=false
+                  setvisible(false);
+                  setPickerVisible(false);
+                  PostCompDetails(
+                    compname,
+                    pic,
+                    CombinedCompStart,
+                    CombinedCompEnd,
+                    desc,
+                    pdf,
+                    getNumTestcases(testcases),
+                    testcases,
+                    marker,
+                    CombinedRegStart,
+                    CombinedRegEnd,
+                    maxTeams,
+                    min,
+                    max,
+                    zip
+                  );
+                  window.location.reload(false);
+                }
+              }
+                
                 // console.log("Create button clicked");
                 // console.log("Competition Name is:" + compname);
                 // console.log("Number of teams is " + maxTeams);
@@ -331,23 +382,9 @@ export default function CustomDataGrid({ rows }) {
                 // console.log("compStartDate: " + CombinedCompStart);
                 // console.log("compEndDate: " + CombinedCompEnd);
                 // console.log("Desc: " + desc);
-                PostCompDetails(
-                  compname,
-                  pic,
-                  CombinedCompStart,
-                  CombinedCompEnd,
-                  desc,
-                  pdf,
-                  getNumTestcases(testcases),
-                  testcases,
-                  marker,
-                  CombinedRegStart,
-                  CombinedRegEnd,
-                  maxTeams,
-                  min,
-                  max
-                );
-                window.location.reload(false);
+
+                
+
               }}
             />
           </div>

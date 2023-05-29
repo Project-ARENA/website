@@ -13,6 +13,7 @@ import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
 import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSelector.js";
 import InputTextArea from "../components/input-textarea.js"
+import { set } from "date-fns";
 
 let validcomp = false;
 let valid = false;
@@ -58,7 +59,7 @@ function validationCompName(compname){
     });
 };
 
-function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max) {
+function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
   // Create an array to store the names of the missing fields
   const missingFields = [];
 
@@ -76,6 +77,7 @@ function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc,
   if (!maxTeams) missingFields.push('Max Teams');
   if (!min) missingFields.push('Min');
   if (!max) missingFields.push('Max');
+  if (!zip) missingFields.push('Zip');
 
   // Check if any fields are missing
   if (missingFields.length > 0) {
@@ -102,7 +104,8 @@ function PostCompDetails(
   CombinedRegEnd,
   maxTeams,
   min,
-  max
+  max,
+  zip
 ) {
   
   return axios.post("http://localhost:3002/api/post/Create_comp", {
@@ -119,13 +122,10 @@ function PostCompDetails(
     CombinedRegEnd: CombinedRegEnd,
     numTeams: maxTeams,
     min: min,
-    max: max
+    max: max,
+    zip: zip
   });
 }
-
-
-
-
 
 function GenGrid() {
   const [rows, setData] = React.useState([]);
@@ -159,7 +159,12 @@ const AdminCompetitions = (props) => {
   const [desc, setdesc] = useState("");
   const [pic, setpic] = useState("");
   const [pdf, setpdf] = useState("");
+  const [zip, setzip] = useState("");
   const [marker, setmarker] = useState("");
+  const [picName, setpicName] = useState("");
+  const [pdfName, setpdfName] = useState("");
+  const [zipName, setzipName] = useState("");
+  const [markerName, setmarkerName] = useState("");
   const [RegStart, setRegStart] = useState(null);
   const [RegEnd, setRegEnd] = useState(null);
   const [RegStartTime, setRegStartTime] = useState(null);
@@ -198,14 +203,20 @@ const AdminCompetitions = (props) => {
     res.filesUploaded[0].mimetype === "image/jpeg" ||
     res.filesUploaded[0].mimetype === "image/jpg") {
     setpic(res.filesUploaded[0].url);
+    setpicName("Picture uploaded: " + res.filesUploaded[0].filename);
   }
-
   if (res.filesUploaded[0].mimetype === "application/pdf") {
     setpdf(res.filesUploaded[0].url);
+    setpdfName("PDF uploaded: " + res.filesUploaded[0].filename);
   }
-
   if (res.filesUploaded[0].mimetype === "text/x-python") {
     setmarker(res.filesUploaded[0].url);
+    setmarkerName("Marker uploaded: " + res.filesUploaded[0].filename);
+  }
+  if (res.filesUploaded[0].mimetype === "application/zip" ||
+    res.filesUploaded[0].mimetype ===  "application/x-zip-compressed") {
+    setzip(res.filesUploaded[0].url);
+    setzipName("ZIP uploaded: " + res.filesUploaded[0].filename);
   }
   };
 
@@ -278,6 +289,7 @@ const AdminCompetitions = (props) => {
               }}
             />
           </div>
+          <p>{picName}</p>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
@@ -288,6 +300,7 @@ const AdminCompetitions = (props) => {
               }}
             />
           </div>
+          <p>{pdfName}</p>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
@@ -298,7 +311,18 @@ const AdminCompetitions = (props) => {
               }}
             />
           </div>
-     
+          <p>{markerName}</p>
+          <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
+            <Button
+              name="Upload Input's Zip"
+              style={{ background: "#457B9D", color: "white" }}
+              onClick={() => {
+                setPickerVisible(true);
+              }}
+            />
+          </div>
+          <p>{zipName}</p>
+          
           {pickerVisible && (
             <div
               className="center"
@@ -366,7 +390,7 @@ const AdminCompetitions = (props) => {
               name="Create"
               onClick={() => {
                 // Validate inputs before making the API call
-              if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max)) {
+              if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip)) {
               return; // Stop further execution if validation fails
               }
               else{
@@ -389,7 +413,8 @@ const AdminCompetitions = (props) => {
                     CombinedRegEnd,
                     maxTeams,
                     min,
-                    max
+                    max,
+                    zip
                   );
                   window.location.reload(false);
                 }
