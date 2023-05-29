@@ -305,11 +305,13 @@ const About = (props) => {
         {/* Person 4 */}
         <div class="column">
           <div class="card">
+            <a href="https://www.youtube.com/watch?v=42OleX0HR4E">
             <img
               src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
               alt="Muhammed Muaaz Dawood"
               style={{ width: "100%", borderRadius: "1%" }}
             />
+            </a>
             <div class="container">
               <h2>Muhammed Muaaz Dawood</h2>
               <p class="title">Programmer</p>
