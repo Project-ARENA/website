@@ -23,13 +23,29 @@ const copyToClipboard = (value) => {
 };
 
 const PlayerPortalTeam = (props) => {
+  //UseEfect function when page loads
+  React.useEffect(() => {
+    // Make a get request to see if the max amount of teams has been reached for this competition
+    axios.get("http://localhost:3002/api/get/maxTeamsReached/" + competition_id)
+    .then(function (response) {
+      const result = response.data[0].result;
+      // If the max teams has been reached, disable the create team button
+      if (result == 1) {
+        setDisabled(true);
+      }
+      else {
+        setDisabled(false);
+      }
+    }
+    );
+  }, []);
   //useState variables
 
   //storing the code generated
   const [code, setCode] = useState("");
   const [teamName, setInputValue] = useState("");
   const [submitCount, setSubmitCount] = useState(0);
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [no_testcases, setNoTests] = useState(0);
   let inputLocation = " ";
   

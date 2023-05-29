@@ -39,6 +39,7 @@ let Mark = 0;
 let team_code = sessionStorage.getItem("teamCode");
 let testcaseName = "";
 let endDate = "";
+let sampleInOutLink = "";
 
 async function handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTAlert) {
   TXTLink = res.filesUploaded[0].url;
@@ -292,6 +293,17 @@ function getEndDate (){
   )
 }
 
+function getSampleInOut(){
+  return new Promise((resolve, reject) => {
+    axios.get("http://localhost:3002/api/get/sampleOutput/" + competition_id)
+    .then(function (response) {
+      sampleInOutLink = response.data[0].testcases_zip;
+      resolve(sampleInOutLink);
+    }
+    )
+  });
+}
+
 const ArenaMain = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [pickerTXTVisible, setTXTPickerVisible] = useState(false);
@@ -315,6 +327,7 @@ const ArenaMain = (props) => {
     const fetchData = async () => {
       await getCompTestCases();
       setIsLoaded(true);
+      getSampleInOut()
       getLatestScores();
       getHighest();
       getEndDate();
@@ -658,7 +671,25 @@ const ArenaMain = (props) => {
       >
         <u>Download PDF</u>
       </a>
-
+      <a
+        href="#"
+        onClick={async (event) => {
+          event.preventDefault(); // This prevents the default behavior of the link
+          const link = event.currentTarget;
+          if (link) {
+            link.style.cursor = "wait"; // Set the cursor to 'wait'
+            const inOutLink = await getSampleInOut();
+            window.open(inOutLink);
+            setTimeout(() => {
+              link.style.cursor = "default"; // Set the cursor back to default after a delay
+            }, 1000); // Change the delay time as needed
+          }
+        }}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <u>Download Sample Input</u>
+      </a>
       <br />
       <h4>{timeRemaining}</h4>
       <br />

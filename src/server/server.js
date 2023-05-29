@@ -6,6 +6,7 @@ const mysql = require("mysql");
 const axios = require("axios");
 const { spawn } = require("child_process");
 const sgMail = require('@sendgrid/mail');
+const { el } = require("date-fns/locale");
 dotenv.config();
 
 const app = express();
@@ -1330,6 +1331,58 @@ app.get("/api/get/compEndDate/:competition_id", (req, res) => {
   );
 });
 
+//Route to get the sample input and output
+app.get("/api/get/sampleOutput/:competition_id", (req, res) => {
+  const competition_id = req.params.competition_id;
+
+  db.query(
+    "SELECT testcases_zip FROM competition_details WHERE competition_id = ?;",
+    [competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } 
+      else {
+      
+      res.send(result);
+    }
+    }
+  );
+});
+
+
+//Route to see if the max amount of teams has been reached
+app.get("/api/get/maxTeamsReached/:competition_id", (req, res) => {
+  const competition_id = req.params.competition_id;
+
+  db.query(
+    "SELECT IF((SELECT COUNT(*) FROM team_details WHERE competition_id = ? AND valid_team = 1) >= (SELECT max_teams FROM competition_details WHERE competition_id = ?),1,0) AS result;",
+    [competition_id, competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+//Route to see if the max amount of team members has been reached
+app.get("/api/get/maxTeamMembersReached/:competition_id/:team_code", (req, res) => {
+  const competition_id = req.params.competition_id;
+  const team_code = req.params.team_code;
+
+  db.query(
+    "SELECT IF((SELECT COUNT(*) FROM teams WHERE team_code = ?) >= (SELECT teamsize_max FROM competition_details WHERE competition_id = ?),1,0) AS result;",
+    [team_code, competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
 
 
 //!Type above this

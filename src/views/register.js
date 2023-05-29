@@ -255,12 +255,12 @@ function handleClickToSendEmail(email) {
   shouldCloseOnOverlayClick={false}
   style={{
     content: {
-      width: "50%",
-      height: "40%",
+      width: "80%",
+      height: "70%",
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      overflowY: "hidden",
+      overflowY: "scroll",
       borderRadius: "10px", // Add border-radius for curved corners
       padding: "20px" // Add padding for spacing
     },
