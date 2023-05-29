@@ -142,7 +142,7 @@ const About = (props) => {
         <div class="column">
           <div class="card">
             <img
-              src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
+              src="logos/muaazbassa.jpg"
               alt="Mu'aaz Bassa"
               style={{ width: "100%", borderRadius: "1%" }}
             />
