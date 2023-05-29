@@ -266,10 +266,11 @@ const Login = (props) => {
           ></Button>
           <br/>
           <Button
-              name="close"
+              name="Close"
               onClick={() => {
                 setModalVisible(false);
               }}
+              color="danger"
           ></Button>
         </div>
         </Modal>
