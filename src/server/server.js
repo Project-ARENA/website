@@ -1137,6 +1137,22 @@ app.get("/api/get/userNickname/:user_id", (req, res) => {
   );
 });
 
+// Route to get the team details
+app.get("/api/get/teamDetails/:team_code", (req, res) => {
+  const team_code = req.params.team_code;
+
+  db.query(
+    "SELECT * FROM team_details WHERE team_code = ?;",
+    [team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
 // Route to get the team location
 app.get("/api/get/teamLocation/:teamName/:competition_id", (req, res) => {
   const team_name = req.params.teamName;

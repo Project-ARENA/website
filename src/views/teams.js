@@ -9,7 +9,8 @@ import Swal from 'sweetalert2'
 
 const competition_id = sessionStorage.getItem('CompID');
 const user_id = sessionStorage.getItem('userID');
-let teamLocation = ""
+const team_code = sessionStorage.getItem('teamCode');
+let teamLocation = "Getting Information..."
 let TeamStatus = ""
 let TeamStatusMessage = "Getting Information..."
 let ColorStatus = "black"
@@ -30,23 +31,31 @@ const Teams = (props) => {
   const [teamName, setTeamName] = useState("");
   const [userNicknames, setUserNicknames] = useState([]);
   const [teamCode, setTeamCode] = useState("");
+  const [loading, setLoading] = React.useState(true);
   //const [teamLocation, setTeamLocation] = useState("");
-  ColorStatus="red"
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Get the team name
-        const teamNameResponse = await axios.get(`http://localhost:3002/api/get/teamName/${user_id}/${competition_id}`);
-        const teamName = teamNameResponse.data[0].team_name;
+        //Get team details
+        const teamDetailsResponse = await axios.get(`http://localhost:3002/api/get/teamDetails/${team_code}`);
+        const teamName = teamDetailsResponse.data[0].team_name;
+        teamLocation = teamDetailsResponse.data[0].team_location;
+        TeamStatus = teamDetailsResponse.data[0].valid_team;
+
+
+        // // Get the team name
+        // const teamNameResponse = await axios.get(`http://localhost:3002/api/get/teamName/${user_id}/${competition_id}`);
+        // const teamName = teamNameResponse.data[0].team_name;
   
-        // Get the team location
-        const teamLocationResponse = await axios.get(`http://localhost:3002/api/get/teamLocation/${teamName}/${competition_id}`);
-         teamLocation = teamLocationResponse.data[0].team_location;
+        // // Get the team location
+        // const teamLocationResponse = await axios.get(`http://localhost:3002/api/get/teamLocation/${teamName}/${competition_id}`);
+        //  teamLocation = teamLocationResponse.data[0].team_location;
   
-        // Get the team code
-        const teamCodeResponse = await axios.get(`http://localhost:3002/api/get/teamCode/${teamName}/${competition_id}`);
-        const teamCode = teamCodeResponse.data[0].team_code;
+        // // Get the team code
+        // const teamCodeResponse = await axios.get(`http://localhost:3002/api/get/teamCode/${teamName}/${competition_id}`);
+        // const teamCode = teamCodeResponse.data[0].team_code;
   
         // Get the competition details
         const compDetailsResponse = await axios.get(`http://localhost:3002/api/get/compDetails/${competition_id}`);
@@ -62,9 +71,9 @@ const Teams = (props) => {
         const teamMembers = teamMembersResponse.data;
 
 
-        // Get the Team Status
-        const teamStatusResponse = await axios.get(`http://localhost:3002/api/get/teamStatus/${teamName}/${competition_id}`);
-        TeamStatus = teamStatusResponse.data[0].valid_team;
+        // // Get the Team Status
+        // const teamStatusResponse = await axios.get(`http://localhost:3002/api/get/teamStatus/${teamName}/${competition_id}`);
+        // TeamStatus = teamStatusResponse.data[0].valid_team;
   
         // Get the user nicknames
         const userIds = teamMembers.map(member => member.user_id);
@@ -77,7 +86,7 @@ const Teams = (props) => {
   
         // Update the state
         setTeamName(teamName);
-        setTeamCode(teamCode);
+        // setTeamCode(teamCode);
         setTitle(title);
         setUserNicknames(userNicknames);
       } catch (error) {
@@ -85,13 +94,24 @@ const Teams = (props) => {
       }
     };
     fetchData();
+
+        // Simulating an asynchronous API call
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+
+        if (loading) {
+          return <div>Loading...</div>;
+        }
+
   }, []);
 
   if (TeamStatus === 1){
     ColorStatus = "green"
     TeamStatusMessage = "Team is Valid"
   }
-  else{
+  else if (TeamStatus === 0)
+  {
     ColorStatus = "red"
     TeamStatusMessage = "Team is Invalid"
   }
@@ -174,7 +194,7 @@ const Teams = (props) => {
         onCopyClick={() => {
           Swal.fire({
             title: 'Team created!',
-            text: "Team Code: " + teamCode,
+            text: "Team Code: " + team_code,
             icon: 'success',
             showCancelButton: false,
             confirmButtonColor: '#3085d6',
@@ -182,7 +202,7 @@ const Teams = (props) => {
             confirmButtonText: 'Copy'
             }).then((result) => {
             if (result.isConfirmed) {
-              copyToClipboard(teamCode);
+              copyToClipboard(team_code);
               
             }
           })
