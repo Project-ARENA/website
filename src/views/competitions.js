@@ -231,12 +231,12 @@ function GenCards() {
       }}
     >
       <AccordionContent
-        title="Active Competitions"
+        title="Current Competitions"
         content={getActiveCards()}
       />
 
       <AccordionContent
-        title="Inactive Competitions"
+        title="Past Competitions"
         content={getInactiveCards()}
       />
     </div>

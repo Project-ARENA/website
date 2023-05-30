@@ -140,7 +140,6 @@ export default function CustomDataGrid({ rows }) {
     }).then((result) => {
       if (result.isConfirmed) {
         axios.post("http://localhost:3002/api/post/remove/team", {
-          user_id: row.user_id,
           team_code: row.team_code,
         });
 
