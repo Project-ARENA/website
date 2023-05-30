@@ -140,7 +140,7 @@ const About = (props) => {
           alt="image"
           src={TeamPicture}
           className="about-image2"
-          style={{borderRadius: "1%" }}
+          style={{borderRadius: "1%"}}
         />
       </div>
                
@@ -156,7 +156,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Mu'aaz Bassa</h2>
-              <p class="title">Scrum Master & Programmer</p>
+              <p class="title">"In Programming, mistakes are stepping stones towards elegant solutions."</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -212,7 +212,7 @@ const About = (props) => {
               <h2 className="person-name">
               Sayfullah Jumoorty
               </h2>
-              <p class="title">Programmer</p>
+              <p class="title">"Coding is the key to unlocking a world of endless possibilities."</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -266,7 +266,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Altaaf Ally</h2>
-              <p class="title">Programmer</p>
+              <p class="title">"Code is the language that empowers machines to change worlds."</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -320,7 +320,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Muhammed Muaaz Dawood</h2>
-              <p class="title">Programmer</p>
+              <p class="title">"Writing code: The art of crafting digital symphonies of functionality."</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -374,7 +374,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Rayhaan Hanslod</h2>
-              <p class="title">Programmer</p>
+              <p class="title">"Writing code is like painting, but with zeros and ones, creating masterpieces."</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -429,7 +429,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Hamdullah Dadabhoy (Abdullah)</h2>
-              <p class="title">Programmer</p>
+              <p class="title">"Programmers are architects of virtual worlds, molding dreams into reality."</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}

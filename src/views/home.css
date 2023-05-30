@@ -217,6 +217,8 @@
   width: 550px;
   height: 598px;
   object-fit: cover;
+  box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 @media(max-width: 1200px) {
   .home-navbar {
