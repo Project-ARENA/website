@@ -15,6 +15,7 @@ export default function OverflowCardPP(props) {
     endDate,
     onClick,
     isRegistered,
+    isInactive,
     onButton1Click,
     onButton2Click,
     onButton3Click,
@@ -156,7 +157,7 @@ export default function OverflowCardPP(props) {
             </Typography>
           </Typography>
 
-          {isRegistered && (
+          {(isRegistered && !isInactive) && (
             <Button 
               name="Enter Arena" 
               onClick={handleBtn2Click}
@@ -166,7 +167,7 @@ export default function OverflowCardPP(props) {
           <br />
           
           <div style={{ paddingBottom: "10px" }}>
-          {!isRegistered && (
+          {(!isRegistered && !isInactive) && (
             <Button
               name={"Register Now"}
               onClick={handleBtn1Click}

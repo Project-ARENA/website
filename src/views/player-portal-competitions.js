@@ -105,6 +105,11 @@ function GenCards() {
       return dateB - dateA;
     });
 
+    // Set the isInactive property to true
+    InactiveCards.forEach((card) => {
+      card.isInactive = true;
+    });
+
     return InactiveCards;
   };
 
@@ -285,31 +290,36 @@ function GenCards() {
           justifyContent: "center",
         }}
       >
-        {activeData.map((activeData) => (
-          <OverflowCard
-            key={activeData.competition_id}
-            onClick={() => {
-              handleCardClick(activeData.competition_id);
-            }}
-            onButton1Click={() => {
-              handleButton1Click(activeData.competition_id);
-            }}
-            onButton2Click={() => {
-              handleButton2Click(
-                activeData.competition_id,
-                activeData.startDate
-              );
-            }}
-            onButton3Click={() => {
-              handleButton3Click(activeData.competition_id);
-            }}
-            isRegistered={activeData.isRegistered}
-            {...activeData}
-          />
-        ))}
+        {activeData.map((activeData) => {
+          if (!activeData.isRegistered) {
+            return (
+              <OverflowCard
+                key={activeData.competition_id}
+                onClick={() => {
+                  handleCardClick(activeData.competition_id);
+                }}
+                onButton1Click={() => {
+                  handleButton1Click(activeData.competition_id);
+                }}
+                onButton2Click={() => {
+                  handleButton2Click(
+                    activeData.competition_id,
+                    activeData.startDate
+                  );
+                }}
+                onButton3Click={() => {
+                  handleButton3Click(activeData.competition_id);
+                }}
+                isRegistered={activeData.isRegistered}
+                {...activeData}
+              />
+            );
+          }
+          return null;
+        })}
       </div>
     );
-  }
+  }  
 
   function getInactiveCards() {
     return (
@@ -403,17 +413,17 @@ function GenCards() {
       }}
     >
       <AccordionContent
-        title="Active Registered Competitions"
+        title="Your Registered Competitions"
         content={getRegisteredCards()}
       />
 
       <AccordionContent
-        title="Active Competitions"
+        title="Availible Competitions"
         content={getActiveCards()}
       />
 
       <AccordionContent
-        title="Inactive Competitions"
+        title="Past Competitions"
         content={getInactiveCards()}
       />
     </div>
