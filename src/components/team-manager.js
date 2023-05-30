@@ -100,6 +100,7 @@ export default function TeamManager(props) {
           name={"Delete team"}
           onClick={onButtonDelete}
           style={{ marginTop: "25px" }}
+          color={"danger"}
         />
         )}
       {/* </div> */}
@@ -111,6 +112,7 @@ export default function TeamManager(props) {
         name={"Leave Team"}
         onClick={onButtonLeave}
         style={{ marginTop: "25px" }}
+        color={"danger"}
       />
       )}
 

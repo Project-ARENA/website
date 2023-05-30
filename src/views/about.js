@@ -156,7 +156,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Mu'aaz Bassa</h2>
-              <p class="title">Scrum Master</p>
+              <p class="title">Scrum Master & Programmer</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}

@@ -6,9 +6,14 @@ import axios from "axios";
 import './teams.css'
 import Swal from 'sweetalert2'
 
+
 const competition_id = sessionStorage.getItem('CompID');
 const user_id = sessionStorage.getItem('userID');
 let teamLocation = ""
+let TeamStatus = ""
+let TeamStatusMessage = "Getting Information..."
+let ColorStatus = "black"
+
 
 // Function to copy a value to clipboard
 const copyToClipboard = (value) => {
@@ -26,6 +31,7 @@ const Teams = (props) => {
   const [userNicknames, setUserNicknames] = useState([]);
   const [teamCode, setTeamCode] = useState("");
   //const [teamLocation, setTeamLocation] = useState("");
+  ColorStatus="red"
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +60,11 @@ const Teams = (props) => {
           }
         });
         const teamMembers = teamMembersResponse.data;
+
+
+        // Get the Team Status
+        const teamStatusResponse = await axios.get(`http://localhost:3002/api/get/teamStatus/${teamName}/${competition_id}`);
+        TeamStatus = teamStatusResponse.data[0].valid_team;
   
         // Get the user nicknames
         const userIds = teamMembers.map(member => member.user_id);
@@ -75,6 +86,15 @@ const Teams = (props) => {
     };
     fetchData();
   }, []);
+
+  if (TeamStatus === 1){
+    ColorStatus = "green"
+    TeamStatusMessage = "Team is Valid"
+  }
+  else{
+    ColorStatus = "red"
+    TeamStatusMessage = "Team is Invalid"
+  }
   
   return (
     <div className="arena-team-container">
@@ -144,6 +164,8 @@ const Teams = (props) => {
       <br/>
       <h1>{title}</h1>
       <h2>Team Manager</h2>
+
+      <h3 style={{color:ColorStatus}}>Teams Status: {TeamStatusMessage}</h3>
       
       <TeamManager
         TeamName={teamName}

@@ -1154,6 +1154,23 @@ app.get("/api/get/teamLocation/:teamName/:competition_id", (req, res) => {
   );
 });
 
+// Route to get the team status
+app.get("/api/get/teamStatus/:teamName/:competition_id", (req, res) => {
+  const team_name = req.params.teamName;
+  const competition_id = req.params.competition_id;
+
+  db.query(
+    "SELECT valid_team FROM team_details WHERE team_name = ? AND competition_id = ?;",
+    [team_name, competition_id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
 // Route to get the team code
 app.get("/api/get/teamCode/:teamName/:competition_id", (req, res) => {
   const team_name = req.params.teamName;
