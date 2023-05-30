@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 const username = sessionStorage.getItem("username");
 const userID = sessionStorage.getItem("userID");
 const competition_id = sessionStorage.getItem("CompID");
+let teamName = "";
 
 // Function to copy a value to clipboard
 const copyToClipboard = (value) => {
@@ -21,6 +22,54 @@ const copyToClipboard = (value) => {
   document.execCommand('copy'); // Copy the selected text to clipboard
   document.body.removeChild(textarea); // Remove the textarea from the body
 };
+
+/*
+  ! CHECK IF TEAM IS FULL -> throw notification
+  ! If it isn't then join it
+  ! Check now if it is a valid team, then set the valid field to true
+*/
+
+function joinTeam (teamName, teamCode) {
+  axios.post("http://localhost:3002/api/post/addTo/team", {
+    user_id: parseInt(userID),
+    team_name: teamName,
+    team_code: teamCode,
+    competition_id: parseInt(competition_id,)
+  //When it is done then call the check if valid function
+  }).then(function (response) {
+    checkIfValidTeam(teamCode);
+  }
+  );
+
+};
+
+function checkIfFull(teamCode){
+  axios.get("http://localhost:3002/api/get/maxTeamMembersReached/" + competition_id + "/" + teamCode)
+    .then(function (response) {
+      const result = response.data[0].result;
+      // If the max team members has been reached, notify the user
+      if (result == 1) {
+        alert("This team is full");
+      }
+      else {
+        // If the team isn't full , join the team, then check if it is valid
+        console.log("Team not full");
+        joinTeam(teamName, teamCode); 
+      }
+    }
+    );
+}
+
+function checkIfValidTeam(teamCode){
+  axios.post("http://localhost:3002/api/post/updateTeamValid", {
+    team_code: teamCode,
+    competition_id: competition_id
+  })
+  .then(function (response) {
+   console.log(response.data);
+  }
+  );
+}
 
 const PlayerPortalTeam = (props) => {
   //UseEfect function when page loads
@@ -43,7 +92,7 @@ const PlayerPortalTeam = (props) => {
 
   //storing the code generated
   const [code, setCode] = useState("");
-  const [teamName, setInputValue] = useState("");
+  
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [no_testcases, setNoTests] = useState(0);
@@ -192,23 +241,15 @@ const PlayerPortalTeam = (props) => {
         if (JSON.stringify(codeResponse) == "[]") {
           alert("Please enter a valid code");
         } else {
-          joinTeam(codeResponse[0].team_name, teamCode);
+          //The team exists, now check if it is full
+          checkIfFull(teamCode);
+          teamName = codeResponse[0].team_name;
           sessionStorage.setItem("teamCode", teamCode);
         }
       });
   };
 
-  const joinTeam = (teamName, teamCode) => {
-    axios.post("http://localhost:3002/api/post/addTo/team", {
-      user_id: parseInt(userID),
-      team_name: teamName,
-      team_code: teamCode,
-      competition_id: parseInt(competition_id,)
-    });
-    setTimeout(() => {
-      window.location.href = "http://localhost:3000/teams"
-    }, 500);
-  };
+  
 
   return (
     <div className="player-portal-team-container">

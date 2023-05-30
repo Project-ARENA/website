@@ -1384,6 +1384,22 @@ app.get("/api/get/maxTeamMembersReached/:competition_id/:team_code", (req, res) 
   );
 });
 
+//Route to update team_valid if valid team
+app.post("/api/post/updateTeamValid", (req, res) => {
+  const team_code = req.body.team_code;
+  const competition_id = req.body.competition_id;
+
+  db.query(
+    "UPDATE team_details SET valid_team = 1 WHERE team_code = ? AND (SELECT COUNT(*) >= (SELECT teamsize_min FROM competition_details WHERE competition_id = ?) FROM teams WHERE team_code = ?);",
+    [team_code, competition_id, team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
 
 //!Type above this
 app.listen(PORT, () => {
