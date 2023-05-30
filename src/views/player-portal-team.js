@@ -35,12 +35,8 @@ function joinTeam (teamName, teamCode) {
     team_name: teamName,
     team_code: teamCode,
     competition_id: parseInt(competition_id,)
-  //When it is done then call the check if valid function
-  }).then(function (response) {
-    checkIfValidTeam(teamCode);
-  }
-  );
-
+  })
+  checkIfValidTeam(teamCode);
 };
 
 function checkIfFull(teamCode){
@@ -92,7 +88,6 @@ const PlayerPortalTeam = (props) => {
 
   //storing the code generated
   const [code, setCode] = useState("");
-  
   const [submitCount, setSubmitCount] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [no_testcases, setNoTests] = useState(0);
@@ -103,10 +98,6 @@ const PlayerPortalTeam = (props) => {
     setDisabled(true);
     const code = uuidv4();
     setCode(code);
-
-    // console.log("Team code generated");
-    // console.log(code);
-    // console.log(teamName);
     return code;
   };
 
