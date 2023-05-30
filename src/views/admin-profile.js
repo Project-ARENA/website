@@ -160,7 +160,7 @@ const AdminProfile = (props) => {
             </div>
           </div>
           <div className="admin-profile-container1">
-            <Link to="/player-portal-profile" className="admin-profile-navlink">
+            <Link to="/admin-profile" className="admin-profile-navlink">
               <svg viewBox="0 0 1024 1024" className="admin-profile-icon2">
                 <path d="M576 706.612v-52.78c70.498-39.728 128-138.772 128-237.832 0-159.058 0-288-192-288s-192 128.942-192 288c0 99.060 57.502 198.104 128 237.832v52.78c-217.102 17.748-384 124.42-384 253.388h896c0-128.968-166.898-235.64-384-253.388z"></path>
               </svg>
@@ -248,9 +248,9 @@ const AdminProfile = (props) => {
             sessionStorage.clear();
             window.location.href = "http://localhost:3000";
           }}
+          color={"danger"}
           rootClassName="button-root-class-name4"
         ></Button>
-        <div className="admin-profile-container4"></div>
       </div>
     </div>
   );
