@@ -6,6 +6,14 @@ import "./about.css";
 var GithubLogo = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
 var LinkedInLogo = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/800px-LinkedIn_logo_initials.png"
 var EmailLogo = "https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
+var TeamPicture="https://lh3.googleusercontent.com/pw/AJFCJaUHVJlgwnLyCLi2PgmMNZmW929Srz8MEGHh_TSD17Nqy_7LyRq_zGe_MHYIAjV6jKcYcTfmz3s7lb9FojqljRhz-6WiH2OYWkds79KJQw_nF3KTAMapBcbQSw0LRqlixx5ePGHlxvDrYL_YvQ1ppiHsyDaVd2MexLsmw8l08DezRcFXN0bTvDL59a8XTmE7Vuf9e3jAq9xJc280eurE22i0B5r8BWq6FOHW4MR8uLKIi9YBM-ixolqfxA6vI3jYC9vTXGzXBKeSE_RxOMtWeyQMC4PwETNclGXRx9WQa8M538IHipWTOtcyAMKOHzp1IR8rbO-vodT-RafYTLr0kTi9VrV_dT8mdOqwx7dWPc4Qfhc83dyM2aMRnu1ccU4jo_EJfi62Hpq1uAoUGIpo3GcitmxW5KFumEQvoH1xjSbVGZ-1TMWy4E3CxkJ5GgcDwI2R3fbOlUj-UL8EHgmgDz_cBd3Y9eI-uf_MCiLgkp8mk8-326TfJgaflzJZa5sLOY3d_GJK6HUuUCt-D7Sea1CFCYPTgcEyqH-VELl6m0H2BrAe6N0vjoR_EkYT3Wy7a2h91DYEYrqd093zxFrVlHee2eIAzEKnvZnoYwXyzfHObF-wYSJQ4uKK1418ILwpviyLajD45G0X8f0vPPdR158fbVXThRXx17ZyG_2S2sfdhICHUyfk5A6LFNKNkrlej11oB6URj3iFclV-CIghi5HQMXlR5ECa6q_4NSrYWyokzBWFZamTQqkRTi1l6Am4wcrWu4GHzPqJ9f5G_h_a9Ba4wtKtSEo-28OSvU7gg3Z3okEXcabWjMhz2Y-osKxEJYlQ562DLjQLuRUKDjFwkCssIO1FqWwCK2J69nHK_1j4V9sTfR9hFBMgbax0iPRTAz5venW_bU0QwAf9SB8RUDIDSpwF0-btE8R_2WQj0-lzVeQIN1Pq2X0WSDJ_5RnZFHhAsx99a8gDLb_D7faH8Bs9Bia-wNscZ2c3dEeROVgXqY9UDzOXaabFJYYPkZlqwIjw-PxswbtYxBz1pidXUIUhv5GMEOMTxiWG93CG=w1350-h1013-s-no?authuser=0"
+var MuaazPicture ="https://i.ibb.co/chFpdCL/muaazbassa.png"
+var SayfullahPicture ="https://i.ibb.co/0JGZv03/sayfullahjumoorty.png"
+var AltaafPicture ="https://i.ibb.co/xmgjz2v/altaafally.png"
+var MuhammedPicture ="https://i.ibb.co/qgGRnTh/muhammedmuaazdawood.png"
+var RayhaanPicture ="https://i.ibb.co/zxmRX2g/rayhaanhanslod.png"
+var HamdullahPicture="https://i.ibb.co/61YJn4Z/hamdullahdadabhoy-abdullah.png"
+
 const About = (props) => {
   return (
     <div className="about-container">
@@ -130,7 +138,7 @@ const About = (props) => {
         </div>
         <img
           alt="image"
-          src="https://www.wits.ac.za/media/wits-university/home-page/Wits%20University%20Great%20Hall%202023.png"
+          src={TeamPicture}
           className="about-image2"
           style={{borderRadius: "1%" }}
         />
@@ -142,7 +150,7 @@ const About = (props) => {
         <div class="column">
           <div class="card">
             <img
-              src="logos/muaazbassa.jpg"
+              src={MuaazPicture}
               alt="Mu'aaz Bassa"
               style={{ width: "100%", borderRadius: "1%" }}
             />
@@ -196,7 +204,7 @@ const About = (props) => {
         <div class="column">
           <div class="card">
             <img
-              src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
+              src={SayfullahPicture}
               alt="Sayfullah Jumoorty"
               style={{ width: "100%", borderRadius: "1%" }}
             />
@@ -252,9 +260,9 @@ const About = (props) => {
         <div class="column">
           <div class="card">
             <img
-              src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
+              src={AltaafPicture}
               alt="Altaaf Ally"
-              style={{ width: "100%", borderRadius: "1%" }}
+              style={{maxHeight:"500px", width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
               <h2>Altaaf Ally</h2>
@@ -305,13 +313,11 @@ const About = (props) => {
         {/* Person 4 */}
         <div class="column">
           <div class="card">
-            <a href="https://www.youtube.com/watch?v=42OleX0HR4E">
             <img
-              src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
+              src={MuhammedPicture}
               alt="Muhammed Muaaz Dawood"
               style={{ width: "100%", borderRadius: "1%" }}
             />
-            </a>
             <div class="container">
               <h2>Muhammed Muaaz Dawood</h2>
               <p class="title">Programmer</p>
@@ -362,7 +368,7 @@ const About = (props) => {
         <div class="column">
           <div class="card">
             <img
-              src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
+              src={RayhaanPicture}
               alt="Rayhaan Hanslod"
               style={{ width: "100%", borderRadius: "1%" }}
             />
@@ -417,7 +423,7 @@ const About = (props) => {
         <div class="column">
           <div class="card">
             <img
-              src="https://highlyclutch.com/wp-content/uploads/2023/03/Hasbulla.jpg"
+              src={HamdullahPicture}
               alt="Hamdullah Dadabhoy (Abdullah)"
               style={{ width: "100%", borderRadius: "1%" }}
             />
