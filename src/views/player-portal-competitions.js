@@ -418,7 +418,7 @@ function GenCards() {
       />
 
       <AccordionContent
-        title="Availible Competitions"
+        title="Available Competitions"
         content={getActiveCards()}
       />
 

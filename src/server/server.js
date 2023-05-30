@@ -751,12 +751,11 @@ app.post("/api/post/update/team", (req, res) => {
 
 // Route to remove/delete a team
 app.post("/api/post/remove/team", (req, res) => {
-  const user_id = req.body.user_id;
   const team_code = req.body.team_code;
 
   db.query(
-    "DELETE cd, td, t, s FROM competition_details cd LEFT JOIN team_details td ON cd.competition_id = td.competition_id LEFT JOIN teams t ON cd.competition_id = t.competition_id LEFT JOIN submissions s ON cd.competition_id = s.competition_id WHERE cd.competition_id = ?;",
-    [user_id, team_code],
+    "DELETE td, t FROM team_details AS td JOIN teams AS t ON td.team_code = t.team_code WHERE td.team_code = ?;",
+    [team_code],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -766,7 +765,7 @@ app.post("/api/post/remove/team", (req, res) => {
   );
 });
 
-// Route to remove/delete a team
+// Route to remove/delete a competition
 app.post("/api/post/remove/competition", (req, res) => {
   const comp_id = req.body.comp_id;
 
