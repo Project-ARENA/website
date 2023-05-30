@@ -283,7 +283,7 @@ const AdminCompetitions = (props) => {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Upload Competition Picture"
-              style={{ background: "#457B9D", color: "white" }}
+              color="primary"
               onClick={() => {
                 setPickerVisible(true);
               }}
@@ -294,7 +294,7 @@ const AdminCompetitions = (props) => {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Upload Competition PDF"
-              style={{ background: "#457B9D", color: "white" }}
+              color="primary"
               onClick={() => {
                 setPickerVisible(true);
               }}
@@ -305,7 +305,7 @@ const AdminCompetitions = (props) => {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Upload Marker Script"
-              style={{ background: "#457B9D", color: "white" }}
+              color="primary"
               onClick={() => {
                 setPickerVisible(true);
               }}
@@ -315,7 +315,7 @@ const AdminCompetitions = (props) => {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Upload Input's Zip"
-              style={{ background: "#457B9D", color: "white" }}
+              color="primary"
               onClick={() => {
                 setPickerVisible(true);
               }}
@@ -388,6 +388,7 @@ const AdminCompetitions = (props) => {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Create"
+              color="success"
               onClick={() => {
                 // Validate inputs before making the API call
               if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip)) {
@@ -450,6 +451,7 @@ const AdminCompetitions = (props) => {
                 setPickerVisible(false);
                 // console.log("button clicked");
               }}
+              color="danger"
             />
           </div>
         </div>
@@ -532,7 +534,7 @@ const AdminCompetitions = (props) => {
           </div>
         </div>
       </div>
-
+      <h1 className="admin-competitions-title" style={{paddingTop:"25px"}}>Competitions</h1>
       <div className="grid-container" style={{height: "800px"}}>
         <GenGrid />
       </div>

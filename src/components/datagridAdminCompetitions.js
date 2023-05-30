@@ -152,17 +152,18 @@ export default function CustomDataGrid({ rows }) {
         return (
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button
-              name="Delete"
-              onClick={(e) => onButtonDelete(e, params.row)}
-            >
-              Delete Team
-            </Button>
-
-            <Button
               name="Edit"
               onClick={(e) => onButtonEdit(e, params.row)}
             >
               Edit Details
+            </Button>
+
+            <Button
+              name="Delete"
+              onClick={(e) => onButtonDelete(e, params.row)}
+              color="danger"
+            >
+              Delete Team
             </Button>
 
           </Box>
@@ -230,7 +231,7 @@ export default function CustomDataGrid({ rows }) {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Upload Competition Picture"
-              style={{ background: "#457B9D", color: "white" }}
+              color="primary"
               onClick={() => {
                 setPickerVisible(true);
               }}
@@ -241,7 +242,7 @@ export default function CustomDataGrid({ rows }) {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Upload Competition PDF"
-              style={{ background: "#457B9D", color: "white" }}
+              color="primary"
               onClick={() => {
                 setPickerVisible(true);
               }}
@@ -252,7 +253,7 @@ export default function CustomDataGrid({ rows }) {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Upload Marker Script"
-              style={{ background: "#457B9D", color: "white" }}
+              color="primary"
               onClick={() => {
                 setPickerVisible(true);
               }}
@@ -262,7 +263,7 @@ export default function CustomDataGrid({ rows }) {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Upload Input's Zip"
-              style={{ background: "#457B9D", color: "white" }}
+              color="primary"
               onClick={() => {
                 setPickerVisible(true);
               }}
@@ -335,6 +336,7 @@ export default function CustomDataGrid({ rows }) {
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
               name="Create"
+              color={"success"}
               onClick={() => {
                 // Validate inputs before making the API call
               if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip)) {
@@ -397,6 +399,7 @@ export default function CustomDataGrid({ rows }) {
                 setPickerVisible(false);
                 // console.log("button clicked");
               }}
+              color="danger"
             />
           </div>
         </div>

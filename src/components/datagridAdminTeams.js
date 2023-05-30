@@ -152,8 +152,8 @@ export default function CustomDataGrid({ rows }) {
   };
 
   const columns = [
-    { field: "team_code", headerName: "Team Code", width: 250 },
-    { field: "user_id", headerName: "User ID", width: 100 },
+    // { field: "team_code", headerName: "Team Code", width: 250 },
+    // { field: "user_id", headerName: "User ID", width: 100 },
     { field: "team_name", headerName: "Team Name", width: 130 },
     { field: "team_score", headerName: "Team Score", width: 130 },
     { field: "competition_name", headerName: "Competition Name", width: 200 },
@@ -162,13 +162,14 @@ export default function CustomDataGrid({ rows }) {
       headerName: "Actions",
       description: "Actions column.",
       sortable: false,
-      width: 530,
+      width: 800,
       renderCell: (params) => {
         return (
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button
               name="Edit Details"
               onClick={(e) => onButtonEdit(e, params.row)}
+              color={"info"}
             >
               Edit Details
             </Button>
@@ -179,10 +180,18 @@ export default function CustomDataGrid({ rows }) {
             >
               Edit Members
             </Button>
+            <Button
+              name="Download Submission"
+              onClick={(e) => onButtonSubmission(e, params.row)}
+              color={"success"}
+            >
+              Download Submission
+            </Button>
 
             <Button
               name="Delete Team"
               onClick={(e) => onButtonDelete(e, params.row)}
+              color={"danger"}
             >
               Delete Team
             </Button>
@@ -382,6 +391,7 @@ export default function CustomDataGrid({ rows }) {
                 setvisible(false);
                 // console.log("Close button clicked");
               }}
+              color={"danger"}
             />
           </div>
         </div>
@@ -448,6 +458,7 @@ export default function CustomDataGrid({ rows }) {
                 onButtonRemove(e.target.value);
               }}
               disabled={buttonsEnabled}
+              color={"danger"}
             />
           </div>
 
@@ -471,6 +482,7 @@ export default function CustomDataGrid({ rows }) {
                 setValue("");
                 // console.log("Close button clicked");
               }}
+              color={"danger"}
             />
           </div>
         </div>

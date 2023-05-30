@@ -84,6 +84,7 @@ const AdminTeams = (props) => {
           </div>
         </div>
       </div>
+      <h1 className="admin-teams-title" style={{paddingTop:"25px"}}>Teams</h1>
       <div className="grid-container">
         <GenGrid />
       </div>

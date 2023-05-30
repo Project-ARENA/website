@@ -6,7 +6,10 @@
   align-items: center;
   flex-direction: column;
 }
-
+.admin-competitions-title{
+  font-size: 70px;
+  /* font-family: 'Bebas Neue', sans-serif; */
+}
 .grid-container {
   display: flex;
   justify-content: center;
