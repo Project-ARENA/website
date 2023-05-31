@@ -15,6 +15,7 @@ let TeamStatus = ""
 let TeamStatusMessage = "Getting Information..."
 let ColorStatus = "black"
 let startDate = ""
+let nicknames = []
 
 // Function to copy a value to clipboard
 const copyToClipboard = (value) => {
@@ -73,7 +74,7 @@ const Teams = (props) => {
         });
         const data = teamMembersResponse.data;
 
-        const updatedNicknames = data.map((member) => {
+        nicknames = data.map((member) => {
           let nickname = member.user_nickname;
           if (member.is_captain) {
             nickname += ' (Captain)';
@@ -81,7 +82,7 @@ const Teams = (props) => {
           return nickname;
         });
 
-        setUserNicknames(updatedNicknames);
+        setUserNicknames(nicknames);
 
         // // Get the Team Status
         // const teamStatusResponse = await axios.get(`http://localhost:3002/api/get/teamStatus/${teamName}/${competition_id}`);
@@ -123,6 +124,7 @@ const Teams = (props) => {
 
     setTimeRemaining(`Remaining time: ${days}d ${hours}h ${minutes}m ${seconds}s`);
 
+    
 
 
     //If the seconds remaining is less than 0, then the competition is over
@@ -133,6 +135,38 @@ const Teams = (props) => {
     }
 
   }, 1000); //1000ms = 1 sec
+  
+  // const interval2 = setInterval(async () => {
+  //   try {
+  //     // Get the team members
+  //     const teamMembersResponse = await axios.post('http://localhost:3002/api/get/teamMembers', null, {
+  //       params: {
+  //         user_id: user_id,
+  //         competition_id: competition_id
+  //       }
+  //     });
+  //     const data = teamMembersResponse.data;
+  
+  //     const updatedNicknames = data.map((member) => {
+  //       let nickname = member.user_nickname;
+  //       if (member.is_captain) {
+  //         nickname += ' (Captain)';
+  //       }
+  //       return nickname;
+  //     });
+  //     //Check if the nicknames have changed
+  //     // if (nicknames != updatedNicknames) {
+  //     //   setUserNicknames(updatedNicknames);
+  //     //   console.log("Nicknames have changed");
+  //     // }
+
+      
+  //   } catch (error) {
+  //     // Handle any errors that occur during the API request
+  //     console.error('Error occurred during API request:', error);
+  //   }
+  // }, 10000);
+  
 
   if (TeamStatus === 1){
     ColorStatus = "green"
