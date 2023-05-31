@@ -188,7 +188,7 @@ const Login = (props) => {
           <InputBoxForInfo
             buttonText="PASSWORD"
             isPassword
-            tooltipText="poespoes"
+            tooltipText="The password should include a capital letter, a symbol like @ or -, numbers and have a minimum length of 8 characters"
             onChange={(e) => setPassword(e.target.value)}
           ></InputBoxForInfo>
           <br/>

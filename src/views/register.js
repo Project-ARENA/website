@@ -234,6 +234,7 @@ function handleClickToSendEmail(email) {
           buttonText="PASSWORD"
           onChange={(e) => setPassword(e.target.value)}
           isPassword
+          tooltipText="The password should include a capital letter, a symbol like @ or -, numbers and have a minimum length of 8 characters"
           rootClassName="input-box-for-info-root-class-name5"
           id="password"
         ></InputBoxForInfo>
