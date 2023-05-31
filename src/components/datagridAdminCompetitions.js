@@ -88,12 +88,22 @@ export default function CustomDataGrid({ rows }) {
 
     try {
     //   const response = await axios.post(
-    //     "http://localhost:3002/api/post/update/team",
+    //     "http://localhost:3002/api/post/update/competition",
     //     {
-    //       team_code: teamCode,
-    //       user_id: userID,
-    //       team_name: teamName,
-    //       team_score: teamScore,
+    //       competition_name: compname,
+    //       competition_image: pic,
+    //       competition_startdate: CompStart,
+    //       competition_enddate: CompEnd,
+    //       competition_info:desc,
+    //       competition_testcases:pdf ,
+    //       no_testcases :noTestcases,
+    //       testcases:testcases
+    //       competition_marker:marker,
+    //       registration_startdate:RegStart,
+    //       registration_enddate:RegEnd,
+    //       max_teams:teamMax,
+    //       teamsize_min:teamMin,
+    //       teamsize_max:teamMin,
     //     }
     //   );
     //   console.log(response.data);
