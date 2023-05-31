@@ -188,6 +188,7 @@ const Login = (props) => {
           <InputBoxForInfo
             buttonText="PASSWORD"
             isPassword
+            tooltipText="poespoes"
             onChange={(e) => setPassword(e.target.value)}
           ></InputBoxForInfo>
           <br/>
