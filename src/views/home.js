@@ -85,18 +85,18 @@ const Home = (props) => {
               Join the league of champions and start your journey today!
               </span>
               <span>
-                <span
+                {/* <span
                   dangerouslySetInnerHTML={{
                     __html: ' ',
                   }}
-                />
+                /> */}
               </span>
               <span>
-                <span
+                {/* <span
                   dangerouslySetInnerHTML={{
                     __html: ' ',
                   }}
-                />
+                /> */}
               </span>
             </span>
           </div>
@@ -105,7 +105,7 @@ const Home = (props) => {
             src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDEzfHxjb21wdXRlcnxlbnwwfHx8fDE2NzkxNDM2ODM&amp;ixlib=rb-4.0.3&amp;w=1200"
             className="home-image1"
           /> */}
-          <ParticleComponent width={800} height={600} />
+          <ParticleComponent width={600} height={600} />
         </div>
       </div>
     </div>

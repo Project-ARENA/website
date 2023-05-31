@@ -289,8 +289,8 @@ const Register = (props) => {
             shouldCloseOnOverlayClick={false}
             style={{
               content: {
-                width: "80%",
-                height: "70%",
+                width: "50%",
+                height: "50%",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
@@ -312,7 +312,7 @@ const Register = (props) => {
                 style={{
                   marginBottom: "10px",
                   textAlign: "center",
-                  fontFamily: "Bebas Neue",
+                  fontSize: "25px"
                 }}
               >
                 A code has been sent to your email
@@ -322,7 +322,7 @@ const Register = (props) => {
                 style={{
                   marginBottom: "20px",
                   textAlign: "center",
-                  fontFamily: "Bebas Neue",
+                  fontSize: "25px"
                 }}
               >
                 Please enter your code to verify your email
@@ -345,6 +345,7 @@ const Register = (props) => {
               <Button
                 name={"Email incorrect? Click here to change your email"}
                 onClick={() => setModalVisible(false)}
+                color={"warning"}
               ></Button>
             </div>
           </Modal>

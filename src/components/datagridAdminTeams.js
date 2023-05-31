@@ -116,7 +116,8 @@ export default function CustomDataGrid({ rows }) {
   const onButtonSubmission = (e, row) => {
     setTeamCode(row.team_code);
     console.log(teamCode);
-    axios.get("http://localhost:3002/api/get/testcaseLinks/" + teamCode)
+    axios
+      .get("http://localhost:3002/api/get/testcaseLinks/" + teamCode)
       .then((response) => {
         console.log(response.data);
         const data = response.data[0].testcase_links;
@@ -125,45 +126,76 @@ export default function CustomDataGrid({ rows }) {
         const downloadLinks = [];
   
         let count = 0;
-        for (let key in jsonArray) {
-          if (jsonArray[key] != 0) {
-            downloadLinks.push(jsonArray[key]);
-          }
-          count++;
-        }
-        console.log(downloadLinks);
-        
-        const zip = new JSZip();
-        
-        // Promises to download files and add them to the zip
-        const promises = downloadLinks.map((link) => {
-          return axios.get(link, { responseType: 'blob' })
-            .then((response) => {
-              const filename = getFileNameFromURL(link);
-              const extension = getFileExtensionFromContentType(response.headers['content-type']);
-              const newFilename = `file_${count}.${extension}`;
-              zip.file(newFilename, response.data);
+        const promises = []; // Store promises
+  
+        const zip = new JSZip(); // Declare the zip object
+  
+        if (jsonArray && typeof jsonArray === "object") {
+          // Create an array of promises to fetch the JSON data
+          const jsonPromises = Object.values(jsonArray).map((link) =>
+            axios.get(link).catch((error) => {
+              console.error("Error fetching JSON data:", error);
+            })
+          );
+  
+          // Wait for all JSON promises to resolve
+          Promise.all(jsonPromises)
+            .then((jsonResponses) => {
+              jsonResponses.forEach((jsonResponse) => {
+                if (jsonResponse && jsonResponse.data) {
+                  const jsonData = jsonResponse.data;
+                  // Process jsonData and extract the download links
+                  // Add the download links to the downloadLinks array
+                }
+              });
+  
+              // Create promises to download files
+              for (let key in jsonArray) {
+                if (jsonArray[key] !== 0) {
+                  promises.push(
+                    axios
+                      .get(jsonArray[key], { responseType: "blob" })
+                      .then((response) => {
+                        const filename = getFileNameFromURL(jsonArray[key]);
+                        const extension = getFileExtensionFromContentType(
+                          response.headers["content-type"]
+                        );
+                        const newFilename = `file_${count}.${extension}`;
+                        zip.file(newFilename, response.data);
+                        count++;
+                      })
+                      .catch((error) => {
+                        console.error("Error downloading file:", error);
+                      })
+                  );
+                }
+              }
+  
+              // Wait for all promises to resolve
+              Promise.all(promises)
+                .then(() => {
+                  // Generate the zip file
+                  zip.generateAsync({ type: "blob" }).then((content) => {
+                    // Save the zip file
+                    saveAs(content, "files.zip");
+                  });
+                })
+                .catch((error) => {
+                  console.error("Error downloading files:", error);
+                });
             })
             .catch((error) => {
-              console.error("Error downloading file:", error);
+              console.error("Error fetching testcase links:", error);
             });
-        });
-  
-        // Wait for all promises to resolve
-        Promise.all(promises)
-          .then(() => {
-            // Generate the zip file
-            zip.generateAsync({ type: 'blob' })
-              .then((content) => {
-                // Save the zip file
-                saveAs(content, 'files.zip');
-              });
-          });
+        } else {
+          console.error("Invalid JSON array.");
+        }
       })
       .catch((error) => {
         console.error("Error fetching testcase links:", error);
       });
   };
+  
   
   // Helper function to extract filename from a URL
   function getFileNameFromURL(url) {
