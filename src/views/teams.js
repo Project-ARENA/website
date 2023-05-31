@@ -122,14 +122,14 @@ const Teams = (props) => {
 
     setTimeRemaining(`${days}d ${hours}h ${minutes}m ${seconds}s`);
 
-    setTimeRemaining(`Remaining time: ${days}d ${hours}h ${minutes}m ${seconds}s`);
+    setTimeRemaining(`Competition starts in: ${days}d ${hours}h ${minutes}m ${seconds}s`);
 
     
 
-
-    //If the seconds remaining is less than 0, then the competition is over
-    if (seconds < 0) {
-      setTimeRemaining("Competition has ended");
+    //Check if Valid Team
+    //If the seconds remaining is less than 0, then the competition starts
+    if ((seconds < 0) && (TeamStatus == 1)) {
+      setTimeRemaining("Competition has starts");
       //Relocate the user to the competition page
       window.location.href = "http://localhost:3000/arena-main";
     }
@@ -173,6 +173,11 @@ const Teams = (props) => {
     TeamStatusMessage = "Team is Valid"
   }
   else if (TeamStatus === 0)
+  {
+    ColorStatus = "red"
+    TeamStatusMessage = "Team is Invalid"
+  }
+  else if (TeamStatus === "")
   {
     ColorStatus = "red"
     TeamStatusMessage = "Team is Invalid"
