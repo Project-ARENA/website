@@ -5,19 +5,24 @@ import OverflowCard from "../components/OverflowCardPP";
 const userID = sessionStorage.getItem("userID");
 import "./player-portal-competitions.css";
 import AccordionContent from "../components/collapse";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const GetDate = () => {
   return new Date();
   //console.log(CurrentTime);
 };
+let TeamStatus = "";
 
 function getTeamDetails(user_id, comp_id) {
   axios
     .get("http://localhost:3002/api/get/teamCodeAlt/" + user_id + "/" + comp_id)
-    .then(function (response) {
+    .then(async function (response) {
       sessionStorage.setItem("teamCode", response.data[0].team_code);
       sessionStorage.setItem("teamName", response.data[0].team_name);
+      const teamDetailsResponse = await axios.get(
+        `http://localhost:3002/api/get/teamDetails/${response.data[0].team_code}`
+      );
+      TeamStatus = teamDetailsResponse.data[0].valid_team;
     });
 }
 
@@ -241,29 +246,42 @@ function GenCards() {
     //Get Current date
     var today = new Date();
     console.log(today);
+
     //Get start date of competition
     // Check if competition has started
-
     console.log(comp_startDate);
     var startDate = new Date(comp_startDate);
     console.log(startDate);
     if (today < startDate) {
-      //TODO: Add alert
       Swal.fire({
-        title: 'Competition has not started, you will be redirected to the teams page until the competition starts.',
-        icon: 'warning',
+        title:
+          "Competition has not started, you will be redirected to the teams page until the competition starts.",
+        icon: "warning",
         showConfirmButton: false,
-        timer: 3000, // Display for 4 seconds
+        timer: 3000, // Display for 3 seconds
         timerProgressBar: true,
       });
 
       setTimeout(() => {
         // Redirect to login page after a delay
-        window.location.href = 'http://localhost:3000/teams';
+        window.location.href = "http://localhost:3000/teams";
       }, 3000); // Delay duration in milliseconds
 
       // alert(startDate);
+    } else if (TeamStatus === "0" || TeamStatus === "") {
+      Swal.fire({
+        title:
+          "You do not have a valid team, you will be redirected to the teams page until you have a valid team.",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 3000, // Display for 3 seconds
+        timerProgressBar: true,
+      });
 
+      setTimeout(() => {
+        // Redirect to login page after a delay
+        window.location.href = "http://localhost:3000/teams";
+      }, 3000); // Delay duration in milliseconds
     } else {
       setTimeout(function () {
         window.location.href = "http://localhost:3000/arena-main";
@@ -340,7 +358,7 @@ function GenCards() {
         })}
       </div>
     );
-  }  
+  }
 
   function getInactiveCards() {
     return (
