@@ -719,8 +719,37 @@ app.post("/api/post/delete/team/:team_code", (req, res) => {
 app.get("/api/get/compDetails/:comp_id", (req, res) => {
   const comp_id = req.params.comp_id;
   db.query(
-    "SELECT competition_name, competition_info from competition_details WHERE competition_id = ?;",
+    "SELECT competition_name, competition_startdate , competition_info from competition_details WHERE competition_id = ?;",
     comp_id,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+// Route to update competition table
+app.post("/api/post/update/competition", (req, res) => {
+  const competition_name = req.body.competition_name;
+  const competition_image = req.body.competition_image;
+  const competition_startdate = req.body.competition_startdate;
+  const competition_enddate = req.body.competition_enddate;
+  const competition_info = req.body.competition_info;
+  const competition_testcases = req.body.competition_testcases;
+  const no_testcases = req.body.no_testcases;
+  const testcases = req.body.testcases;
+  const competition_marker = req.body.competition_marker;
+  const registration_startdate = req.body.registration_startdate;
+  const registration_enddate = req.body.registration_enddate;
+  const max_teams = req.body.max_teams;
+  const teamsize_min = req.body.teamsize_min;
+  const teamsize_max = req.body.teamsize_max;
+
+
+  db.query(
+    "UPDATE competition_details SET competition_name = ?, competition_image = ?, competition_startdate = ? ,competition_enddate = ?,competition_info = ?,competition_testcases = ?,no_testcases = ?,testcases = ?,competition_marker = ?,registration_startdate = ?,registration_enddate = ?,max_teams = ?,teamsize_min = ?,teamsize_max = ? WHERE competition_name = ?;",
+    [competition_name, competition_image, competition_startdate, competition_enddate,competition_info,competition_testcases,no_testcases,testcases,competition_marker,registration_enddate,max_teams,teamsize_min,teamsize_max],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -1052,22 +1081,23 @@ app.get("/api/get/teamName/:user_id/:competition_id", (req, res) => {
   );
 });
 
-// Route to get all team members of a team
+//Route to get the teamMembers daggy
 app.post("/api/get/teamMembers", (req, res) => {
   const user_id = req.query.user_id;
   const competition_id = req.query.competition_id;
 
   const sql = `
-    SELECT t.user_id, 
-           CASE WHEN td.team_captain IS NOT NULL THEN 1 ELSE 0 END AS is_captain
+    SELECT t.user_id, u.user_nickname,
+      CASE WHEN td.team_captain IS NOT NULL THEN 1 ELSE 0 END AS is_captain
     FROM teams t
+    JOIN users u ON t.user_id = u.user_id
     LEFT JOIN team_details td ON t.team_code = td.team_code AND t.user_id = td.user_id
     WHERE t.team_code = (
       SELECT team_code
       FROM teams
       WHERE competition_id = ${competition_id} AND user_id = ${user_id}
       LIMIT 1
-    )
+    );
   `;
 
   // Execute the query
@@ -1079,6 +1109,7 @@ app.post("/api/get/teamMembers", (req, res) => {
       const response = result.map((row) => {
         return {
           user_id: row.user_id,
+          user_nickname: row.user_nickname,
           is_captain: row.is_captain === 1 ? true : false,
         };
       });
@@ -1086,6 +1117,7 @@ app.post("/api/get/teamMembers", (req, res) => {
     }
   });
 });
+
 
 // DO NOT TOUCH, THIS FOR SAYF
 app.post("/api/get/admin/teamMembers", (req, res) => {
@@ -1432,6 +1464,8 @@ app.post("/api/post/updateTeamValid", (req, res) => {
     }
   );
 });
+
+
 
 //!Type above this
 app.listen(PORT, () => {

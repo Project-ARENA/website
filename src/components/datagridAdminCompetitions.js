@@ -64,39 +64,50 @@ export default function CustomDataGrid({ rows }) {
     }
     };
 
-  const onButtonEdit = (e, row) => {
-    e.stopPropagation();
-    setClickedRowEdit(row);
-
-    setRowID(row.id);
-    setcompID(row.competition_id)
-    setCompname(row.competition_name);
-    setRegStart(row.registration_startdate);
-    setRegEnd(row.registration_enddate);
-    setCompStart(row.competition_startdate);
-    setCompEnd(row.competition_enddate);
-    setNoTestCases(row.competition_no_testcases);
-    setmaxTeams(row.competition_max_teams);
-    setTeamMax(row.competition_team_max);
-    setTeamMin(row.competition_team_min);
+    const onButtonEdit = (e, row) => {
+      e.stopPropagation();
+      setClickedRowEdit(row);
     
-    setvisible(true);
-  };
+      setRowID(row.id);
+      setcompID(row.competition_id);
+      setCompname(row.competition_name);
+      setRegStart(row.registration_startdate);
+      setRegEnd(row.registration_enddate);
+      setCompStart(row.competition_startdate);
+      setCompEnd(row.competition_enddate);
+      setNoTestCases(row.competition_no_testcases);
+      setmaxTeams(row.competition_max_teams);
+      setTeamMax(row.teamsize_max);
+      setTeamMin(row.teamsize_min);
+    
+      setvisible(true);
+    };
+    
 
   //TODO: Change to update competition details
   const onButtonEditSubmit = async (e) => {
 
     try {
-    //   const response = await axios.post(
-    //     "http://localhost:3002/api/post/update/team",
-    //     {
-    //       team_code: teamCode,
-    //       user_id: userID,
-    //       team_name: teamName,
-    //       team_score: teamScore,
-    //     }
-    //   );
-    //   console.log(response.data);
+      const response = await axios.post(
+        "http://localhost:3002/api/post/update/competition",
+        {
+          competition_name: compname,
+          competition_image: pic,
+          competition_startdate: CompStart,
+          competition_enddate: CompEnd,
+          competition_info:desc,
+          competition_testcases:pdf ,
+          no_testcases :noTestcases,
+          testcases:testcases,
+          competition_marker:marker,
+          registration_startdate:RegStart,
+          registration_enddate:RegEnd,
+          max_teams:teamMax,
+          teamsize_min:teamMin,
+          teamsize_max:teamMin,
+        }
+      );
+      console.log(response.data);
 
       window.location.reload(false);
 
@@ -153,7 +164,7 @@ export default function CustomDataGrid({ rows }) {
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button
               name="Edit"
-              onClick={(e) => onButtonEdit(e, params.row)}
+              onClick={(e) => onButtonEditSubmit(e.target.value)}
             >
               Edit Details
             </Button>
