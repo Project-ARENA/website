@@ -143,7 +143,13 @@ function GenGrid() {
         competition_enddate: data.competition_enddate,
         competition_no_testcases: data.no_testcases,
         max_teams: data.max_teams,
-        teamsize_max: data.teamsize_max
+        teamsize_max: data.teamsize_max,
+        teamsize_min: data.teamsize_min,
+        competition_description: data.competition_description,
+        competition_marker: data.competition_marker,
+        competition_pdf: data.competition_pdf,
+        competition_zip: data.competition_zip,
+        competition_picture: data.competition_picture
       }));
       setData(data);
     });
@@ -268,7 +274,7 @@ const AdminCompetitions = (props) => {
           <h3 style={{ color: "#457B9D" }}>Team Size</h3>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
-            <TeamSizeSelector />
+            <TeamSizeSelector/>
           </div>
 
           <h3 style={{ color: "#457B9D", textAlign: "center"  }}>Test Case Names</h3>

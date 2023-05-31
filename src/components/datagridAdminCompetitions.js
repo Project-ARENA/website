@@ -6,10 +6,29 @@ import Modal from "react-modal";
 import Button from "../components/button";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSelector.js";
+import { TeamSizeSelector, min, max , maxTeams as TeamsMax} from "../components/TeamSizeSelector.js";
 import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import InputTextArea from "../components/input-textarea.js";
 import { PickerOverlay } from "filestack-react";
+
+let validcomp = false;
+
+function validationCompName(compname){
+  axios
+    .get("http://localhost:3002/api/get/doesCompExist/" + compname)
+    .then(function (response) {
+      const codeResponse = response.data;
+
+      if (JSON.stringify(codeResponse) == "[]") {
+        validcomp=true;
+        console.log("valid name");
+        // alert("valid name");
+      } else {
+        console.log("invalid name");
+        alert("invalid name");
+      }
+    });
+};
 
 export default function CustomDataGrid({ rows }) {
   const [clickedRowDelete, setClickedRowDelete] = useState();
@@ -29,7 +48,7 @@ export default function CustomDataGrid({ rows }) {
   const [CompEndTime, setCompEndTime] = useState(null);
   const [testcases, setTestCases] = useState("");
   const [noTestcases, setNoTestCases] = useState("");
-  const [maxTeams, setmaxTeams] = useState("");
+  const [maxNoTeams, setmaxNoTeams] = useState("");
   const [teamMin, setTeamMin] = useState("");
   const [teamMax, setTeamMax] = useState("");
   const [desc, setdesc] = useState("");
@@ -79,15 +98,20 @@ export default function CustomDataGrid({ rows }) {
     
       setRowID(row.id);
       setcompID(row.competition_id);
+      setdesc(row.competition_description)
       setCompname(row.competition_name);
       setRegStart(row.registration_startdate);
       setRegEnd(row.registration_enddate);
       setCompStart(row.competition_startdate);
       setCompEnd(row.competition_enddate);
       setNoTestCases(row.competition_no_testcases);
-      setmaxTeams(row.max_teams);
+      setmaxNoTeams(row.max_teams);
       setTeamMax(row.teamsize_max);
       setTeamMin(row.teamsize_min);
+      setpicName("Picture uploaded: " + row.competition_picture);
+      setpdfName("PDF uploaded: " + row.competition_pdf);
+      setmarkerName("Marker uploaded: " + row.competition_marker);
+      setzipName("ZIP uploaded: " + row.competition_zip);
     
       setvisible(true);
     };
@@ -139,9 +163,9 @@ export default function CustomDataGrid({ rows }) {
           competition_marker:marker,
           registration_startdate:CombinedRegStart,
           registration_enddate:CombinedCompEnd,
-          max_teams:teamMax,
-          teamsize_min:teamMin,
-          teamsize_max:teamMin,
+          max_teams: TeamsMax,
+          teamsize_min: min,
+          teamsize_max: max,
           competition_id:compID
         }
       );
@@ -258,6 +282,7 @@ export default function CustomDataGrid({ rows }) {
           setCompname(e.target.value);
           // console.log("Compname value:", e.target.value);
           }}
+          initialValue={compname}
           />
 
           <br/>
@@ -273,6 +298,7 @@ export default function CustomDataGrid({ rows }) {
           <InputTextArea 
             label="testcase 1, testcase 2, etc..."
             onChange={(e) => setTestCases(e.target.value)}
+            initialValue={testcases}
           ></InputTextArea>
 
           <br/>
@@ -381,6 +407,7 @@ export default function CustomDataGrid({ rows }) {
           onChange={(e) => {
           setdesc(e.target.value);
           }}
+          initialValue={desc}
           ></InputTextArea>
 
 

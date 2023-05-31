@@ -450,7 +450,7 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
     const competition_id = req.body.competition_id;
     const team_location = req.body.team_location;
     db.query(
-      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id, team_score, team_location) VALUES (?, ?, ?, 1, ?, 0, ?);",
+      "INSERT INTO team_details (user_id, team_name, team_code,team_captain, competition_id, team_score, team_location, valid_team) VALUES (?, ?, ?, 1, ?, 0, ?, 0);",
       [user_id, team_name, team_code, competition_id, team_location],
       (err, result) => {
         if (err) {
