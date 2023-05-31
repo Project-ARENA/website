@@ -54,8 +54,7 @@
 .login-navlink1:hover {
   color: #008cff;
   border-color: #ffffff;
-  border-width: 5px;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .login-icon {

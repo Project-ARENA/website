@@ -279,6 +279,7 @@ const Login = (props) => {
               console.log("Forgot Password clicked");
               setModalVisible(true);
             }}
+            className="login-navlink1"
           >
             Forgot Password?
           </a>

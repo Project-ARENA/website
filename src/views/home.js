@@ -39,11 +39,9 @@ const Home = (props) => {
           </div>
           <div data-role="MobileMenu" className="home-mobile-menu">
             <div className="home-container1">
-              <img
-                alt="image"
-                src="https://play.teleporthq.io/static/svg/default-img.svg"
-                className="home-image"
-              />
+            <a href="https://youtu.be/dQw4w9WgXcQ" className="home-link">
+                &lt;ProjectArena/&gt;
+              </a>
               <div data-role="CloseMobileMenu" className="home-close-menu">
                 <svg viewBox="0 0 1024 1024" className="home-icon2">
                   <path d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"></path>
@@ -51,10 +49,18 @@ const Home = (props) => {
               </div>
             </div>
             <div className="home-links-container1">
-              <span className="home-link5 Anchor">Resources</span>
-              <span className="home-link6 Anchor">Inspiration</span>
-              <span className="home-link7 Anchor">Process</span>
-              <span className="home-link8 Anchor">Our story</span>
+            <Link to="/" className="home-link1">
+                HOME
+              </Link>
+              <Link to="/competitions" className="home-link2 Anchor">
+                COMPETITIONS
+              </Link>
+              <Link to="/contact" className="home-link3 Anchor">
+                CONTACT
+              </Link>
+              <Link to="/about" className="home-link4 Anchor">
+                ABOUT
+              </Link>
             </div>
           </div>
         </div>
