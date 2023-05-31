@@ -21,8 +21,12 @@ export default function CustomDataGrid({ rows }) {
   const [compname, setCompname] = useState("");
   const [RegStart, setRegStart] = useState("");
   const [RegEnd, setRegEnd] = useState("");
+  const [RegStartTime, setRegStartTime] = useState(null);
+  const [RegEndTime, setRegEndTime] = useState(null);
   const [CompStart, setCompStart] = useState("");
   const [CompEnd, setCompEnd] = useState("");
+  const [CompStartTime, setCompStartTime] = useState(null);
+  const [CompEndTime, setCompEndTime] = useState(null);
   const [testcases, setTestCases] = useState("");
   const [noTestcases, setNoTestCases] = useState("");
   const [maxTeams, setmaxTeams] = useState("");
@@ -37,6 +41,10 @@ export default function CustomDataGrid({ rows }) {
   const [pdfName, setpdfName] = useState("");
   const [zipName, setzipName] = useState("");
   const [markerName, setmarkerName] = useState("");
+  let CombinedRegStart = RegStart + " " + RegStartTime;
+  let CombinedRegEnd = RegEnd + " " + RegEndTime;
+  let CombinedCompStart = CompStart + " " + CompStartTime;
+  let CombinedCompEnd = CompEnd + " " + CompEndTime;
 
   const [pickerVisible, setPickerVisible] = useState(false);
 
@@ -77,14 +85,42 @@ export default function CustomDataGrid({ rows }) {
       setCompStart(row.competition_startdate);
       setCompEnd(row.competition_enddate);
       setNoTestCases(row.competition_no_testcases);
-      setmaxTeams(row.competition_max_teams);
+      setmaxTeams(row.max_teams);
       setTeamMax(row.teamsize_max);
       setTeamMin(row.teamsize_min);
     
       setvisible(true);
     };
     
-
+    function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
+      // Create an array to store the names of the missing fields
+      const missingFields = [];
+    
+      // Check if any of the required inputs are missing and add their names to the missingFields array
+      if (!compname) missingFields.push('Company Name');
+      if (!pic) missingFields.push('Picture');
+      if (!CombinedCompStart) missingFields.push('Combined Competition Start');
+      if (!CombinedCompEnd) missingFields.push('Combined Competition End');
+      if (!desc) missingFields.push('Description');
+      if (!pdf) missingFields.push('PDF');
+      if (!testcases) missingFields.push('Test Cases');
+      if (!marker) missingFields.push('Marker');
+      if (!CombinedRegStart) missingFields.push('Combined Registration Start');
+      if (!CombinedRegEnd) missingFields.push('Combined Registration End');
+      if (!maxTeams) missingFields.push('Max Teams');
+      if (!min) missingFields.push('Min');
+      if (!max) missingFields.push('Max');
+      if (!zip) missingFields.push('Zip');
+    
+      // Check if any fields are missing
+      if (missingFields.length > 0) {
+        const missingFieldsString = missingFields.join(', ');
+        alert(`Please fill in the following required fields: ${missingFieldsString}.`);
+        return false;
+      }
+    
+      return true;
+    }
   //TODO: Change to update competition details
   const onButtonEditSubmit = async (e) => {
 
@@ -94,18 +130,19 @@ export default function CustomDataGrid({ rows }) {
         {
           competition_name: compname,
           competition_image: pic,
-          competition_startdate: CompStart,
-          competition_enddate: CompEnd,
+          competition_startdate: CombinedCompStart,
+          competition_enddate: CombinedCompEnd,
           competition_info:desc,
           competition_testcases:pdf ,
           no_testcases :noTestcases,
           testcases:testcases,
           competition_marker:marker,
-          registration_startdate:RegStart,
-          registration_enddate:RegEnd,
+          registration_startdate:CombinedRegStart,
+          registration_enddate:CombinedCompEnd,
           max_teams:teamMax,
           teamsize_min:teamMin,
           teamsize_max:teamMin,
+          competition_id:compID
         }
       );
       console.log(response.data);
@@ -183,10 +220,12 @@ export default function CustomDataGrid({ rows }) {
       },
     },
   ];
-
+  const handleClosePicker = () => {
+    setPickerVisible(false); // Hide the picker
+  };
   return (
     <Box sx={{ height: 700, width: "100%" }}>
-    <Modal 
+   <Modal 
         isOpen={visible}
         style={{
           content: {
@@ -223,7 +262,7 @@ export default function CustomDataGrid({ rows }) {
 
           <br/>
 
-          <h3 style={{ color: "#457B9D" }}>Number of Teams</h3>
+          <h3 style={{ color: "#457B9D" }}>Team Size</h3>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <TeamSizeSelector />
@@ -347,8 +386,8 @@ export default function CustomDataGrid({ rows }) {
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
             <Button
-              name="Create"
-              color={"success"}
+              name="Modify"
+              color="success"
               onClick={() => {
                 // Validate inputs before making the API call
               if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip)) {
@@ -359,24 +398,25 @@ export default function CustomDataGrid({ rows }) {
                 if(validcomp==true){
                   validcomp=false
                   setvisible(false);
-                  // setPickerVisible(false);
-                  PostCompDetails(
-                    compname,
-                    pic,
-                    CombinedCompStart,
-                    CombinedCompEnd,
-                    desc,
-                    pdf,
-                    getNumTestcases(testcases),
-                    testcases,
-                    marker,
-                    CombinedRegStart,
-                    CombinedRegEnd,
-                    maxTeams,
-                    min,
-                    max,
-                    zip
-                  );
+                  setPickerVisible(false);
+                  onButtonEditSubmit();
+                  // PostCompDetails(
+                  //   compname,
+                  //   pic,
+                  //   CombinedCompStart,
+                  //   CombinedCompEnd,
+                  //   desc,
+                  //   pdf,
+                  //   getNumTestcases(testcases),
+                  //   testcases,
+                  //   marker,
+                  //   CombinedRegStart,
+                  //   CombinedRegEnd,
+                  //   maxTeams,
+                  //   min,
+                  //   max,
+                  //   zip
+                  // );
                   window.location.reload(false);
                 }
               }

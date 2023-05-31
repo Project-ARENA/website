@@ -142,6 +142,8 @@ function GenGrid() {
         competition_startdate: data.competition_startdate,
         competition_enddate: data.competition_enddate,
         competition_no_testcases: data.no_testcases,
+        max_teams: data.max_teams,
+        teamsize_max: data.teamsize_max
       }));
       setData(data);
     });

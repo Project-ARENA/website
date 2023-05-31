@@ -745,11 +745,13 @@ app.post("/api/post/update/competition", (req, res) => {
   const max_teams = req.body.max_teams;
   const teamsize_min = req.body.teamsize_min;
   const teamsize_max = req.body.teamsize_max;
+  const testcases_zip = req.body.testcases_zip;
+  const competition_id = req.body.competition_id;
 
 
   db.query(
-    "UPDATE competition_details SET competition_name = ?, competition_image = ?, competition_startdate = ? ,competition_enddate = ?,competition_info = ?,competition_testcases = ?,no_testcases = ?,testcases = ?,competition_marker = ?,registration_startdate = ?,registration_enddate = ?,max_teams = ?,teamsize_min = ?,teamsize_max = ? WHERE competition_name = ?;",
-    [competition_name, competition_image, competition_startdate, competition_enddate,competition_info,competition_testcases,no_testcases,testcases,competition_marker,registration_startdate,registration_enddate,max_teams,teamsize_min,teamsize_max],
+    "UPDATE competition_details SET competition_name = ?, competition_image = ?, competition_startdate = ? ,competition_enddate = ?,competition_info = ?,competition_testcases = ?,no_testcases = ?,testcases = ?,competition_marker = ?,registration_startdate = ?,registration_enddate = ?,max_teams = ?,teamsize_min = ?,teamsize_max = ?, testcases_zip = ? WHERE competition_id = ?;",
+    [competition_name, competition_image, competition_startdate, competition_enddate,competition_info,competition_testcases,no_testcases,testcases,competition_marker,registration_startdate,registration_enddate,max_teams,teamsize_min,teamsize_max, testcases_zip, competition_id],
     (err, result) => {
       if (err) {
         console.log(err);
