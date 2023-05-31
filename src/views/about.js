@@ -212,7 +212,7 @@ const About = (props) => {
               <h2 className="person-name">
               Sayfullah Jumoorty
               </h2>
-              <p class="title">"Coding is the key to unlocking a world of endless possibilities."</p>
+              <p class="title">01100111 01101111 01101110 01101110 01100001 00001010</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -266,7 +266,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Altaaf Ally</h2>
-              <p class="title">"Code is the language that empowers machines to change worlds."</p>
+              <p class="title">01100111 01101001 01110110 01100101 00001010 00001010</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -320,7 +320,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Muhammed Muaaz Dawood</h2>
-              <p class="title">"Writing code: The art of crafting digital symphonies of functionality."</p>
+              <p class="title">01111001 01101111 01110101 00001010 00001010</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -374,7 +374,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Rayhaan Hanslod</h2>
-              <p class="title">"Writing code is like painting, but with zeros and ones, creating masterpieces."</p>
+              <p class="title">01110101 01110000 00001010</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
@@ -429,7 +429,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Hamdullah Dadabhoy (Abdullah)</h2>
-              <p class="title">"Programmers are architects of virtual worlds, molding dreams into reality."</p>
+              <p class="title">01010010 01101001 01100011 01101011 00001010</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
