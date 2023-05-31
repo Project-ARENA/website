@@ -86,6 +86,15 @@ function GenCards() {
       return dateA - dateB;
     });
 
+    // If the card is not between the start and end date, set the isDisabled property to true
+    activeCards.forEach((card) => {
+      const startDate = new Date(card.registration_startdate);
+      const endDate = new Date(card.registration_enddate);
+      if (now < startDate || now > endDate) {
+        card.isDisabled = true;
+      }
+    });
+
     return activeCards;
   };
 
