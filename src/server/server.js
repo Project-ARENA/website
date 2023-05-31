@@ -1052,10 +1052,11 @@ app.post("/api/post/initTests/team", (req, res) => {
   const team_name = req.body.team_name;
   const testcase_latest = req.body.testcase_latest;
   const testcase_highest = req.body.testcase_highest;
+  const testcase_links = req.body.testcase_links;
 
   db.query(
-    "UPDATE team_details SET testcase_latest = ?, testcase_highest = ? WHERE team_name = ?;",
-    [testcase_latest, testcase_highest, team_name],
+    "UPDATE team_details SET testcase_latest = ?, testcase_highest = ?, testcase_links = ? , valid_team = 0 WHERE team_name = ?;",
+    [testcase_latest, testcase_highest, testcase_links, team_name],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -1467,6 +1468,38 @@ app.post("/api/post/updateTeamValid", (req, res) => {
   );
 });
 
+//Route to get the testcase_links
+app.get("/api/get/testcaseLinks/:team_code", (req, res) => {
+  const team_code = req.params.team_code;
+  
+  db.query(
+    "SELECT testcase_links FROM team_details WHERE team_code = ?;",
+    [team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+//Route to update the testcase_links
+app.post("/api/post/updateTestcaseLinks", (req, res) => {
+  const team_code = req.body.team_code;
+  const testcase_links = req.body.testcase_links;
+
+  db.query(
+    "UPDATE team_details SET testcase_links = ? WHERE team_code = ?;",
+    [testcase_links, team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
 
 
 //!Type above this

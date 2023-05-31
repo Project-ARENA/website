@@ -210,11 +210,48 @@ function ScoredHigher() {
   });
 }
 
+async function postLatestLinks(){
+
+  axios.get("http://localhost:3002/api/get/testcaseLinks/" + team_code)
+    .then(response => {
+      const data = response.data;
+      console.log(data);
+      // Assuming the response data is an array with a single object
+      const testCaseHighest = JSON.parse(data[0].testcase_links);
+
+      // Modify the desired index with the ZIPLink value
+      testCaseHighest[`testcase_${tabIndex}`] = ZIPLink;
+
+      // Convert the modified object back to a string
+      const modifiedTestCaseHighest = JSON.stringify(testCaseHighest);
+
+      // Output the modified string
+      console.log(modifiedTestCaseHighest);
+
+      // Post the modified string to the database
+      axios.post("http://localhost:3002/api/post/updateTestcaseLinks", {
+        team_code: team_code,
+        testcase_links: modifiedTestCaseHighest
+
+      }).then(response => {
+        console.log(response);
+      }
+      ).catch(error => {
+        console.log(error);
+      }
+      )
+
+    })
+
+  
+}
+
 async function postHighestScore() {
   try {
     const [isHigher, newHighestSub] = await ScoredHigher();
 
     if (isHigher) {
+      postLatestLinks();
       const response = await axios.post(
         "http://localhost:3002/api/post/highestScore/team",
         {
@@ -281,6 +318,7 @@ async function uploadSubmissions() {
     testcase_latest: newSub,
   });
 
+  //await postLatestLinks();
   await postHighestScore();
 }
 
@@ -359,13 +397,13 @@ const ArenaMain = (props) => {
 
       
       //If there is one minute remaining, then show the alert
-      if (minutes == 1 && seconds == 1) {
+      if (minutes == 1 && seconds == 1 && hours == 0) {
         setAlertMsg("You have 1 minute remaining!")
         setShowTXTAlert(true);
       }
 
       //If there is 30 minutes remaining, then show the alert
-      if (minutes == 30 && seconds == 1) {
+      if (minutes == 30 && seconds == 1 && hours == 0) {
         setAlertMsg("You have 30 minutes remaining!")
         setShowTXTAlert(true);
       }
@@ -378,7 +416,7 @@ const ArenaMain = (props) => {
 
 
       //If the seconds remaining is less than 0, then the competition is over
-      if (seconds < 0) {
+      if (seconds < 0 && minutes == 0 && hours == 0) {
         setTimeRemaining("Competition has ended");
         //Relocate the user to the competition page
         window.location.href = "http://localhost:3000/player-portal-competitions";

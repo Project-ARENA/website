@@ -11,6 +11,7 @@ let noTests = 0;
 let testcases = "";
 let testsArray = [];
 
+
 // gets number test cases and team name to generate table
 async function getNoTests() {
   return new Promise((resolve, reject) => {
@@ -25,6 +26,7 @@ async function getNoTests() {
     resolve([noTests, testcases]);
   });
 }
+
 
 // used to generate the table with correct data
 function GenGrid(params) {
