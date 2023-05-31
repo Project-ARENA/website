@@ -37,7 +37,7 @@ export default function BasicTextFields(props) {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                {showPassword && (
+                {isPassword && (
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
