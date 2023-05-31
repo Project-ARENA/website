@@ -59,35 +59,35 @@ function validationCompName(compname){
     });
 };
 
-function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
-  // Create an array to store the names of the missing fields
-  const missingFields = [];
+// function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
+//   // Create an array to store the names of the missing fields
+//   const missingFields = [];
 
-  // Check if any of the required inputs are missing and add their names to the missingFields array
-  if (!compname) missingFields.push('Company Name');
-  if (!pic) missingFields.push('Picture');
-  if (!CombinedCompStart) missingFields.push('Combined Competition Start');
-  if (!CombinedCompEnd) missingFields.push('Combined Competition End');
-  if (!desc) missingFields.push('Description');
-  if (!pdf) missingFields.push('PDF');
-  if (!testcases) missingFields.push('Test Cases');
-  if (!marker) missingFields.push('Marker');
-  if (!CombinedRegStart) missingFields.push('Combined Registration Start');
-  if (!CombinedRegEnd) missingFields.push('Combined Registration End');
-  if (!maxTeams) missingFields.push('Max Teams');
-  if (!min) missingFields.push('Min');
-  if (!max) missingFields.push('Max');
-  if (!zip) missingFields.push('Zip');
+//   // Check if any of the required inputs are missing and add their names to the missingFields array
+//   if (!compname) missingFields.push('Company Name');
+//   if (!pic) missingFields.push('Picture');
+//   if (!CombinedCompStart) missingFields.push('Combined Competition Start');
+//   if (!CombinedCompEnd) missingFields.push('Combined Competition End');
+//   if (!desc) missingFields.push('Description');
+//   if (!pdf) missingFields.push('PDF');
+//   if (!testcases) missingFields.push('Test Cases');
+//   if (!marker) missingFields.push('Marker');
+//   if (!CombinedRegStart) missingFields.push('Combined Registration Start');
+//   if (!CombinedRegEnd) missingFields.push('Combined Registration End');
+//   if (!maxTeams) missingFields.push('Max Teams');
+//   if (!min) missingFields.push('Min');
+//   if (!max) missingFields.push('Max');
+//   if (!zip) missingFields.push('Zip');
 
-  // Check if any fields are missing
-  if (missingFields.length > 0) {
-    const missingFieldsString = missingFields.join(', ');
-    alert(`Please fill in the following required fields: ${missingFieldsString}.`);
-    return false;
-  }
+//   // Check if any fields are missing
+//   if (missingFields.length > 0) {
+//     const missingFieldsString = missingFields.join(', ');
+//     alert(`Please fill in the following required fields: ${missingFieldsString}.`);
+//     return false;
+//   }
 
-  return true;
-}
+//   return true;
+// }
 
 
 function PostCompDetails(
@@ -126,7 +126,51 @@ function PostCompDetails(
     zip: zip
   });
 }
+function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcaseNum, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
+  // Create an array to store the names of the missing fields
+  const missingFields = [];
+  
+  // Check if any of the required inputs are missing and add their names to the missingFields array
+  if (!compname) missingFields.push('Company Name');
+  if (!pic) missingFields.push('Picture');
+  if (!CombinedCompStart) missingFields.push('Combined Competition Start');
+  if (!CombinedCompEnd) missingFields.push('Combined Competition End');
+  if (!desc) missingFields.push('Description');
+  if (!pdf) missingFields.push('PDF');
+  if (!testcases) missingFields.push('Test Cases');
+  if (!marker) missingFields.push('Marker');
+  if (!CombinedRegStart) missingFields.push('Combined Registration Start');
+  if (!CombinedRegEnd) missingFields.push('Combined Registration End');
+  if (!maxTeams) missingFields.push('Max Teams');
+  if (!min) missingFields.push('Min');
+  if (!max) missingFields.push('Max');
+  if (!zip) missingFields.push('Zip');
+  
+  // Check if any fields are missing
+  if (missingFields.length > 0) {
+    const missingFieldsString = missingFields.join(', ');
+    alert(`Please fill in the following required fields: ${missingFieldsString}.`);
+    return false;
+  }
 
+  // Validate start and end dates for registration and competition periods
+  const regStartDate = new Date(CombinedRegStart);
+  const regEndDate = new Date(CombinedRegEnd);
+  const compStartDate = new Date(CombinedCompStart);
+  const compEndDate = new Date(CombinedCompEnd);
+
+  if (regStartDate >= regEndDate) {
+    alert('Registration Start Date must be before Registration End Date.');
+    return false;
+  }
+
+  if (compStartDate >= compEndDate) {
+    alert('Competition Start Date must be before Competition End Date.');
+    return false;
+  }
+
+  return true;
+}
 function GenGrid() {
   const [rows, setData] = React.useState([]);
 
