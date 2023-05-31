@@ -14,10 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      - name: Use Node.js 17.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v1
         with:
-          node-version: 17.x
+          node-version: 16.x
           
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
@@ -26,6 +26,6 @@ jobs:
         run: npm test -- --coverage --watchAll | echo "q"
         
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3 -f
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
