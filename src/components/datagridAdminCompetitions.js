@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSelector.js";
 import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import InputTextArea from "../components/input-textarea.js";
+import { PickerOverlay } from "filestack-react";
 
 export default function CustomDataGrid({ rows }) {
   const [clickedRowDelete, setClickedRowDelete] = useState();
@@ -164,7 +165,7 @@ export default function CustomDataGrid({ rows }) {
           <Box sx={{ display: "flex", gap: 1 }}>
             <Button
               name="Edit"
-              onClick={(e) => onButtonEditSubmit(e.target.value)}
+              onClick={(e) => onButtonEdit(e, params.row)}
             >
               Edit Details
             </Button>
@@ -358,7 +359,7 @@ export default function CustomDataGrid({ rows }) {
                 if(validcomp==true){
                   validcomp=false
                   setvisible(false);
-                  setPickerVisible(false);
+                  // setPickerVisible(false);
                   PostCompDetails(
                     compname,
                     pic,

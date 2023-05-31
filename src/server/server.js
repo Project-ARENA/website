@@ -749,7 +749,7 @@ app.post("/api/post/update/competition", (req, res) => {
 
   db.query(
     "UPDATE competition_details SET competition_name = ?, competition_image = ?, competition_startdate = ? ,competition_enddate = ?,competition_info = ?,competition_testcases = ?,no_testcases = ?,testcases = ?,competition_marker = ?,registration_startdate = ?,registration_enddate = ?,max_teams = ?,teamsize_min = ?,teamsize_max = ? WHERE competition_name = ?;",
-    [competition_name, competition_image, competition_startdate, competition_enddate,competition_info,competition_testcases,no_testcases,testcases,competition_marker,registration_enddate,max_teams,teamsize_min,teamsize_max],
+    [competition_name, competition_image, competition_startdate, competition_enddate,competition_info,competition_testcases,no_testcases,testcases,competition_marker,registration_startdate,registration_enddate,max_teams,teamsize_min,teamsize_max],
     (err, result) => {
       if (err) {
         console.log(err);
