@@ -227,7 +227,6 @@ const Register = (props) => {
             <span>Register</span>
             <br></br>
           </span>
-
           <InputBoxForInfo
             buttonText="NAME"
             onChange={(e) => setName(e.target.value)}
