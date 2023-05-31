@@ -14,5 +14,26 @@
     "moduleDirectories": ["node_modules", "src"],
     "moduleNameMapper": {
         "axios": "axios/dist/node/axios.cjs"
-      }
+      },
+      "coveragePathIgnorePatterns": [
+        "/node_modules/",
+        "/src/server/server.js",
+        "/src/index.js",
+        "/src/views/arena-main.js",
+        "/src/components/team-manager.js",
+        "/src/components/datagridAdminCompetitions.js",
+        "/src/components/datagridArenaLeaderboard.js",
+        "/src/components/datagridAdminTeams.js",
+        "/src/views/arena-submissions.js",
+        "/src/views/leaderboard.js",
+        "/src/views/arena-team.js",
+        "/src/views/player-portal-team.js",
+        "/src/views/register.js",
+        "/src/views/teams.js",
+        "/src/views/admin-competitions.js",
+        "/src/views/arena-leaderboard.js",
+        "/src/views/contact.js",
+        "/src/views/login.js"
+      ]
+
    }
