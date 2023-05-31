@@ -1299,7 +1299,7 @@ app.post("/api/post/password/reset/sendCode", (req, res) => {
   // Use sendgrid to send email using dynamic template
   const msg = {
     to: user_email, // Replace with the recipient's email address
-    from: '2430888@students.wits.ac.za', // Replace with your email address
+    from: 'projectarena.team@gmail.com', // Replace with your email address
     subject: 'Project Arena: Password Reset',
     templateId: 'd-17cf23dca0ef40d1a262f33771d1df04', // Replace with your dynamic template ID
     dynamicTemplateData: {
@@ -1328,7 +1328,7 @@ app.post("/api/post/user/verify/sendCode", (req, res) => {
   // Use sendgrid to send email using dynamic template
   const msg = {
     to: user_email, // Replace with the recipient's email address
-    from: '2430888@students.wits.ac.za', // Replace with your email address
+    from: 'projectarena.team@gmail.com', // Replace with your email address
     subject: 'Project Arena: Verify Account',
     templateId: 'd-97821ad555ad4071acacdb29704264e6', // Replace with your dynamic template ID
     dynamicTemplateData: {
