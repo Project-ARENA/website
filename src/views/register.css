@@ -1,10 +1,14 @@
 .register-container {
   width: 100%;
+  height: 100%;
   display: flex;
   overflow: auto;
   min-height: 100vh;
   align-items: center;
   flex-direction: column;
+  background-image: url('https://i.ibb.co/qDVj51p/Background-Black.png');
+  /* https://i.ibb.co/51Hw717/Background.png */
+  background-size: cover;
  
 }
 .register-maincontainer{
@@ -19,12 +23,21 @@
   background-color: #ffffff;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.1); /* Add a box shadow */
 }
+
+.register-maincontainer:hover {
+  box-shadow: 8px 24px 32px 0 rgba(0, 174, 255, 0.2);
+  transform: scale(1.025);
+  transition: all 0.5s ease-in-out;
+}
+
 .register-container1 {
   flex: 0 0 auto;
   width: 100%;
-  height: 100px;
+  height: 75px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  border-radius: var(--dl-radius-radius-round);
+  justify-content: flex-start;
 }
 .register-navlink {
   display: contents;
@@ -61,14 +74,15 @@
   width: 100%;
   height: 700px;
   display: flex;
-  padding: 0px;
   position: relative;
-  top: 0;
-  left: 0;
   flex-wrap: wrap;
   align-self: center;
   align-items: center;
   flex-direction: column;
+  justify-content: flex-start;
+
+  /* width: 496px;
+  height: 1000px; */
 
 }
 .register-text3 {
