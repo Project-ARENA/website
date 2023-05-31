@@ -5,6 +5,19 @@
   min-height: 100vh;
   align-items: center;
   flex-direction: column;
+ 
+}
+.register-maincontainer{
+  width: 50%;
+  height: 760px;
+  margin-top: 2.5%;
+  display: center;
+  position: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #ffffff;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1); /* Add a box shadow */
 }
 .register-container1 {
   flex: 0 0 auto;
@@ -17,9 +30,15 @@
   display: contents;
 }
 .register-backbtn {
+  margin-top: 25px;
   width: 125px;
   height: 78px;
   text-decoration: none;
+}
+
+.register-backbtn:hover {
+  transform: scale(1.1);
+  transition: all 0.5s ease-in-out;
 }
 .register-container3 {
   width: 455px;
@@ -50,6 +69,7 @@
   align-self: center;
   align-items: center;
   flex-direction: column;
+
 }
 .register-text3 {
   font-size: 25px;

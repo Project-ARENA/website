@@ -238,6 +238,11 @@ const PlayerPortalTeam = (props) => {
           sessionStorage.setItem("teamCode", teamCode);
         }
       });
+      setTimeout(() => {
+        // Redirect to login page after a delay
+        window.location.href = "http://localhost:3000/teams";
+      }, 3000); // Delay duration in milliseconds
+
   };
 
   
