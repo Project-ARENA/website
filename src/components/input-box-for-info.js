@@ -27,6 +27,7 @@ export default function BasicTextFields(props) {
       <Tooltip title={tooltipText}>
         <TextField
           id="outlined-basic"
+          defaultValue={initialValue}
           label={buttonText}
           variant="outlined"
           data-testid={id}
