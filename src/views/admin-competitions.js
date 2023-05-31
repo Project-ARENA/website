@@ -59,36 +59,6 @@ function validationCompName(compname){
     });
 };
 
-// function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
-//   // Create an array to store the names of the missing fields
-//   const missingFields = [];
-
-//   // Check if any of the required inputs are missing and add their names to the missingFields array
-//   if (!compname) missingFields.push('Company Name');
-//   if (!pic) missingFields.push('Picture');
-//   if (!CombinedCompStart) missingFields.push('Combined Competition Start');
-//   if (!CombinedCompEnd) missingFields.push('Combined Competition End');
-//   if (!desc) missingFields.push('Description');
-//   if (!pdf) missingFields.push('PDF');
-//   if (!testcases) missingFields.push('Test Cases');
-//   if (!marker) missingFields.push('Marker');
-//   if (!CombinedRegStart) missingFields.push('Combined Registration Start');
-//   if (!CombinedRegEnd) missingFields.push('Combined Registration End');
-//   if (!maxTeams) missingFields.push('Max Teams');
-//   if (!min) missingFields.push('Min');
-//   if (!max) missingFields.push('Max');
-//   if (!zip) missingFields.push('Zip');
-
-//   // Check if any fields are missing
-//   if (missingFields.length > 0) {
-//     const missingFieldsString = missingFields.join(', ');
-//     alert(`Please fill in the following required fields: ${missingFieldsString}.`);
-//     return false;
-//   }
-
-//   return true;
-// }
-
 
 function PostCompDetails(
   compname,
@@ -126,7 +96,7 @@ function PostCompDetails(
     zip: zip
   });
 }
-function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcaseNum, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
+function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
   // Create an array to store the names of the missing fields
   const missingFields = [];
   
@@ -144,6 +114,7 @@ function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc,
   if (!maxTeams) missingFields.push('Max Teams');
   if (!min) missingFields.push('Min');
   if (!max) missingFields.push('Max');
+  console.log(zip);
   if (!zip) missingFields.push('Zip');
   
   // Check if any fields are missing
@@ -158,6 +129,11 @@ function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc,
   const regEndDate = new Date(CombinedRegEnd);
   const compStartDate = new Date(CombinedCompStart);
   const compEndDate = new Date(CombinedCompEnd);
+  
+  if (regEndDate >= compStartDate) {
+    alert('Registration End Date must be before Competition Start Date.');
+    return false;
+  }
 
   if (regStartDate >= regEndDate) {
     alert('Registration Start Date must be before Registration End Date.');
@@ -268,6 +244,7 @@ const AdminCompetitions = (props) => {
   if (res.filesUploaded[0].mimetype === "application/zip" ||
     res.filesUploaded[0].mimetype ===  "application/x-zip-compressed") {
     setzip(res.filesUploaded[0].url);
+    // console.log(zip);
     setzipName("ZIP uploaded: " + res.filesUploaded[0].filename);
   }
   };
@@ -443,6 +420,7 @@ const AdminCompetitions = (props) => {
               color="success"
               onClick={() => {
                 // Validate inputs before making the API call
+
               if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip)) {
               return; // Stop further execution if validation fails
               }
