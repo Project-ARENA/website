@@ -262,7 +262,7 @@ const About = (props) => {
             <img
               src={AltaafPicture}
               alt="Altaaf Ally"
-              style={{maxHeight:"500px", width: "100%", borderRadius: "1%" }}
+              style={{width: "100%", borderRadius: "1%" }}
             />
             <div class="container">
               <h2>Altaaf Ally</h2>
