@@ -156,7 +156,7 @@ const About = (props) => {
             />
             <div class="container">
               <h2>Mu'aaz Bassa</h2>
-              <p class="title">"In Programming, mistakes are stepping stones towards elegant solutions."</p>
+              <p class="title">01001110 01100101 01110110 01100101 01110010</p>
               <p>
                 <div className="social-links">
                   {/* GITHUB */}
