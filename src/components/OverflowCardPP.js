@@ -85,6 +85,18 @@ export default function OverflowCardPP(props) {
     margin: "auto",
   };
 
+  // Assuming registration_startdate is a valid date string or timestamp
+const registrationStartDate = new Date(registration_startdate);
+
+const options = {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric'
+};
+
+const formattedDate = registrationStartDate.toLocaleDateString('en-GB', options);
+const formattedTime = registrationStartDate.toLocaleTimeString();
+
   return (
     <Card
       variant="outlined"
@@ -136,9 +148,9 @@ export default function OverflowCardPP(props) {
             sx={{ fontWeight: "md", color: "text.secondary" }}
           >
             {/* Display date and time separately */}
-            Reg Date: {new Date(
-              registration_startdate
-            ).toLocaleDateString()}{" "}
+            
+
+            Reg Date: {formattedDate}{" "}
             {new Date(registration_startdate).toLocaleTimeString()}
           </Typography>
         </CardOverflow>
