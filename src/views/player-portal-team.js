@@ -166,6 +166,7 @@ const PlayerPortalTeam = (props) => {
       testcase_latest: createJsonArray(no_testcases),
       testcase_highest: createJsonArray(no_testcases),
       team_name: teamName,
+      testcase_links : createJsonArray(no_testcases)
     });
     axios.post("http://localhost:3002/api/post/addTo/team", {
       user_id: parseInt(userID),
