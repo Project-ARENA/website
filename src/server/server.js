@@ -729,6 +729,35 @@ app.get("/api/get/compDetails/:comp_id", (req, res) => {
     }
   );
 });
+// Route to update competition table
+app.post("/api/post/update/competition", (req, res) => {
+  const competition_name = req.body.competition_name;
+  const competition_image = req.body.competition_image;
+  const competition_startdate = req.body.competition_startdate;
+  const competition_enddate = req.body.competition_enddate;
+  const competition_info = req.body.competition_info;
+  const competition_testcases = req.body.competition_testcases;
+  const no_testcases = req.body.no_testcases;
+  const testcases = req.body.testcases;
+  const competition_marker = req.body.competition_marker;
+  const registration_startdate = req.body.registration_startdate;
+  const registration_enddate = req.body.registration_enddate;
+  const max_teams = req.body.max_teams;
+  const teamsize_min = req.body.teamsize_min;
+  const teamsize_max = req.body.teamsize_max;
+
+
+  db.query(
+    "UPDATE competition_details SET competition_name = ?, competition_image = ?, competition_startdate = ? ,competition_enddate = ?,competition_info = ?,competition_testcases = ?,no_testcases = ?,testcases = ?,competition_marker = ?,registration_startdate = ?,registration_enddate = ?,max_teams = ?,teamsize_min = ?,teamsize_max = ? WHERE competition_name = ?;",
+    [competition_name, competition_image, competition_startdate, competition_enddate,competition_info,competition_testcases,no_testcases,testcases,competition_marker,registration_enddate,max_teams,teamsize_min,teamsize_max],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
 
 // Route to update team table
 app.post("/api/post/update/team", (req, res) => {
