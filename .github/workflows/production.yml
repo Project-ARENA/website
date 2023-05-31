@@ -23,7 +23,7 @@ jobs:
         run: npm install --legacy-peer-deps
           
       - name: Run tests and collect coverage
-        run: npm test -- --coverage| echo "q"
+        run: npm test -- --coverage --watchAll | echo "q"
         
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
