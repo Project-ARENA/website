@@ -5,6 +5,7 @@ import OverflowCard from "../components/OverflowCardPP";
 const userID = sessionStorage.getItem("userID");
 import "./player-portal-competitions.css";
 import AccordionContent from "../components/collapse";
+import Swal from 'sweetalert2';
 
 const GetDate = () => {
   return new Date();
@@ -248,10 +249,21 @@ function GenCards() {
     console.log(startDate);
     if (today < startDate) {
       //TODO: Add alert
-      alert("Competition has not started");
-      setTimeout(function () {
-        window.location.href = "http://localhost:3000/teams";
-      }, 1000);
+      Swal.fire({
+        title: 'Competition has not started, you will be redirected to the teams page until the competition starts.',
+        icon: 'warning',
+        showConfirmButton: false,
+        timer: 3000, // Display for 4 seconds
+        timerProgressBar: true,
+      });
+
+      setTimeout(() => {
+        // Redirect to login page after a delay
+        window.location.href = 'http://localhost:3000/teams';
+      }, 3000); // Delay duration in milliseconds
+
+      // alert(startDate);
+
     } else {
       setTimeout(function () {
         window.location.href = "http://localhost:3000/arena-main";
