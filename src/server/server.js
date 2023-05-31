@@ -1004,7 +1004,7 @@ app.get("/api/get/leaderboard/:comp_id", (req, res) => {
   const comp_id = req.params.comp_id;
   db.query(
     `SELECT team_name, team_score, team_location, testcase_highest
-  FROM team_details WHERE competition_id = ? ORDER BY team_score DESC;`,
+  FROM team_details WHERE competition_id = ? AND valid_team=1 ORDER BY team_score DESC;`,
     [comp_id],
     (err, result) => {
       if (err) {
