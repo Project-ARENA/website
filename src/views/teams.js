@@ -14,7 +14,7 @@ let teamLocation = "Getting Information..."
 let TeamStatus = ""
 let TeamStatusMessage = "Getting Information..."
 let ColorStatus = "black"
-
+let startDate = ""
 
 // Function to copy a value to clipboard
 const copyToClipboard = (value) => {
@@ -32,10 +32,12 @@ const Teams = (props) => {
   const [userNicknames, setUserNicknames] = useState([]);
   const [teamCode, setTeamCode] = useState("");
   const [loading, setLoading] = React.useState(true);
+  const [timeRemaining , setTimeRemaining] = useState("");
   //const [teamLocation, setTeamLocation] = useState("");
 
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         //Get team details
@@ -60,35 +62,34 @@ const Teams = (props) => {
         // Get the competition details
         const compDetailsResponse = await axios.get(`http://localhost:3002/api/get/compDetails/${competition_id}`);
         const title = compDetailsResponse.data[0].competition_name;
+        startDate = compDetailsResponse.data[0].competition_startdate;
   
         // Get the team members
-        const teamMembersResponse = await axios.post(`http://localhost:3002/api/get/teamMembers`, null, {
+        const teamMembersResponse = await axios.post('http://localhost:3002/api/get/teamMembers', null, {
           params: {
             user_id: user_id,
             competition_id: competition_id
           }
         });
-        const teamMembers = teamMembersResponse.data;
+        const data = teamMembersResponse.data;
 
+        const updatedNicknames = data.map((member) => {
+          let nickname = member.user_nickname;
+          if (member.is_captain) {
+            nickname += ' (Captain)';
+          }
+          return nickname;
+        });
+
+        setUserNicknames(updatedNicknames);
 
         // // Get the Team Status
         // const teamStatusResponse = await axios.get(`http://localhost:3002/api/get/teamStatus/${teamName}/${competition_id}`);
         // TeamStatus = teamStatusResponse.data[0].valid_team;
-  
-        // Get the user nicknames
-        const userIds = teamMembers.map(member => member.user_id);
-        const userNicknameResponses = await Promise.all(userIds.map(userId => axios.get(`http://localhost:3002/api/get/userNickname/${userId}`)));
-        const userNicknames = userNicknameResponses.map((response, index) => {
-          const nickname = response.data[0].user_nickname;
-          const isCaptain = teamMembers.find(member => member.user_id === userIds[index]).is_captain;
-          return isCaptain ? `${nickname} (Captain)` : nickname;
-        });
-  
         // Update the state
         setTeamName(teamName);
         // setTeamCode(teamCode);
         setTitle(title);
-        setUserNicknames(userNicknames);
       } catch (error) {
         console.error(error);
       }
@@ -105,6 +106,33 @@ const Teams = (props) => {
         }
 
   }, []);
+
+  const interval = setInterval(() => {
+    const targetDate = new Date(startDate);
+    const currentDate = new Date();
+
+    const timeDifference = targetDate.getTime() - currentDate.getTime();
+
+    // Calculate remaining days, hours, minutes, and seconds
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    setTimeRemaining(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+
+    setTimeRemaining(`Remaining time: ${days}d ${hours}h ${minutes}m ${seconds}s`);
+
+
+
+    //If the seconds remaining is less than 0, then the competition is over
+    if (seconds < 0) {
+      setTimeRemaining("Competition has ended");
+      //Relocate the user to the competition page
+      window.location.href = "http://localhost:3000/arena-main";
+    }
+
+  }, 1000); //1000ms = 1 sec
 
   if (TeamStatus === 1){
     ColorStatus = "green"
@@ -186,6 +214,7 @@ const Teams = (props) => {
       <h2>Team Manager</h2>
 
       <h3 style={{color:ColorStatus}}>Teams Status: {TeamStatusMessage}</h3>
+      <h4>{timeRemaining}</h4>
       
       <TeamManager
         TeamName={teamName}

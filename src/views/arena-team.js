@@ -48,36 +48,28 @@ const ArenaTeam = (props) => {
         const title = compDetailsResponse.data[0].competition_name;
   
         // Get the team members
-        const teamMembersResponse = await axios.post(`http://localhost:3002/api/get/teamMembers`, null, {
+        const teamMembersResponse = await axios.post('http://localhost:3002/api/get/teamMembers', null, {
           params: {
             user_id: user_id,
             competition_id: competition_id
           }
         });
-        const teamMembers = teamMembersResponse.data;
-        console.log(teamMembersResponse.data[0]);
-        //Check if the user with user_id = user_id is a captain
-        for (const member of teamMembers) {
-          if (member.user_id == user_id && member.is_captain == true) {
-            isCaptain = true;
-            break;
-          }
-        }
+        const data = teamMembersResponse.data;
 
-        // Get the user nicknames
-        const userIds = teamMembers.map(member => member.user_id);
-        const userNicknameResponses = await Promise.all(userIds.map(userId => axios.get(`http://localhost:3002/api/get/userNickname/${userId}`)));
-        const userNicknames = userNicknameResponses.map((response, index) => {
-          const nickname = response.data[0].user_nickname;
-          const isCaptain = teamMembers.find(member => member.user_id === userIds[index]).is_captain;
-          return isCaptain ? `${nickname} (Captain)` : nickname;
+        const updatedNicknames = data.map((member) => {
+          let nickname = member.user_nickname;
+          if (member.is_captain) {
+            nickname += ' (Captain)';
+          }
+          return nickname;
         });
+
+        setUserNicknames(updatedNicknames);
         
         // Update the state
         setTeamName(teamName);
         setTeamCode(teamCode);
         setTitle(title);
-        setUserNicknames(userNicknames);
       } catch (error) {
         console.error(error);
       }
