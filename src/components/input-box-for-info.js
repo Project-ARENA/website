@@ -25,20 +25,19 @@ export default function BasicTextFields(props) {
       autoComplete="off"
     >
       <Tooltip title={tooltipText}>
-      <TextField
-        id="outlined-basic"
-        label={buttonText}
-        variant="outlined"
-        data-testid={id}
-        inputProps={{
-          onChange: onChange,
-        }}
-        type={showPassword ? "text" : (isPassword ? "password" : "text")}
-        defaultValue={initialValue}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              {isPassword && (
+        <TextField
+          id="outlined-basic"
+          label={buttonText}
+          variant="outlined"
+          data-testid={id}
+          inputProps={{
+            onChange: onChange,
+          }}
+          type={showPassword ? "text" : (isPassword ? "password" : "text")}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                {showPassword && (
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
@@ -47,12 +46,11 @@ export default function BasicTextFields(props) {
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
-                
-              )}
-            </InputAdornment>
-          ),
-        }}
-      />
+                )}
+              </InputAdornment>
+            ),
+          }}
+        />
       </Tooltip>
     </Box>
   );
