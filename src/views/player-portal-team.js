@@ -137,10 +137,10 @@ const PlayerPortalTeam = (props) => {
 
   const handleInputSubmit = (value) => {
     const teamName = value;
-    // console.log("Location value: ", location);
+     console.log("Location value: ", location);
     // console.log("Team value: ", teamName);
-    if (teamName == "") {
-      alert("Please enter a valid team name");
+    if (teamName == "" || location == "") {
+      alert("Please enter all details");
     } else {
       validationCreate(teamName);
     }
