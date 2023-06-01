@@ -42,22 +42,24 @@ function getNumTestcases(testcases) {
 }
 
 // Modal.setAppElement(el)
-function validationCompName(compname){
-  axios
-    .get("http://localhost:3002/api/get/doesCompExist/" + compname)
-    .then(function (response) {
-      const codeResponse = response.data;
+async function validationCompName(compname) {
+  try {
+    const response = await axios.get("http://localhost:3002/api/get/doesCompExist/" + compname);
+    const codeResponse = response.data;
 
-      if (JSON.stringify(codeResponse) == "[]") {
-        validcomp=true;
-        console.log("valid name");
-        // alert("valid name");
-      } else {
-        console.log("invalid name");
-        alert("invalid name");
-      }
-    });
-};
+    if (JSON.stringify(codeResponse) === "[]") {
+      validcomp = true;
+      console.log("valid name");
+      // alert("valid name");
+    } else {
+      console.log("invalid name");
+      alert("invalid name");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 
 function PostCompDetails(
@@ -429,58 +431,59 @@ const AdminCompetitions = (props) => {
             <Button
               name="Create"
               color="success"
-              onClick={() => {
-                // Validate inputs before making the API call
+              onClick={async () => {
+                  // Validate inputs before making the API call
 
-              if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip)) {
-              return; // Stop further execution if validation fails
-              }
-              else{
-                validationCompName(compname);
-                if(validcomp==true){
-                  validcomp=false
-                  setvisible(false);
-                  setPickerVisible(false);
-                  PostCompDetails(
-                    compname,
-                    pic,
-                    CombinedCompStart,
-                    CombinedCompEnd,
-                    desc,
-                    pdf,
-                    getNumTestcases(testcases),
-                    testcases,
-                    marker,
-                    CombinedRegStart,
-                    CombinedRegEnd,
-                    maxTeams,
-                    min,
-                    max,
-                    zip
-                  );
-                  window.location.reload(false);
+                if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip))
+                {
+                  return; // Stop further execution if validation fails
                 }
-              }
-                
-                // console.log("Create button clicked");
-                // console.log("Competition Name is:" + compname);
-                // console.log("Number of teams is " + maxTeams);
-                // console.log("Team min is:" + min);
-                // console.log("Team max is:" + max);
-                // console.log("Test cases are:" + testcases);
-                // console.log("Num testcases is:" + getNumTestcases(testcases));
-                // console.log("pic link is:" + pic);
-                // console.log("pdf link is:" + pdf);
-                // console.log("marker link is:" + marker);
-                // console.log("regStartDate: " + CombinedRegStart);
-                // console.log("regEndDate: " + CombinedRegEnd);
-                // console.log("compStartDate: " + CombinedCompStart);
-                // console.log("compEndDate: " + CombinedCompEnd);
-                // console.log("Desc: " + desc);
-
-                
-
-              }}
+                else
+                {
+                  await validationCompName(compname);
+                  
+                  if(validcomp==true)
+                  {
+                    validcomp=false
+                    PostCompDetails(
+                      compname,
+                      pic,
+                      CombinedCompStart,
+                      CombinedCompEnd,
+                      desc,
+                      pdf,
+                      getNumTestcases(testcases),
+                      testcases,
+                      marker,
+                      CombinedRegStart,
+                      CombinedRegEnd,
+                      maxTeams,
+                      min,
+                      max,
+                      zip
+                    );
+                    setvisible(false);
+                    setPickerVisible(false);
+                    window.location.reload(false);
+                  }
+                }
+        
+                  // console.log("Create button clicked");
+                  // console.log("Competition Name is:" + compname);
+                  // console.log("Number of teams is " + maxTeams);
+                  // console.log("Team min is:" + min);
+                  // console.log("Team max is:" + max);
+                  // console.log("Test cases are:" + testcases);
+                  // console.log("Num testcases is:" + getNumTestcases(testcases));
+                  // console.log("pic link is:" + pic);
+                  // console.log("pdf link is:" + pdf);
+                  // console.log("marker link is:" + marker);
+                  // console.log("regStartDate: " + CombinedRegStart);
+                  // console.log("regEndDate: " + CombinedRegEnd);
+                  // console.log("compStartDate: " + CombinedCompStart);
+                  // console.log("compEndDate: " + CombinedCompEnd);
+                  // console.log("Desc: " + desc);
+                }}
             />
           </div>
 
