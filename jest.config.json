@@ -34,6 +34,7 @@
         "/src/views/arena-leaderboard.js",
         "/src/views/contact.js",
         "/src/views/arena-teams.js",
+        "/src/views/player-portal-competitions.js",
         "/src/views/login.js"
       ]
 
