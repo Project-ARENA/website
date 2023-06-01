@@ -47,13 +47,15 @@ async function handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTA
   //Join the string "Text file uploaded" with the filename
   setTXTFileName("Text file uploaded: " + res.filesUploaded[0].filename);
   console.log(testcaseName);
+  const trimmedStr = testcaseName.trim();
+  console.log(trimmedStr);
   try {
     const response = await axios.post(
       "http://localhost:3002/api/get/uploadTest/score",
       {
         textFileUrl: res.filesUploaded[0].url,
         competitionId: competition_id,
-        testcaseName: testcaseName,
+        testcaseName: testcaseName.trim(),
       }
     );
     Mark = response.data;
@@ -69,6 +71,9 @@ async function handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTA
     }
     console.log(Mark);
   } catch (error) {
+    uploadedTXT = false;
+    setAlertMsg(error.response.data);
+    setShowTXTAlert(true);
     console.error(error);
   }
 }
