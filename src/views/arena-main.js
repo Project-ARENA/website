@@ -20,6 +20,7 @@ import Button from "../components/button";
 import InputTextArea from "../components/input-textarea";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import Swal from "sweetalert2";
 
 const competition_id = sessionStorage.getItem("CompID");
 const user_id = sessionStorage.getItem("userID");
@@ -46,9 +47,9 @@ async function handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTA
 
   //Join the string "Text file uploaded" with the filename
   setTXTFileName("Text file uploaded: " + res.filesUploaded[0].filename);
-  console.log(testcaseName);
+  // console.log(testcaseName);
   const trimmedStr = testcaseName.trim();
-  console.log(trimmedStr);
+  // console.log(trimmedStr);
   try {
     const response = await axios.post(
       "http://localhost:3002/api/get/uploadTest/score",
@@ -61,15 +62,15 @@ async function handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTA
     Mark = response.data;
     //Check if mark is a number
     if (isNaN(Mark)) {
-      console.log("Mark is not a number");
+      // console.log("Mark is not a number");
       setAlertMsg(Mark);
       setShowTXTAlert(true);
       uploadedTXT = false;
     }
     else {
-      console.log("Mark is a number");
+      // console.log("Mark is a number");
     }
-    console.log(Mark);
+    // console.log(Mark);
   } catch (error) {
     uploadedTXT = false;
     setAlertMsg(error.response.data);
@@ -83,7 +84,7 @@ function handleUploadZIPDone(res, setZIPFileName) {
 
   //Join the string "ZIP file uploaded" with the filename
   setZIPFileName("ZIP file uploaded: " + res.filesUploaded[0].filename);
-  console.log(res.filesUploaded[0].filename);
+  // console.log(res.filesUploaded[0].filename);
 }
 
 async function getLatestScores() {
@@ -229,7 +230,7 @@ async function postLatestLinks(){
   axios.get("http://localhost:3002/api/get/testcaseLinks/" + team_code)
     .then(response => {
       const data = response.data;
-      console.log(data);
+      // console.log(data);
       // Assuming the response data is an array with a single object
       const testCaseHighest = JSON.parse(data[0].testcase_links);
 
@@ -240,7 +241,7 @@ async function postLatestLinks(){
       const modifiedTestCaseHighest = JSON.stringify(testCaseHighest);
 
       // Output the modified string
-      console.log(modifiedTestCaseHighest);
+      // console.log(modifiedTestCaseHighest);
 
       // Post the modified string to the database
       axios.post("http://localhost:3002/api/post/updateTestcaseLinks", {
@@ -248,10 +249,10 @@ async function postLatestLinks(){
         testcase_links: modifiedTestCaseHighest
 
       }).then(response => {
-        console.log(response);
+        // console.log(response);
       }
       ).catch(error => {
-        console.log(error);
+        // console.log(error);
       }
       )
 
@@ -340,7 +341,7 @@ function getEndDate (){
   axios.get("http://localhost:3002/api/get/compEndDate/" + competition_id)
   .then(function (response) {
     endDate = response.data[0].competition_enddate;
-    console.log(response.data[0].competition_enddate);
+    // console.log(response.data[0].competition_enddate);
   }
   )
 }

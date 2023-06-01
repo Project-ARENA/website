@@ -43,10 +43,10 @@ async function validationCompName(compname) {
 
     if (JSON.stringify(codeResponse) === "[]" || sameName === true) {
       validcomp = true;
-      console.log("valid name");
+      // console.log("valid name");
       // alert("valid name");
     } else {
-      console.log("invalid name");
+      // console.log("invalid name");
       alert("invalid name");
     }
   } catch (error) {
@@ -192,17 +192,38 @@ export default function CustomDataGrid({ rows }) {
       const compEndDate = new Date(CombinedCompEnd);
       
       if (regEndDate >= compStartDate) {
-        alert('Registration End Date must be before Competition Start Date.');
+        Swal.fire({
+          title:
+            "Registration End Date must be before Competition Start Date.",
+          icon: "warning",
+          showConfirmButton: false,
+          timer: 3000, // Display for 3 seconds
+          timerProgressBar: true,
+        });
         return false;
       }
     
       if (regStartDate >= regEndDate) {
-        alert('Registration Start Date must be before Registration End Date.');
+        Swal.fire({
+          title:
+            "Registration Start Date must be before Registration End Date.",
+          icon: "warning",
+          showConfirmButton: false,
+          timer: 3000, // Display for 3 seconds
+          timerProgressBar: true,
+        });
         return false;
       }
     
       if (compStartDate >= compEndDate) {
-        alert('Competition Start Date must be before Competition End Date.');
+        Swal.fire({
+          title:
+            "Competition Start Date must be before Competition End Date.",
+          icon: "warning",
+          showConfirmButton: false,
+          timer: 3000, // Display for 3 seconds
+          timerProgressBar: true,
+        });
         return false;
       }
     
@@ -233,7 +254,7 @@ export default function CustomDataGrid({ rows }) {
           competition_id:compID
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       window.location.reload(false);
 

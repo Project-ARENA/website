@@ -29,12 +29,12 @@ function checkEmailExists(email, setEmailError){
         if (JSON.stringify(userData) == "[]") {
           //Email does not exist
           setEmailError('Email does not exist');
-          console.log("Email does not exist");
+          // console.log("Email does not exist");
         }
         else {
           //Email exists, so send email
           setEmailError("Code sent");
-          console.log("Code sent");
+          // console.log("Code sent");
           sendEmail(email);
         }
 
@@ -43,13 +43,13 @@ function checkEmailExists(email, setEmailError){
 
 function sendEmail(email){
   code = uuidv4();
-  console.log(code);
+  // console.log(code);
   axios.post("http://localhost:3002/api/post/password/reset/sendCode", {
     user_email: email,
     user_code: code
   })
   .then(function (response) {
-    console.log(response);
+    // console.log(response);
   }
   )
 
@@ -61,7 +61,7 @@ function changePassword(email, newPass, setModalVisible){
     user_password: newPass
   })
   .then(function (response) {
-    console.log(response);
+    // console.log(response);
     setModalVisible(false);
   }
   )
@@ -231,7 +231,7 @@ const Login = (props) => {
           <Button
               name="Send verification code"
               onClick={() => {
-                console.log(email);
+                // console.log(email);
                 checkEmailExists(email, setEmailError);
               }}
           ></Button>
@@ -256,14 +256,14 @@ const Login = (props) => {
           <Button
               name="Change Password"
               onClick={() => {
-                console.log(email);
-                console.log(verfCode);
-                console.log(newPass);
+                // console.log(email);
+                // console.log(verfCode);
+                // console.log(newPass);
                 if (verfCode == code){
                   console.log("Code is correct");
                   const salt = bycrypt.genSaltSync(10);
                   const cryptedPass = bycrypt.hashSync(newPass, salt);
-                  console.log(cryptedPass);
+                  // console.log(cryptedPass);
                   changePassword(email, cryptedPass, setModalVisible);
                   Swal.fire({
                     title: "Code is correct and account created!",
@@ -301,7 +301,7 @@ const Login = (props) => {
         </Modal>
           <a href="#"
             onClick={() => {
-              console.log("Forgot Password clicked");
+              // console.log("Forgot Password clicked");
               setModalVisible(true);
             }}
             className="login-navlink1"

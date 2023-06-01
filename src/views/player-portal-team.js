@@ -45,11 +45,18 @@ function checkIfFull(teamCode){
       const result = response.data[0].result;
       // If the max team members has been reached, notify the user
       if (result == 1) {
-        alert("This team is full");
+        Swal.fire({
+          title:
+            "This team is full",
+          icon: "warning",
+          showConfirmButton: false,
+          timer: 3000, // Display for 3 seconds
+          timerProgressBar: true,
+        });
       }
       else {
         // If the team isn't full , join the team, then check if it is valid
-        console.log("Team not full");
+        // console.log("Team not full");
         joinTeam(teamName, teamCode); 
       }
     }
@@ -62,7 +69,7 @@ function checkIfValidTeam(teamCode){
     competition_id: competition_id
   })
   .then(function (response) {
-   console.log(response.data);
+  //console.log(response.data);
   }
   );
 }
@@ -137,10 +144,17 @@ const PlayerPortalTeam = (props) => {
 
   const handleInputSubmit = (value) => {
     const teamName = value;
-     console.log("Location value: ", location);
+    //  console.log("Location value: ", location);
     // console.log("Team value: ", teamName);
     if (teamName == "" || location == "") {
-      alert("Please enter all details");
+      Swal.fire({
+        title:
+          "Please enter all details",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 3000, // Display for 3 seconds
+        timerProgressBar: true,
+      });
     } else {
       validationCreate(teamName);
     }
@@ -204,7 +218,14 @@ const PlayerPortalTeam = (props) => {
           createTeam(teamName);
         } else {
           // console.log("team exists");
-          alert("This team name is already taken");
+          Swal.fire({
+            title:
+              "This team name is already taken",
+            icon: "warning",
+            showConfirmButton: false,
+            timer: 3000, // Display for 3 seconds
+            timerProgressBar: true,
+          });
         }
       });
   };
@@ -219,7 +240,14 @@ const PlayerPortalTeam = (props) => {
     const teamCode = value;
     // console.log("Input value: ", teamCode);
     if (teamCode == "") {
-      alert("Please enter a valid code");
+      Swal.fire({
+        title:
+          "Please enter a valid code",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 3000, // Display for 3 seconds
+        timerProgressBar: true,
+      });
     } else {
       validationCode(teamCode);
     }
@@ -232,7 +260,14 @@ const PlayerPortalTeam = (props) => {
         const codeResponse = response.data;
 
         if (JSON.stringify(codeResponse) == "[]") {
-          alert("Please enter a valid code");
+          Swal.fire({
+            title:
+              "Please enter a valid code",
+            icon: "warning",
+            showConfirmButton: false,
+            timer: 3000, // Display for 3 seconds
+            timerProgressBar: true,
+          });
         } else {
           //The team exists, now check if it is full
           checkIfFull(teamCode);

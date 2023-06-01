@@ -158,7 +158,7 @@ function GenCards() {
         setCardsData(newCardsData);
         setActiveData(fetchActiveData(newCardsData));
         setInactiveData(fetchInactiveData(newCardsData));
-        console.log(response);
+        // console.log(response);
         setIsFlipped(false);
       } catch (error) {
         console.error(error);

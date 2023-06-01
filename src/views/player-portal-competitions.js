@@ -198,7 +198,7 @@ function GenCards() {
 
         setRegisteredData(fetchOnlyRegisteredData(newCardsData2));
 
-        console.log(response);
+        // console.log(response);
         setIsFlipped(false);
       } catch (error) {
         console.error(error);
@@ -250,13 +250,13 @@ function GenCards() {
 
     //Get Current date
     var today = new Date();
-    console.log(today);
+    // console.log(today);
 
     //Get start date of competition
     // Check if competition has started
-    console.log(comp_startDate);
+    // console.log(comp_startDate);
     var startDate = new Date(comp_startDate);
-    console.log(startDate);
+    // console.log(startDate);
     
     if (today < startDate) {
       Swal.fire({

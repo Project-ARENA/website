@@ -7,6 +7,8 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import Button from "../components/button";
 import "./arena-profile.css";
 
+import Swal from "sweetalert2";
+
 // Update user details in database
 async function putUserDetails(userID, newEmail, newUsername, newPassword) {
   await axios.post("http://localhost:3002/api/post/updateDetails", {
@@ -24,10 +26,24 @@ function checkIfDetailsValid(newEmail, newUsername, password, newPassword) {
 
   //If fields empty, warn
   if (newEmail == "" || newUsername == "") {
-    alert("Email and Username cannot be empty");
+    Swal.fire({
+      title:
+        "Email and Username cannot be empty",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 3000, // Display for 3 seconds
+      timerProgressBar: true,
+    });
     return false;
   } else if (password == "") {
-    alert("Current Password Required");
+    Swal.fire({
+      title:
+        "Current Password Required",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 3000, // Display for 3 seconds
+      timerProgressBar: true,
+    });
     return false;
   }
 
@@ -35,12 +51,26 @@ function checkIfDetailsValid(newEmail, newUsername, password, newPassword) {
   else if (newEmail != "" || newUsername != "" || password != "") {
     //email not corect format
     if (!emailPattern.test(newEmail)) {
-      alert("Please enter a valid email");
+      Swal.fire({
+        title:
+          "Please enter a valid emai",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 3000, // Display for 3 seconds
+        timerProgressBar: true,
+      });
       return false;
     }
     //password not correct format
     if (!passwordPattern.test(newPassword) && newPassword != "") {
-      alert("Please enter a stronger password");
+      Swal.fire({
+        title:
+          "Please enter a stronger password",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 3000, // Display for 3 seconds
+        timerProgressBar: true,
+      });
       return false;
     }
   }
@@ -67,7 +97,14 @@ function update(
         checkIfDetailsValid(newEmail, newUsername, password, newPassword)
       ) {
         putUserDetails(userID, newEmail, newUsername, oldPassword);
-        alert("Email and username updated");
+        Swal.fire({
+          title:
+            "Email and username updated",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 3000, // Display for 3 seconds
+          timerProgressBar: true,
+        });
         window.location.href = "http://localhost:3000/arena-home";
       }
       // Password changed and new passwords matches confirmed password
@@ -80,7 +117,14 @@ function update(
         const salt = bycrypt.genSaltSync(10);
         let hashedNewPassword = bycrypt.hashSync(newPassword, salt);
         putUserDetails(userID, newEmail, newUsername, hashedNewPassword);
-        alert("Details updated");
+        Swal.fire({
+          title:
+            "Details updated",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 3000, // Display for 3 seconds
+          timerProgressBar: true,
+        });
         window.location.href = "http://localhost:3000/arena-home";
       }
       // New password doesn't match confirmed password
@@ -88,11 +132,25 @@ function update(
         newPassword != confirmPassword &&
         checkIfDetailsValid(newEmail, newUsername, password, newPassword)
       ) {
-        alert("Passwords do not match");
+        Swal.fire({
+          title:
+            "Passwords do not match",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 3000, // Display for 3 seconds
+          timerProgressBar: true,
+        });
       }
     } else {
       if (checkIfDetailsValid(newEmail, newUsername, password, newPassword)) {
-        alert("Incorrect Current Password");
+        Swal.fire({
+          title:
+            "Incorrect Current Password",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 3000, // Display for 3 seconds
+          timerProgressBar: true,
+        });
       }
     }
   });

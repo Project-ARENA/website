@@ -15,6 +15,7 @@ import "../components/modal.css";
 import InputTextArea from "../components/input-textarea.js"
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Swal from "sweetalert2";
 
 let validcomp = false;
 async function checkIfUserExists(username, setErrorMessage) {
@@ -49,10 +50,10 @@ async function validationCompName(compname) {
 
     if (JSON.stringify(codeResponse) === "[]") {
       validcomp = true;
-      console.log("valid name");
+      // console.log("valid name");
       // alert("valid name");
     } else {
-      console.log("invalid name");
+      // console.log("invalid name");
       alert("invalid name");
     }
   } catch (error) {
@@ -79,7 +80,7 @@ function PostCompDetails(
   max,
   zip
 ) {
-  console.log("Max Teams: " + maxTeams);
+  // console.log("Max Teams: " + maxTeams);
   return axios.post("http://localhost:3002/api/post/Create_comp", {
     compname: compname,
     pic: pic,
@@ -132,27 +133,62 @@ function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc,
   const compEndDate = new Date(CombinedCompEnd);
 
   if (regEndDate > compStartDate) {
-    alert('Registration End Date must be before Competition Start Date.');
+    Swal.fire({
+      title:
+        "Registration End Date must be before Competition Start Date.",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 3000, // Display for 3 seconds
+      timerProgressBar: true,
+    });
     return false;
   }
 
   if (regStartDate > regEndDate) {
-    alert('Registration Start Date must be before Registration End Date.');
+    Swal.fire({
+      title:
+        "Registration Start Date must be before Registration End Date.",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 3000, // Display for 3 seconds
+      timerProgressBar: true,
+    });
     return false;
   }
 
   if (compStartDate > compEndDate) {
-    alert('Competition Start Date must be before or equal to Competition End Date.');
+    Swal.fire({
+      title:
+        "Competition Start Date must be before or equal to Competition End Date.",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 3000, // Display for 3 seconds
+      timerProgressBar: true,
+    });
     return false;
   }
 
   if (regStartDate.toDateString() === regEndDate.toDateString() && regEndDate <= regStartDate) {
-    alert('Registration period must have a later end time than the start time.');
+    Swal.fire({
+      title:
+        "Registration period must have a later end time than the start time.",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 3000, // Display for 3 seconds
+      timerProgressBar: true,
+    });
     return false;
   }
 
   if (compStartDate.toDateString() === compEndDate.toDateString() && compEndDate <= compStartDate) {
-    alert('Competition period must have a later end time than the start time.');
+    Swal.fire({
+      title:
+        "Competition period must have a later end time than the start time.",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 3000, // Display for 3 seconds
+      timerProgressBar: true,
+    });
     return false;
   }
 
