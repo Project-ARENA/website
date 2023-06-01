@@ -29,7 +29,7 @@ export default function CustomDataGrid({ rows, noTests, testcases, myTeam }) {
             { value: "Western Cape", label: "Western Cape" },
             { value: "Eastern Cape", label: "Eastern Cape" },
             { value: "Gauteng", label: "Gauteng" },
-            { value: "Kwa-Zulu-Natal", label: "Kwa-Zulu-Natal" }
+            { value: "KwaZulu-Natal", label: "KwaZulu-Natal" }
           ],
           valueFormatter: ({ id: rowId, value, field, api }) => {
             const colDef = api.getColumn(field);
