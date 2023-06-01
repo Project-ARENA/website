@@ -23,6 +23,7 @@ function getTeamDetails(user_id, comp_id) {
         `http://localhost:3002/api/get/teamDetails/${response.data[0].team_code}`
       );
       TeamStatus = teamDetailsResponse.data[0].valid_team;
+      sessionStorage.setItem("teamStatus", teamDetailsResponse.data[0].valid_team);
     });
 }
 
@@ -243,6 +244,10 @@ function GenCards() {
     const compID = competition_id;
     sessionStorage.setItem("CompID", compID);
     getTeamDetails(userID, compID);
+    //get team status
+    const TeamStatus = sessionStorage.getItem("teamStatus");
+    // console.log("team: ",TeamStatus);
+
     //Get Current date
     var today = new Date();
     console.log(today);
@@ -252,6 +257,7 @@ function GenCards() {
     console.log(comp_startDate);
     var startDate = new Date(comp_startDate);
     console.log(startDate);
+    
     if (today < startDate) {
       Swal.fire({
         title:
@@ -264,11 +270,12 @@ function GenCards() {
 
       setTimeout(() => {
         // Redirect to login page after a delay
-        window.location.href = "http://localhost:3000/teams";
+        // window.location.href = "http://localhost:3000/teams";
       }, 3000); // Delay duration in milliseconds
 
       // alert(startDate);
-    } else if (TeamStatus === "0" || TeamStatus === "") {
+    } else 
+    if (TeamStatus === "0" || TeamStatus === "") {
       Swal.fire({
         title:
           "You do not have a valid team, you will be redirected to the teams page until you have a valid team.",
@@ -280,7 +287,7 @@ function GenCards() {
 
       setTimeout(() => {
         // Redirect to login page after a delay
-        window.location.href = "http://localhost:3000/teams";
+        // window.location.href = "http://localhost:3000/teams";
       }, 3000); // Delay duration in milliseconds
     } else {
       setTimeout(function () {
