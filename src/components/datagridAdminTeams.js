@@ -135,7 +135,6 @@ export default function CustomDataGrid({ rows }) {
                 axios
                   .get(jsonArray[key], { responseType: "blob" })
                   .then((response) => {
-                    const filename = getFileNameFromURL(jsonArray[key]);
                     const extension = getFileExtensionFromContentType(
                       response.headers["content-type"]
                     );
@@ -188,12 +187,6 @@ export default function CustomDataGrid({ rows }) {
       throw error;
     }
   };
-  
-  // Helper functions
-  function getFileNameFromURL(url) {
-    const urlParts = url.split('/');
-    return urlParts[urlParts.length - 1];
-  }
   
   function getFileExtensionFromContentType(contentType) {
     const extension = contentType.split('/').pop();
