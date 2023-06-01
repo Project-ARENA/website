@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1685655121898" clover="3.2.0">
-  <project timestamp="1685655121898" name="All files">
-    <metrics statements="2510" coveredstatements="568" conditionals="657" coveredconditionals="134" methods="688" coveredmethods="136" elements="3855" coveredelements="838" complexity="0" loc="2510" ncloc="2510" packages="4" files="50" classes="50"/>
+<coverage generated="1685657186869" clover="3.2.0">
+  <project timestamp="1685657186869" name="All files">
+    <metrics statements="2510" coveredstatements="557" conditionals="657" coveredconditionals="134" methods="688" coveredmethods="134" elements="3855" coveredelements="825" complexity="0" loc="2510" ncloc="2510" packages="4" files="50" classes="50"/>
     <package name="src">
       <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="index.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\index.js">
@@ -12,7 +12,7 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="532" coveredstatements="195" conditionals="131" coveredconditionals="33" methods="161" coveredmethods="50"/>
+      <metrics statements="532" coveredstatements="196" conditionals="131" coveredconditionals="33" methods="161" coveredmethods="51"/>
       <file name="JoinTeam.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\components\JoinTeam.js">
         <metrics statements="6" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
         <line num="17" count="5" type="stmt"/>
@@ -160,7 +160,7 @@
       </file>
       <file name="button.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\components\button.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="6" count="172" type="stmt"/>
+        <line num="6" count="170" type="stmt"/>
       </file>
       <file name="collapse.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\components\collapse.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
@@ -605,7 +605,7 @@
         <line num="77" count="12" type="stmt"/>
       </file>
       <file name="team-manager.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\components\team-manager.js">
-        <metrics statements="22" coveredstatements="10" conditionals="10" coveredconditionals="3" methods="9" coveredmethods="3"/>
+        <metrics statements="22" coveredstatements="11" conditionals="10" coveredconditionals="3" methods="9" coveredmethods="4"/>
         <line num="10" count="2" type="stmt"/>
         <line num="11" count="2" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
@@ -615,19 +615,19 @@
         <line num="28" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
         <line num="35" count="2" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
         <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="46" count="0" type="stmt"/>
         <line num="50" count="0" type="stmt"/>
-        <line num="57" count="6" type="stmt"/>
-        <line num="58" count="5" type="stmt"/>
-        <line num="60" count="5" type="stmt"/>
-        <line num="61" count="5" type="stmt"/>
+        <line num="57" count="4" type="stmt"/>
+        <line num="58" count="4" type="stmt"/>
+        <line num="60" count="4" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
         <line num="63" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="64" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
-        <line num="69" count="5" type="stmt"/>
-        <line num="80" count="12" type="stmt"/>
+        <line num="69" count="4" type="stmt"/>
+        <line num="80" count="8" type="stmt"/>
       </file>
     </package>
     <package name="src.server">
@@ -1275,7 +1275,7 @@
       </file>
     </package>
     <package name="src.views">
-      <metrics statements="1337" coveredstatements="373" conditionals="354" coveredconditionals="101" methods="367" coveredmethods="86"/>
+      <metrics statements="1337" coveredstatements="361" conditionals="354" coveredconditionals="101" methods="367" coveredmethods="83"/>
       <file name="about.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\views\about.js">
         <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="6" count="1" type="stmt"/>
@@ -1899,7 +1899,7 @@
         <line num="66" count="0" type="stmt"/>
       </file>
       <file name="arena-team.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\views\arena-team.js">
-        <metrics statements="43" coveredstatements="17" conditionals="4" coveredconditionals="0" methods="7" coveredmethods="3"/>
+        <metrics statements="43" coveredstatements="5" conditionals="4" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="10" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
@@ -1911,15 +1911,15 @@
         <line num="20" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
         <line num="24" count="1" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
@@ -1937,9 +1937,9 @@
         <line num="70" count="0" type="stmt"/>
         <line num="71" count="0" type="stmt"/>
         <line num="72" count="0" type="stmt"/>
-        <line num="74" count="1" type="stmt"/>
-        <line num="77" count="1" type="stmt"/>
-        <line num="80" count="1" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="77" count="0" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
         <line num="161" count="0" type="stmt"/>
         <line num="170" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="171" count="0" type="stmt"/>

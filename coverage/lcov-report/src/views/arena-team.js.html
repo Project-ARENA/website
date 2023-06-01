@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.53% </span>
+                <span class="strong">11.62% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/43</span>
+                <span class='fraction'>5/43</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.53% </span>
+                <span class="strong">11.62% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/43</span>
+                <span class='fraction'>5/43</span>
             </div>
         
             
@@ -270,19 +270,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -297,6 +293,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -319,13 +319,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -452,19 +452,19 @@ const copyToClipboard = <span class="fstat-no" title="function not covered" >(v<
 <span class="cstat-no" title="statement not covered" >  document.body.removeChild(textarea); </span>// Remove the textarea from the body
 };
 &nbsp;
-const ArenaTeam = (props) =&gt; {
-  const [title, setTitle] = useState("");
-  const [teamName, setTeamName] = useState("");
-  const [userNicknames, setUserNicknames] = useState([]);
-  const [teamCode, setTeamCode] = useState("");
+const ArenaTeam = <span class="fstat-no" title="function not covered" >(p</span>rops) =&gt; {
+  const [title, setTitle] = <span class="cstat-no" title="statement not covered" >useState("");</span>
+  const [teamName, setTeamName] = <span class="cstat-no" title="statement not covered" >useState("");</span>
+  const [userNicknames, setUserNicknames] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
+  const [teamCode, setTeamCode] = <span class="cstat-no" title="statement not covered" >useState("");</span>
   //const [teamLocation, setTeamLocation] = useState("");
 &nbsp;
-  useEffect(() =&gt; {
-    const fetchData = async () =&gt; {
-      try {
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+    const fetchData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      try {</span>
         // Get the team name
-        const teamNameResponse = await axios.get(`http://localhost:3002/api/get/teamName/${user_id}/${competition_id}`);
-        const teamName = teamNameResponse.data[0].team_name;
+        const teamNameResponse = <span class="cstat-no" title="statement not covered" >await axios.get(`http://localhost:3002/api/get/teamName/${user_id}/${competition_id}`);</span>
+        const teamName = <span class="cstat-no" title="statement not covered" >teamNameResponse.data[0].team_name;</span>
   
         // Get the team location
         const teamLocationResponse = <span class="cstat-no" title="statement not covered" >await axios.get(`http://localhost:3002/api/get/teamLocation/${teamName}/${competition_id}`);</span>
@@ -502,13 +502,13 @@ const ArenaTeam = (props) =&gt; {
 <span class="cstat-no" title="statement not covered" >        setTeamCode(teamCode);</span>
 <span class="cstat-no" title="statement not covered" >        setTitle(title);</span>
       } catch (error) {
-        console.error(error);
+<span class="cstat-no" title="statement not covered" >        console.error(error);</span>
       }
     };
-    fetchData();
+<span class="cstat-no" title="statement not covered" >    fetchData();</span>
   }, []);
   
-  return (
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div className="arena-team-container"&gt;
       &lt;div data-role="Header" className="arena-team-navbar-container"&gt;
       &lt;div className="arena-main-navbar"&gt;
@@ -619,7 +619,7 @@ export default ArenaTeam
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-06-01T21:32:01.790Z
+                at 2023-06-01T22:06:26.741Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
