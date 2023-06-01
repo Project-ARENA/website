@@ -113,83 +113,69 @@ export default function CustomDataGrid({ rows }) {
 
 
   
-  const onButtonSubmission = async (e, row) => {
-    setTeamCode(row.team_code);
-    console.log(teamCode);
-    
-    try {
-      const response = await fetchTestcaseLinks(teamCode);
-      console.log(response.data);
-      
-      const data = response.data[0].testcase_links;
-      console.log(data);
-      const jsonArray = JSON.parse(data);
-      const downloadLinks = [];
-    
-      let count = 0;
-      const promises = [];
-      const zip = new JSZip();
-    
-      if (jsonArray && typeof jsonArray === "object") {
-        const jsonPromises = Object.values(jsonArray).map((link) =>
-          axios.get(link).catch((error) => {
-            console.error("Error fetching JSON data:", error);
-          })
-        );
-    
-        const jsonResponses = await Promise.all(jsonPromises);
-        jsonResponses.forEach((jsonResponse) => {
-          if (jsonResponse && jsonResponse.data) {
-            const jsonData = jsonResponse.data;
-            // Process jsonData and extract the download links
-            // Add the download links to the downloadLinks array
-          }
-        });
-    
-        for (let key in jsonArray) {
-          if (jsonArray[key] !== 0) {
-            promises.push(
-              axios
-                .get(jsonArray[key], { responseType: "blob" })
-                .then((response) => {
-                  const filename = getFileNameFromURL(jsonArray[key]);
-                  const extension = getFileExtensionFromContentType(
-                    response.headers["content-type"]
-                  );
-                  const newFilename = `file_${count}.${extension}`;
-                  zip.file(newFilename, response.data);
-                  count++;
-                })
-                .catch((error) => {
-                  console.error("Error downloading file:", error);
-                })
-            );
-          }
-        }
-    
-        await Promise.all(promises);
-    
-        const content = await zip.generateAsync({ type: "blob" });
-        saveAs(content, "files.zip");
-      } else {
-        console.error("Invalid JSON array.");
-        Swal.fire({
-          title:
-            "Team has no uploads.",
-          icon: "warning",
-          showConfirmButton: false,
-          timer: 2000, // Display for 3 seconds
-          timerProgressBar: true,
-        });
+  const onButtonSubmission = (e, row) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchTestcaseLinks(row.team_code);
+        console.log(response.data);
   
-        setTimeout(() => {
-          // Redirect to login page after a delay
-        }, 2000); // Delay duration in milliseconds
+        const data = response.data[0].testcase_links;
+        console.log(data);
+        const jsonArray = JSON.parse(data);
+        const downloadLinks = [];
+  
+        let count = 0;
+        const promises = [];
+        const zip = new JSZip();
+  
+        if (jsonArray && typeof jsonArray === "object") {
+          for (let key in jsonArray) {
+            if (jsonArray[key] !== 0) {
+              promises.push(
+                axios
+                  .get(jsonArray[key], { responseType: "blob" })
+                  .then((response) => {
+                    const filename = getFileNameFromURL(jsonArray[key]);
+                    const extension = getFileExtensionFromContentType(
+                      response.headers["content-type"]
+                    );
+                    const newFilename = `file_${count}.${extension}`;
+                    zip.file(newFilename, response.data);
+                    count++;
+                  })
+                  .catch((error) => {
+                    console.error("Error downloading file:", error);
+                  })
+              );
+            }
+          }
+  
+          await Promise.all(promises);
+  
+          const content = await zip.generateAsync({ type: "blob" });
+          saveAs(content, "files.zip");
+        } else {
+          console.error("Invalid JSON array.");
+          Swal.fire({
+            title: "Team has no uploads.",
+            icon: "warning",
+            showConfirmButton: false,
+            timer: 2000, // Display for 3 seconds
+            timerProgressBar: true,
+          });
+  
+          setTimeout(() => {
+            // Redirect to login page after a delay
+          }, 2000); // Delay duration in milliseconds
+        }
+      } catch (error) {
+        console.error("Error fetching testcase links:", error);
       }
-    } catch (error) {
-      console.error("Error fetching testcase links:", error);
-    }
+    };
+  
+    fetchData();
   };
+  
   
   // Extracted Axios GET command as a separate function
   const fetchTestcaseLinks = async (teamCode) => {

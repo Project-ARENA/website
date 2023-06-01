@@ -207,7 +207,7 @@ function ScoredHigher() {
           count++;
         }
         for (let i = 0; i < latestSubmissionScores.length; i++) {
-          if (latestSubmissionScores[i] > highestSub[i]) {
+          if (latestSubmissionScores[i] >= highestSub[i]) {
             //Change only the one that is higher
             highestSub[i] = latestSubmissionScores[i];
             isHigher = true;

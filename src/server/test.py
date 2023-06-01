@@ -13,7 +13,7 @@ def evaluate_test_case(test_case, user_submission):
             if user_submission == 5:
                 return 100
             else:
-                return "Error: Incorrect solution. Expected 5."
+                return 0
         except ValueError:
             return "Error: Something unexpected happened."
     elif test_case == "subtracting":
@@ -21,7 +21,7 @@ def evaluate_test_case(test_case, user_submission):
             if user_submission == 10:
                 return 100
             else:
-                return "Error: Incorrect solution. Expected 10."
+                return 0
         except ValueError:
             return "Error: Something unexpected happened."
     elif test_case == "averaging":
@@ -29,7 +29,7 @@ def evaluate_test_case(test_case, user_submission):
             if user_submission == 2:
                 return 100
             else:
-                return "Error: Incorrect solution. Expected 2."
+                return 0
         except ValueError:
             return "Error: Something unexpected happened."
     else:
