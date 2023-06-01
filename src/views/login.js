@@ -9,6 +9,7 @@ import Button from "../components/button";
 import "./login.css";
 import bycrypt from 'bcryptjs';
 import Modal from "react-modal";
+import Swal from "sweetalert2";
 import { doesSectionFormatHaveLeadingZeros } from "@mui/x-date-pickers/internals/hooks/useField/useField.utils";
 
 /*
@@ -248,6 +249,7 @@ const Login = (props) => {
           <InputBoxForInfo
             buttonText="New Password"
             onChange={(e) => setNewPass(e.target.value)}
+            isPassword
           ></InputBoxForInfo>
           <br/>
           <Button
@@ -262,6 +264,27 @@ const Login = (props) => {
                   const cryptedPass = bycrypt.hashSync(newPass, salt);
                   console.log(cryptedPass);
                   changePassword(email, cryptedPass, setModalVisible);
+                  Swal.fire({
+                    title: "Code is correct and account created!",
+                    icon: "success",
+                    showCancelButton: false,
+                    timer: 4000, // Display for 4 seconds
+                    timerProgressBar: true,
+                  });
+            
+                  setTimeout(() => {
+                    // Redirect to login page after a delay
+                    window.location.href = "http://localhost:3000/login";
+                  }, 4000); // Delay duration in milliseconds
+                }
+                else{
+                  Swal.fire({
+                    title: "Code incorrect",
+                    icon: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Close",
+                  });
                 }
               }}
           ></Button>
