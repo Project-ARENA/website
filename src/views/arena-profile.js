@@ -268,7 +268,6 @@ const ArenaProfile = (props) => {
           }}
           rootClassName="button-root-class-name4"
         ></Button>
-        <div className="arena-profile-container4"></div>
       </div>
     </div>
   );
