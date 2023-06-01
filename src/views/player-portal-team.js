@@ -195,7 +195,7 @@ const PlayerPortalTeam = (props) => {
 
   const validationCreate = (teamName) => {
     axios
-      .get("http://localhost:3002/api/get/doesTeamExist/" + teamName)
+      .get("http://localhost:3002/api/get/doesTeamExist/" + teamName + "/" + competition_id)
       .then(function (response) {
         const teamData = response.data;
 

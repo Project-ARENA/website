@@ -465,11 +465,12 @@ app.get("/api/get/isAdmin/:username", (req, res) => {
 
 //!Route to check if the team name already exists
 //* Returns [] if DNE, else returns something
-app.get("/api/get/doesTeamExist/:team_name", (req, res) => {
+app.get("/api/get/doesTeamExist/:team_name/:competition_id", (req, res) => {
   const team_name = req.params.team_name;
+  const competition_id = req.params.competition_id;
   db.query(
-    "SELECT * from team_details WHERE team_name = ?;",
-    team_name,
+    "SELECT * from team_details WHERE team_name = ? AND competition_id = ?;",
+    [team_name, competition_id],
     (err, result) => {
       if (err) {
         console.log(err);
