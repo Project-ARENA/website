@@ -11,12 +11,12 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
-import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSelector.js";
+// import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSelector.js";
 import InputTextArea from "../components/input-textarea.js"
-import { set } from "date-fns";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 let validcomp = false;
-let valid = false;
 async function checkIfUserExists(username, setErrorMessage) {
   const response = await axios.get("http://localhost:3002/api/get/doesExist/" + compname);
   const userExists = response.data;
@@ -79,7 +79,7 @@ function PostCompDetails(
   max,
   zip
 ) {
-  
+  console.log("Max Teams: " + maxTeams);
   return axios.post("http://localhost:3002/api/post/Create_comp", {
     compname: compname,
     pic: pic,
@@ -92,7 +92,7 @@ function PostCompDetails(
     marker: marker,
     CombinedRegStart: CombinedRegStart,
     CombinedRegEnd: CombinedRegEnd,
-    numTeams: maxTeams,
+    maxTeams: maxTeams,
     min: min,
     max: max,
     zip: zip
@@ -178,11 +178,12 @@ function GenGrid() {
         max_teams: data.max_teams,
         teamsize_max: data.teamsize_max,
         teamsize_min: data.teamsize_min,
-        competition_description: data.competition_description,
+        competition_description: data.competition_info,
         competition_marker: data.competition_marker,
-        competition_pdf: data.competition_pdf,
-        competition_zip: data.competition_zip,
-        competition_picture: data.competition_picture
+        competition_pdf: data.competition_testcases,
+        competition_zip: data.testcases_zip,
+        competition_picture: data.competition_image,
+        competition_testcases: data.testcases
       }));
       setData(data);
     });
@@ -214,6 +215,9 @@ const AdminCompetitions = (props) => {
   const [CompEnd, setCompEnd] = useState(null);
   const [CompStartTime, setCompStartTime] = useState(null);
   const [CompEndTime, setCompEndTime] = useState(null);
+  const [min, setmin] = useState(1);
+  const [max, setmax] = useState(10);
+  const [maxTeams, setmaxTeams] = useState(50);
   let CombinedRegStart = RegStart + " " + RegStartTime;
   let CombinedRegEnd = RegEnd + " " + RegEndTime;
   let CombinedCompStart = CompStart + " " + CompStartTime;
@@ -222,6 +226,18 @@ const AdminCompetitions = (props) => {
   const [visible, setvisible] = useState(false);
   const [pickerVisible, setPickerVisible] = useState(false);
   const username = sessionStorage.getItem('username');
+
+  function handleminChange(event) {
+    setmin(event.target.value);
+  }
+
+  function handlemaxChange(event) {
+    setmax(event.target.value);
+  }
+
+  function handlemaxTeamsChange(event) {
+    setmaxTeams(event.target.value);
+  }
   
   // Get user details from database, to make displaying it easier
   const getUserDetails = () => {
@@ -308,7 +324,47 @@ const AdminCompetitions = (props) => {
           <h3 style={{ color: "#457B9D" }}>Team Size</h3>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
-            <TeamSizeSelector/>
+            <Box
+              sx={{
+              display: 'grid',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '15px',
+              }}>
+                <TextField
+                  label="Max number of teams"
+                  type="number"
+                  inputProps={{ min: 1 }}
+                  value={maxTeams}
+                  onChange={handlemaxTeamsChange}
+                />
+
+               <h3 style={{ color: "#457B9D", textAlign: "center",marginBottom: "1px"   }}>Team Size</h3>
+            
+                <TextField
+                  label="Minimum team size"
+                  type="number"
+                  inputProps={{ min: 1 }}
+                  value={min}
+                  onChange={handleminChange}
+                />
+
+                <TextField
+                  label="Maximum team size"
+                  type="number"
+                  inputProps={{ min: 1 }}
+                  value={max}
+                  onChange={handlemaxChange}
+                />
+
+                <br />
+            
+                {/* {teamMembers.map((member, index) => (
+                  <div key={index} style={{ marginBottom: "5px" }}>
+                    <span className={`team-manager-text${index + 2}`}>{member}</span>
+                  </div>
+                ))} */}
+              </Box>
           </div>
 
           <h3 style={{ color: "#457B9D", textAlign: "center"  }}>Test Case Names</h3>

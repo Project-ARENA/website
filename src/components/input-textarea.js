@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 export default function MultilineTextFields(props) {
-  const { label, onChange } = props
+  const { label, onChange, initialValue} = props
   return (
     <Box
       component="form"
@@ -22,6 +22,7 @@ export default function MultilineTextFields(props) {
           inputProps={{
             onChange: onChange,
           }}
+          defaultValue={initialValue}
         />
       </div>
     </Box>
