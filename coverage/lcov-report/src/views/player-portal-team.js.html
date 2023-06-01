@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.81% </span>
+                <span class="strong">6.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/88</span>
+                <span class='fraction'>6/90</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.89% </span>
+                <span class="strong">6.74% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/87</span>
+                <span class='fraction'>6/89</span>
             </div>
         
             
@@ -422,7 +422,8 @@
 <a name='L357'></a><a href='#L357'>357</a>
 <a name='L358'></a><a href='#L358'>358</a>
 <a name='L359'></a><a href='#L359'>359</a>
-<a name='L360'></a><a href='#L360'>360</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L360'></a><a href='#L360'>360</a>
+<a name='L361'></a><a href='#L361'>361</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -561,32 +562,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -598,6 +593,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -920,10 +922,10 @@ const PlayerPortalTeam = <span class="fstat-no" title="function not covered" >(p
 &nbsp;
   const handleInputSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; {</span>
     const teamName = <span class="cstat-no" title="statement not covered" >value;</span>
-    // console.log("Location value: ", location);
+<span class="cstat-no" title="statement not covered" >     console.log("Location value: ", location);</span>
     // console.log("Team value: ", teamName);
-<span class="cstat-no" title="statement not covered" >    if (teamName == "") {</span>
-<span class="cstat-no" title="statement not covered" >      alert("Please enter a valid team name");</span>
+<span class="cstat-no" title="statement not covered" >    if (teamName == "" || location == "") {</span>
+<span class="cstat-no" title="statement not covered" >      alert("Please enter all details");</span>
     } else {
 <span class="cstat-no" title="statement not covered" >      validationCreate(teamName);</span>
     }
@@ -957,6 +959,7 @@ const PlayerPortalTeam = <span class="fstat-no" title="function not covered" >(p
       team_code: code,
       competition_id: parseInt(competition_id)
     });
+<span class="cstat-no" title="statement not covered" >    checkIfValidTeam(code);</span>
 <span class="cstat-no" title="statement not covered" >    Swal.fire({</span>
       title: 'Team created!',
       text: "Team Code: " + code,
@@ -977,7 +980,7 @@ const PlayerPortalTeam = <span class="fstat-no" title="function not covered" >(p
 &nbsp;
   const validationCreate = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>eamName) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    axios</span>
-      .get("http://localhost:3002/api/get/doesTeamExist/" + teamName)
+      .get("http://localhost:3002/api/get/doesTeamExist/" + teamName + "/" + competition_id)
       .then(<span class="fstat-no" title="function not covered" >fu</span>nction (response) {
         const teamData = <span class="cstat-no" title="statement not covered" >response.data;</span>
 &nbsp;
@@ -1147,7 +1150,7 @@ export default PlayerPortalTeam;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-31T23:05:13.681Z
+                at 2023-06-01T21:22:05.607Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

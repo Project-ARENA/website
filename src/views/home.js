@@ -8,9 +8,9 @@ const Home = (props) => {
   return (
     <div className="home-container">
       <div data-role="Header" className="home-navbar-container">
-        <div className="home-navbar">
+        <div className="home-navbar" data-testid="navbar">
           <div className="home-left-side">
-            <div data-role="BurgerMenu" className="home-burger-menu">
+            <div data-role="BurgerMenu" className="home-burger-menu" data-testid="BurgerMenu">
               <svg viewBox="0 0 1024 1024" className="home-icon">
                 <path d="M128 256h768v86h-768v-86zM128 554v-84h768v84h-768zM128 768v-86h768v86h-768z"></path>
               </svg>
@@ -28,7 +28,7 @@ const Home = (props) => {
               <Link to="/contact" className="home-link3 Anchor">
                 CONTACT
               </Link>
-              <Link to="/about" className="home-link4 Anchor">
+              <Link to="/about" className="home-link4 Anchor" data-id="about">
                 ABOUT
               </Link>
             </div>
@@ -70,7 +70,7 @@ const Home = (props) => {
       <div className="home-section-separator1"></div>
       <div className="home-section-separator2"></div>
       <div className="home-section-separator3">
-        <div className="home-hero">
+        <div className="home-hero" data-testid="hero">
           <div className="home-container2">
             <h1 className="home-text1">
               "Where Programmers Rise, Challenges Fall!"
@@ -105,7 +105,7 @@ const Home = (props) => {
             src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDEzfHxjb21wdXRlcnxlbnwwfHx8fDE2NzkxNDM2ODM&amp;ixlib=rb-4.0.3&amp;w=1200"
             className="home-image1"
           /> */}
-          <ParticleComponent width={600} height={600} />
+          <ParticleComponent width={600} height={600}  />
         </div>
       </div>
     </div>

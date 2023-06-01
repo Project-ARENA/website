@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/158</span>
+                <span class='fraction'>0/172</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/53</span>
+                <span class='fraction'>0/59</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/144</span>
+                <span class='fraction'>0/158</span>
             </div>
         
             
@@ -567,7 +567,29 @@
 <a name='L502'></a><a href='#L502'>502</a>
 <a name='L503'></a><a href='#L503'>503</a>
 <a name='L504'></a><a href='#L504'>504</a>
-<a name='L505'></a><a href='#L505'>505</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L505'></a><a href='#L505'>505</a>
+<a name='L506'></a><a href='#L506'>506</a>
+<a name='L507'></a><a href='#L507'>507</a>
+<a name='L508'></a><a href='#L508'>508</a>
+<a name='L509'></a><a href='#L509'>509</a>
+<a name='L510'></a><a href='#L510'>510</a>
+<a name='L511'></a><a href='#L511'>511</a>
+<a name='L512'></a><a href='#L512'>512</a>
+<a name='L513'></a><a href='#L513'>513</a>
+<a name='L514'></a><a href='#L514'>514</a>
+<a name='L515'></a><a href='#L515'>515</a>
+<a name='L516'></a><a href='#L516'>516</a>
+<a name='L517'></a><a href='#L517'>517</a>
+<a name='L518'></a><a href='#L518'>518</a>
+<a name='L519'></a><a href='#L519'>519</a>
+<a name='L520'></a><a href='#L520'>520</a>
+<a name='L521'></a><a href='#L521'>521</a>
+<a name='L522'></a><a href='#L522'>522</a>
+<a name='L523'></a><a href='#L523'>523</a>
+<a name='L524'></a><a href='#L524'>524</a>
+<a name='L525'></a><a href='#L525'>525</a>
+<a name='L526'></a><a href='#L526'>526</a>
+<a name='L527'></a><a href='#L527'>527</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -704,9 +726,31 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1192,7 +1236,7 @@ export default function <span class="fstat-no" title="function not covered" >Cus
     function <span class="fstat-no" title="function not covered" >validateInputs(</span>compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
       // Create an array to store the names of the missing fields
       const missingFields = <span class="cstat-no" title="statement not covered" >[];</span>
-    
+      
       // Check if any of the required inputs are missing and add their names to the missingFields array
 <span class="cstat-no" title="statement not covered" >      if (!compname) <span class="cstat-no" title="statement not covered" >missingFields.push('Company Name');</span></span>
 <span class="cstat-no" title="statement not covered" >      if (!pic) <span class="cstat-no" title="statement not covered" >missingFields.push('Picture');</span></span>
@@ -1207,12 +1251,34 @@ export default function <span class="fstat-no" title="function not covered" >Cus
 <span class="cstat-no" title="statement not covered" >      if (!maxTeams) <span class="cstat-no" title="statement not covered" >missingFields.push('Max Teams');</span></span>
 <span class="cstat-no" title="statement not covered" >      if (!min) <span class="cstat-no" title="statement not covered" >missingFields.push('Min');</span></span>
 <span class="cstat-no" title="statement not covered" >      if (!max) <span class="cstat-no" title="statement not covered" >missingFields.push('Max');</span></span>
+<span class="cstat-no" title="statement not covered" >      console.log(zip);</span>
 <span class="cstat-no" title="statement not covered" >      if (!zip) <span class="cstat-no" title="statement not covered" >missingFields.push('Zip');</span></span>
-    
+      
       // Check if any fields are missing
 <span class="cstat-no" title="statement not covered" >      if (missingFields.length &gt; 0) {</span>
         const missingFieldsString = <span class="cstat-no" title="statement not covered" >missingFields.join(', ');</span>
 <span class="cstat-no" title="statement not covered" >        alert(`Please fill in the following required fields: ${missingFieldsString}.`);</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+      }
+    
+      // Validate start and end dates for registration and competition periods
+      const regStartDate = <span class="cstat-no" title="statement not covered" >new Date(CombinedRegStart);</span>
+      const regEndDate = <span class="cstat-no" title="statement not covered" >new Date(CombinedRegEnd);</span>
+      const compStartDate = <span class="cstat-no" title="statement not covered" >new Date(CombinedCompStart);</span>
+      const compEndDate = <span class="cstat-no" title="statement not covered" >new Date(CombinedCompEnd);</span>
+      
+<span class="cstat-no" title="statement not covered" >      if (regEndDate &gt;= compStartDate) {</span>
+<span class="cstat-no" title="statement not covered" >        alert('Registration End Date must be before Competition Start Date.');</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+      }
+    
+<span class="cstat-no" title="statement not covered" >      if (regStartDate &gt;= regEndDate) {</span>
+<span class="cstat-no" title="statement not covered" >        alert('Registration Start Date must be before Registration End Date.');</span>
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+      }
+    
+<span class="cstat-no" title="statement not covered" >      if (compStartDate &gt;= compEndDate) {</span>
+<span class="cstat-no" title="statement not covered" >        alert('Competition Start Date must be before Competition End Date.');</span>
 <span class="cstat-no" title="statement not covered" >        return false;</span>
       }
     
@@ -1582,7 +1648,7 @@ export default function <span class="fstat-no" title="function not covered" >Cus
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-31T23:05:13.681Z
+                at 2023-06-01T21:22:05.607Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

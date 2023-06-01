@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.33% </span>
+                <span class="strong">46.78% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>80/169</span>
+                <span class='fraction'>80/171</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.02% </span>
+                <span class="strong">46.47% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>79/168</span>
+                <span class='fraction'>79/170</span>
             </div>
         
             
@@ -633,7 +633,14 @@
 <a name='L568'></a><a href='#L568'>568</a>
 <a name='L569'></a><a href='#L569'>569</a>
 <a name='L570'></a><a href='#L570'>570</a>
-<a name='L571'></a><a href='#L571'>571</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L571'></a><a href='#L571'>571</a>
+<a name='L572'></a><a href='#L572'>572</a>
+<a name='L573'></a><a href='#L573'>573</a>
+<a name='L574'></a><a href='#L574'>574</a>
+<a name='L575'></a><a href='#L575'>575</a>
+<a name='L576'></a><a href='#L576'>576</a>
+<a name='L577'></a><a href='#L577'>577</a>
+<a name='L578'></a><a href='#L578'>578</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -657,6 +664,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -880,26 +888,32 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1228,6 +1242,7 @@ function <span class="fstat-no" title="function not covered" >getTeamDetails(</s
         `http://localhost:3002/api/get/teamDetails/${response.data[0].team_code}`
       );
 <span class="cstat-no" title="statement not covered" >      TeamStatus = teamDetailsResponse.data[0].valid_team;</span>
+<span class="cstat-no" title="statement not covered" >      sessionStorage.setItem("teamStatus", teamDetailsResponse.data[0].valid_team);</span>
     });
 }
 &nbsp;
@@ -1448,6 +1463,10 @@ function GenCards() {
     const compID = <span class="cstat-no" title="statement not covered" >competition_id;</span>
 <span class="cstat-no" title="statement not covered" >    sessionStorage.setItem("CompID", compID);</span>
 <span class="cstat-no" title="statement not covered" >    getTeamDetails(userID, compID);</span>
+    //get team status
+    const TeamStatus = <span class="cstat-no" title="statement not covered" >sessionStorage.getItem("teamStatus");</span>
+    // console.log("team: ",TeamStatus);
+&nbsp;
     //Get Current date
     var today = <span class="cstat-no" title="statement not covered" >new Date();</span>
 <span class="cstat-no" title="statement not covered" >    console.log(today);</span>
@@ -1457,6 +1476,7 @@ function GenCards() {
 <span class="cstat-no" title="statement not covered" >    console.log(comp_startDate);</span>
     var startDate = <span class="cstat-no" title="statement not covered" >new Date(comp_startDate);</span>
 <span class="cstat-no" title="statement not covered" >    console.log(startDate);</span>
+    
 <span class="cstat-no" title="statement not covered" >    if (today &lt; startDate) {</span>
 <span class="cstat-no" title="statement not covered" >      Swal.fire({</span>
         title:
@@ -1473,7 +1493,8 @@ function GenCards() {
       }, 3000); // Delay duration in milliseconds
 &nbsp;
       // alert(startDate);
-    } else <span class="cstat-no" title="statement not covered" >if (TeamStatus === "0" || TeamStatus === "") {</span>
+    } else 
+<span class="cstat-no" title="statement not covered" >    if (TeamStatus === "0" || TeamStatus === "") {</span>
 <span class="cstat-no" title="statement not covered" >      Swal.fire({</span>
         title:
           "You do not have a valid team, you will be redirected to the teams page until you have a valid team.",
@@ -1780,7 +1801,7 @@ export default PlayerPortalCompetitions;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-31T23:05:13.681Z
+                at 2023-06-01T21:22:05.607Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

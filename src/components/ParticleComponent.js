@@ -7,6 +7,7 @@ import ParticleImage, {
 } from "react-particle-image";
 
 const ParticleComponent = ({ width, height }) => {
+  
   const particleOptions = {
     filter: ({ x, y, image }) => {
       // Get pixel
@@ -42,6 +43,7 @@ const ParticleComponent = ({ width, height }) => {
       mouseMoveForce={motionForce}
       touchMoveForce={motionForce}
       backgroundColor="#FFFFFF"
+      data-testid="particle-component"
     />
   );
 };
