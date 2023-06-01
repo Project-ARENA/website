@@ -119,7 +119,7 @@ export default function CustomDataGrid({ rows }) {
     function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
       // Create an array to store the names of the missing fields
       const missingFields = [];
-    
+      
       // Check if any of the required inputs are missing and add their names to the missingFields array
       if (!compname) missingFields.push('Company Name');
       if (!pic) missingFields.push('Picture');
@@ -134,12 +134,34 @@ export default function CustomDataGrid({ rows }) {
       if (!maxTeams) missingFields.push('Max Teams');
       if (!min) missingFields.push('Min');
       if (!max) missingFields.push('Max');
+      console.log(zip);
       if (!zip) missingFields.push('Zip');
-    
+      
       // Check if any fields are missing
       if (missingFields.length > 0) {
         const missingFieldsString = missingFields.join(', ');
         alert(`Please fill in the following required fields: ${missingFieldsString}.`);
+        return false;
+      }
+    
+      // Validate start and end dates for registration and competition periods
+      const regStartDate = new Date(CombinedRegStart);
+      const regEndDate = new Date(CombinedRegEnd);
+      const compStartDate = new Date(CombinedCompStart);
+      const compEndDate = new Date(CombinedCompEnd);
+      
+      if (regEndDate >= compStartDate) {
+        alert('Registration End Date must be before Competition Start Date.');
+        return false;
+      }
+    
+      if (regStartDate >= regEndDate) {
+        alert('Registration Start Date must be before Registration End Date.');
+        return false;
+      }
+    
+      if (compStartDate >= compEndDate) {
+        alert('Competition Start Date must be before Competition End Date.');
         return false;
       }
     

@@ -114,7 +114,6 @@ function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc,
   if (!maxTeams) missingFields.push('Max Teams');
   if (!min) missingFields.push('Min');
   if (!max) missingFields.push('Max');
-  console.log(zip);
   if (!zip) missingFields.push('Zip');
   
   // Check if any fields are missing
@@ -129,24 +128,36 @@ function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc,
   const regEndDate = new Date(CombinedRegEnd);
   const compStartDate = new Date(CombinedCompStart);
   const compEndDate = new Date(CombinedCompEnd);
-  
-  if (regEndDate >= compStartDate) {
+
+  if (regEndDate > compStartDate) {
     alert('Registration End Date must be before Competition Start Date.');
     return false;
   }
 
-  if (regStartDate >= regEndDate) {
+  if (regStartDate > regEndDate) {
     alert('Registration Start Date must be before Registration End Date.');
     return false;
   }
 
-  if (compStartDate >= compEndDate) {
-    alert('Competition Start Date must be before Competition End Date.');
+  if (compStartDate > compEndDate) {
+    alert('Competition Start Date must be before or equal to Competition End Date.');
+    return false;
+  }
+
+  if (regStartDate.toDateString() === regEndDate.toDateString() && regEndDate <= regStartDate) {
+    alert('Registration period must have a later end time than the start time.');
+    return false;
+  }
+
+  if (compStartDate.toDateString() === compEndDate.toDateString() && compEndDate <= compStartDate) {
+    alert('Competition period must have a later end time than the start time.');
     return false;
   }
 
   return true;
 }
+
+
 function GenGrid() {
   const [rows, setData] = React.useState([]);
 
