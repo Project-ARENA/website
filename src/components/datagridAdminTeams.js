@@ -98,7 +98,7 @@ export default function CustomDataGrid({ rows }) {
 
       setvisible(false);
     } catch (error) {
-      console.error(error);
+      //console.error(error);
     }
   };
 
@@ -117,10 +117,10 @@ export default function CustomDataGrid({ rows }) {
     const fetchData = async () => {
       try {
         const response = await fetchTestcaseLinks(row.team_code);
-        console.log(response.data);
+        //console.log(response.data);
   
         const data = response.data[0].testcase_links;
-        console.log(data);
+        //console.log(data);
         const jsonArray = JSON.parse(data);
         const downloadLinks = [];
   
@@ -143,7 +143,7 @@ export default function CustomDataGrid({ rows }) {
                     count++;
                   })
                   .catch((error) => {
-                    console.error("Error downloading file:", error);
+                    //console.error("Error downloading file:", error);
                   })
               );
             }
@@ -154,7 +154,7 @@ export default function CustomDataGrid({ rows }) {
           const content = await zip.generateAsync({ type: "blob" });
           saveAs(content, "files.zip");
         } else {
-          console.error("Invalid JSON array.");
+          //console.error("Invalid JSON array.");
           Swal.fire({
             title: "Team has no uploads.",
             icon: "warning",
@@ -168,7 +168,7 @@ export default function CustomDataGrid({ rows }) {
           }, 2000); // Delay duration in milliseconds
         }
       } catch (error) {
-        console.error("Error fetching testcase links:", error);
+        //console.error("Error fetching testcase links:", error);
       }
     };
   
@@ -314,7 +314,7 @@ export default function CustomDataGrid({ rows }) {
       }
       setTeamMemberList(newTeamMemberList); // Update the state with new list
     } catch (error) {
-      console.error(error);
+      //console.error(error);
     }
   };
 

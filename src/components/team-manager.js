@@ -61,7 +61,7 @@ export default function TeamManager(props) {
     axios.get(`http://localhost:3002/api/get/doesCodeExist/${team_code}`)
     .then((response) => {
       if (user_id == response.data[0].user_id) {
-        console.log("User is captain");
+        //console.log("User is captain");
         setCaptain(true);
       }
       });
