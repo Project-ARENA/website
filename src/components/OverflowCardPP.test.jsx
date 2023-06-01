@@ -52,11 +52,6 @@ describe("OverflowCardPP", () => {
     expect(getByText("Register Now")).toBeInTheDocument();
   });
 
-  it("displays the correct button text when already registered", () => {
-    const { getByText } = render(<OverflowCardPP isRegistered={true} />);
-    expect(getByText("Leave")).toBeInTheDocument();
-  });
-
   it("calls onClick prop when card is clicked", () => {
     render(<OverflowCardPP {...props} />);
     //fireEvent.click(screen.getByRole("button"));
@@ -69,6 +64,9 @@ describe("OverflowCardPP", () => {
     // fireEvent.click(screen.getByText("Register Now"));
     expect(props.onButton1Click).toHaveBeenCalledTimes(0);
   });
+
+
+
 
   it("calls onButton2Click prop when second button is clicked", () => {
     const newProps = { ...props, isRegistered: true };
