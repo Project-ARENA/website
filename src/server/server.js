@@ -1004,7 +1004,7 @@ app.get("/api/get/leaderboard/:comp_id", (req, res) => {
   const comp_id = req.params.comp_id;
   db.query(
     `SELECT team_name, team_score, team_location, testcase_highest
-  FROM team_details WHERE competition_id = ? ORDER BY team_score DESC;`,
+  FROM team_details WHERE competition_id = ? AND valid_team=1 ORDER BY team_score DESC;`,
     [comp_id],
     (err, result) => {
       if (err) {
@@ -1052,10 +1052,11 @@ app.post("/api/post/initTests/team", (req, res) => {
   const team_name = req.body.team_name;
   const testcase_latest = req.body.testcase_latest;
   const testcase_highest = req.body.testcase_highest;
+  const testcase_links = req.body.testcase_links;
 
   db.query(
-    "UPDATE team_details SET testcase_latest = ?, testcase_highest = ? WHERE team_name = ?;",
-    [testcase_latest, testcase_highest, team_name],
+    "UPDATE team_details SET testcase_latest = ?, testcase_highest = ?, testcase_links = ? , valid_team = 0 WHERE team_name = ?;",
+    [testcase_latest, testcase_highest, testcase_links, team_name],
     (err, result) => {
       if (err) {
         res.send(err);
@@ -1298,7 +1299,7 @@ app.post("/api/post/password/reset/sendCode", (req, res) => {
   // Use sendgrid to send email using dynamic template
   const msg = {
     to: user_email, // Replace with the recipient's email address
-    from: '2430888@students.wits.ac.za', // Replace with your email address
+    from: 'projectarena.team@gmail.com', // Replace with your email address
     subject: 'Project Arena: Password Reset',
     templateId: 'd-17cf23dca0ef40d1a262f33771d1df04', // Replace with your dynamic template ID
     dynamicTemplateData: {
@@ -1327,7 +1328,7 @@ app.post("/api/post/user/verify/sendCode", (req, res) => {
   // Use sendgrid to send email using dynamic template
   const msg = {
     to: user_email, // Replace with the recipient's email address
-    from: '2430888@students.wits.ac.za', // Replace with your email address
+    from: 'projectarena.team@gmail.com', // Replace with your email address
     subject: 'Project Arena: Verify Account',
     templateId: 'd-97821ad555ad4071acacdb29704264e6', // Replace with your dynamic template ID
     dynamicTemplateData: {
@@ -1467,6 +1468,38 @@ app.post("/api/post/updateTeamValid", (req, res) => {
   );
 });
 
+//Route to get the testcase_links
+app.get("/api/get/testcaseLinks/:team_code", (req, res) => {
+  const team_code = req.params.team_code;
+  
+  db.query(
+    "SELECT testcase_links FROM team_details WHERE team_code = ?;",
+    [team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+//Route to update the testcase_links
+app.post("/api/post/updateTestcaseLinks", (req, res) => {
+  const team_code = req.body.team_code;
+  const testcase_links = req.body.testcase_links;
+
+  db.query(
+    "UPDATE team_details SET testcase_links = ? WHERE team_code = ?;",
+    [testcase_links, team_code],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(result);
+    }
+  );
+});
 
 
 //!Type above this

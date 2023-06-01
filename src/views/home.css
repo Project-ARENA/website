@@ -199,13 +199,25 @@
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
+  
 }
 .home-container2 {
   display: flex;
   margin-right: 48px;
   padding-right: 48px;
+  padding-left: 48px; /* Add left padding */
   flex-direction: column;
+  width: 50%;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1); /* Add a box shadow */
 }
+
+.home-container2:hover {
+  box-shadow: 8px 24px 32px 0 #00aeff33;
+  transform: scale(1.025);
+  transition: all 0.5s ease-in-out;
+
+}
+
 .home-text1 {
   font-size: 3rem;
   max-width: 450px;

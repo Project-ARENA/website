@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import ParticleComponent from '../components/ParticleComponent'
 
 import './home.css'
 
@@ -72,38 +73,39 @@ const Home = (props) => {
         <div className="home-hero">
           <div className="home-container2">
             <h1 className="home-text1">
-              Welcome to our online platform for competitive programming!
+              "Where Programmers Rise, Challenges Fall!"
             </h1>
             <span className="home-text2">
               <span>
-                Our platform offers a competitive space for programmers to
-                showcase their skills and participate in challenges. Join or
-                create a team and submit your solutions to earn a score, with
-                the top performers showcased on the leaderboard. Test your
-                skills against other talented programmers and join us today to
-                start competing!
+              Embark on an exhilarating coding adventure where programmers triumph!
+              Ignite your competitive spirit, collaborate, and conquer challenges on
+              our cutting-edge platform. Climb the ranks, earn glory, and witness your
+              name atop the prestigious leaderboard. Engage in thrilling battles against
+              brilliant minds, and seize the moment to unleash your programming genius.
+              Join the league of champions and start your journey today!
               </span>
               <span>
-                <span
+                {/* <span
                   dangerouslySetInnerHTML={{
                     __html: ' ',
                   }}
-                />
+                /> */}
               </span>
               <span>
-                <span
+                {/* <span
                   dangerouslySetInnerHTML={{
                     __html: ' ',
                   }}
-                />
+                /> */}
               </span>
             </span>
           </div>
-          <img
+          {/* <img
             alt="image"
             src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDEzfHxjb21wdXRlcnxlbnwwfHx8fDE2NzkxNDM2ODM&amp;ixlib=rb-4.0.3&amp;w=1200"
             className="home-image1"
-          />
+          /> */}
+          <ParticleComponent width={600} height={600} />
         </div>
       </div>
     </div>

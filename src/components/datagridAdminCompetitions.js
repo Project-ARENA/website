@@ -266,9 +266,11 @@ export default function CustomDataGrid({ rows }) {
       },
     },
   ];
+  
   const handleClosePicker = () => {
     setPickerVisible(false); // Hide the picker
   };
+
   return (
     <Box sx={{ height: 700, width: "100%" }}>
    <Modal 
