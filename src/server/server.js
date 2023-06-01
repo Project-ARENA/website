@@ -291,7 +291,7 @@ app.post("/api/post/Create_comp", (req, res) => {
   const marker = req.body.marker;
   const CombinedRegStart = req.body.CombinedRegStart;
   const CombinedRegEnd = req.body.CombinedRegEnd;
-  const numTeams = req.body.numTeams;
+  const maxTeams = req.body.maxTeams;
   const min = req.body.min;
   const max = req.body.max;
   const zip = req.body.zip;
@@ -310,7 +310,7 @@ app.post("/api/post/Create_comp", (req, res) => {
       marker,
       CombinedRegStart,
       CombinedRegEnd,
-      numTeams,
+      maxTeams,
       min,
       max,
       zip

@@ -6,29 +6,53 @@ import Modal from "react-modal";
 import Button from "../components/button";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { TeamSizeSelector, min, max , maxTeams as TeamsMax} from "../components/TeamSizeSelector.js";
 import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import InputTextArea from "../components/input-textarea.js";
 import { PickerOverlay } from "filestack-react";
+import TextField from "@mui/material/TextField";
 
 let validcomp = false;
 
-function validationCompName(compname){
-  axios
-    .get("http://localhost:3002/api/get/doesCompExist/" + compname)
-    .then(function (response) {
-      const codeResponse = response.data;
+function getNumTestcases(testcases) {
+  var numtestcases = 1;
+  for (var i = 0; i < testcases.length; i++) {
+    if (testcases[i] === ",") {
+      numtestcases++;
+    }
+  }
+  return numtestcases;
+}
 
-      if (JSON.stringify(codeResponse) == "[]") {
-        validcomp=true;
-        console.log("valid name");
-        // alert("valid name");
-      } else {
-        console.log("invalid name");
-        alert("invalid name");
+function dateModified(date) {
+  var newDate = date.split("T");
+  return newDate[0];
+}
+
+async function validationCompName(compname) {
+  try {
+    const response = await axios.get("http://localhost:3002/api/get/doesCompExist/" + compname);
+    const codeResponse = response.data;
+    let sameName = false;
+    for (let i = 0; i < codeResponse.length; i++) {
+      console.log(codeResponse[i]["competition_name"]);
+      if (codeResponse[i]["competition_name"] === compname) {
+        validcomp = true;
+        sameName = true;
       }
-    });
-};
+    }
+
+    if (JSON.stringify(codeResponse) === "[]" || sameName === true) {
+      validcomp = true;
+      console.log("valid name");
+      // alert("valid name");
+    } else {
+      console.log("invalid name");
+      alert("invalid name");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export default function CustomDataGrid({ rows }) {
   const [clickedRowDelete, setClickedRowDelete] = useState();
@@ -48,9 +72,6 @@ export default function CustomDataGrid({ rows }) {
   const [CompEndTime, setCompEndTime] = useState(null);
   const [testcases, setTestCases] = useState("");
   const [noTestcases, setNoTestCases] = useState("");
-  const [maxNoTeams, setmaxNoTeams] = useState("");
-  const [teamMin, setTeamMin] = useState("");
-  const [teamMax, setTeamMax] = useState("");
   const [desc, setdesc] = useState("");
   const [pic, setpic] = useState("");
   const [pdf, setpdf] = useState("");
@@ -60,12 +81,27 @@ export default function CustomDataGrid({ rows }) {
   const [pdfName, setpdfName] = useState("");
   const [zipName, setzipName] = useState("");
   const [markerName, setmarkerName] = useState("");
+  const [min, setmin] = useState(1);
+  const [max, setmax] = useState(10);
+  const [maxTeams, setmaxTeams] = useState(50);
   let CombinedRegStart = RegStart + " " + RegStartTime;
   let CombinedRegEnd = RegEnd + " " + RegEndTime;
   let CombinedCompStart = CompStart + " " + CompStartTime;
   let CombinedCompEnd = CompEnd + " " + CompEndTime;
 
   const [pickerVisible, setPickerVisible] = useState(false);
+
+  function handleminChange(event) {
+    setmin(event.target.value);
+  }
+
+  function handlemaxChange(event) {
+    setmax(event.target.value);
+  }
+
+  function handlemaxTeamsChange(event) {
+    setmaxTeams(event.target.value);
+  }
 
   const handleUploadDone = (res) => {
     //   console.log(res.filesUploaded[0].url); // Print the URL of the uploaded file
@@ -98,20 +134,26 @@ export default function CustomDataGrid({ rows }) {
     
       setRowID(row.id);
       setcompID(row.competition_id);
-      setdesc(row.competition_description)
+      setdesc(row.competition_description);
       setCompname(row.competition_name);
-      setRegStart(row.registration_startdate);
-      setRegEnd(row.registration_enddate);
-      setCompStart(row.competition_startdate);
-      setCompEnd(row.competition_enddate);
-      setNoTestCases(row.competition_no_testcases);
-      setmaxNoTeams(row.max_teams);
-      setTeamMax(row.teamsize_max);
-      setTeamMin(row.teamsize_min);
+      // setRegStart(row.registration_startdate);
+      // setRegEnd(row.registration_enddate);
+      // setCompStart(row.competition_startdate);
+      // setCompEnd(row.competition_enddate);
+      setNoTestCases(getNumTestcases(row.competition_testcases));
+      setTestCases(row.competition_testcases);
+      setmaxTeams(row.max_teams);
+      setmax(row.teamsize_max);
+      setmin(row.teamsize_min);
       setpicName("Picture uploaded: " + row.competition_picture);
+      setpic(row.competition_picture);
       setpdfName("PDF uploaded: " + row.competition_pdf);
+      setpdf(row.competition_pdf);
       setmarkerName("Marker uploaded: " + row.competition_marker);
+      setmarker(row.competition_marker);
       setzipName("ZIP uploaded: " + row.competition_zip);
+      setzip(row.competition_zip);
+      console.log("Num testcases " + zip);
     
       setvisible(true);
     };
@@ -119,7 +161,7 @@ export default function CustomDataGrid({ rows }) {
     function validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip) {
       // Create an array to store the names of the missing fields
       const missingFields = [];
-      
+
       // Check if any of the required inputs are missing and add their names to the missingFields array
       if (!compname) missingFields.push('Company Name');
       if (!pic) missingFields.push('Picture');
@@ -134,7 +176,6 @@ export default function CustomDataGrid({ rows }) {
       if (!maxTeams) missingFields.push('Max Teams');
       if (!min) missingFields.push('Min');
       if (!max) missingFields.push('Max');
-      console.log(zip);
       if (!zip) missingFields.push('Zip');
       
       // Check if any fields are missing
@@ -185,9 +226,10 @@ export default function CustomDataGrid({ rows }) {
           competition_marker:marker,
           registration_startdate:CombinedRegStart,
           registration_enddate:CombinedCompEnd,
-          max_teams: TeamsMax,
+          max_teams: maxTeams,
           teamsize_min: min,
           teamsize_max: max,
+          testcase_zip: zip,
           competition_id:compID
         }
       );
@@ -314,16 +356,67 @@ export default function CustomDataGrid({ rows }) {
           <h3 style={{ color: "#457B9D" }}>Team Size</h3>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>
-            <TeamSizeSelector />
+            <Box
+              sx={{
+              display: 'grid',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '15px',
+              }}>
+                <TextField
+                  label="Max number of teams"
+                  type="number"
+                  inputProps={{ min: 1 }}
+                  value={maxTeams}
+                  onChange={handlemaxTeamsChange}
+                  style={{ marginBottom: "10px"}}
+                />
+
+               <h3 style={{ color: "#457B9D", textAlign: "center",marginBottom: "1px"   }}>Team Size</h3>
+            
+                <TextField
+                  label="Minimum team size"
+                  type="number"
+                  inputProps={{ min: 1 }}
+                  value={min}
+                  onChange={handleminChange}
+                />
+
+                <TextField
+                  label="Maximum team size"
+                  type="number"
+                  inputProps={{ min: 1 }}
+                  value={max}
+                  onChange={handlemaxChange}
+                />
+
+                <br />
+            
+                {/* {teamMembers.map((member, index) => (
+                  <div key={index} style={{ marginBottom: "5px" }}>
+                    <span className={`team-manager-text${index + 2}`}>{member}</span>
+                  </div>
+                ))} */}
+              </Box>
           </div>
 
           <h3 style={{ color: "#457B9D", textAlign: "center"  }}>Test Case Names</h3>
 
           <InputTextArea 
-            label="testcase 1, testcase 2, etc..."
-            onChange={(e) => setTestCases(e.target.value)}
+            buttonText="testcase 1, testcase 2, etc..."
+            onChange={(e) => {
+              setTestCases(e.target.value);
+              setNoTestCases(getNumTestcases(e.target.value));
+            }}
             initialValue={testcases}
           ></InputTextArea>
+          {/* <InputBoxForInfo
+          buttonText="testcase 1, testcase 2, etc..."
+          onChange={(e) => {
+            setTestCases(e.target.value);
+          }}
+          initialValue={testcases}
+          /> */}
 
           <br/>
 
@@ -393,7 +486,7 @@ export default function CustomDataGrid({ rows }) {
           )}
           <br/>
           <h3 style={{ color: "#457B9D" }}>Registration Period Details</h3>
-
+          <h4 style={{ color: "red" }}>PLEASE ENTER ALL DATE AND TIME FIELDS</h4>
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
             <NewCalenderComp
               date1_label="Registration Opening Date"
@@ -409,6 +502,7 @@ export default function CustomDataGrid({ rows }) {
 
           <br/>
           <h3 style={{ color: "#457B9D" }}>Competing Period Details</h3>
+          <h4 style={{ color: "red" }}>PLEASE ENTER ALL DATE AND TIME FIELDS</h4>
 
           <div style={{ marginLeft: 6, marginBottom: 10, marginTop: 5 }}>  
             <NewCalenderComp
@@ -426,12 +520,19 @@ export default function CustomDataGrid({ rows }) {
           <br/>
           <h3 style={{ color: "#457B9D" }}>Competition Description</h3>
 
-          <InputTextArea 
-          label="Competition Description"
+          {/* <InputTextArea 
+          buttonText="Competition Description"
           onChange={(e) => {
           setdesc(e.target.value);
           }}
           initialValue={desc}
+          /> */}
+          <InputTextArea 
+            buttonText="Competition Description"
+            onChange={(e) => {
+              setdesc(e.target.value);
+            }}
+            initialValue={desc}
           ></InputTextArea>
 
 
@@ -439,13 +540,13 @@ export default function CustomDataGrid({ rows }) {
             <Button
               name="Modify"
               color="success"
-              onClick={() => {
+              onClick={async () => {
                 // Validate inputs before making the API call
               if (!validateInputs(compname, pic, CombinedCompStart, CombinedCompEnd, desc, pdf, testcases, marker, CombinedRegStart, CombinedRegEnd, maxTeams, min, max, zip)) {
               return; // Stop further execution if validation fails
               }
               else{
-                validationCompName(compname);
+                await validationCompName(compname);
                 if(validcomp==true){
                   validcomp=false
                   setvisible(false);
@@ -500,6 +601,7 @@ export default function CustomDataGrid({ rows }) {
               onClick={() => {
                 setvisible(false);
                 setPickerVisible(false);
+                console.log("Testcases: " + testcases);
                 // console.log("button clicked");
               }}
               color="danger"
