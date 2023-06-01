@@ -320,6 +320,7 @@ const PlayerPortalProfile = (props) => {
             sessionStorage.clear();
             window.location.href = "http://localhost:3000";
           }}
+          color="danger"
           rootClassName="button-root-class-name4"
         ></Button>
       </div>
