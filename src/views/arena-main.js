@@ -57,10 +57,18 @@ async function handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTA
       }
     );
     Mark = response.data;
+    //Check if mark is a number
+    if (isNaN(Mark)) {
+      console.log("Mark is not a number");
+      setAlertMsg(Mark);
+      setShowTXTAlert(true);
+      uploadedTXT = false;
+    }
+    else {
+      console.log("Mark is a number");
+    }
     console.log(Mark);
   } catch (error) {
-    setAlertMsg(error.response.data);
-    setShowTXTAlert(true);
     console.error(error);
   }
 }
