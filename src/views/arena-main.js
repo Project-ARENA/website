@@ -57,6 +57,7 @@ async function handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTA
       }
     );
     Mark = response.data;
+    console.log(Mark);
   } catch (error) {
     setAlertMsg(error.response.data);
     setShowTXTAlert(true);
@@ -570,7 +571,7 @@ const ArenaMain = (props) => {
               uploadSubmissions();
               setTimeout(function () {
                 window.location.reload(false);
-              }, 1000);
+              }, 3000);
             }}
           ></Button>
           <br />
