@@ -270,7 +270,7 @@ function GenCards() {
 
       setTimeout(() => {
         // Redirect to login page after a delay
-        // window.location.href = "http://localhost:3000/teams";
+        window.location.href = "http://localhost:3000/teams";
       }, 3000); // Delay duration in milliseconds
 
       // alert(startDate);
@@ -287,7 +287,7 @@ function GenCards() {
 
       setTimeout(() => {
         // Redirect to login page after a delay
-        // window.location.href = "http://localhost:3000/teams";
+        window.location.href = "http://localhost:3000/teams";
       }, 3000); // Delay duration in milliseconds
     } else {
       setTimeout(function () {

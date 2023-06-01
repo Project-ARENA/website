@@ -174,6 +174,7 @@ const PlayerPortalTeam = (props) => {
       team_code: code,
       competition_id: parseInt(competition_id)
     });
+    checkIfValidTeam(code);
     Swal.fire({
       title: 'Team created!',
       text: "Team Code: " + code,
