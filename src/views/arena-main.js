@@ -442,11 +442,9 @@ const ArenaMain = (props) => {
   }, []);
 
   const [isLoaded, setIsLoaded] = React.useState(false);
+
   //Sets the pickerVisible to false, so you can actually click it again
-  const handleClosePicker = () => {
-    setTXTPickerVisible(false);
-    setZIPPickerVisible(false);
-  };
+
   //Returns the url for the file uploaded
   const handleUploadDone = (res) => {};
   return (
@@ -502,6 +500,7 @@ const ArenaMain = (props) => {
                 key="picker-overlay"
                 apikey={process.env.REACT_APP_API_KEY_FILESTACK}
                 onUploadDone={(res) => {
+                  
                   if (res.filesUploaded[0].mimetype === "text/plain") {
                     handleUploadTXTDone(res, setTXTFileName, setAlertMsg, setShowTXTAlert);
                     uploadedTXT = true;
@@ -513,10 +512,11 @@ const ArenaMain = (props) => {
                     setAlertMsg("Please upload a .txt file");
                     setShowTXTAlert(true);
                   }
+                  setTXTPickerVisible(false);
                 }}
                 pickerOptions={{
                   onClose: () => {
-                    handleClosePicker();
+                    setTXTPickerVisible(false);
                   },
                 }}
               />
@@ -538,10 +538,11 @@ const ArenaMain = (props) => {
                   if (uploadedZIP && uploadedTXT) {
                     setDisabled(false);
                   }
+                  setZIPPickerVisible(false);
                 }}
                 pickerOptions={{
                   onClose: () => {
-                    handleClosePicker();
+                    setZIPPickerVisible(false);
                   },
                 }}
               />
