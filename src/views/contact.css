@@ -21,7 +21,7 @@
 .contact-navbar {
   width: 100%;
   display: flex;
-  max-width: var(--dl-size-size-maxcontent);
+  max-width: auto;
   align-self: flex-start;
   align-items: center;
   padding-top: var(--dl-space-space-doubleunit);
@@ -80,6 +80,7 @@
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
+  padding-right: 50px;
 }
 .contact-cta-btn {
   color: var(--dl-color-gray-white);

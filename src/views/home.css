@@ -22,7 +22,7 @@
   /* width:1499px; */
   width: 100%;
   display: flex;
-  max-width: var(--dl-size-size-maxcontent);
+  max-width: auto;
   align-self: flex-start;
   align-items: center;
   padding-top: var(--dl-space-space-doubleunit);
@@ -79,8 +79,8 @@
   display: flex;
   align-items: center;
   flex-direction: row;
+  padding-right: 50px;
   /* margin-right: var(--dl-space-space-doubleunit); */
-
   /* justify-content: space-between; */
   /* margin-left: 40em; Move more inwards */
   /* margin-right: 40px; Move more outwards */

@@ -21,7 +21,7 @@
   .arena-main-navbar {
     width: 100%;
     display: flex;
-    max-width: var(--dl-size-size-maxcontent);
+    max-width: auto;
     align-self: flex-start;
     align-items: center;
     padding-top: var(--dl-space-space-doubleunit);
@@ -84,6 +84,7 @@
     display: flex;
     align-items: space-between;
     flex-direction: column;
+    padding-right: 50px;
   }
   .arena-main-navlink {
     display: contents;
