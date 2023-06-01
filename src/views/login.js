@@ -33,8 +33,8 @@ function checkEmailExists(email, setEmailError){
         }
         else {
           //Email exists, so send email
-          setEmailError('');
-          console.log("Email exists");
+          setEmailError("Code sent");
+          console.log("Code sent");
           sendEmail(email);
         }
 
@@ -235,6 +235,7 @@ const Login = (props) => {
                 checkEmailExists(email, setEmailError);
               }}
           ></Button>
+          <h4>{emailError}</h4>
           <br/>
 
           <br/>
