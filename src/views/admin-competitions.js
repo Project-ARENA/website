@@ -11,7 +11,6 @@ import InputBoxForInfo from "../components/input-box-for-info";
 import { CommonlyUsedComponents as NewCalenderComp, handleChange } from "../components/NewCalenderComp.js"
 import { PickerOverlay } from "filestack-react";
 import "../components/modal.css";
-// import { TeamSizeSelector, min, max , maxTeams} from "../components/TeamSizeSelector.js";
 import InputTextArea from "../components/input-textarea.js"
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";

@@ -29,8 +29,6 @@ describe('getLatestScores', () => {
     jest.clearAllMocks();
   });
 
-  
-
   it('should return an array of scores when axios.get succeeds', async () => {
     const expectedScores = [20, 30];
     const actualScores = await getLatestScores();

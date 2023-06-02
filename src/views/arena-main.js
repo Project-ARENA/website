@@ -109,6 +109,7 @@ async function getLatestScores() {
   });
 }
 
+// Get the number of test cases for the competition
 function getNumTestCases() {
   axios
     .get("http://localhost:3002/api/get/numTests/" + competition_id)
@@ -158,6 +159,7 @@ function getCompTestCases() {
   });
 }
 
+// Get competition pdf link
 function getLinkForPDF() {
   return new Promise((resolve, reject) => {
     axios
@@ -173,6 +175,7 @@ function getLinkForPDF() {
   });
 }
 
+// Identify highest submission score for each testcase
 async function getHighest() {
   return new Promise(async (resolve, reject) => {
     await axios
@@ -193,6 +196,7 @@ async function getHighest() {
   });
 }
 
+// Calculate if the latest submission score is higher than the highest submission score
 function ScoredHigher() {
   let isHigher = false;
   return new Promise((resolve, reject) => {
@@ -225,6 +229,7 @@ function ScoredHigher() {
   });
 }
 
+// Update the highest submission zip code in the database
 async function postLatestLinks(){
 
   axios.get("http://localhost:3002/api/get/testcaseLinks/" + team_code)
@@ -261,6 +266,7 @@ async function postLatestLinks(){
   
 }
 
+// Update the highest submission score in the database
 async function postHighestScore() {
   try {
     const [isHigher, newHighestSub] = await ScoredHigher();

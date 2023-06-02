@@ -19,7 +19,6 @@ import { doesSectionFormatHaveLeadingZeros } from "@mui/x-date-pickers/internals
 
 let code = "";
 
-
 function checkEmailExists(email, setEmailError){
   axios
       .get("http://localhost:3002/api/get/emailExists/" + email)
