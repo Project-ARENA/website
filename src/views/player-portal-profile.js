@@ -51,7 +51,7 @@ function checkIfDetailsValid(newEmail, newUsername, password, newPassword) {
     if (!emailPattern.test(newEmail)) {
       Swal.fire({
         title:
-          "Please enter a valid emai",
+          "Please enter a valid email",
         icon: "warning",
         showConfirmButton: false,
         timer: 3000, // Display for 3 seconds

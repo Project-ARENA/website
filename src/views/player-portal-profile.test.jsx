@@ -82,13 +82,25 @@ describe('checkIfDetailsValid function', () => {
     });
   });
 
-  test('should return false when current password is empty', () => {
+  test('should return false when the password is empty', () => {
     const newEmail = 'test@test.com';
     const newUsername = 'testuser';
     const password = '';
     const newPassword = 'TestPassword123';
 
+    // Mock the SweetAlert behavior
+    Swal.fire.mockImplementation(() => Promise.resolve({ value: true }));
+
     expect(checkIfDetailsValid(newEmail, newUsername, password, newPassword)).toBe(false);
+
+    // Verify that SweetAlert was called with the expected arguments
+    expect(Swal.fire).toHaveBeenCalledWith({
+      title: 'Current Password Required',
+      icon: 'warning',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
   });
 
   test('should return false when email is not in correct format', () => {
@@ -97,7 +109,21 @@ describe('checkIfDetailsValid function', () => {
     const password = 'testpassword';
     const newPassword = 'TestPassword123';
 
+    // Mock the SweetAlert behavior
+    Swal.fire.mockImplementation(() => Promise.resolve({ value: true }));
+
     expect(checkIfDetailsValid(newEmail, newUsername, password, newPassword)).toBe(false);
+
+    // Verify that SweetAlert was called with the expected arguments
+    expect(Swal.fire).toHaveBeenCalledWith({
+      title: 'Please enter a valid email',
+      icon: 'warning',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
+
+    // expect(checkIfDetailsValid(newEmail, newUsername, password, newPassword)).toBe(false);
   });
 
   test('should return false when password is not in correct format', () => {
@@ -105,6 +131,20 @@ describe('checkIfDetailsValid function', () => {
     const newUsername = 'testuser';
     const password = 'testpassword';
     const newPassword = 'weakpassword';
+
+    // Mock the SweetAlert behavior
+    Swal.fire.mockImplementation(() => Promise.resolve({ value: true }));
+
+    expect(checkIfDetailsValid(newEmail, newUsername, password, newPassword)).toBe(false);
+
+    // Verify that SweetAlert was called with the expected arguments
+    expect(Swal.fire).toHaveBeenCalledWith({
+      title: 'Please enter a stronger password',
+      icon: 'warning',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
 
     expect(checkIfDetailsValid(newEmail, newUsername, password, newPassword)).toBe(false);
   });
