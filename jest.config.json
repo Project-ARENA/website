@@ -16,7 +16,7 @@
         "axios": "axios/dist/node/axios.cjs"
       },
       "coveragePathIgnorePatterns": [
-        "/node_modules/",
+        "/node_modules",
         "/src/server/server.js",
         "/src/index.js",
         "/src/views/arena-main.js",
@@ -37,5 +37,4 @@
         "/src/views/player-portal-competitions.js",
         "/src/views/login.js"
       ]
-
    }

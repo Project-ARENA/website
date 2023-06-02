@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/85</span>
+                <span class='fraction'>0/74</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/85</span>
+                <span class='fraction'>0/74</span>
             </div>
         
             
@@ -427,12 +427,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -440,14 +440,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -459,7 +459,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -629,7 +629,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -654,14 +654,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -699,7 +699,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -760,12 +760,12 @@ function <span class="fstat-no" title="function not covered" >checkEmailExists(<
 <span class="cstat-no" title="statement not covered" >        if (JSON.stringify(userData) == "[]") {</span>
           //Email does not exist
 <span class="cstat-no" title="statement not covered" >          setEmailError('Email does not exist');</span>
-<span class="cstat-no" title="statement not covered" >          console.log("Email does not exist");</span>
+          // console.log("Email does not exist");
         }
         else {
           //Email exists, so send email
 <span class="cstat-no" title="statement not covered" >          setEmailError("Code sent");</span>
-<span class="cstat-no" title="statement not covered" >          console.log("Code sent");</span>
+          // console.log("Code sent");
 <span class="cstat-no" title="statement not covered" >          sendEmail(email);</span>
         }
 &nbsp;
@@ -774,13 +774,13 @@ function <span class="fstat-no" title="function not covered" >checkEmailExists(<
 &nbsp;
 function <span class="fstat-no" title="function not covered" >sendEmail(</span>email){
 <span class="cstat-no" title="statement not covered" >  code = uuidv4();</span>
-<span class="cstat-no" title="statement not covered" >  console.log(code);</span>
+  // console.log(code);
 <span class="cstat-no" title="statement not covered" >  axios.post("http://localhost:3002/api/post/password/reset/sendCode", {</span>
     user_email: email,
     user_code: code
   })
   .then(<span class="fstat-no" title="function not covered" >fu</span>nction (response) {
-<span class="cstat-no" title="statement not covered" >    console.log(response);</span>
+    // console.log(response);
   }
   )
 &nbsp;
@@ -792,7 +792,7 @@ function <span class="fstat-no" title="function not covered" >changePassword(</s
     user_password: newPass
   })
   .then(<span class="fstat-no" title="function not covered" >fu</span>nction (response) {
-<span class="cstat-no" title="statement not covered" >    console.log(response);</span>
+    // console.log(response);
 <span class="cstat-no" title="statement not covered" >    setModalVisible(false);</span>
   }
   )
@@ -962,7 +962,7 @@ const Login = <span class="cstat-no" title="statement not covered" ><span class=
           &lt;Button
               name="Send verification code"
               onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >                console.log(email);</span>
+                // console.log(email);
 <span class="cstat-no" title="statement not covered" >                checkEmailExists(email, setEmailError);</span>
               }}
           &gt;&lt;/Button&gt;
@@ -987,14 +987,14 @@ const Login = <span class="cstat-no" title="statement not covered" ><span class=
           &lt;Button
               name="Change Password"
               onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >                console.log(email);</span>
-<span class="cstat-no" title="statement not covered" >                console.log(verfCode);</span>
-<span class="cstat-no" title="statement not covered" >                console.log(newPass);</span>
+                // console.log(email);
+                // console.log(verfCode);
+                // console.log(newPass);
 <span class="cstat-no" title="statement not covered" >                if (verfCode == code){</span>
 <span class="cstat-no" title="statement not covered" >                  console.log("Code is correct");</span>
                   const salt = <span class="cstat-no" title="statement not covered" >bycrypt.genSaltSync(10);</span>
                   const cryptedPass = <span class="cstat-no" title="statement not covered" >bycrypt.hashSync(newPass, salt);</span>
-<span class="cstat-no" title="statement not covered" >                  console.log(cryptedPass);</span>
+                  // console.log(cryptedPass);
 <span class="cstat-no" title="statement not covered" >                  changePassword(email, cryptedPass, setModalVisible);</span>
 <span class="cstat-no" title="statement not covered" >                  Swal.fire({</span>
                     title: "Code is correct and account created!",
@@ -1032,7 +1032,7 @@ const Login = <span class="cstat-no" title="statement not covered" ><span class=
         &lt;/Modal&gt;
           &lt;a href="#"
             onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >              console.log("Forgot Password clicked");</span>
+              // console.log("Forgot Password clicked");
 <span class="cstat-no" title="statement not covered" >              setModalVisible(true);</span>
             }}
             className="login-navlink1"
@@ -1069,7 +1069,7 @@ export { Login };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-06-01T22:34:35.408Z
+                at 2023-06-02T09:22:55.668Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -124,6 +124,7 @@ export default function CustomDataGrid({ rows }) {
     if (res.filesUploaded[0].mimetype === "application/zip" ||
       res.filesUploaded[0].mimetype ===  "application/x-zip-compressed") {
       setzip(res.filesUploaded[0].url);
+      console.log("ZIP 2" + zip);
       setzipName("ZIP uploaded: " + res.filesUploaded[0].filename);
     }
     };
@@ -151,9 +152,9 @@ export default function CustomDataGrid({ rows }) {
       setpdf(row.competition_pdf);
       setmarkerName("Marker uploaded: " + row.competition_marker);
       setmarker(row.competition_marker);
-      setzipName("ZIP uploaded: " + row.competition_zip);
       setzip(row.competition_zip);
-      console.log("Num testcases " + zip);
+      setzipName("ZIP uploaded: " + row.competition_zip);
+      console.log("ZIP 1" + zip);
     
       setvisible(true);
     };
@@ -231,7 +232,6 @@ export default function CustomDataGrid({ rows }) {
     }
   //TODO: Change to update competition details
   const onButtonEditSubmit = async (e) => {
-
     try {
       const response = await axios.post(
         "http://localhost:3002/api/post/update/competition",
@@ -250,7 +250,7 @@ export default function CustomDataGrid({ rows }) {
           max_teams: maxTeams,
           teamsize_min: min,
           teamsize_max: max,
-          testcase_zip: zip,
+          testcases_zip: zip,
           competition_id:compID
         }
       );
