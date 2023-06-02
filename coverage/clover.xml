@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1685707522594" clover="3.2.0">
-  <project timestamp="1685707522594" name="All files">
-    <metrics statements="2494" coveredstatements="557" conditionals="663" coveredconditionals="134" methods="695" coveredmethods="134" elements="3852" coveredelements="825" complexity="0" loc="2494" ncloc="2494" packages="4" files="50" classes="50"/>
+<coverage generated="1685708384277" clover="3.2.0">
+  <project timestamp="1685708384277" name="All files">
+    <metrics statements="2494" coveredstatements="559" conditionals="663" coveredconditionals="134" methods="695" coveredmethods="135" elements="3852" coveredelements="828" complexity="0" loc="2494" ncloc="2494" packages="4" files="50" classes="50"/>
     <package name="src">
       <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="index.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\index.js">
@@ -12,7 +12,7 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="543" coveredstatements="196" conditionals="137" coveredconditionals="33" methods="165" coveredmethods="51"/>
+      <metrics statements="543" coveredstatements="198" conditionals="137" coveredconditionals="33" methods="165" coveredmethods="52"/>
       <file name="JoinTeam.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\components\JoinTeam.js">
         <metrics statements="6" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
         <line num="17" count="5" type="stmt"/>
@@ -154,9 +154,9 @@
         <line num="71" count="0" type="stmt"/>
       </file>
       <file name="aboutPerson.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\components\aboutPerson.js">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
       </file>
       <file name="button.js" path="C:\Users\muaaz\Desktop\Wits\3rd\COMS\COMS3009A - Software Design\Project\website\src\components\button.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>

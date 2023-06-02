@@ -290,12 +290,12 @@ TN:
 SF:src\components\aboutPerson.js
 FN:5,AboutPerson
 FNF:1
-FNH:0
-FNDA:0,AboutPerson
-DA:6,0
-DA:7,0
+FNH:1
+FNDA:1,AboutPerson
+DA:6,1
+DA:7,1
 LF:2
-LH:0
+LH:2
 BRF:0
 BRH:0
 end_of_record

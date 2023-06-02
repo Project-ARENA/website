@@ -69,13 +69,6 @@ describe("TeamInputBox component", () => {
     expect(onClick).toHaveBeenCalled();
   });
 
-  // test("updates location state when dropdown option is selected", () => {
-  //   render(<TeamInputBox />);
-  //   // const dropdown = screen.getByLabelText("Location");
-  //   const dropdown = screen.getByTestId('location-select');
-  //   userEvent.selectOptions(dropdown, "Limpopo");
-  //   expect(dropdown).toHaveValue("Limpopo");
-  // });
 
   test("renders all dropdown menu options", () => {
     render(<TeamInputBox />);
