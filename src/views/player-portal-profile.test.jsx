@@ -63,8 +63,23 @@ describe('checkIfDetailsValid function', () => {
     const newUsername = 'testuser';
     const password = 'testpassword';
     const newPassword = 'TestPassword123';
-
-    expect(checkIfDetailsValid(newEmail, newUsername, password, newPassword)).toBe(false);
+  
+    // Mock Swal.fire
+    const SwalMock = {
+      fire: jest.fn(),
+    };
+    global.Swal = SwalMock;
+  
+    const result = checkIfDetailsValid(newEmail, newUsername, password, newPassword);
+  
+    expect(result).toBe(false);
+    expect(SwalMock.fire).toHaveBeenCalledWith({
+      title: "Email and Username cannot be empty",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
   });
 
   test('should return false when current password is empty', () => {
